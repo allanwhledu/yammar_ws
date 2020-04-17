@@ -11,6 +11,19 @@ find_package(catkin REQUIRED COMPONENTS
   rospy
   smach
   smach_ros
+  actionlib_msgs
+  reap_unit_action
+)
+
+## Generate actions in the 'action' folder
+add_action_files(
+  FILES
+  Test.action
+)
+## Generate added messages and services with any dependencies listed here
+generate_messages(
+  DEPENDENCIES
+  actionlib_msgs  # Or other packages containing msgs
 )
 
 ## System dependencies are found with CMake's conventions

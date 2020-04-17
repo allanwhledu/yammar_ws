@@ -20,7 +20,7 @@ void activeCb()
 // 收到feedback后调用的回调函数
 void feedbackCb(const reap_unit_action::ControlReapFeedbackConstPtr& feedback)
 {
-    ROS_INFO(" percent_complete : %f ", feedback->percent_complete);
+    ROS_INFO(" percent_complete : %d ", feedback->percent_complete);
 }
 
 int main(int argc, char** argv)
@@ -38,6 +38,7 @@ int main(int argc, char** argv)
 	// 创建一个action的goal
     reap_unit_action::ControlReapGoal goal;
     goal.dishwasher_id = 1;
+    goal.target_speed = 1500;
 
     // 发送action的goal给服务器端，并且设置回调函数
     client.sendGoal(goal,  &doneCb, &activeCb, &feedbackCb);
