@@ -24,6 +24,8 @@ VCI_BOARD_INFO pInfo;//用来获取设备信息。
 int count=0;//数据列表中，用来存储列表序号。
 //reap_unit_action::ControlReapFeedback feedback;
 
+std::vector<int> log_error;
+
 
 std::string getTime(void)
 {
@@ -69,10 +71,10 @@ void init_CAN() {// 进行CAN信号发送
     printf(">>start CAN device !\r\n");//指示程序已运行
     if(VCI_OpenDevice(VCI_USBCAN2,0,0)==1)//打开设备
     {
-        printf(">>open deivce success!\n");//打开设备成功
+        printf(">>open device success!\n");//打开设备成功
     }else
     {
-        printf(">>open deivce error!\n");
+        printf(">>open device error!\n");
         // exit(1);
     }
 
@@ -135,15 +137,12 @@ void *receive_func(void* param)  //接收线程,若接受到的信号为速度�
 
 				if(rec[j].Data[2] == 0x92) //判断是否为速度误差反馈
                 {
-//				    printf("This is a speed callback msg.\n");
-
                     unsigned char heigh,low;
                     heigh=rec[j].Data[5];
                     low=rec[j].Data[4];
                     pfd->percent_complete = heigh << 8 | low;
 
                     pas->publishFeedback(*pfd);
-//                    ROS_INFO_STREAM(feedback.percent_complete);
                     ROS_INFO("Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X speed_error:%04d",count,rec[j].ID,
                              rec[j].Data[0],rec[j].Data[1],rec[j].Data[2],rec[j].Data[3],
                              rec[j].Data[4],rec[j].Data[5],rec[j].Data[6],rec[j].Data[7],heigh << 8 | low);
@@ -304,10 +303,16 @@ void execute(const reap_unit_action::ControlReapGoalConstPtr& goal, Server* as)
     usleep(10000);
 
     // 读取电机速度误差
+    log_error.push_back(0);
     callFeedback(goal->dishwasher_id);
-    usleep(10000);
-    while(feedback.percent_complete != 0)
+    while(feedback.percent_complete == 0)
     {
+        log_error.push_back(feedback.percent_complete);
+        usleep(10000);
+    }
+    while(feedback.percent_complete > 50)
+    {
+        log_error.push_back(feedback.percent_complete);
         callFeedback(goal->dishwasher_id);
         usleep(1000);
     }
