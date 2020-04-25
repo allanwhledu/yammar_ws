@@ -42,10 +42,10 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "control_reap_height_client");
 
 	// 定义一个客户端，do_dishes就是topic
-    Client client("control_reap_height", true);
+    Client client("/action_nodes/control_reap_height", true);
     ros::NodeHandle n;
-    ros::Subscriber sub = n.subscribe("reap_height", 1, velCallback);
-    ros::Subscriber sub2 = n.subscribe("grain_height_data", 1, velCallback2);
+    ros::Subscriber sub = n.subscribe("/capture_nodes/reap_height", 1, velCallback);
+    ros::Subscriber sub2 = n.subscribe("/perceptual_nodes/grain_height_data", 1, velCallback2);
 
 
 	// 等待服务器端

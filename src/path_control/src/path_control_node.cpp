@@ -8,7 +8,7 @@ class SubscribeAndPublish
 		SubscribeAndPublish()
 		{
 			//Topic you want to publish
-			pub_ = n_.advertise<std_msgs::String>("cmd_vel", 1);
+			pub_ = n_.advertise<std_msgs::String>("/automatic_nodes/cmd_vel", 1);
 
 			//Topic you want to subscribe
 			sub_ = n_.subscribe("cmd_avoiding_obstacle", 1, &SubscribeAndPublish::callback, this);

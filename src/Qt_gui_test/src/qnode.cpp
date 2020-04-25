@@ -77,10 +77,10 @@ bool QNode::init()
     image_transport::ImageTransport it(im);
 
     // Add your ros communications here.
-    text_subscriber = nSub.subscribe("harvest_line_data",100,&QNode::TextCallback, this);
+    text_subscriber = nSub.subscribe("/perceptual_nodes/harvest_line_data",100,&QNode::TextCallback, this);
     chart_subscriber = nSub.subscribe("/chart",1,&QNode::ChartCallback,this);
     FH_subscriber = nSub.subscribe("/FH_speed",1,&QNode::FHCallback,this);
-    image_sub = it.subscribe("harvest_line_stream",100,&QNode::myCallback_img,this);//相机尝试
+    image_sub = it.subscribe("/perceptual_nodes/harvest_line_stream",100,&QNode::myCallback_img,this);//相机尝试
 
     start();
     ROS_INFO_STREAM("inited qnode.");

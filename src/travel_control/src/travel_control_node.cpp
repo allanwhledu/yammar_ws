@@ -10,7 +10,7 @@ int main(int argc, char **argv)
 {
 	ros::init(argc, argv, "travel_control");
 	ros::NodeHandle n;
-	ros::Subscriber sub = n.subscribe("cmd_vel", 2, chatterCallback);
+	ros::Subscriber sub = n.subscribe("/automatic_nodes/cmd_vel", 2, chatterCallback);
 
 	ros::Rate loop_rate(5);
 	while (ros::ok())

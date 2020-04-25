@@ -37,9 +37,9 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "control_reap_client");
 
 	// 定义一个客户端，do_dishes就是topic
-    Client client("control_reap", true);
+    Client client("/action_nodes/control_reap", true);
     ros::NodeHandle n;
-    ros::Subscriber sub = n.subscribe("cmd_vel", 1, velCallback);
+    ros::Subscriber sub = n.subscribe("/automatic_nodes/cmd_vel", 1, velCallback);
 
 	// 等待服务器端
     ROS_INFO("Waiting for action server to start.");

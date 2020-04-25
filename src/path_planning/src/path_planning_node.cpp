@@ -12,7 +12,7 @@ class SubscribeAndPublish
 			pub2_ = n_.advertise<std_msgs::String>("path_data", 1);
 
 			//Topic you want to subscribe
-			sub_ = n_.subscribe("harvest_line_data", 1, &SubscribeAndPublish::callback, this);
+			sub_ = n_.subscribe("/perceptual_nodes/harvest_line_data", 1, &SubscribeAndPublish::callback, this);
 		}
 
 		void callback(const std_msgs::StringConstPtr& input)

@@ -10,7 +10,7 @@ class SubscribeAndPublish
 			pub_ = n_.advertise<std_msgs::String>("detected_obstacle", 1);
 
 			//Topic you want to subscribe
-			sub_ = n_.subscribe("millimeter_wave", 1, &SubscribeAndPublish::callback, this);
+			sub_ = n_.subscribe("/capture_nodes/millimeter_wave", 1, &SubscribeAndPublish::callback, this);
 		}
 
 		void callback(const std_msgs::StringConstPtr& input)

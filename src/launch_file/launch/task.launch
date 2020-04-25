@@ -1,25 +1,40 @@
 <launch>
-    <node pkg="mmw_capture" type="mmw_capture_node" name="mmw_capture"/>
-    <node pkg="camera_capture" type="camera_capture_node" name="camera_capture"/>
+    <group ns="capture_nodes">
+        <node pkg="mmw_capture" type="mmw_capture_node" name="mmw_capture"/>
+        <node pkg="camera_capture" type="camera_capture_node" name="camera_capture"/>
+        <node pkg="reap_height_capture" type="reap_height_capture_node" name="reap_height_capture"/>
+    </group>
 
-    <node pkg="reap_height_capture" type="reap_height_capture_node" name="reap_height_capture"/>
-    
-    <node pkg="harvest_line_detecte" type="harvest_line_detecte_node" name="harvest_line_detecte"/>
-    <node pkg="grain_height_detecte" type="grain_height_detecte_node" name="grain_height_detecte"/>
-    <node pkg="full_view" type="full_view_node" name="full_view"/>
-    <node pkg="obstacle_detecte" type="obstacle_detecte_node" name="obstacle_detecte"/>
-    <node pkg="path_planning" type="path_planning_node" name="path_planning"/>
-    <node pkg="path_control" type="path_control_node" name="path_control"/>
-    <node pkg="travel_control" type="travel_control_node" name="travel_control"/>
-    <node pkg="avoiding_obstacle" type="avoiding_obstacle_node" name="avoiding_obstacle"/>
-    <node pkg="unload_position_detecte" type="unload_position_detecte_node" name="unload_position_detecte"/>
-    <node pkg="system_monitor" type="system_monitor_node" name="system_monitor"/>
-    <node pkg="reap_unit_action" type="ControlReap_server" name="ControlReap_server"/>
-    <node pkg="reap_unit_control" type="reap_unit_control_node" name="reap_unit_control"/>
-    <node pkg="reap_height_action" type="ControlReapHeight_server" name="ControlReapHeight_server"/>
-    <node pkg="reap_height_control" type="reap_height_control_node" name="reap_height_control"/>
+    <group ns="perceptual_nodes">
+        <node pkg="harvest_line_detecte" type="harvest_line_detecte_node" name="harvest_line_detecte"/>
+        <node pkg="grain_height_detecte" type="grain_height_detecte_node" name="grain_height_detecte"/>
+        <node pkg="obstacle_detecte" type="obstacle_detecte_node" name="obstacle_detecte"/>
+        <node pkg="full_view" type="full_view_node" name="full_view"/>
+    </group>
 
-    <node pkg="hmi" type="hmi_node" name="HMI"/>
+    <group ns="automatic_nodes">
+        <node pkg="path_planning" type="path_planning_node" name="path_planning"/>
+        <node pkg="path_control" type="path_control_node" name="path_control"/>
+        <node pkg="travel_control" type="travel_control_node" name="travel_control"/>
+        <node pkg="avoiding_obstacle" type="avoiding_obstacle_node" name="avoiding_obstacle"/>
+    </group>
+
+    <group ns="unload_nodes">
+        <node pkg="unload_position_detecte" type="unload_position_detecte_node" name="unload_position_detecte"/>
+    </group>
+
+    <group ns="action_nodes">
+        <node pkg="reap_unit_action" type="ControlReap_server" name="ControlReap_server"/>
+        <node pkg="reap_height_action" type="ControlReapHeight_server" name="ControlReapHeight_server"/>
+    </group>
+
+    <group ns="central_nodes">
+        <!--node pkg="system_monitor" type="system_monitor_node" name="system_monitor"/-->
+        <node pkg="reap_unit_control" type="reap_unit_control_node" name="reap_unit_control"/>
+        <node pkg="reap_height_control" type="reap_height_control_node" name="reap_height_control"/>
+    </group>
+
+    <!--node pkg="hmi" type="hmi_node" name="HMI"/-->
 
     <node pkg="rqt_graph" type="rqt_graph" name="rqt_graph"/>
 </launch>

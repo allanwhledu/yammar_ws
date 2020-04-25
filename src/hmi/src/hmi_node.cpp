@@ -12,12 +12,12 @@ class SubscribeAndPublish
 			// pub3_ = n_.advertise<std_msgs::String>("full_view_stream", 1);
 
 			//Topic you want to subscribe
-			sub_ = n_.subscribe("harvest_line_stream", 1, &SubscribeAndPublish::callback, this);
-			sub2_ = n_.subscribe("harvest_line_data", 1, &SubscribeAndPublish::callback2, this);
-			sub3_ = n_.subscribe("full_view_stream", 1, &SubscribeAndPublish::callback3, this);
-			sub4_ = n_.subscribe("system_status", 1, &SubscribeAndPublish::callback4, this);
-			sub5_ = n_.subscribe("path_stream", 1, &SubscribeAndPublish::callback5, this);
-			sub6_ = n_.subscribe("detected_obstacle", 1, &SubscribeAndPublish::callback6, this);
+			sub_ = n_.subscribe("/perceptual_nodes/harvest_line_stream", 1, &SubscribeAndPublish::callback, this);
+			sub2_ = n_.subscribe("/perceptual_nodes/harvest_line_data", 1, &SubscribeAndPublish::callback2, this);
+			sub3_ = n_.subscribe("/perceptual_nodes/full_view_stream", 1, &SubscribeAndPublish::callback3, this);
+			sub4_ = n_.subscribe("/central_nodes/system_status", 1, &SubscribeAndPublish::callback4, this);
+			sub5_ = n_.subscribe("/automatic_nodes/path_stream", 1, &SubscribeAndPublish::callback5, this);
+			sub6_ = n_.subscribe("/perceptual_nodes/detected_obstacle", 1, &SubscribeAndPublish::callback6, this);
 			// sub7_ = n_.subscribe("full_view_stream", 1, &SubscribeAndPublish::callback7, this);
 			// sub8_ = n_.subscribe("full_view_stream", 1, &SubscribeAndPublish::callback8, this);
 		}
