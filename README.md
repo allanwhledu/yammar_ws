@@ -20,6 +20,7 @@
 
 ===
 杨正涛：
+1. 大陆ARS404毫米波雷达ROS驱动上传mmw_capture文件夹，修改node为：“mmw_capture”, topic为“millimeter_wave”格式：sensor_msgs::PointCloud2
 
 ===
 孙晗：

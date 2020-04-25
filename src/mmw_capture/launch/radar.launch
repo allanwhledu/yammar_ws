@@ -1,0 +1,3 @@
+<launch>
+	<node pkg = "radar_detection" name = "radar" type = "radar_node" output = "screen"/>
+</launch>
