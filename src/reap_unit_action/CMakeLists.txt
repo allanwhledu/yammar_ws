@@ -162,7 +162,7 @@ target_link_libraries( ControlReap_client ${catkin_LIBRARIES})
 add_dependencies(ControlReap_client ${${PROJECT_NAME}_EXPORTED_TARGETS})
 
 
-add_executable(ControlReap_server src/ControlReap_server.cpp)
+add_executable(ControlReap_server src/ControlReap_server.cpp src/CAN_DEVICE.cpp src/CAN_DEVICE.h)
 
 add_dependencies(ControlReap_server ${${PROJECT_NAME}_EXPORTED_TARGETS})
 

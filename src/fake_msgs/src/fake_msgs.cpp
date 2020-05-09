@@ -12,7 +12,6 @@ int main(int argc, char **argv)
 	ros::Publisher chatter_pub2 = n.advertise<std_msgs::Float32>("/chart",1000);
 	ros::Rate loop_rate(10);
 
-
 	std_msgs::Float32 msg;
 	std_msgs::Float32 msg2;
 	int count = 0;

@@ -34,7 +34,8 @@
         <node pkg="reap_height_control" type="reap_height_control_node" name="reap_height_control"/>
     </group>
 
-    <!--node pkg="hmi" type="hmi_node" name="HMI"/-->
+    <!--node pkg="hmi" type="hmi_node" name="fake_HMI"/-->
+    <node pkg="trail" type="app_node" name="HMI"/>
 
     <node pkg="rqt_graph" type="rqt_graph" name="rqt_graph"/>
 </launch>
