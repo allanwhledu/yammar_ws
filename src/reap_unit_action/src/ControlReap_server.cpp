@@ -65,6 +65,7 @@ typedef actionlib::SimpleActionServer<reap_unit_action::ControlReapAction> Serve
 // 收到action的goal后调用的回调函数
 void execute(const reap_unit_action::ControlReapGoalConstPtr& goal, Server* as)
 {
+    can_1.pfd.percent_complete = 10000;
     can_1.open_receive();
     // 保存server的指针到全局变量
     can_1.pas = as;
@@ -82,10 +83,11 @@ void execute(const reap_unit_action::ControlReapGoalConstPtr& goal, Server* as)
 	can_1.set_speed_mode(goal->dishwasher_id);
 	// 发送电机驱动指令
     can_1.set_motor_speed(goal->dishwasher_id, goal->target_speed);
-    usleep(10000);
+//    usleep(10000);
 
     // 读取电机速度误差
     can_1.check_speed();//线程关闭指令,这里是关闭接受线程
+    ROS_INFO_STREAM("check speed end.");
 
     as->setSucceeded();
 

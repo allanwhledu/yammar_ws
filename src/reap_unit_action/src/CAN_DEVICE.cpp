@@ -9,6 +9,7 @@ CAN_DEVICE::CAN_DEVICE(int channel_idx) {
     count = 0;
     m_run0 = 0;
     channel = channel_idx-1;
+    pfd.percent_complete = 10000;
 }
 
 void CAN_DEVICE::init_CAN() {// 进行CAN信号发送
@@ -186,18 +187,20 @@ void CAN_DEVICE::check_speed() {
     this->callFeedback(motor);
     ROS_INFO_STREAM("first call send");
 
-    pfd.percent_complete = 10000;
     while(pfd.percent_complete == 10000)
     {
         log_error.push_back(pfd.percent_complete);
-        usleep(10000);
+        ROS_INFO_STREAM("still wait");
+        usleep(2000);
     }
+
     while(pfd.percent_complete > 50)
     {
         log_error.push_back(pfd.percent_complete);
         this->callFeedback(motor);
-        usleep(1000);
+        usleep(2000);
     }
+    ROS_INFO_STREAM("ok error is already small");
 
     this->m_run0 = 0;
     ROS_INFO_STREAM("wait close");

@@ -12,8 +12,17 @@ from std_msgs.msg import Int32
 from smach_ros import SimpleActionState
 from reap_unit_action.msg import ControlReapAction
 
+motors = [40, 39, 38, 37]
+motor_goal = list()
+
+for i in motors:
+    motor_client = ControlReapAction()
+    motor_client.action_goal.goal.dishwasher_id = i
+    motor_goal.append(motor_client)
+
 target_speed = Int32()
-target_speed.data = 1500
+target_speed.data = 0
+
 
 # i = Int32()
 # i.data = 3
@@ -77,18 +86,35 @@ target_speed.data = 1500
 #         return 'foo_reset'
 #     else:
 #         return 'foo_done'
+pub = rospy.Publisher('smach_fback', Int32, queue_size=1)
+class end(smach.State):
+    def __init__(self):
+        smach.State.__init__(self, outcomes=['end_succeeded'])
 
+    def execute(self, userdata):
+        msg = Int32()
+        msg.data = 1
+        pub.publish(msg)
+        # rospy.sleep(3.0)
+        # msg.data = 0
+        # pub.publish(msg)
+        return 'end_succeeded'
 
 def monitor_cb(self, msg):
-    # global target_speed
-    # print msg
-    # print msg.data
-    # target_speed.data = msg.data
-    # print target_speed
+    motor_goal[0].action_goal.goal.target_speed = 1 * msg.data
+    motor_goal[1].action_goal.goal.target_speed = 2 * msg.data
+    motor_goal[2].action_goal.goal.target_speed = 2.5 * msg.data
+    motor_goal[3].action_goal.goal.target_speed = 3 * msg.data
+
+    for motor in motor_goal:
+        print motor.action_goal.goal.dishwasher_id, ' ', motor.action_goal.goal.target_speed
+
     return False
 
 
 def main():
+    global motor_client
+
     rospy.init_node("preemption_example")
 
     # # 配置第1个并行容器
@@ -112,51 +138,42 @@ def main():
     # 配置状态机
     sm = smach.StateMachine(outcomes=['DONE'])
     with sm:
-        smach.StateMachine.add('WAIT', smach_ros.MonitorState("/sm_reset", Int32, monitor_cb), transitions={'invalid':'MOTOR40', 'valid':'WAIT', 'preempted':'WAIT'})
+        smach.StateMachine.add('WAIT', smach_ros.MonitorState("/sm_reset", Int32, monitor_cb),
+                               transitions={'invalid': 'MOTOR1', 'valid': 'WAIT', 'preempted': 'WAIT'})
 
-        motor_client = ControlReapAction()
-        motor_client.action_goal.goal.dishwasher_id = 40
-        motor_client.action_goal.goal.target_speed = target_speed.data
-        smach.StateMachine.add('MOTOR40',
+        smach.StateMachine.add('MOTOR1',
                                SimpleActionState('control_reap',
                                                  ControlReapAction,
-                                                 goal=motor_client.action_goal.goal),
-                               transitions={'succeeded': 'MOTOR39',
-                                            'preempted': 'MOTOR40',
-                                            'aborted': 'MOTOR40'})
-        motor_client = ControlReapAction()
-        motor_client.action_goal.goal.dishwasher_id = 39
-        # todo 如何去更新这个全局变量？
-        motor_client.action_goal.goal.target_speed = target_speed.data
-        smach.StateMachine.add('MOTOR39',
-                               SimpleActionState('control_reap',
-                                                 ControlReapAction,
-                                                 goal=motor_client.action_goal.goal),
-                               transitions={'succeeded': 'MOTOR38',
-                                            'preempted': 'MOTOR39',
-                                            'aborted': 'MOTOR39'})
+                                                 goal=motor_goal[0].action_goal.goal),
+                               transitions={'succeeded': 'MOTOR2',
+                                            'preempted': 'MOTOR1',
+                                            'aborted': 'MOTOR1'})
 
-        motor_client = ControlReapAction()
-        motor_client.action_goal.goal.dishwasher_id = 38
-        motor_client.action_goal.goal.target_speed = target_speed.data
-        smach.StateMachine.add('MOTOR38',
+        smach.StateMachine.add('MOTOR2',
                                SimpleActionState('control_reap',
                                                  ControlReapAction,
-                                                 goal=motor_client.action_goal.goal),
-                               transitions={'succeeded': 'MOTOR37',
-                                            'preempted': 'MOTOR38',
-                                            'aborted': 'MOTOR38'})
+                                                 goal=motor_goal[1].action_goal.goal),
+                               transitions={'succeeded': 'MOTOR3',
+                                            'preempted': 'MOTOR2',
+                                            'aborted': 'MOTOR2'})
 
-        motor_client = ControlReapAction()
-        motor_client.action_goal.goal.dishwasher_id = 37
-        motor_client.action_goal.goal.target_speed = target_speed.data
-        smach.StateMachine.add('MOTOR37',
+        smach.StateMachine.add('MOTOR3',
                                SimpleActionState('control_reap',
                                                  ControlReapAction,
-                                                 goal=motor_client.action_goal.goal),
-                               transitions={'succeeded': 'WAIT',
-                                            'preempted': 'MOTOR37',
-                                            'aborted': 'MOTOR37'})
+                                                 goal=motor_goal[2].action_goal.goal),
+                               transitions={'succeeded': 'MOTOR4',
+                                            'preempted': 'MOTOR3',
+                                            'aborted': 'MOTOR3'})
+
+        smach.StateMachine.add('MOTOR4',
+                               SimpleActionState('control_reap',
+                                                 ControlReapAction,
+                                                 goal=motor_goal[3].action_goal.goal),
+                               transitions={'succeeded': 'END',
+                                            'preempted': 'MOTOR4',
+                                            'aborted': 'MOTOR4'})
+        smach.StateMachine.add('END',
+                               end(), transitions={'end_succeeded': 'WAIT'})
 
         # # 第一个节点为普通节点，调用init节点函数，若节点函数返回值为init_done则转移到下一个节点FH
         # smach.StateMachine.add('TRY_SPEEDUP_FH', init(), transitions={'init_done': 'FH'})
