@@ -251,7 +251,7 @@ public:
     // 这里有三个内容,分别是：action,event,condition
     MyPNPActionServer() : PNPActionServer() {
         // interrupt才对应的event,如果是一个sensing则是对应的condition
-        event_pub = handle.advertise<std_msgs::String>("PNPConditionEvent", 10); 
+        event_pub = handle.advertise<std_msgs::String>("PNPConditionEvent", 10);
         laser_sub = handle.subscribe("scan", 10, &MyPNPActionServer::laser_callback, this);
 
         checkCANBus_sub = handle.subscribe("CANBus", 10, &MyPNPActionServer::canbus_callback, this);
@@ -294,20 +294,20 @@ public:
 
         return res;
       }
-      
+
       return PNPActionServer::evalCondition(cond);
     }
     */
 
     void laser_callback(const sensor_msgs::LaserScan::ConstPtr& msg)
     {
-      std::vector<float> scans;
-      scans=std::vector<float>(msg->ranges);
-      if (scans[scans.size()/2]<1.0) {
-        std_msgs::String cond;
-        cond.data = "obstacle";
-        event_pub.publish(cond);
-      }
+        std::vector<float> scans;
+        scans=std::vector<float>(msg->ranges);
+        if (scans[scans.size()/2]<1.0) {
+            std_msgs::String cond;
+            cond.data = "obstacle";
+            event_pub.publish(cond);
+        }
     }
 
     void start_callback(const std_msgs::Int8::ConstPtr& msg)
@@ -357,12 +357,11 @@ public:
 
 int main(int argc, char** argv)
 {
-  ros::init(argc, argv, "mypnpas");
+    ros::init(argc, argv, "mypnpas");
 
-  MyPNPActionServer mypnpas;
-  mypnpas.start();
-  ros::spin();
+    MyPNPActionServer mypnpas;
+    mypnpas.start();
+    ros::spin();
 
-  return 0;
+    return 0;
 }
-

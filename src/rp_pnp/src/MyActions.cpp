@@ -33,7 +33,7 @@ actionlib::SimpleActionClient<move_base_msgs::MoveBaseAction> *ac_movebase = NUL
 
 void start_gotopose(float GX, float GY, float GTh, bool *run) {
 
-  exec_gotopose(robotname, GX, GY, GTh, run);
+    exec_gotopose(robotname, GX, GY, GTh, run);
 
 }
 
@@ -42,58 +42,58 @@ void start_gotopose(float GX, float GY, float GTh, bool *run) {
 
 // ainit就是直接到达固定的起始点(2,2)就好了
 void ainit(string params, bool *run) {
-  cout << "### Executing Init ... " << params << endl;
-  // Set turn topic
+    cout << "### Executing Init ... " << params << endl;
+    // Set turn topic
 
-  float GX=2.0;
-  float GY=2.0;
-  float GTh=0;
+    float GX=2.0;
+    float GY=2.0;
+    float GTh=0;
 
-  start_gotopose(GX, GY, GTh, run);
+    start_gotopose(GX, GY, GTh, run);
 
-  if (*run)
-      cout << "### Finished Init " << endl;
-  else
-      cout << "### Aborted Init  " << endl;
+    if (*run)
+        cout << "### Finished Init " << endl;
+    else
+        cout << "### Aborted Init  " << endl;
 }
 
 // 在petri网中动作名之后用_隔开的是传入参数,这些参数是goto的目标
 void gotopose(string params, bool *run) {
-  cout << "### Executing Gotopose ... " << params << endl;
+    cout << "### Executing Gotopose ... " << params << endl;
 
-  int i=params.find("_");	
-  float GX=atof(params.substr(0,i).c_str());
-  int j=params.find("_",i+1);
-  float GY=atof(params.substr(i+1,j).c_str());
-  float GTh=atof(params.substr(j+1).c_str());
+    int i=params.find("_");
+    float GX=atof(params.substr(0,i).c_str());
+    int j=params.find("_",i+1);
+    float GY=atof(params.substr(i+1,j).c_str());
+    float GTh=atof(params.substr(j+1).c_str());
 
-  start_gotopose(GX, GY, GTh, run);
+    start_gotopose(GX, GY, GTh, run);
 
-  if (*run)
-    cout << "### Finished Gotopose " << endl;
-  else
-    cout << "### Aborted Gotopose  " << endl;
+    if (*run)
+        cout << "### Finished Gotopose " << endl;
+    else
+        cout << "### Aborted Gotopose  " << endl;
 }
 
-void home(string params, bool *run) 
+void home(string params, bool *run)
 {
-  cout << "### Executing Home ... " << params << endl;
+    cout << "### Executing Home ... " << params << endl;
 
-  float GX=2.0;
-  float GY=2.0;
-  float GTh=0;
+    float GX=2.0;
+    float GY=2.0;
+    float GTh=0;
 
-  start_gotopose(GX, GY, GTh, run);
+    start_gotopose(GX, GY, GTh, run);
 
-  if (*run)
-    cout << "### Finished Home " << endl;
-  else
-    cout << "### Aborted Home  " << endl;
+    if (*run)
+        cout << "### Finished Home " << endl;
+    else
+        cout << "### Aborted Home  " << endl;
 }
 
 void wave(string params, bool *run) {
     cout << "### Executing Wave ... " << params << endl;
-    
+
 //    cout << "HELLO FROM " << robotname << " !!!"<<endl;
     // wave就是原地sleep而已
     boost::this_thread::sleep(boost::posix_time::milliseconds(500));
@@ -105,7 +105,7 @@ void wave(string params, bool *run) {
 }
 
 void waitstart(string params, bool *run) {
-  cout << "### Executing waistart ... " << params << endl;
+    cout << "### Executing waistart ... " << params << endl;
 }
 
 void syscheck(string params, bool *run) {
@@ -133,18 +133,17 @@ void controlcar(string params, bool *run) {
 /*** CONDITIONS ***/
 // 这个函数调用getRobotPose函数确定机器人是否已经在home内,但是问题是谁调用了它？
 int closeToHomeCond(string params) {
-  int r = -1; // unknown
-  double x, y, theta;
-  
-  if (getRobotPose(robotname,x,y,theta)) {
-    if ((fabs(x - 2) <= 4) && (fabs(y - 2) <= 4)) {
-        // cerr << "\033[22;34;1mCloseToHome\033[0m" << endl;
-        r = 1;
-    }
-    else {
-        r = 0;
-    }
-  }
-  return r;
-}
+    int r = -1; // unknown
+    double x, y, theta;
 
+    if (getRobotPose(robotname,x,y,theta)) {
+        if ((fabs(x - 2) <= 4) && (fabs(y - 2) <= 4)) {
+            // cerr << "\033[22;34;1mCloseToHome\033[0m" << endl;
+            r = 1;
+        }
+        else {
+            r = 0;
+        }
+    }
+    return r;
+}

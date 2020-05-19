@@ -17,4 +17,3 @@ void controlcar(string params, bool *run);
 int closeToHomeCond(string params);
 
 #endif
-

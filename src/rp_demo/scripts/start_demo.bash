@@ -6,8 +6,8 @@ if [ "$#" == 0 ]; then
 xterm -e roslaunch rp_demo dis-B1.launch &
 sleep 5
 xterm -e roslaunch rp_action robot.launch &
-#sleep 5
-#xterm -e roslaunch rp_pnp robot_plan.launch &
+sleep 5
+xterm -e roslaunch rp_pnp robot_plan.launch &
 
 else
 
