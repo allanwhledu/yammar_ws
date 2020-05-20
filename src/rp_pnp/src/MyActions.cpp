@@ -7,12 +7,15 @@
 #include <rp_action_msgs/TurnAction.h>
 
 #include <boost/thread/thread.hpp>
+#include <std_msgs/String.h>
 
 #define radians(a) ((a)/180.0*M_PI)
 extern int checkStart;
 extern int checkLeaderLine;
 extern int checkGrainHeight;
-extern bool sign_stop;
+
+extern ros::NodeHandle* handle_ptr;
+extern ros::Publisher* event_pub_ptr;
 // 这里的机器人名称应该是可以自己更改的
 std::string robotname="";
 
@@ -138,11 +141,17 @@ void syscheck(string params, bool *run) {
 
 void waiterror(string params, bool *run) {
     cout << "### Executing syscheck ... " << params << endl;
-    while(checkLeaderLine == 1 && checkGrainHeight == 1)
+    while(checkLeaderLine == 1 && checkGrainHeight == 1 && (*run))
     {
         ROS_INFO_STREAM("still waiterror.");
         boost::this_thread::sleep(boost::posix_time::milliseconds(3000));
     }
+
+    ROS_WARN_STREAM("car should stop.");
+    std_msgs::String cond;
+    cond.data = "carstop";
+    event_pub_ptr->publish(cond);
+    ROS_WARN_STREAM("carstop event pub.");
 
     if (*run)
         cout << "### Finished waiterror " << endl;
@@ -153,7 +162,9 @@ void waiterror(string params, bool *run) {
 void controlcar(string params, bool *run) {
     cout << "### Executing controlcar ... " << params << endl;
 
-    while(sign_stop == false){
+    // pnp应该是用了*run来中断吧,但是似乎不能够中断while循环，所以这里while应该用上*run控制
+    int i = 100;
+    while(i-- && (*run)){
         boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
         ROS_INFO_STREAM("control car.");
     }

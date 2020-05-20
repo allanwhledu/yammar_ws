@@ -29,6 +29,9 @@ bool sign_stop = false;
 
 int smach_fback = 0;
 
+ros::NodeHandle* handle_ptr;
+ros::Publisher* event_pub_ptr;
+
 
 //int con_start(string params) {
 //    int r = -1; // unknown
@@ -236,15 +239,14 @@ void stopreap(string params, bool *run) {
 //      ros::Duration(1).sleep(); // wait 1 sec
     }
 
-    if(motor_num == 37)
-        sign_stop = true;
+    if(motor_num == 37);
 #endif
 }
 
 
 class MyPNPActionServer : public PNPActionServer
 {
-private:
+public:
 
     ros::NodeHandle handle;
     ros::Publisher event_pub;
@@ -371,6 +373,8 @@ int main(int argc, char** argv)
     ros::init(argc, argv, "mypnpas");
 
     MyPNPActionServer mypnpas;
+    handle_ptr = &(mypnpas.handle);
+    event_pub_ptr = &(mypnpas.event_pub);
     mypnpas.start();
     ros::spin();
 
