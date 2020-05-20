@@ -9,7 +9,10 @@
 #include <boost/thread/thread.hpp>
 
 #define radians(a) ((a)/180.0*M_PI)
-
+extern int checkStart;
+extern int checkLeaderLine;
+extern int checkGrainHeight;
+extern bool sign_stop;
 // 这里的机器人名称应该是可以自己更改的
 std::string robotname="";
 
@@ -104,13 +107,28 @@ void wave(string params, bool *run) {
         cout << "### Aborted Wave  " << endl;
 }
 
+
+
 void waitstart(string params, bool *run) {
     cout << "### Executing waistart ... " << params << endl;
+    while(checkStart == 0)
+    {
+        ROS_INFO_STREAM("still wait start.");
+        boost::this_thread::sleep(boost::posix_time::milliseconds(3000));
+    }
+    if (*run)
+        cout << "### Finished waitstart " << endl;
+    else
+        cout << "### Aborted waitstart  " << endl;
 }
 
 void syscheck(string params, bool *run) {
     cout << "### Executing syscheck ... " << params << endl;
-    boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
+    while(checkLeaderLine == 0 || checkGrainHeight == 0)
+    {
+        ROS_INFO_STREAM("still check sys.");
+        boost::this_thread::sleep(boost::posix_time::milliseconds(3000));
+    }
 
     if (*run)
         cout << "### Finished syscheck " << endl;
@@ -118,9 +136,27 @@ void syscheck(string params, bool *run) {
         cout << "### Aborted syscheck  " << endl;
 }
 
+void waiterror(string params, bool *run) {
+    cout << "### Executing syscheck ... " << params << endl;
+    while(checkLeaderLine == 1 && checkGrainHeight == 1)
+    {
+        ROS_INFO_STREAM("still waiterror.");
+        boost::this_thread::sleep(boost::posix_time::milliseconds(3000));
+    }
+
+    if (*run)
+        cout << "### Finished waiterror " << endl;
+    else
+        cout << "### Aborted waiterror  " << endl;
+}
+
 void controlcar(string params, bool *run) {
     cout << "### Executing controlcar ... " << params << endl;
-    boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
+
+    while(sign_stop == false){
+        boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
+        ROS_INFO_STREAM("control car.");
+    }
 
     if (*run)
         cout << "### Finished controlcar " << endl;

@@ -25,18 +25,24 @@ int checkGrainHeight = 0;
 int carSpeed = 500;
 int speedChange = 0;
 
+bool sign_stop = false;
+
 int smach_fback = 0;
 
 
+//int con_start(string params) {
+//    int r = -1; // unknown
+//
+//    if (checkStart == 1) {
+//        r = 1;
+//    } else {
+//        r = 0;
+//    }
+//    return r;
+//}
 
-int con_start(string params) {
-    int r = -1; // unknown
-
-    if (checkStart == 1) {
-        r = 1;
-    } else {
-        r = 0;
-    }
+int con_stop(string params) {
+    int r = 0;
     return r;
 }
 
@@ -51,18 +57,18 @@ int con_sys(string params) {
     return r;
 }
 
-int con_speedchange(string params) {
-    int r = -1; // unknown
-
-    if (speedChange == 1) {
-        ROS_WARN_STREAM("Speed changed!");
-        r = 1;
-        speedChange = 0;
-    } else {
-        r = 0;
-    }
-    return r;
-}
+//int con_speedchange(string params) {
+//    int r = -1; // unknown
+//
+//    if (speedChange == 1) {
+//        ROS_WARN_STREAM("Speed changed!");
+//        r = 1;
+//        speedChange = 0;
+//    } else {
+//        r = 0;
+//    }
+//    return r;
+//}
 
 //void startreap(string params, bool *run) {
 //    cout << "### Executing startreap ... " << params << endl;
@@ -229,6 +235,9 @@ void stopreap(string params, bool *run) {
         ac.cancelAllGoals();
 //      ros::Duration(1).sleep(); // wait 1 sec
     }
+
+    if(motor_num == 37)
+        sign_stop = true;
 #endif
 }
 
@@ -270,8 +279,10 @@ public:
         register_action("gotopose",&gotopose);
         register_action("home",&home);
         register_action("wave",&wave);
+
         register_action("waitstart",&waitstart);
         register_action("syscheck",&syscheck);
+        register_action("waiterror",&waiterror);
 
         register_action("startreap", &startreap);
         register_action("stopreap",&stopreap);
@@ -279,8 +290,9 @@ public:
 
         register_condition("closeToHome",&closeToHomeCond);
         register_condition("sys" , &con_sys);
-        register_condition("start" , &con_start);
-        register_condition("speedchange" , &con_speedchange);
+//        register_condition("start" , &con_start);
+        register_condition("stop" , &con_stop);
+//        register_condition("speedchange" , &con_speedchange);
     }
 
     /*
@@ -336,16 +348,15 @@ public:
 
     void canbus_callback(const std_msgs::Int32::ConstPtr& msg)
     {
+        ROS_WARN_STREAM("speed: "<<carSpeed);
         if(carSpeed != msg->data)
         {
-            speedChange = 1;
-//            ROS_WARN_STREAM("speed changed.");
-//            std_msgs::String cond;
-//            cond.data = "speedchange";
-//            event_pub.publish(cond);
-//            ROS_WARN_STREAM("event pub.");
+            ROS_WARN_STREAM("speed changed.");
+            std_msgs::String cond;
+            cond.data = "speedchange";
+            event_pub.publish(cond);
+            ROS_WARN_STREAM("event pub.");
         }
-
         carSpeed = msg->data;
     }
 
