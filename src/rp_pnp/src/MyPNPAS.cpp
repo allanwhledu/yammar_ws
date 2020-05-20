@@ -25,18 +25,27 @@ int checkGrainHeight = 0;
 int carSpeed = 500;
 int speedChange = 0;
 
+bool sign_stop = false;
+
 int smach_fback = 0;
 
+ros::NodeHandle* handle_ptr;
+ros::Publisher* event_pub_ptr;
 
 
-int con_start(string params) {
-    int r = -1; // unknown
+//int con_start(string params) {
+//    int r = -1; // unknown
+//
+//    if (checkStart == 1) {
+//        r = 1;
+//    } else {
+//        r = 0;
+//    }
+//    return r;
+//}
 
-    if (checkStart == 1) {
-        r = 1;
-    } else {
-        r = 0;
-    }
+int con_stop(string params) {
+    int r = 0;
     return r;
 }
 
@@ -51,18 +60,18 @@ int con_sys(string params) {
     return r;
 }
 
-int con_speedchange(string params) {
-    int r = -1; // unknown
-
-    if (speedChange == 1) {
-        ROS_WARN_STREAM("Speed changed!");
-        r = 1;
-        speedChange = 0;
-    } else {
-        r = 0;
-    }
-    return r;
-}
+//int con_speedchange(string params) {
+//    int r = -1; // unknown
+//
+//    if (speedChange == 1) {
+//        ROS_WARN_STREAM("Speed changed!");
+//        r = 1;
+//        speedChange = 0;
+//    } else {
+//        r = 0;
+//    }
+//    return r;
+//}
 
 //void startreap(string params, bool *run) {
 //    cout << "### Executing startreap ... " << params << endl;
@@ -229,13 +238,15 @@ void stopreap(string params, bool *run) {
         ac.cancelAllGoals();
 //      ros::Duration(1).sleep(); // wait 1 sec
     }
+
+    if(motor_num == 37);
 #endif
 }
 
 
 class MyPNPActionServer : public PNPActionServer
 {
-private:
+public:
 
     ros::NodeHandle handle;
     ros::Publisher event_pub;
@@ -251,7 +262,7 @@ public:
     // 这里有三个内容,分别是：action,event,condition
     MyPNPActionServer() : PNPActionServer() {
         // interrupt才对应的event,如果是一个sensing则是对应的condition
-        event_pub = handle.advertise<std_msgs::String>("PNPConditionEvent", 10); 
+        event_pub = handle.advertise<std_msgs::String>("PNPConditionEvent", 10);
         laser_sub = handle.subscribe("scan", 10, &MyPNPActionServer::laser_callback, this);
 
         checkCANBus_sub = handle.subscribe("CANBus", 10, &MyPNPActionServer::canbus_callback, this);
@@ -270,8 +281,10 @@ public:
         register_action("gotopose",&gotopose);
         register_action("home",&home);
         register_action("wave",&wave);
+
         register_action("waitstart",&waitstart);
         register_action("syscheck",&syscheck);
+        register_action("waiterror",&waiterror);
 
         register_action("startreap", &startreap);
         register_action("stopreap",&stopreap);
@@ -279,8 +292,9 @@ public:
 
         register_condition("closeToHome",&closeToHomeCond);
         register_condition("sys" , &con_sys);
-        register_condition("start" , &con_start);
-        register_condition("speedchange" , &con_speedchange);
+//        register_condition("start" , &con_start);
+        register_condition("stop" , &con_stop);
+//        register_condition("speedchange" , &con_speedchange);
     }
 
     /*
@@ -294,20 +308,20 @@ public:
 
         return res;
       }
-      
+
       return PNPActionServer::evalCondition(cond);
     }
     */
 
     void laser_callback(const sensor_msgs::LaserScan::ConstPtr& msg)
     {
-      std::vector<float> scans;
-      scans=std::vector<float>(msg->ranges);
-      if (scans[scans.size()/2]<1.0) {
-        std_msgs::String cond;
-        cond.data = "obstacle";
-        event_pub.publish(cond);
-      }
+        std::vector<float> scans;
+        scans=std::vector<float>(msg->ranges);
+        if (scans[scans.size()/2]<1.0) {
+            std_msgs::String cond;
+            cond.data = "obstacle";
+            event_pub.publish(cond);
+        }
     }
 
     void start_callback(const std_msgs::Int8::ConstPtr& msg)
@@ -336,16 +350,15 @@ public:
 
     void canbus_callback(const std_msgs::Int32::ConstPtr& msg)
     {
+        ROS_WARN_STREAM("speed: "<<carSpeed);
         if(carSpeed != msg->data)
         {
-            speedChange = 1;
-//            ROS_WARN_STREAM("speed changed.");
-//            std_msgs::String cond;
-//            cond.data = "speedchange";
-//            event_pub.publish(cond);
-//            ROS_WARN_STREAM("event pub.");
+            ROS_WARN_STREAM("speed changed.");
+            std_msgs::String cond;
+            cond.data = "speedchange";
+            event_pub.publish(cond);
+            ROS_WARN_STREAM("event pub.");
         }
-
         carSpeed = msg->data;
     }
 
@@ -357,12 +370,13 @@ public:
 
 int main(int argc, char** argv)
 {
-  ros::init(argc, argv, "mypnpas");
+    ros::init(argc, argv, "mypnpas");
 
-  MyPNPActionServer mypnpas;
-  mypnpas.start();
-  ros::spin();
+    MyPNPActionServer mypnpas;
+    handle_ptr = &(mypnpas.handle);
+    event_pub_ptr = &(mypnpas.event_pub);
+    mypnpas.start();
+    ros::spin();
 
-  return 0;
+    return 0;
 }
-
