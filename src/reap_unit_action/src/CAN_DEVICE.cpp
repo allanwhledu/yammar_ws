@@ -67,6 +67,9 @@ void* receive_func(void *param)  //接收线程,若接受到的信号为速度�
                     unsigned char heigh, low;
                     heigh = rec[j].Data[5];
                     low = rec[j].Data[4];
+                    // 因为常常出现反常反馈,所以对于上了60000的数据进行跳过
+                    if ((heigh << 8 | low) > 60000)
+                        continue;
                     pCAN_DEVICE->pfd.percent_complete = heigh << 8 | low;
                     pCAN_DEVICE->pas->publishFeedback(pCAN_DEVICE->pfd);
 
@@ -75,7 +78,25 @@ void* receive_func(void *param)  //接收线程,若接受到的信号为速度�
                             pCAN_DEVICE->count, rec[j].ID,
                             rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
                             rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], heigh << 8 | low);
-                } else {
+                }
+                else if (rec[j].Data[2] == 0xD0)
+                {
+                    unsigned char heigh, low;
+                    heigh = rec[j].Data[5];
+                    low = rec[j].Data[4];
+                    // 因为常常出现反常反馈,所以对于上了60000的数据进行跳过
+                    if ((heigh << 8 | low) > 60000)
+                        continue;
+                    pCAN_DEVICE->pfd.percent_complete = heigh << 8 | low;
+                    pCAN_DEVICE->pas->publishFeedback(pCAN_DEVICE->pfd);
+
+                    ROS_INFO(
+                            "Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X current:%04d",
+                            pCAN_DEVICE->count, rec[j].ID,
+                            rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
+                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], heigh << 8 | low);
+                }
+                else {
                     ROS_INFO("Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X", pCAN_DEVICE->count,
                              rec[j].ID,
                              rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
@@ -174,6 +195,28 @@ void CAN_DEVICE::callFeedback(int num_motor) //读取第num_motor号电机的速
     transmit_msg(msg, "call ERRO");
 }
 
+void CAN_DEVICE::callCurrent(int num_motor) //读取第num_motor号电机的速度误差
+{
+    VCI_CAN_OBJ msg[1];
+
+    msg[0].ID = num_motor;
+    msg[0].SendType = 0;
+    msg[0].RemoteFlag = 0;
+    msg[0].ExternFlag = 0;
+    msg[0].DataLen = 8;
+
+    msg[0].Data[0] = 0x04;
+    msg[0].Data[1] = num_motor;
+    msg[0].Data[2] = 0xD0;
+    msg[0].Data[3] = 0x00;
+    msg[0].Data[4] = 0x00;
+    msg[0].Data[5] = 0x00;
+    msg[0].Data[6] = 0x00;
+    msg[0].Data[7] = 0x00;
+
+    transmit_msg(msg, "call CURR");
+}
+
 void CAN_DEVICE::open_receive() {
     // 开启CAN信号接受线程
     int ret;
@@ -191,6 +234,7 @@ void CAN_DEVICE::check_speed() {
     {
         log_error.push_back(pfd.percent_complete);
         ROS_INFO_STREAM("still wait");
+        this->callFeedback(motor);
         usleep(2000);
     }
 
@@ -201,6 +245,34 @@ void CAN_DEVICE::check_speed() {
         usleep(2000);
     }
     ROS_INFO_STREAM("ok error is already small");
+
+    this->m_run0 = 0;
+    ROS_INFO_STREAM("wait close");
+    pthread_join(receive_thread, NULL);//等待线程关闭
+    ROS_INFO_STREAM("receive_thread_close.");
+}
+
+void CAN_DEVICE::wait_current() {
+    // 关闭CAN信号接受线程
+    this->callCurrent(motor);
+    ROS_INFO_STREAM("call send");
+
+    while(pfd.percent_complete == 10000)
+    {
+        log_error.push_back(pfd.percent_complete);
+        ROS_INFO_STREAM("still wait current feedback");
+        this->callCurrent(motor);
+        usleep(2000);
+    }
+    ROS_INFO_STREAM("current got.");
+
+//    while(pfd.percent_complete > 50)
+//    {
+//        log_error.push_back(pfd.percent_complete);
+//        this->callFeedback(motor);
+//        usleep(2000);
+//    }
+//    ROS_INFO_STREAM("ok error is already small");
 
     this->m_run0 = 0;
     ROS_INFO_STREAM("wait close");

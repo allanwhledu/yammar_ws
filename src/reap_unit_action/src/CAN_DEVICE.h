@@ -38,6 +38,9 @@ public:
     void set_motor_speed(int num_motor, int speed);
     void callFeedback(int num_motor);
 
+    void callCurrent(int num_motor);
+    void wait_current();
+
     void open_receive();
     void check_speed();
 

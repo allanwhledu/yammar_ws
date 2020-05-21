@@ -65,15 +65,56 @@ typedef actionlib::SimpleActionServer<reap_unit_action::ControlReapAction> Serve
 // 收到action的goal后调用的回调函数
 void execute(const reap_unit_action::ControlReapGoalConstPtr& goal, Server* as)
 {
-    ROS_INFO_STREAM("goal got.");
-    ROS_INFO_STREAM("MOTOR: "<<goal->dishwasher_id<<" target speed: "<<goal->target_speed);
+    if(goal->dishwasher_id < 100){
+        can_1.pfd.percent_complete = 10000;
+        can_1.open_receive();
+        // 保存server的指针到全局变量
+        can_1.pas = as;
 
-    usleep(10000);
+        // 清理can卡缓冲区,但是感觉没有太大的用处
+//    VCI_ClearBuffer(VCI_USBCAN2,0,0);
 
+//	reap_unit_action::ControlReapFeedback feedback;
+//	pfd = &feedback;
 
-    as->setSucceeded();
+        ROS_INFO("Motor %d is working.", goal->dishwasher_id);
 
-	ROS_INFO_STREAM("Once action complete. Wait for next invoke.\n");
+        can_1.setMotor(goal->dishwasher_id);
+        // 设置电机为速度模式
+        can_1.set_speed_mode(goal->dishwasher_id);
+        // 发送电机驱动指令
+        can_1.set_motor_speed(goal->dishwasher_id, goal->target_speed);
+//    usleep(10000);
+
+        // 读取电机速度误差
+        can_1.check_speed();//线程关闭指令,这里是关闭接受线程
+        ROS_INFO_STREAM("check speed end.");
+
+        as->setSucceeded();
+
+        ROS_INFO_STREAM("Once action complete. Wait for next invoke.\n");
+    }
+    else
+    {
+        ROS_INFO_STREAM("to get target motor current.");
+        //todo
+
+        can_1.pfd.percent_complete = 10000;
+        can_1.open_receive();
+        // 保存server的指针到全局变量
+        can_1.pas = as;
+
+        ROS_INFO("to get Motor %d current.", goal->dishwasher_id - 100);
+        can_1.setMotor(goal->dishwasher_id - 100);
+
+        can_1.callCurrent(goal->dishwasher_id - 100);
+
+        // 读取电机速度误差
+        can_1.wait_current();//线程关闭指令,这里是关闭接受线程
+        ROS_INFO_STREAM("check current end.");
+
+        as->setSucceeded();
+    }
 }
 
 int main(int argc, char** argv)
@@ -100,6 +141,7 @@ int main(int argc, char** argv)
     can_1.set_motor_speed(39, 0);
     can_1.set_motor_speed(38, 0);
     can_1.set_motor_speed(37, 0);
+    can_1.set_motor_speed(36, 0);
 
     can_1.closeCAN();
 

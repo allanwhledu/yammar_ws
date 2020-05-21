@@ -157,6 +157,94 @@ void startreap(string params, bool *run) {
 #endif
 }
 
+// 当action完成后会调用次回调函数一次
+void doneCb(const actionlib::SimpleClientGoalState& state,
+            const reap_unit_action::ControlReapResultConstPtr& result)
+{
+    ROS_INFO("Yay! The dishes are now clean");
+//    ros::shutdown();
+}
+
+// 当action激活后会调用次回调函数一次
+void activeCb()
+{
+    ROS_INFO("Goal just went active");
+}
+
+// 收到feedback后调用的回调函数
+void feedbackCb(const reap_unit_action::ControlReapFeedbackConstPtr& feedback)
+{
+    ROS_INFO(" percent_complete : %d ", feedback->percent_complete);
+    if(feedback->percent_complete > 200){
+        std_msgs::String cond;
+        cond.data = "blocked";
+        event_pub_ptr->publish(cond);
+        ROS_WARN_STREAM("blocked!");
+    }
+}
+
+void controlreap(string params, bool *run) {
+#if 0
+    cout << "\033[22;31;1m### Executing turn360 ... " << params << "\033[0m" << endl;
+
+    cout << "HELLO FROM " << robotname << " !!!"<<endl;
+    boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
+
+    if (*run)
+        cout << "### Finished turn360 " << endl;
+    else
+        cout << "### Aborted turn360  " << endl;
+#else
+
+    int i=params.find("_");
+    int motor_num=atof(params.substr(0,i).c_str());
+
+    // Set turn topic
+    std::string turn_topic = "control_reap";
+
+    // Define the action client (true: we want to spin a thread)
+    actionlib::SimpleActionClient<reap_unit_action::ControlReapAction> ac(turn_topic, true);
+
+    // Wait for the action server to come up
+    while(!ac.waitForServer(ros::Duration(5.0))){
+        ROS_INFO("Waiting for control_reap action server to come up");
+    }
+
+    // Cancel all goals (JUST IN CASE SOME GOAL WAS NOT CLOSED BEFORE)
+    ac.cancelAllGoals();
+//    ros::Duration(1).sleep(); // wait 1 sec
+
+    while ((*run))
+    {
+        // Set the goal
+        reap_unit_action::ControlReapGoal goal;
+//        goal.dishwasher_id = motor_num + 100;
+        goal.dishwasher_id = 140;
+        goal.target_speed = carSpeed;
+
+        // Send the goal
+        ROS_INFO("Sending goal");
+        ac.sendGoal(goal,  &doneCb, &activeCb, &feedbackCb);
+
+        // Wait for termination
+        while (!ac.waitForResult(ros::Duration(1.0))) {
+            ROS_INFO_STREAM("Running... [" << ac.getState().toString() << "]");
+        }
+        ROS_INFO_STREAM("Finished [" << ac.getState().toString() << "]");
+
+        // Print result
+        if (ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
+            ROS_INFO("get current successful");
+        else
+            ROS_INFO("get current failed");
+
+        // Cancel all goals (NEEDED TO ISSUE NEW GOALS LATER)
+        ac.cancelAllGoals();
+        ros::Duration(1).sleep(); // wait 1 sec
+    }
+#endif
+}
+
 void stopreap(string params, bool *run) {
 
     cout << "### Executing stopreap ... " << params << endl;

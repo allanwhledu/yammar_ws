@@ -8,6 +8,7 @@
 
 #include <boost/thread/thread.hpp>
 #include <std_msgs/String.h>
+#include <reap_unit_action/ControlReapAction.h>
 
 #define radians(a) ((a)/180.0*M_PI)
 extern int checkStart;
@@ -102,7 +103,7 @@ void wave(string params, bool *run) {
 
 //    cout << "HELLO FROM " << robotname << " !!!"<<endl;
     // wave就是原地sleep而已
-    boost::this_thread::sleep(boost::posix_time::milliseconds(500));
+    boost::this_thread::sleep(boost::posix_time::milliseconds(5000));
 
     if (*run)
         cout << "### Finished Wave " << endl;
@@ -162,8 +163,52 @@ void waiterror(string params, bool *run) {
 void controlcar(string params, bool *run) {
     cout << "### Executing controlcar ... " << params << endl;
 
+    // Set turn topic
+    std::string turn_topic = "control_reap";
+
+    // Define the action client (true: we want to spin a thread)
+    actionlib::SimpleActionClient<reap_unit_action::ControlReapAction> ac(turn_topic, true);
+
+    // Wait for the action server to come up
+    while(!ac.waitForServer(ros::Duration(5.0))){
+        ROS_INFO("Waiting for control_reap action server to come up");
+    }
+
+    // Cancel all goals (JUST IN CASE SOME GOAL WAS NOT CLOSED BEFORE)
+    ac.cancelAllGoals();
+//    ros::Duration(1).sleep(); // wait 1 sec
+
+    int counter = 0;
+
+    while (counter++ != 1)
+    {
+        // Set the goal
+        reap_unit_action::ControlReapGoal goal;
+        goal.dishwasher_id = 36;
+        goal.target_speed = 1500;
+
+        // Send the goal
+        ROS_INFO("Sending goal");
+        ac.sendGoal(goal);
+
+        // Wait for termination
+        while (!ac.waitForResult(ros::Duration(1.0))) {
+            ROS_INFO_STREAM("Running... [" << ac.getState().toString() << "]");
+        }
+        ROS_INFO_STREAM("Finished [" << ac.getState().toString() << "]");
+
+        // Print result
+        if (ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
+            ROS_WARN_STREAM("controlcar successful");
+        else
+            ROS_WARN_STREAM("controlcar failed");
+
+        // Cancel all goals (NEEDED TO ISSUE NEW GOALS LATER)
+        ac.cancelAllGoals();
+//      ros::Duration(1).sleep(); // wait 1 sec
+    }
     // pnp应该是用了*run来中断吧,但是似乎不能够中断while循环，所以这里while应该用上*run控制
-    int i = 50;
+    int i = 100;
     while(i-- && (*run)){
         boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
         ROS_INFO_STREAM("control car.");
@@ -175,22 +220,6 @@ void controlcar(string params, bool *run) {
         cout << "### Aborted controlcar  " << endl;
 }
 
-void controlreap(string params, bool *run) {
-    cout << "### Executing controlreap ... " << params << endl;
-
-    // pnp应该是用了*run来中断吧,但是似乎不能够中断while循环，所以这里while应该用上*run控制
-    int i = 50;
-    while(i-- && (*run)){
-        boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
-        ROS_INFO_STREAM("control reap.");
-    }
-
-    if (*run)
-        cout << "### Finished controlreap " << endl;
-    else
-        cout << "### Aborted controlreap  " << endl;
-}
-
 void stopcar(string params, bool *run) {
     cout << "### Executing stopcar ... " << params << endl;
 
@@ -200,6 +229,51 @@ void stopcar(string params, bool *run) {
 //        boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
 //        ROS_INFO_STREAM("stopcar.");
 //    }
+
+    // Set turn topic
+    std::string turn_topic = "control_reap";
+
+    // Define the action client (true: we want to spin a thread)
+    actionlib::SimpleActionClient<reap_unit_action::ControlReapAction> ac(turn_topic, true);
+
+    // Wait for the action server to come up
+    while(!ac.waitForServer(ros::Duration(5.0))){
+        ROS_INFO("Waiting for control_reap action server to come up");
+    }
+
+    // Cancel all goals (JUST IN CASE SOME GOAL WAS NOT CLOSED BEFORE)
+    ac.cancelAllGoals();
+//    ros::Duration(1).sleep(); // wait 1 sec
+
+    int counter = 0;
+
+    while (counter++ != 1)
+    {
+        // Set the goal
+        reap_unit_action::ControlReapGoal goal;
+        goal.dishwasher_id = 36;
+        goal.target_speed = 0;
+
+        // Send the goal
+        ROS_INFO("Sending goal");
+        ac.sendGoal(goal);
+
+        // Wait for termination
+        while (!ac.waitForResult(ros::Duration(1.0))) {
+            ROS_INFO_STREAM("Running... [" << ac.getState().toString() << "]");
+        }
+        ROS_INFO_STREAM("Finished [" << ac.getState().toString() << "]");
+
+        // Print result
+        if (ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
+            ROS_INFO("Turn successful");
+        else
+            ROS_INFO("Turn failed");
+
+        // Cancel all goals (NEEDED TO ISSUE NEW GOALS LATER)
+        ac.cancelAllGoals();
+//      ros::Duration(1).sleep(); // wait 1 sec
+    }
 
     boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
     ROS_WARN_STREAM("stopcar.");
@@ -214,7 +288,7 @@ void waitclean(string params, bool *run) {
     cout << "### Executing waitclean ... " << params << endl;
 
     // pnp应该是用了*run来中断吧,但是似乎不能够中断while循环，所以这里while应该用上*run控制
-    int i = 50;
+    int i = 100;
     while(i-- && (*run)){
         boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
         ROS_WARN_STREAM("wait clean.");
