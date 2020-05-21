@@ -421,8 +421,8 @@ int PNPActionServer::evalCondition(string cond) {
       string condition_params = "";
       r = f(condition_params);
     }
-    else
-        ROS_INFO_STREAM("??? WAIT Condition event " << cond << " ??? ");
+//    else
+//        ROS_INFO_STREAM("??? WAIT Condition event " << cond << " ??? ");
 //      ROS_ERROR_STREAM("??? UNKNOWN Condition " << cond << " ??? ");
 
     return r;

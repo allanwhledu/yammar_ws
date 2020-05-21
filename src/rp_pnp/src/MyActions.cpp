@@ -163,7 +163,7 @@ void controlcar(string params, bool *run) {
     cout << "### Executing controlcar ... " << params << endl;
 
     // pnp应该是用了*run来中断吧,但是似乎不能够中断while循环，所以这里while应该用上*run控制
-    int i = 20;
+    int i = 50;
     while(i-- && (*run)){
         boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
         ROS_INFO_STREAM("control car.");
@@ -173,6 +173,57 @@ void controlcar(string params, bool *run) {
         cout << "### Finished controlcar " << endl;
     else
         cout << "### Aborted controlcar  " << endl;
+}
+
+void controlreap(string params, bool *run) {
+    cout << "### Executing controlreap ... " << params << endl;
+
+    // pnp应该是用了*run来中断吧,但是似乎不能够中断while循环，所以这里while应该用上*run控制
+    int i = 50;
+    while(i-- && (*run)){
+        boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
+        ROS_INFO_STREAM("control reap.");
+    }
+
+    if (*run)
+        cout << "### Finished controlreap " << endl;
+    else
+        cout << "### Aborted controlreap  " << endl;
+}
+
+void stopcar(string params, bool *run) {
+    cout << "### Executing stopcar ... " << params << endl;
+
+//    // pnp应该是用了*run来中断吧,但是似乎不能够中断while循环，所以这里while应该用上*run控制
+//    int i = 50;
+//    while(i-- && (*run)){
+//        boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
+//        ROS_INFO_STREAM("stopcar.");
+//    }
+
+    boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
+    ROS_WARN_STREAM("stopcar.");
+
+    if (*run)
+        cout << "### Finished stopcar " << endl;
+    else
+        cout << "### Aborted stopcar  " << endl;
+}
+
+void waitclean(string params, bool *run) {
+    cout << "### Executing waitclean ... " << params << endl;
+
+    // pnp应该是用了*run来中断吧,但是似乎不能够中断while循环，所以这里while应该用上*run控制
+    int i = 50;
+    while(i-- && (*run)){
+        boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
+        ROS_WARN_STREAM("wait clean.");
+    }
+
+    if (*run)
+        cout << "### Finished waitclean " << endl;
+    else
+        cout << "### Aborted waitclean  " << endl;
 }
 
 

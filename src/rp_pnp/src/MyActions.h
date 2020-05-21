@@ -15,6 +15,9 @@ void waitstart(string params, bool *run);
 void syscheck(string params, bool *run);
 void waiterror(string params, bool *run);
 void controlcar(string params, bool *run);
+void controlreap(string params, bool *run);
+void stopcar(string params, bool *run);
+void waitclean(string params, bool *run);
 
 int closeToHomeCond(string params);
 

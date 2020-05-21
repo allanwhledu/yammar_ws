@@ -288,7 +288,10 @@ public:
 
         register_action("startreap", &startreap);
         register_action("stopreap",&stopreap);
+        register_action("controlreap",&controlreap);
         register_action("controlcar",&controlcar);
+        register_action("stopcar",&stopcar);
+        register_action("waitclean",&waitclean);
 
         register_condition("closeToHome",&closeToHomeCond);
         register_condition("sys" , &con_sys);
@@ -376,7 +379,10 @@ int main(int argc, char** argv)
     handle_ptr = &(mypnpas.handle);
     event_pub_ptr = &(mypnpas.event_pub);
     mypnpas.start();
-    ros::spin();
+//    ros::spin();
+    ros::AsyncSpinner spinner(4); // Use 4 threads
+    spinner.start();
+    ros::waitForShutdown();
 
     return 0;
 }
