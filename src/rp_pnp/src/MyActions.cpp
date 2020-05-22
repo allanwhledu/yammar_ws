@@ -14,6 +14,7 @@
 extern int checkStart;
 extern int checkLeaderLine;
 extern int checkGrainHeight;
+extern int carSpeed;
 
 extern ros::NodeHandle* handle_ptr;
 extern ros::Publisher* event_pub_ptr;
@@ -117,8 +118,8 @@ void waitstart(string params, bool *run) {
     cout << "### Executing waistart ... " << params << endl;
     while(checkStart == 0)
     {
-        ROS_INFO_STREAM("still wait start.");
-        boost::this_thread::sleep(boost::posix_time::milliseconds(3000));
+        ROS_INFO_STREAM("Still wait start sign.");
+        boost::this_thread::sleep(boost::posix_time::milliseconds(500));
     }
     if (*run)
         cout << "### Finished waitstart " << endl;
@@ -130,8 +131,8 @@ void syscheck(string params, bool *run) {
     cout << "### Executing syscheck ... " << params << endl;
     while(checkLeaderLine == 0 || checkGrainHeight == 0)
     {
-        ROS_INFO_STREAM("still check sys.");
-        boost::this_thread::sleep(boost::posix_time::milliseconds(3000));
+        ROS_INFO_STREAM("Still check sys condition.");
+        boost::this_thread::sleep(boost::posix_time::milliseconds(500));
     }
 
     if (*run)
@@ -141,18 +142,18 @@ void syscheck(string params, bool *run) {
 }
 
 void waiterror(string params, bool *run) {
-    cout << "### Executing syscheck ... " << params << endl;
+    cout << "### Executing waiterror ... " << params << endl;
     while(checkLeaderLine == 1 && checkGrainHeight == 1 && (*run))
     {
-        ROS_INFO_STREAM("still waiterror.");
+        ROS_INFO_STREAM("Waiting sys error.");
         boost::this_thread::sleep(boost::posix_time::milliseconds(3000));
     }
 
-    ROS_WARN_STREAM("car should stop.");
+    ROS_WARN_STREAM("There is something wrong, so the combine should be stop.");
     std_msgs::String cond;
     cond.data = "carstop";
     event_pub_ptr->publish(cond);
-    ROS_WARN_STREAM("carstop event pub.");
+//    ROS_WARN_STREAM("carstop event pub.");
 
     if (*run)
         cout << "### Finished waiterror " << endl;
@@ -175,20 +176,20 @@ void controlcar(string params, bool *run) {
     }
 
     // Cancel all goals (JUST IN CASE SOME GOAL WAS NOT CLOSED BEFORE)
-    ac.cancelAllGoals();
+//    ac.cancelAllGoals();
 //    ros::Duration(1).sleep(); // wait 1 sec
 
     int counter = 0;
 
-    while (counter++ != 1)
+    while (counter < 2)
     {
         // Set the goal
         reap_unit_action::ControlReapGoal goal;
-        goal.dishwasher_id = 36;
-        goal.target_speed = 1500;
+        goal.dishwasher_id = 35 + counter;
+        goal.target_speed = carSpeed;
 
         // Send the goal
-        ROS_INFO("Sending goal");
+//        ROS_INFO("Sending goal");
         ac.sendGoal(goal);
 
         // Wait for termination
@@ -199,19 +200,22 @@ void controlcar(string params, bool *run) {
 
         // Print result
         if (ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
+        {
+            counter++;
             ROS_WARN_STREAM("controlcar successful");
+        }
         else
             ROS_WARN_STREAM("controlcar failed");
 
         // Cancel all goals (NEEDED TO ISSUE NEW GOALS LATER)
-        ac.cancelAllGoals();
+//        ac.cancelAllGoals();
 //      ros::Duration(1).sleep(); // wait 1 sec
     }
     // pnp应该是用了*run来中断吧,但是似乎不能够中断while循环，所以这里while应该用上*run控制
     int i = 100;
     while(i-- && (*run)){
         boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
-        ROS_INFO_STREAM("control car.");
+        ROS_INFO_STREAM("controlling car.");
     }
 
     if (*run)
@@ -242,20 +246,20 @@ void stopcar(string params, bool *run) {
     }
 
     // Cancel all goals (JUST IN CASE SOME GOAL WAS NOT CLOSED BEFORE)
-    ac.cancelAllGoals();
+//    ac.cancelAllGoals();
 //    ros::Duration(1).sleep(); // wait 1 sec
 
     int counter = 0;
 
-    while (counter++ != 1)
+    while (counter < 2)
     {
         // Set the goal
         reap_unit_action::ControlReapGoal goal;
-        goal.dishwasher_id = 36;
+        goal.dishwasher_id = 35 + counter;
         goal.target_speed = 0;
 
         // Send the goal
-        ROS_INFO("Sending goal");
+//        ROS_INFO("Sending goal");
         ac.sendGoal(goal);
 
         // Wait for termination
@@ -266,17 +270,20 @@ void stopcar(string params, bool *run) {
 
         // Print result
         if (ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
-            ROS_INFO("Turn successful");
+        {
+            ROS_INFO("Stop car successful");
+            counter++;
+        }
         else
-            ROS_INFO("Turn failed");
+            ROS_INFO("Stop car failed");
 
         // Cancel all goals (NEEDED TO ISSUE NEW GOALS LATER)
-        ac.cancelAllGoals();
+//        ac.cancelAllGoals();
 //      ros::Duration(1).sleep(); // wait 1 sec
     }
 
-    boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
-    ROS_WARN_STREAM("stopcar.");
+//    boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
+//    ROS_WARN_STREAM("stopcar.");
 
     if (*run)
         cout << "### Finished stopcar " << endl;
@@ -291,7 +298,7 @@ void waitclean(string params, bool *run) {
     int i = 100;
     while(i-- && (*run)){
         boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
-        ROS_WARN_STREAM("wait clean.");
+        ROS_WARN_STREAM("wait obstacle clean.");
     }
 
     if (*run)

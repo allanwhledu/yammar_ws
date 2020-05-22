@@ -32,18 +32,6 @@ int smach_fback = 0;
 ros::NodeHandle* handle_ptr;
 ros::Publisher* event_pub_ptr;
 
-
-//int con_start(string params) {
-//    int r = -1; // unknown
-//
-//    if (checkStart == 1) {
-//        r = 1;
-//    } else {
-//        r = 0;
-//    }
-//    return r;
-//}
-
 int con_stop(string params) {
     int r = 0;
     return r;
@@ -60,40 +48,6 @@ int con_sys(string params) {
     return r;
 }
 
-//int con_speedchange(string params) {
-//    int r = -1; // unknown
-//
-//    if (speedChange == 1) {
-//        ROS_WARN_STREAM("Speed changed!");
-//        r = 1;
-//        speedChange = 0;
-//    } else {
-//        r = 0;
-//    }
-//    return r;
-//}
-
-//void startreap(string params, bool *run) {
-//    cout << "### Executing startreap ... " << params << endl;
-//    ros::NodeHandle globaln;
-//    ros::Publisher pub_smach;
-//    // Set turn topic
-//    std_msgs::Int32 msg;
-//    msg.data = 400;
-//    pub_smach = globaln.advertise<std_msgs::Int32>("/sm_reset", 10);
-//    pub_smach.publish(msg);
-//
-//    while (smach_fback != 1)
-//    {
-//        boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
-//        pub_smach.publish(msg);
-//    }
-//
-//    if (*run)
-//        cout << "### Finished startreap " << endl;
-//    else
-//        cout << "### Aborted startreap  " << endl;
-//}
 void startreap(string params, bool *run) {
 #if 0
     cout << "\033[22;31;1m### Executing turn360 ... " << params << "\033[0m" << endl;
@@ -122,7 +76,7 @@ void startreap(string params, bool *run) {
     }
 
     // Cancel all goals (JUST IN CASE SOME GOAL WAS NOT CLOSED BEFORE)
-    ac.cancelAllGoals();
+//    ac.cancelAllGoals();
 //    ros::Duration(1).sleep(); // wait 1 sec
 
     int counter = 0;
@@ -135,7 +89,7 @@ void startreap(string params, bool *run) {
         goal.target_speed = carSpeed;
 
         // Send the goal
-        ROS_INFO("Sending goal");
+//        ROS_INFO("Sending goal");
         ac.sendGoal(goal);
 
         // Wait for termination
@@ -146,12 +100,12 @@ void startreap(string params, bool *run) {
 
         // Print result
         if (ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
-            ROS_INFO("Turn successful");
+            ROS_INFO("Drive motor successful");
         else
-            ROS_INFO("Turn failed");
+            ROS_INFO("Drive motor failed");
 
         // Cancel all goals (NEEDED TO ISSUE NEW GOALS LATER)
-        ac.cancelAllGoals();
+//        ac.cancelAllGoals();
 //      ros::Duration(1).sleep(); // wait 1 sec
     }
 #endif
@@ -161,25 +115,25 @@ void startreap(string params, bool *run) {
 void doneCb(const actionlib::SimpleClientGoalState& state,
             const reap_unit_action::ControlReapResultConstPtr& result)
 {
-    ROS_INFO("Yay! The dishes are now clean");
+//    ROS_INFO("Yay! Action complete.");
 //    ros::shutdown();
 }
 
 // 当action激活后会调用次回调函数一次
 void activeCb()
 {
-    ROS_INFO("Goal just went active");
+//    ROS_INFO("Goal just went active");
 }
 
 // 收到feedback后调用的回调函数
 void feedbackCb(const reap_unit_action::ControlReapFeedbackConstPtr& feedback)
 {
-    ROS_INFO(" percent_complete : %d ", feedback->percent_complete);
-    if(feedback->percent_complete > 200){
+    ROS_INFO(" Now current : %d ", feedback->percent_complete);
+    if(feedback->percent_complete > 250){
         std_msgs::String cond;
         cond.data = "blocked";
         event_pub_ptr->publish(cond);
-        ROS_WARN_STREAM("blocked!");
+        ROS_WARN_STREAM("Motor was blocked!");
     }
 }
 
@@ -196,6 +150,7 @@ void controlreap(string params, bool *run) {
         cout << "### Aborted turn360  " << endl;
 #else
 
+    ROS_INFO_STREAM("Getting current...");
     int i=params.find("_");
     int motor_num=atof(params.substr(0,i).c_str());
 
@@ -211,7 +166,7 @@ void controlreap(string params, bool *run) {
     }
 
     // Cancel all goals (JUST IN CASE SOME GOAL WAS NOT CLOSED BEFORE)
-    ac.cancelAllGoals();
+//    ac.cancelAllGoals();
 //    ros::Duration(1).sleep(); // wait 1 sec
 
     while ((*run))
@@ -223,23 +178,23 @@ void controlreap(string params, bool *run) {
         goal.target_speed = carSpeed;
 
         // Send the goal
-        ROS_INFO("Sending goal");
+//        ROS_INFO("Sending goal");
         ac.sendGoal(goal,  &doneCb, &activeCb, &feedbackCb);
 
         // Wait for termination
         while (!ac.waitForResult(ros::Duration(1.0))) {
-            ROS_INFO_STREAM("Running... [" << ac.getState().toString() << "]");
+//            ROS_INFO_STREAM("Running... [" << ac.getState().toString() << "]");
         }
-        ROS_INFO_STREAM("Finished [" << ac.getState().toString() << "]");
+//        ROS_INFO_STREAM("Finished [" << ac.getState().toString() << "]");
 
-        // Print result
-        if (ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
-            ROS_INFO("get current successful");
-        else
-            ROS_INFO("get current failed");
+//        // Print result
+//        if (ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
+//            ROS_INFO("get current successful");
+//        else
+//            ROS_INFO("get current failed");
 
         // Cancel all goals (NEEDED TO ISSUE NEW GOALS LATER)
-        ac.cancelAllGoals();
+//        ac.cancelAllGoals();
         ros::Duration(1).sleep(); // wait 1 sec
     }
 #endif
@@ -294,7 +249,7 @@ void stopreap(string params, bool *run) {
     }
 
     // Cancel all goals (JUST IN CASE SOME GOAL WAS NOT CLOSED BEFORE)
-    ac.cancelAllGoals();
+//    ac.cancelAllGoals();
 //    ros::Duration(1).sleep(); // wait 1 sec
 
     int counter = 0;
@@ -307,7 +262,7 @@ void stopreap(string params, bool *run) {
         goal.target_speed = 0;
 
         // Send the goal
-        ROS_INFO("Sending goal");
+//        ROS_INFO("Sending goal");
         ac.sendGoal(goal);
 
         // Wait for termination
@@ -318,16 +273,16 @@ void stopreap(string params, bool *run) {
 
         // Print result
         if (ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
-            ROS_INFO("Turn successful");
+            ROS_INFO("Stop motor successful");
         else
-            ROS_INFO("Turn failed");
+            ROS_INFO("Stop motor failed");
 
         // Cancel all goals (NEEDED TO ISSUE NEW GOALS LATER)
-        ac.cancelAllGoals();
+//        ac.cancelAllGoals();
 //      ros::Duration(1).sleep(); // wait 1 sec
     }
 
-    if(motor_num == 37);
+//    if(motor_num == 37);
 #endif
 }
 
@@ -448,7 +403,7 @@ public:
             std_msgs::String cond;
             cond.data = "speedchange";
             event_pub.publish(cond);
-            ROS_WARN_STREAM("event pub.");
+//            ROS_WARN_STREAM("event pub.");
         }
         carSpeed = msg->data;
     }

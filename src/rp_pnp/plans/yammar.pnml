@@ -8,7 +8,7 @@
     </name>
     <place id="p1">
       <graphics>
-        <position x="575" y="901" />
+        <position x="642" y="774" />
         <size width="32" height="32" />
       </graphics>
       <name>
@@ -123,7 +123,7 @@
     </place>
     <place id="p6">
       <graphics>
-        <position x="973" y="276" />
+        <position x="971" y="44" />
         <size width="32" height="32" />
       </graphics>
       <name>
@@ -146,7 +146,7 @@
     </place>
     <place id="p7">
       <graphics>
-        <position x="1169" y="281" />
+        <position x="1167" y="49" />
         <size width="32" height="32" />
       </graphics>
       <name>
@@ -196,7 +196,7 @@
         <size width="32" height="32" />
       </graphics>
       <name>
-        <value>stopreap_40.exec</value>
+        <value>stopreap_37.exec</value>
         <graphics>
           <offset x="-16" y="36" />
         </graphics>
@@ -215,7 +215,7 @@
     </place>
     <place id="p10">
       <graphics>
-        <position x="976" y="412" />
+        <position x="974" y="180" />
         <size width="32" height="32" />
       </graphics>
       <name>
@@ -238,7 +238,7 @@
     </place>
     <place id="p11">
       <graphics>
-        <position x="1172" y="417" />
+        <position x="1170" y="185" />
         <size width="32" height="32" />
       </graphics>
       <name>
@@ -261,7 +261,7 @@
     </place>
     <place id="p12">
       <graphics>
-        <position x="976" y="527" />
+        <position x="974" y="295" />
         <size width="32" height="32" />
       </graphics>
       <name>
@@ -284,7 +284,7 @@
     </place>
     <place id="p13">
       <graphics>
-        <position x="1172" y="532" />
+        <position x="1170" y="300" />
         <size width="32" height="32" />
       </graphics>
       <name>
@@ -307,7 +307,7 @@
     </place>
     <place id="p14">
       <graphics>
-        <position x="977" y="637" />
+        <position x="975" y="405" />
         <size width="32" height="32" />
       </graphics>
       <name>
@@ -403,7 +403,7 @@
         <size width="32" height="32" />
       </graphics>
       <name>
-        <value>stopreap_39.exec</value>
+        <value>stopreap_38.exec</value>
         <graphics>
           <offset x="-18" y="32" />
         </graphics>
@@ -449,7 +449,7 @@
         <size width="32" height="32" />
       </graphics>
       <name>
-        <value>stopreap_38.exec</value>
+        <value>stopreap_39.exec</value>
         <graphics>
           <offset x="-18" y="32" />
         </graphics>
@@ -472,7 +472,7 @@
         <size width="32" height="32" />
       </graphics>
       <name>
-        <value>stopreap_37.exec</value>
+        <value>stopreap_40.exec</value>
         <graphics>
           <offset x="-18" y="32" />
         </graphics>
@@ -744,7 +744,7 @@
     </place>
     <place id="p33">
       <graphics>
-        <position x="561" y="1439" />
+        <position x="631" y="1436" />
         <size width="32" height="32" />
       </graphics>
       <name>
@@ -790,7 +790,7 @@
     </place>
     <place id="p35">
       <graphics>
-        <position x="1667" y="1185" />
+        <position x="1682" y="1022" />
         <size width="32" height="32" />
       </graphics>
       <name>
@@ -1491,7 +1491,7 @@
     </transition>
     <transition id="t5">
       <graphics>
-        <position x="921" y="270" />
+        <position x="919" y="38" />
         <size width="8" height="48" />
       </graphics>
       <name>
@@ -1511,7 +1511,7 @@
     </transition>
     <transition id="t6">
       <graphics>
-        <position x="1085" y="272" />
+        <position x="1083" y="40" />
         <size width="8" height="48" />
       </graphics>
       <name>
@@ -1555,7 +1555,7 @@
         <size width="8" height="48" />
       </graphics>
       <name>
-        <value>stopreap_40.start</value>
+        <value>stopreap_37.start</value>
         <graphics>
           <offset x="-47" y="51" />
         </graphics>
@@ -1575,7 +1575,7 @@
         <size width="8" height="48" />
       </graphics>
       <name>
-        <value>stopreap_40.end</value>
+        <value>stopreap_37.end</value>
         <graphics>
           <offset x="-44" y="51" />
         </graphics>
@@ -1591,7 +1591,7 @@
     </transition>
     <transition id="t10">
       <graphics>
-        <position x="924" y="406" />
+        <position x="922" y="174" />
         <size width="8" height="48" />
       </graphics>
       <name>
@@ -1611,7 +1611,7 @@
     </transition>
     <transition id="t11">
       <graphics>
-        <position x="1088" y="408" />
+        <position x="1086" y="176" />
         <size width="8" height="48" />
       </graphics>
       <name>
@@ -1631,7 +1631,7 @@
     </transition>
     <transition id="t12">
       <graphics>
-        <position x="924" y="521" />
+        <position x="922" y="289" />
         <size width="8" height="48" />
       </graphics>
       <name>
@@ -1651,7 +1651,7 @@
     </transition>
     <transition id="t13">
       <graphics>
-        <position x="1088" y="523" />
+        <position x="1086" y="291" />
         <size width="8" height="48" />
       </graphics>
       <name>
@@ -1671,7 +1671,7 @@
     </transition>
     <transition id="t14">
       <graphics>
-        <position x="925" y="631" />
+        <position x="923" y="399" />
         <size width="8" height="48" />
       </graphics>
       <name>
@@ -1691,7 +1691,7 @@
     </transition>
     <transition id="t15">
       <graphics>
-        <position x="1089" y="633" />
+        <position x="1087" y="401" />
         <size width="8" height="48" />
       </graphics>
       <name>
@@ -1755,7 +1755,7 @@
         <size width="8" height="48" />
       </graphics>
       <name>
-        <value>stopreap_39.start</value>
+        <value>stopreap_38.start</value>
         <graphics>
           <offset x="-47" y="51" />
         </graphics>
@@ -1775,7 +1775,7 @@
         <size width="8" height="48" />
       </graphics>
       <name>
-        <value>stopreap_39.end</value>
+        <value>stopreap_38.end</value>
         <graphics>
           <offset x="-44" y="51" />
         </graphics>
@@ -1795,7 +1795,7 @@
         <size width="8" height="48" />
       </graphics>
       <name>
-        <value>stopreap_38.start</value>
+        <value>stopreap_39.start</value>
         <graphics>
           <offset x="-47" y="51" />
         </graphics>
@@ -1815,7 +1815,7 @@
         <size width="8" height="48" />
       </graphics>
       <name>
-        <value>stopreap_38.end</value>
+        <value>stopreap_39.end</value>
         <graphics>
           <offset x="-44" y="51" />
         </graphics>
@@ -1835,7 +1835,7 @@
         <size width="8" height="48" />
       </graphics>
       <name>
-        <value>stopreap_37.start</value>
+        <value>stopreap_40.start</value>
         <graphics>
           <offset x="-47" y="51" />
         </graphics>
@@ -1855,7 +1855,7 @@
         <size width="8" height="48" />
       </graphics>
       <name>
-        <value>stopreap_37.end</value>
+        <value>stopreap_40.end</value>
         <graphics>
           <offset x="-44" y="51" />
         </graphics>
@@ -1871,7 +1871,7 @@
     </transition>
     <transition id="t24">
       <graphics>
-        <position x="1578" y="887" />
+        <position x="1592" y="891" />
         <size width="8" height="48" />
       </graphics>
       <name>
@@ -2598,6 +2598,26 @@
         <value>join</value>
         <graphics>
           <offset x="-2" y="51" />
+        </graphics>
+      </name>
+      <toolspecific tool="JARP" version="1.2">
+        <FrameColor>
+          <value>java.awt.Color[r=0,g=0,b=0]</value>
+        </FrameColor>
+        <FillColor>
+          <value>java.awt.Color[r=128,g=128,b=128]</value>
+        </FillColor>
+      </toolspecific>
+    </transition>
+    <transition id="t61">
+      <graphics>
+        <position x="1636" y="696" />
+        <size width="8" height="48" />
+      </graphics>
+      <name>
+        <value>controlcar.interrupt [speedchange]</value>
+        <graphics>
+          <offset x="-102" y="51" />
         </graphics>
       </name>
       <toolspecific tool="JARP" version="1.2">
@@ -4594,6 +4614,38 @@
       </toolspecific>
     </arc>
     <arc id="a125" source="t60" target="p61">
+      <inscription>
+        <value>1</value>
+        <graphics>
+          <offset x="0" y="0" />
+        </graphics>
+      </inscription>
+      <toolspecific tool="JARP" version="1.2">
+        <FrameColor>
+          <value>java.awt.Color[r=128,g=128,b=128]</value>
+        </FrameColor>
+        <ArrowMode>
+          <value>2</value>
+        </ArrowMode>
+      </toolspecific>
+    </arc>
+    <arc id="a126" source="p17" target="t61">
+      <inscription>
+        <value>1</value>
+        <graphics>
+          <offset x="0" y="0" />
+        </graphics>
+      </inscription>
+      <toolspecific tool="JARP" version="1.2">
+        <FrameColor>
+          <value>java.awt.Color[r=128,g=128,b=128]</value>
+        </FrameColor>
+        <ArrowMode>
+          <value>2</value>
+        </ArrowMode>
+      </toolspecific>
+    </arc>
+    <arc id="a127" source="t61" target="p24">
       <inscription>
         <value>1</value>
         <graphics>

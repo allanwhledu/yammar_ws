@@ -228,12 +228,12 @@ void CAN_DEVICE::open_receive() {
 void CAN_DEVICE::check_speed() {
     // 关闭CAN信号接受线程
     this->callFeedback(motor);
-    ROS_INFO_STREAM("first call send");
+//    ROS_INFO_STREAM("first call send");
 
     while(pfd.percent_complete == 10000)
     {
         log_error.push_back(pfd.percent_complete);
-        ROS_INFO_STREAM("still wait");
+//        ROS_INFO_STREAM("still wait");
         this->callFeedback(motor);
         usleep(2000);
     }
@@ -247,20 +247,20 @@ void CAN_DEVICE::check_speed() {
     ROS_INFO_STREAM("ok error is already small");
 
     this->m_run0 = 0;
-    ROS_INFO_STREAM("wait close");
+//    ROS_INFO_STREAM("wait close");
     pthread_join(receive_thread, NULL);//等待线程关闭
-    ROS_INFO_STREAM("receive_thread_close.");
+//    ROS_INFO_STREAM("receive_thread_close.");
 }
 
 void CAN_DEVICE::wait_current() {
     // 关闭CAN信号接受线程
     this->callCurrent(motor);
-    ROS_INFO_STREAM("call send");
+//    ROS_INFO_STREAM("call send");
 
     while(pfd.percent_complete == 10000)
     {
         log_error.push_back(pfd.percent_complete);
-        ROS_INFO_STREAM("still wait current feedback");
+//        ROS_INFO_STREAM("still wait current feedback");
         this->callCurrent(motor);
         usleep(2000);
     }
@@ -275,9 +275,9 @@ void CAN_DEVICE::wait_current() {
 //    ROS_INFO_STREAM("ok error is already small");
 
     this->m_run0 = 0;
-    ROS_INFO_STREAM("wait close");
+//    ROS_INFO_STREAM("wait close");
     pthread_join(receive_thread, NULL);//等待线程关闭
-    ROS_INFO_STREAM("receive_thread_close.");
+//    ROS_INFO_STREAM("receive_thread_close.");
 }
 
 void CAN_DEVICE::closeCAN() {

@@ -77,7 +77,7 @@ void execute(const reap_unit_action::ControlReapGoalConstPtr& goal, Server* as)
 //	reap_unit_action::ControlReapFeedback feedback;
 //	pfd = &feedback;
 
-        ROS_INFO("Motor %d is working.", goal->dishwasher_id);
+        ROS_INFO("Start Motor %d.", goal->dishwasher_id);
 
         can_1.setMotor(goal->dishwasher_id);
         // 设置电机为速度模式
@@ -88,11 +88,11 @@ void execute(const reap_unit_action::ControlReapGoalConstPtr& goal, Server* as)
 
         // 读取电机速度误差
         can_1.check_speed();//线程关闭指令,这里是关闭接受线程
-        ROS_INFO_STREAM("check speed end.");
+        ROS_INFO_STREAM("succeed.");
 
         as->setSucceeded();
 
-        ROS_INFO_STREAM("Once action complete. Wait for next invoke.\n");
+        ROS_INFO_STREAM("Action complete. Wait for next invoke.\n");
     }
     else
     {
@@ -142,6 +142,11 @@ int main(int argc, char** argv)
     can_1.set_motor_speed(38, 0);
     can_1.set_motor_speed(37, 0);
     can_1.set_motor_speed(36, 0);
+    can_1.set_motor_speed(35, 0);
+    can_1.set_motor_speed(34, 0);
+    can_1.set_motor_speed(33, 0);
+    can_1.set_motor_speed(32, 0);
+    can_1.set_motor_speed(31, 0);
 
     can_1.closeCAN();
 
