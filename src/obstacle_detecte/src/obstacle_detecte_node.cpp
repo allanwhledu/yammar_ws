@@ -30,7 +30,7 @@ class SubscribeAndPublish
 int main(int argc, char **argv)
 {
 	//Initiate ROS
-	ros::init(argc, argv, "obstacle_detecte");
+	ros::init(argc, argv, "obstacle_detecte_fake");
 
 	//Create an object of class SubscribeAndPublish that will take care of everything
 	SubscribeAndPublish SAPObject;

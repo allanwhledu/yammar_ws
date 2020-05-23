@@ -156,7 +156,7 @@ int main(int argc, char **argv)
 	ret=pthread_create(&threadid,NULL,receive_func,&m_run0);
 	// 后面的函数都是在发送呀，这一小段的接收函数有什么用处呢？应该是打开接收的线程只是打印出来吧，也不需要赋值，反正接收到了就打印。
 
-	int times = 5;
+	int times = 50;
 	while(times--)
 	{
 		if(VCI_Transmit(VCI_USBCAN2,0,0,send,1) == 1)

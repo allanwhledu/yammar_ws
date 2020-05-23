@@ -7,10 +7,10 @@
 
     <group unless="$(arg multirobot)">
 
-	  <node pkg="stage_ros" type="stageros" name="stageros" 
+	  <node pkg="stage_ros" type="stageros" name="stageros"
             args="$(find rp_demo)/maps/dis-B1.world" respawn="false">
 	      <param name="base_watchdog_timeout" value="0.2"/>
-	      <remap from="base_scan" to="scan" />
+	      <remap from="base_scan" to="scannnn" />
       </node>
 
     </group>

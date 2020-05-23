@@ -81,7 +81,7 @@ void startreap(string params, bool *run) {
 
     int counter = 0;
 
-    while (counter++ != 1)
+    while (counter < 1)
     {
         // Set the goal
         reap_unit_action::ControlReapGoal goal;
@@ -100,7 +100,10 @@ void startreap(string params, bool *run) {
 
         // Print result
         if (ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
+        {
             ROS_INFO("Drive motor successful");
+            counter++;
+        }
         else
             ROS_INFO("Drive motor failed");
 
@@ -254,7 +257,7 @@ void stopreap(string params, bool *run) {
 
     int counter = 0;
 
-    while (counter++ != 1)
+    while (counter < 1)
     {
         // Set the goal
         reap_unit_action::ControlReapGoal goal;
@@ -273,7 +276,10 @@ void stopreap(string params, bool *run) {
 
         // Print result
         if (ac.getState() == actionlib::SimpleClientGoalState::SUCCEEDED)
+        {
             ROS_INFO("Stop motor successful");
+            counter++;
+        }
         else
             ROS_INFO("Stop motor failed");
 
@@ -361,13 +367,13 @@ public:
 
     void laser_callback(const sensor_msgs::LaserScan::ConstPtr& msg)
     {
-        std::vector<float> scans;
-        scans=std::vector<float>(msg->ranges);
-        if (scans[scans.size()/2]<1.0) {
-            std_msgs::String cond;
-            cond.data = "obstacle";
-            event_pub.publish(cond);
-        }
+//        std::vector<float> scans;
+//        scans=std::vector<float>(msg->ranges);
+//        if (scans[scans.size()/2]<1.0) {
+//            std_msgs::String cond;
+//            cond.data = "obstacle";
+//            event_pub.publish(cond);
+//        }
     }
 
     void start_callback(const std_msgs::Int8::ConstPtr& msg)

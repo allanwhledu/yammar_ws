@@ -212,7 +212,7 @@ void controlcar(string params, bool *run) {
 //      ros::Duration(1).sleep(); // wait 1 sec
     }
     // pnp应该是用了*run来中断吧,但是似乎不能够中断while循环，所以这里while应该用上*run控制
-    int i = 100;
+    int i = 1000;
     while(i-- && (*run)){
         boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
         ROS_INFO_STREAM("controlling car.");
@@ -295,7 +295,7 @@ void waitclean(string params, bool *run) {
     cout << "### Executing waitclean ... " << params << endl;
 
     // pnp应该是用了*run来中断吧,但是似乎不能够中断while循环，所以这里while应该用上*run控制
-    int i = 100;
+    int i = 1000;
     while(i-- && (*run)){
         boost::this_thread::sleep(boost::posix_time::milliseconds(2000));
         ROS_WARN_STREAM("wait obstacle clean.");
