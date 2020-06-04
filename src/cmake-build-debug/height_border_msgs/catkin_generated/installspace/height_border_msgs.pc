@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: height_border_msgs
+Description: Description of height_border_msgs
+Version: 1.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: message_runtime message_generation std_msgs

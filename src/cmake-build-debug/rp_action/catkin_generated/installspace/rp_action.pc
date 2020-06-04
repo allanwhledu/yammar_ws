@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: rp_action
+Description: Description of rp_action
+Version: 0.0.11
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

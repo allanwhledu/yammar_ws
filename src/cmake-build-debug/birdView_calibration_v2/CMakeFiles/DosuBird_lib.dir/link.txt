@@ -1,0 +1,1 @@
+/usr/bin/c++ -fPIC -g  -shared -Wl,-soname,libDosuBird_lib.so -o ../devel/lib/libDosuBird_lib.so CMakeFiles/DosuBird_lib.dir/src/DosuBirdView.cpp.o   -L/usr/local/lib  -L/home/sjtu_wanghaili/yammar_ws/src/birdView_calibration_v2/lib 

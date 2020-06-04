@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: obstacle_detecte_fake
+Description: Description of obstacle_detecte_fake
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

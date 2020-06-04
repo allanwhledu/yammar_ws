@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: unload_position_detecte
+Description: Description of unload_position_detecte
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

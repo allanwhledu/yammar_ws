@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: birdView_calibration_v2
+Description: Description of birdView_calibration_v2
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: roscpp rospy std_msgs message_runtime

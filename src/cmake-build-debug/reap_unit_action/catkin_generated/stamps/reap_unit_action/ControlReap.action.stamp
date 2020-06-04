@@ -1,0 +1,9 @@
+# Define the goal
+uint32 dishwasher_id  # Specify which dishwasher we want to use
+uint32 target_speed  # Target speed
+---
+# Define the result
+uint32 total_dishes_cleaned
+---
+# Define a feedback message
+uint32 percent_complete

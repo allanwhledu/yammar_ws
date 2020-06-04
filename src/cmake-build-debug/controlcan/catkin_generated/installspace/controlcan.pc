@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: controlcan
+Description: Description of controlcan
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

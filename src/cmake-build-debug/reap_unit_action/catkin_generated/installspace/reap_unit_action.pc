@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: reap_unit_action
+Description: Description of reap_unit_action
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: 

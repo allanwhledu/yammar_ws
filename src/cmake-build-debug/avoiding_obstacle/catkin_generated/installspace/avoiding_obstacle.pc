@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: avoiding_obstacle
+Description: Description of avoiding_obstacle
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

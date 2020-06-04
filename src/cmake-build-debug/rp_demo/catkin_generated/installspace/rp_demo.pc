@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: rp_demo
+Description: Description of rp_demo
+Version: 0.0.11
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

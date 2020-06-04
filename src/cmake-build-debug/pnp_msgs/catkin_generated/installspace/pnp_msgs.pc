@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: pnp_msgs
+Description: Description of pnp_msgs
+Version: 0.0.11
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: actionlib actionlib_msgs geometry_msgs message_runtime

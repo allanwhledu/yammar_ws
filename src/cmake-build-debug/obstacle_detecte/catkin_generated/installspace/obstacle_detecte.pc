@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: obstacle_detecte
+Description: Description of obstacle_detecte
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

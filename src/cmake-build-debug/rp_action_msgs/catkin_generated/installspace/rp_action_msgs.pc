@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: rp_action_msgs
+Description: Description of rp_action_msgs
+Version: 0.0.11
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: 

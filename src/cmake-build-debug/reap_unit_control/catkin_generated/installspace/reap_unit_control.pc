@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: reap_unit_control
+Description: Description of reap_unit_control
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: 

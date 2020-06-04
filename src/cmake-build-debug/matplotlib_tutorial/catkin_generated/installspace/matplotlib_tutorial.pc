@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: matplotlib_tutorial
+Description: Description of matplotlib_tutorial
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

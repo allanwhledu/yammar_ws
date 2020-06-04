@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: boud_rgbd
+Description: Description of boud_rgbd
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: height_border_msgs

@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: dosuss_srvs
+Description: Description of dosuss_srvs
+Version: 0.0.0
+Cflags: -I${prefix}/include
+Libs: -L${prefix}/lib 
+Requires: message_runtime

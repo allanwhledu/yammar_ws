@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: harvest_line_detecte
+Description: Description of harvest_line_detecte
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

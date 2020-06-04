@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: grain_height_detecte
+Description: Description of grain_height_detecte
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: 

@@ -1,0 +1,332 @@
+/home/sjtu_wanghaili/.local/share/JetBrains/Toolbox/apps/CLion/ch-0/201.7223.86/bin/cmake/linux/bin/cmake -DCMAKE_BUILD_TYPE=Debug -G "CodeBlocks - Unix Makefiles" /home/sjtu_wanghaili/yammar_ws/src
+CMake Warning (dev) in CMakeLists.txt:
+  No project() command is present.  The top-level CMakeLists.txt file must
+  contain a literal, direct call to the project() command.  Add a line of
+  code such as
+
+    project(ProjectName)
+
+  near the top of the file, but after cmake_minimum_required().
+
+  CMake is pretending there is a "project(Project)" command on the first
+  line.
+This warning is for project developers.  Use -Wno-dev to suppress it.
+
+-- Using CATKIN_DEVEL_PREFIX: /home/sjtu_wanghaili/yammar_ws/src/cmake-build-debug/devel
+-- Using CMAKE_PREFIX_PATH: /home/sjtu_wanghaili/yammar_ws/devel;/opt/ros/melodic
+-- This workspace overlays: /home/sjtu_wanghaili/yammar_ws/devel;/opt/ros/melodic
+-- Found PythonInterp: /usr/bin/python2 (found suitable version "2.7.17", minimum required is "2") 
+-- Using PYTHON_EXECUTABLE: /usr/bin/python2
+-- Using Debian Python package layout
+-- Using empy: /usr/bin/empy
+-- Using CATKIN_ENABLE_TESTING: ON
+-- Call enable_testing()
+-- Using CATKIN_TEST_RESULTS_DIR: /home/sjtu_wanghaili/yammar_ws/src/cmake-build-debug/test_results
+-- Found gtest sources under '/usr/src/googletest': gtests will be built
+-- Found gmock sources under '/usr/src/googletest': gmock will be built
+-- Found PythonInterp: /usr/bin/python2 (found version "2.7.17") 
+-- Using Python nosetests: /usr/bin/nosetests-2.7
+-- catkin 0.7.23
+-- BUILD_SHARED_LIBS is on
+-- BUILD_SHARED_LIBS is on
+WARNING: Package name "birdView_calibration_v2" does not follow the naming conventions. It should start with a lower case letter and only contain lower case letters, digits, underscores, and dashes.
+WARNING: Package name "birdView_calibration_v2" does not follow the naming conventions. It should start with a lower case letter and only contain lower case letters, digits, underscores, and dashes.
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- ~~  traversing 41 packages in topological order:
+-- ~~  - dosuss_srvs
+-- ~~  - height_border_msgs
+-- ~~  - trail
+-- ~~  - avoiding_obstacle
+-- ~~  - camera_capture
+-- ~~  - control485
+-- ~~  - fake_msgs
+-- ~~  - full_view
+-- ~~  - grain_height_detecte
+-- ~~  - harvest_line_detecte
+-- ~~  - hmi
+-- ~~  - launch_file
+-- ~~  - matplotlib_tutorial
+-- ~~  - obstacle_detecte
+-- ~~  - obstacle_detecte_fake
+-- ~~  - path_control
+-- ~~  - path_planning
+-- ~~  - reap_height_capture
+-- ~~  - reap_height_control
+-- ~~  - reap_unit_control
+-- ~~  - system_monitor
+-- ~~  - action_tutorials
+-- ~~  - pnp_msgs
+-- ~~  - pnp_ros
+-- ~~  - reap_height_action
+-- ~~  - reap_unit_action
+-- ~~  - rp_action_msgs
+-- ~~  - controlcan
+-- ~~  - birdView_calibration_v2
+-- ~~  - boud_rgbd
+-- ~~  - camera_image
+-- ~~  - find_cut
+-- ~~  - mmw_capture
+-- ~~  - rqt_image_view
+-- ~~  - smach_tutorials
+-- ~~  - rp_demo
+-- ~~  - rp_pnp
+-- ~~  - travel_control
+-- ~~  - unload_position_detecte
+-- ~~  - usb_cam
+-- ~~  - rp_action
+-- ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+-- +++ processing catkin package: 'dosuss_srvs'
+-- ==> add_subdirectory(dosuss_srvs)
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+-- dosuss_srvs: 1 messages, 1 services
+-- +++ processing catkin package: 'height_border_msgs'
+-- ==> add_subdirectory(height_border_msgs)
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+-- height_border_msgs: 1 messages, 0 services
+-- +++ processing catkin package: 'trail'
+-- ==> add_subdirectory(Qt_gui_test)
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+-- +++ processing catkin package: 'avoiding_obstacle'
+-- ==> add_subdirectory(avoiding_obstacle)
+-- +++ processing catkin package: 'camera_capture'
+-- ==> add_subdirectory(camera_capture)
+-- +++ processing catkin package: 'control485'
+-- ==> add_subdirectory(control485)
+-- +++ processing catkin package: 'fake_msgs'
+-- ==> add_subdirectory(fake_msgs)
+-- +++ processing catkin package: 'full_view'
+-- ==> add_subdirectory(full_view)
+-- +++ processing catkin package: 'grain_height_detecte'
+-- ==> add_subdirectory(grain_height_detecte)
+-- +++ processing catkin package: 'harvest_line_detecte'
+-- ==> add_subdirectory(harvest_line_detecte)
+-- +++ processing catkin package: 'hmi'
+-- ==> add_subdirectory(hmi)
+-- +++ processing catkin package: 'launch_file'
+-- ==> add_subdirectory(launch_file)
+-- +++ processing catkin package: 'matplotlib_tutorial'
+-- ==> add_subdirectory(matplotlib_tutorial)
+-- +++ processing catkin package: 'obstacle_detecte'
+-- ==> add_subdirectory(obstacle_detecte)
+-- +++ processing catkin package: 'obstacle_detecte_fake'
+-- ==> add_subdirectory(obstacle_detecte_fake)
+-- +++ processing catkin package: 'path_control'
+-- ==> add_subdirectory(path_control)
+-- +++ processing catkin package: 'path_planning'
+-- ==> add_subdirectory(path_planning)
+-- +++ processing catkin package: 'reap_height_capture'
+-- ==> add_subdirectory(reap_height_capture)
+-- +++ processing catkin package: 'reap_height_control'
+-- ==> add_subdirectory(reap_height_control)
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+-- Generating .msg files for action reap_height_control/ControlReapHeight /home/sjtu_wanghaili/yammar_ws/src/reap_height_control/action/ControlReapHeight.action
+-- reap_height_control: 7 messages, 0 services
+-- +++ processing catkin package: 'reap_unit_control'
+-- ==> add_subdirectory(reap_unit_control)
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+-- Generating .msg files for action reap_unit_control/ControlReap /home/sjtu_wanghaili/yammar_ws/src/reap_unit_control/action/ControlReap.action
+-- reap_unit_control: 7 messages, 0 services
+-- +++ processing catkin package: 'system_monitor'
+-- ==> add_subdirectory(system_monitor)
+-- +++ processing catkin package: 'action_tutorials'
+-- ==> add_subdirectory(action_tutorials)
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+-- Generating .msg files for action action_tutorials/DoDishes /home/sjtu_wanghaili/yammar_ws/src/action_tutorials/action/DoDishes.action
+-- action_tutorials: 7 messages, 0 services
+-- +++ processing catkin package: 'pnp_msgs'
+-- ==> add_subdirectory(pnp_msgs)
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+-- Generating .msg files for action pnp_msgs/PNP /home/sjtu_wanghaili/yammar_ws/src/pnp_msgs/action/PNP.action
+-- pnp_msgs: 9 messages, 6 services
+-- +++ processing catkin package: 'pnp_ros'
+-- ==> add_subdirectory(pnp_ros)
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+-- Found Boost: /usr/include (found version "1.65.1") found components: system thread chrono date_time atomic 
+-- +++ processing catkin package: 'reap_height_action'
+-- ==> add_subdirectory(reap_height_action)
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+-- Generating .msg files for action reap_height_action/ControlReapHeight /home/sjtu_wanghaili/yammar_ws/src/reap_height_action/action/ControlReapHeight.action
+-- reap_height_action: 7 messages, 0 services
+-- +++ processing catkin package: 'reap_unit_action'
+-- ==> add_subdirectory(reap_unit_action)
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+-- Generating .msg files for action reap_unit_action/ControlReap /home/sjtu_wanghaili/yammar_ws/src/reap_unit_action/action/ControlReap.action
+-- reap_unit_action: 7 messages, 0 services
+-- +++ processing catkin package: 'rp_action_msgs'
+-- ==> add_subdirectory(rp_action_msgs)
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+-- Generating .msg files for action rp_action_msgs/Turn /home/sjtu_wanghaili/yammar_ws/src/rp_action_msgs/action/Turn.action
+-- rp_action_msgs: 7 messages, 0 services
+-- +++ processing catkin package: 'controlcan'
+-- ==> add_subdirectory(controlcan)
+-- +++ processing catkin package: 'birdView_calibration_v2'
+-- ==> add_subdirectory(birdView_calibration_v2)
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+-- Found Boost: /usr/include (found suitable version "1.65.1", minimum required is "1.48.0") found components: program_options serialization random system 
+Boost information:
+  Boost_INCLUDE_DIRS: /usr/include
+  Boost_LIBRARIES: /usr/lib/x86_64-linux-gnu/libboost_program_options.so;/usr/lib/x86_64-linux-gnu/libboost_serialization.so;/usr/lib/x86_64-linux-gnu/libboost_random.so;/usr/lib/x86_64-linux-gnu/libboost_system.so
+  Boost_LIBRARY_DIRS: /usr/lib/x86_64-linux-gnu
+WARNING: Package name "birdView_calibration_v2" does not follow the naming conventions. It should start with a lower case letter and only contain lower case letters, digits, underscores, and dashes.
+-- +++ processing catkin package: 'boud_rgbd'
+-- ==> add_subdirectory(boud_rgbd)
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+-- Found Boost: /usr/include (found suitable version "1.65.1", minimum required is "1.40.0") found components: system filesystem thread date_time iostreams serialization chrono atomic regex 
+-- Could NOT find ensenso (missing: ENSENSO_LIBRARY ENSENSO_INCLUDE_DIR) 
+** WARNING ** io features related to ensenso will be disabled
+-- Could NOT find DAVIDSDK (missing: DAVIDSDK_LIBRARY DAVIDSDK_INCLUDE_DIR) 
+** WARNING ** io features related to davidSDK will be disabled
+-- Could NOT find DSSDK (missing: _DSSDK_LIBRARIES) 
+** WARNING ** io features related to dssdk will be disabled
+** WARNING ** io features related to pcap will be disabled
+** WARNING ** io features related to png will be disabled
+-- The imported target "vtkRenderingPythonTkWidgets" references the file
+   "/usr/lib/x86_64-linux-gnu/libvtkRenderingPythonTkWidgets.so"
+but this file does not exist.  Possible reasons include:
+* The file was deleted, renamed, or moved to another location.
+* An install or uninstall procedure did not complete successfully.
+* The installation package was faulty and contained
+   "/usr/lib/cmake/vtk-6.3/VTKTargets.cmake"
+but not all the files it references.
+
+-- The imported target "vtk" references the file
+   "/usr/bin/vtk"
+but this file does not exist.  Possible reasons include:
+* The file was deleted, renamed, or moved to another location.
+* An install or uninstall procedure did not complete successfully.
+* The installation package was faulty and contained
+   "/usr/lib/cmake/vtk-6.3/VTKTargets.cmake"
+but not all the files it references.
+
+** WARNING ** io features related to libusb-1.0 will be disabled
+-- Could NOT find ensenso (missing: ENSENSO_LIBRARY ENSENSO_INCLUDE_DIR) 
+** WARNING ** visualization features related to ensenso will be disabled
+-- Could NOT find DAVIDSDK (missing: DAVIDSDK_LIBRARY DAVIDSDK_INCLUDE_DIR) 
+** WARNING ** visualization features related to davidSDK will be disabled
+-- Could NOT find DSSDK (missing: _DSSDK_LIBRARIES) 
+** WARNING ** visualization features related to dssdk will be disabled
+-- Could NOT find RSSDK (missing: _RSSDK_LIBRARIES) 
+** WARNING ** visualization features related to rssdk will be disabled
+-- looking for PCL_COMMON
+-- looking for PCL_OCTREE
+-- looking for PCL_IO
+-- looking for PCL_KDTREE
+-- looking for PCL_SEARCH
+-- looking for PCL_SAMPLE_CONSENSUS
+-- looking for PCL_FILTERS
+-- looking for PCL_2D
+-- looking for PCL_GEOMETRY
+-- looking for PCL_FEATURES
+-- looking for PCL_ML
+-- looking for PCL_SEGMENTATION
+-- looking for PCL_VISUALIZATION
+-- looking for PCL_SURFACE
+-- looking for PCL_REGISTRATION
+-- looking for PCL_KEYPOINTS
+-- looking for PCL_TRACKING
+-- looking for PCL_RECOGNITION
+-- looking for PCL_STEREO
+-- looking for PCL_APPS
+-- looking for PCL_IN_HAND_SCANNER
+-- looking for PCL_MODELER
+-- looking for PCL_POINT_CLOUD_EDITOR
+-- looking for PCL_OUTOFCORE
+-- looking for PCL_PEOPLE
+-- +++ processing catkin package: 'camera_image'
+-- ==> add_subdirectory(camera_image)
+-- +++ processing catkin package: 'find_cut'
+-- ==> add_subdirectory(find_cut)
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+-- Found Boost: /usr/include (found suitable version "1.65.1", minimum required is "1.48.0") found components: program_options serialization random system 
+Boost information:
+  Boost_INCLUDE_DIRS: /usr/include
+  Boost_LIBRARIES: /usr/lib/x86_64-linux-gnu/libboost_program_options.so;/usr/lib/x86_64-linux-gnu/libboost_serialization.so;/usr/lib/x86_64-linux-gnu/libboost_random.so;/usr/lib/x86_64-linux-gnu/libboost_system.so
+  Boost_LIBRARY_DIRS: /usr/lib/x86_64-linux-gnu
+-- +++ processing catkin package: 'mmw_capture'
+-- ==> add_subdirectory(mmw_capture)
+-- Found Boost: /usr/include (found suitable version "1.65.1", minimum required is "1.40.0") found components: system filesystem thread date_time iostreams serialization chrono atomic regex 
+-- Could NOT find ensenso (missing: ENSENSO_LIBRARY ENSENSO_INCLUDE_DIR) 
+** WARNING ** io features related to ensenso will be disabled
+-- Could NOT find DAVIDSDK (missing: DAVIDSDK_LIBRARY DAVIDSDK_INCLUDE_DIR) 
+** WARNING ** io features related to davidSDK will be disabled
+-- Could NOT find DSSDK (missing: _DSSDK_LIBRARIES) 
+** WARNING ** io features related to dssdk will be disabled
+** WARNING ** io features related to pcap will be disabled
+** WARNING ** io features related to png will be disabled
+-- The imported target "vtkRenderingPythonTkWidgets" references the file
+   "/usr/lib/x86_64-linux-gnu/libvtkRenderingPythonTkWidgets.so"
+but this file does not exist.  Possible reasons include:
+* The file was deleted, renamed, or moved to another location.
+* An install or uninstall procedure did not complete successfully.
+* The installation package was faulty and contained
+   "/usr/lib/cmake/vtk-6.3/VTKTargets.cmake"
+but not all the files it references.
+
+-- The imported target "vtk" references the file
+   "/usr/bin/vtk"
+but this file does not exist.  Possible reasons include:
+* The file was deleted, renamed, or moved to another location.
+* An install or uninstall procedure did not complete successfully.
+* The installation package was faulty and contained
+   "/usr/lib/cmake/vtk-6.3/VTKTargets.cmake"
+but not all the files it references.
+
+** WARNING ** io features related to libusb-1.0 will be disabled
+-- Could NOT find ensenso (missing: ENSENSO_LIBRARY ENSENSO_INCLUDE_DIR) 
+** WARNING ** visualization features related to ensenso will be disabled
+-- Could NOT find DAVIDSDK (missing: DAVIDSDK_LIBRARY DAVIDSDK_INCLUDE_DIR) 
+** WARNING ** visualization features related to davidSDK will be disabled
+-- Could NOT find DSSDK (missing: _DSSDK_LIBRARIES) 
+** WARNING ** visualization features related to dssdk will be disabled
+-- Could NOT find RSSDK (missing: _RSSDK_LIBRARIES) 
+** WARNING ** visualization features related to rssdk will be disabled
+-- looking for PCL_COMMON
+-- looking for PCL_OCTREE
+-- looking for PCL_IO
+-- looking for PCL_KDTREE
+-- looking for PCL_SEARCH
+-- looking for PCL_SAMPLE_CONSENSUS
+-- looking for PCL_FILTERS
+-- looking for PCL_2D
+-- looking for PCL_GEOMETRY
+-- looking for PCL_FEATURES
+-- looking for PCL_ML
+-- looking for PCL_SEGMENTATION
+-- looking for PCL_VISUALIZATION
+-- looking for PCL_SURFACE
+-- looking for PCL_REGISTRATION
+-- looking for PCL_KEYPOINTS
+-- looking for PCL_TRACKING
+-- looking for PCL_RECOGNITION
+-- looking for PCL_STEREO
+-- looking for PCL_APPS
+-- looking for PCL_IN_HAND_SCANNER
+-- looking for PCL_MODELER
+-- looking for PCL_POINT_CLOUD_EDITOR
+-- looking for PCL_OUTOFCORE
+-- looking for PCL_PEOPLE
+-- +++ processing catkin package: 'rqt_image_view'
+-- ==> add_subdirectory(rqt_image_view)
+-- +++ processing catkin package: 'smach_tutorials'
+-- ==> add_subdirectory(smach_tutorials)
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+-- Generating .msg files for action smach_tutorials/Test /home/sjtu_wanghaili/yammar_ws/src/smach_tutorials/action/Test.action
+-- smach_tutorials: 7 messages, 0 services
+-- +++ processing catkin package: 'rp_demo'
+-- ==> add_subdirectory(rp_demo)
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+-- +++ processing catkin package: 'rp_pnp'
+-- ==> add_subdirectory(rp_pnp)
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+-- +++ processing catkin package: 'travel_control'
+-- ==> add_subdirectory(travel_control)
+-- +++ processing catkin package: 'unload_position_detecte'
+-- ==> add_subdirectory(unload_position_detecte)
+-- +++ processing catkin package: 'usb_cam'
+-- ==> add_subdirectory(usb_cam)
+-- +++ processing catkin package: 'rp_action'
+-- ==> add_subdirectory(rp_action)
+-- Using these message generators: gencpp;geneus;genlisp;gennodejs;genpy
+-- Configuring done
+-- Generating done
+-- Build files have been written to: /home/sjtu_wanghaili/yammar_ws/src/cmake-build-debug
