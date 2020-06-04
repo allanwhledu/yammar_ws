@@ -17,6 +17,7 @@
 
 #include <ros/ros.h>
 #include "std_msgs/String.h"
+#include "std_msgs/Int32.h"
 
 using namespace std;
 
@@ -33,7 +34,7 @@ uint16_t motorSpeedAddr=0x56;
 uint16_t motorSpeedFeedbackAddr=0x5F;
 double cbCof=1.2,reelCof=1.6,pfCof=4.44,fhCof=3.94;//同调率
 int cbRatio=5,reelRatio=64,pfRatio=15,fhRatio=10;//减速比
-const int cbMotor=2,reelMotor=1,pfMotor=3,fhMotor=4;
+const int reelMotor=1,cbMotor=2,pfMotor=3,fhMotor=4;
 string port="/dev/ttyUSB0";
 harvesterSpeed carSpeed;
 
@@ -275,8 +276,8 @@ void* carSpeedFollowMode(void*)
         cbRealSpeed=motorReadSpeed(cbMotor);
         reelRealSpeed=motorReadSpeed(reelMotor);
         pfRealSpeed=motorReadSpeed(pfMotor);
-        fhRealSpeed=0;
-        //fhRealSpeed=motorReadSpeed(fhMotor);
+//        fhRealSpeed=0;
+        fhRealSpeed=motorReadSpeed(fhMotor);
         current=motorReadCurrent();
         //check if motor speed differnece is very small
         if(abs(cbSpeed-cbRealSpeed)>10)
@@ -357,7 +358,7 @@ double readHeight(void)
     return height;
 }
 
-void callback(const std_msgs::StringConstPtr &input);
+void callback(const std_msgs::Int32ConstPtr &msg);
 
 int main (int argc, char **argv)
 {
@@ -369,7 +370,6 @@ int main (int argc, char **argv)
 
     //Topic you want to subscribe
     sub_ = n_.subscribe("subtopic", 1, &callback);
-
 
     cout<<"usage sudo ./motor"<<endl;
     //modbus_set_debug(com,true);//调试模式 可以显示串口总线的调试信息
@@ -384,7 +384,7 @@ int main (int argc, char **argv)
         ROS_INFO_STREAM("spinonce");
         ros::spinOnce();
         count++;
-        if(count == 10){
+        if(count == 100){
             break;
         }
 
@@ -395,7 +395,7 @@ int main (int argc, char **argv)
     ros::Duration(10);
 }
 
-void callback(const std_msgs::StringConstPtr &input) {
-    ROS_INFO_STREAM("callback");
-    cout<<input->data<<endl;
+void callback(const std_msgs::Int32ConstPtr &msg) {
+    ROS_INFO_STREAM("callback! carspeed: "<<msg->data);
+    carSpeed.linear = msg->data;
 }
