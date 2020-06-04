@@ -84,7 +84,8 @@ bool openSerial(const char* port)
     {
         cout<<"Cannot connect modbus at port:"<<port<<endl;
         return false;
-    }
+    } else
+        cout<<"Connected modbus at port:"<<port<<endl;
     return true;
 }
 string getTime(void)
@@ -245,7 +246,7 @@ int getFHSpeed(double carSpeed)
     int res= fhRatio*min(324.0,min(76.43*fhCof*carSpeed+90.95,76.43*3.0*carSpeed+152.86));
     return min(res,3000);
 }
-void carSpeedFollowMode(void)
+void* carSpeedFollowMode(void*)
 {
     fstream outFile;
     string file=getTime();
@@ -356,20 +357,45 @@ double readHeight(void)
     return height;
 }
 
+void callback(const std_msgs::StringConstPtr &input);
+
 int main (int argc, char **argv)
 {
     ros::init(argc, argv, "hello") ;
     ros::NodeHandle nh;
     ROS_INFO_STREAM("Hello, ROS!") ;
+    ros::NodeHandle n_;
+    ros::Subscriber sub_;
+
+    //Topic you want to subscribe
+    sub_ = n_.subscribe("subtopic", 1, &callback);
+
 
     cout<<"usage sudo ./motor"<<endl;
     //modbus_set_debug(com,true);//调试模式 可以显示串口总线的调试信息
     openSerial(port.c_str());
     motorInit();
-//        pthread_t carSpeedThread,motorControlThread;
-//        pthread_create(&motorControlThread,nullptr,carSpeedFollowMode,nullptr);
-//        pthread_join(motorControlThread,nullptr);
-//        pthread_kill(carSpeedThread,0);
-    carSpeedFollowMode();
+    pthread_t motorControlThread;
+    pthread_create(&motorControlThread, nullptr, carSpeedFollowMode, nullptr);
+    ROS_INFO_STREAM("spread make.");
+    int count = 0;
+
+    while (ros::ok()){
+        ROS_INFO_STREAM("spinonce");
+        ros::spinOnce();
+        count++;
+        if(count == 10){
+            break;
+        }
+
+        ros::Rate(1).sleep();
+    }
+    ROS_INFO_STREAM("wait spread close.");
+    pthread_kill(motorControlThread, 0);
     ros::Duration(10);
+}
+
+void callback(const std_msgs::StringConstPtr &input) {
+    ROS_INFO_STREAM("callback");
+    cout<<input->data<<endl;
 }
