@@ -18,6 +18,7 @@
 #include <ros/ros.h>
 #include "std_msgs/String.h"
 #include "std_msgs/Int32.h"
+#include "std_msgs/Float32.h"
 
 using namespace std;
 
@@ -125,10 +126,10 @@ string getTime(void)
 }
 void motorInit(void)
 {
-    motorSetModbus(0,1);
-    motorSetDirection(0,2);//正转
-    motorSetDirection(fhMotor,1);
-    motorSetSpeed(0,0);
+    motorSetModbus(reelMotor,1);
+    motorSetDirection(reelMotor,2);//正转
+//    motorSetDirection(fhMotor,1);
+    motorSetSpeed(reelMotor,0);
 }
 void motorSetModbus(int motor,int enable)
 {
@@ -165,6 +166,8 @@ int motorReadSpeed(int motor)
     if(flag==-1)
     {
         cout<<"error read motor"<<motor<<" speed."<<endl;
+    } else{
+        cout<<"succeed read motor"<<motor<<" speed."<<endl;
     }
     return temp;
 }
@@ -268,32 +271,37 @@ void* carSpeedFollowMode(void*)
     {
         string time=getTime();
         //calculate new motor speed
-        cbSpeed=getCBSpeed(carSpeed.linear);//cb
         reelSpeed=getReelSpeed(carSpeed.linear);//reel
+        cbSpeed=getCBSpeed(carSpeed.linear);//cb
         fhSpeed=getFHSpeed(carSpeed.linear);//feedHouse
         pfSpeed=getPFSpeed(carSpeed.linear);//PlatformAuger
+
         //get motor real speed
-        cbRealSpeed=motorReadSpeed(cbMotor);
         reelRealSpeed=motorReadSpeed(reelMotor);
+        cbRealSpeed=motorReadSpeed(cbMotor);
         pfRealSpeed=motorReadSpeed(pfMotor);
-//        fhRealSpeed=0;
         fhRealSpeed=motorReadSpeed(fhMotor);
         current=motorReadCurrent();
+
         //check if motor speed differnece is very small
         if(abs(cbSpeed-cbRealSpeed)>10)
         {
+            ROS_WARN_STREAM("cb change");
             motorSetSpeed(cbMotor,cbSpeed);
         }
         if(abs(reelSpeed-reelRealSpeed)>10)
         {
+            ROS_WARN_STREAM("reel change");
             motorSetSpeed(reelMotor,reelSpeed);
         }
         if(abs(fhSpeed-fhRealSpeed)>10)
         {
-            //motorSetSpeed(fhMotor,fhSpeed);
+            ROS_WARN_STREAM("fh change");
+            motorSetSpeed(fhMotor,fhSpeed);
         }
         if(abs(pfSpeed-pfRealSpeed)>10)
         {
+            ROS_WARN_STREAM("pf change");
             motorSetSpeed(pfMotor,pfSpeed);
         }
         cout<<time<<" carVl="<<carSpeed.linear<<" carVw="<<carSpeed.rotate<<
@@ -358,7 +366,7 @@ double readHeight(void)
     return height;
 }
 
-void callback(const std_msgs::Int32ConstPtr &msg);
+void callback(const std_msgs::Float32ConstPtr &msg);
 
 int main (int argc, char **argv)
 {
@@ -395,7 +403,7 @@ int main (int argc, char **argv)
     ros::Duration(10);
 }
 
-void callback(const std_msgs::Int32ConstPtr &msg) {
+void callback(const std_msgs::Float32ConstPtr &msg) {
     ROS_INFO_STREAM("callback! carspeed: "<<msg->data);
     carSpeed.linear = msg->data;
 }
