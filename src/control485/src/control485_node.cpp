@@ -29,10 +29,16 @@ struct harvesterSpeed
     double rotate=0.0;
 };
 modbus_t* com;//com用于电机速度控制反馈
-uint16_t motorModbusAddr=0xB6;
-uint16_t motorDirectionAddr=0x66;
-uint16_t motorSpeedAddr=0x56;
-uint16_t motorSpeedFeedbackAddr=0x5F;
+uint16_t motorModbusAddr=0xB6; //0xB6在说明书中用于使能电机的rs485功能
+uint16_t motorDirectionAddr=0x66; //在说明书中找到在0x66中访问数据0x01是正转，0x02是反转
+uint16_t motorSpeedAddr=0x56; //在说明书中找到，0x56中设置电机的转速
+uint16_t motorSpeedFeedbackAddr=0x5F; //说明书中可以找到其为读取速度的地址
+uint16_t motorCurrentFeedbackAddr=0xC6; //说明书中找到而补充的，但是应该暂时不用（因为不精确吧）
+
+uint16_t motorMODBUSAddr=0x43; //这是在网上找到的，设置从站地址
+// 以上，就是现在用到的寄存器地址
+
+
 double cbCof=1.2,reelCof=1.6,pfCof=4.44,fhCof=3.94;//同调率
 int cbRatio=5,reelRatio=64,pfRatio=15,fhRatio=10;//减速比
 const int reelMotor=1,cbMotor=2,pfMotor=3,fhMotor=4;
@@ -126,22 +132,24 @@ string getTime(void)
 }
 void motorInit(void)
 {
+    // 只有这里才打开了电机，这里首先仅仅开启了reel电机
     motorSetModbus(reelMotor,1);
     motorSetDirection(reelMotor,2);//正转
-//    motorSetDirection(fhMotor,1);
     motorSetSpeed(reelMotor,0);
 }
+
+// 使能某电机的rs485通讯
 void motorSetModbus(int motor,int enable)
 {
-    modbus_set_slave(com,motor);
+    modbus_set_slave(com,motor); //这句话的意思是不是将某从机设置为当前要访问的对象？
     modbus_write_register(com,motorModbusAddr,enable);
-    usleep(3000);
+//    usleep(3000);
 }
 void motorSetDirection(int motor,int dir)
 {
     modbus_set_slave(com,motor);
     modbus_write_register(com,motorDirectionAddr,dir);
-    usleep(3000);
+//    usleep(3000);
 }
 void motorSetSpeed(int motor,int speed)
 {
@@ -155,14 +163,16 @@ void motorSetSpeed(int motor,int speed)
     }
     modbus_set_slave(com,motor);
     modbus_write_register(com,motorSpeedAddr,speed);
-    usleep(3000);
+//    usleep(3000);
 }
 int motorReadSpeed(int motor)
 {
     uint16_t temp=0;
     modbus_set_slave(com,motor);
     int flag=modbus_read_registers(com,motorSpeedFeedbackAddr,1,&temp);
-    usleep(2000);
+
+    // todo 这里为什么ankang写作等待？事实上不是可以写成一直循环查看吗？
+//    usleep(2000);
     if(flag==-1)
     {
         cout<<"error read motor"<<motor<<" speed."<<endl;
@@ -180,7 +190,7 @@ pair<double,double> carReadSpeed(void)
     {
         cout<<"error reading carspeed,slave=5"<<endl;
     }
-    usleep(3000);
+//    usleep(3000);
     double lSpeed=0.001,rSpeed=0.001;
     if(temp[7]==0&&temp[7]==0&&temp[8]==0&&temp[9]==0)//车未启动
     {
@@ -277,11 +287,13 @@ void* carSpeedFollowMode(void*)
         pfSpeed=getPFSpeed(carSpeed.linear);//PlatformAuger
 
         //get motor real speed
+        ROS_WARN_STREAM("start read");
         reelRealSpeed=motorReadSpeed(reelMotor);
         cbRealSpeed=motorReadSpeed(cbMotor);
         pfRealSpeed=motorReadSpeed(pfMotor);
         fhRealSpeed=motorReadSpeed(fhMotor);
         current=motorReadCurrent();
+        ROS_WARN_STREAM("end read");
 
         //check if motor speed differnece is very small
         if(abs(cbSpeed-cbRealSpeed)>10)
@@ -305,20 +317,20 @@ void* carSpeedFollowMode(void*)
             motorSetSpeed(pfMotor,pfSpeed);
         }
         cout<<time<<" carVl="<<carSpeed.linear<<" carVw="<<carSpeed.rotate<<
-            " cbv="<<cbRealSpeed<<" cbvNew="<<cbSpeed<<" cbI="<<current[1]<<
             " reelv="<<reelRealSpeed<<" reelvNew="<<reelSpeed<<" reelI="<<current[0]<<
+            " cbv="<<cbRealSpeed<<" cbvNew="<<cbSpeed<<" cbI="<<current[1]<<
             " pfv="<<pfRealSpeed<<" pfvNew="<<pfSpeed<<" pfI="<<current[2]<<
             " fhv="<<fhRealSpeed<<" fhvNew="<<fhSpeed<<" fhI="<<current[3]<<endl;
         outFile.open(filename,ios_base::app);
         outFile<<time<<" "<<carSpeed.linear<<" "<<carSpeed.rotate<<
-               " "<<cbRealSpeed<<" "<<cbSpeed<<" "<<current[1]<<
                " "<<reelRealSpeed<<" "<<reelSpeed<<" "<<current[0]<<
+               " "<<cbRealSpeed<<" "<<cbSpeed<<" "<<current[1]<<
                " "<<pfRealSpeed<<" "<<pfSpeed<<" "<<current[2]<<
                " "<<fhRealSpeed<<" "<<fhSpeed<<" "<<current[3]<<endl;
         outFile.close();
         if(endFlag)
         {
-            usleep(2000);
+//            usleep(2000);
             motorSetSpeed(0,0);
             modbus_close(com);
             modbus_free(com);
@@ -338,7 +350,7 @@ vector<double> motorReadCurrent(void)
     {
         cout<<"error read current."<<endl;
     }
-    usleep(3000);
+//    usleep(3000);
     for(int i=0;i<4;i++)
     {
         //voltage=analog/32767*1.2
@@ -359,7 +371,7 @@ double readHeight(void)
     {
         cout<<"error read grain heap height."<<endl;
     }
-    //usleep(2000);
+//    usleep(2000);
     //voltage=analog/32767.0*1.2*5
     //height=0.2+voltage/5*(3-0.2)
     height=0.2+analog/32767.0*1.2*5.0/5.0*(3-0.2);
@@ -386,16 +398,16 @@ int main (int argc, char **argv)
     pthread_t motorControlThread;
     pthread_create(&motorControlThread, nullptr, carSpeedFollowMode, nullptr);
     ROS_INFO_STREAM("spread make.");
-    int count = 0;
 
+    int count = 0;
     while (ros::ok()){
         ROS_INFO_STREAM("spinonce");
         ros::spinOnce();
         count++;
-        if(count == 100){
+        if(count == 10000){
             break;
         }
-        ros::Rate(1).sleep();
+        ros::Rate(100).sleep();
     }
     ROS_INFO_STREAM("wait spread close.");
     pthread_kill(motorControlThread, 0);
