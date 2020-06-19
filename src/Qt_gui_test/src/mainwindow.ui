@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>1282</width>
-    <height>801</height>
+    <height>995</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -99,7 +99,7 @@
                  </sizepolicy>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(115, 210, 22);</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>Reap</string>
@@ -115,7 +115,7 @@
                  </sizepolicy>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(115, 210, 22);</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>Thresh</string>
@@ -131,7 +131,7 @@
                  </sizepolicy>
                 </property>
                 <property name="styleSheet">
-                 <string notr="true">background-color: rgb(204, 0, 0);</string>
+                 <string notr="true"/>
                 </property>
                 <property name="text">
                  <string>Grain</string>
@@ -187,6 +187,9 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(138, 226, 52);</string>
+              </property>
               <property name="text">
                <string>Obstacle!</string>
               </property>
@@ -200,6 +203,9 @@
                 <verstretch>0</verstretch>
                </sizepolicy>
               </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(138, 226, 52);</string>
+              </property>
               <property name="text">
                <string>Fault!</string>
               </property>
@@ -212,6 +218,9 @@
                 <horstretch>0</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="styleSheet">
+               <string notr="true">background-color: rgb(138, 226, 52);</string>
               </property>
               <property name="text">
                <string>Unload!</string>
@@ -275,6 +284,39 @@
                <widget class="QPushButton" name="pushButtonConnect1">
                 <property name="text">
                  <string>Zoom in</string>
+                </property>
+               </widget>
+              </item>
+             </layout>
+            </item>
+            <item>
+             <layout class="QHBoxLayout" name="horizontalLayout_10">
+              <item>
+               <widget class="QLabel" name="label_21">
+                <property name="text">
+                 <string>error:</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QTextBrowser" name="textBrowser">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
+                  <horstretch>0</horstretch>
+                  <verstretch>20</verstretch>
+                 </sizepolicy>
+                </property>
+                <property name="minimumSize">
+                 <size>
+                  <width>0</width>
+                  <height>30</height>
+                 </size>
+                </property>
+                <property name="maximumSize">
+                 <size>
+                  <width>16777215</width>
+                  <height>30</height>
+                 </size>
                 </property>
                </widget>
               </item>
@@ -425,7 +467,7 @@
            <x>0</x>
            <y>0</y>
            <width>971</width>
-           <height>391</height>
+           <height>446</height>
           </rect>
          </property>
          <attribute name="label">
@@ -1358,7 +1400,7 @@
            <x>0</x>
            <y>0</y>
            <width>1111</width>
-           <height>455</height>
+           <height>488</height>
           </rect>
          </property>
          <attribute name="label">
@@ -1470,10 +1512,10 @@
          <widget class="QLabel" name="label_42">
           <property name="geometry">
            <rect>
-            <x>454</x>
-            <y>110</y>
-            <width>231</width>
-            <height>68</height>
+            <x>480</x>
+            <y>120</y>
+            <width>201</width>
+            <height>51</height>
            </rect>
           </property>
           <property name="text">
@@ -1491,6 +1533,19 @@
           </property>
           <property name="text">
            <string/>
+          </property>
+         </widget>
+         <widget class="QProgressBar" name="progressBar">
+          <property name="geometry">
+           <rect>
+            <x>720</x>
+            <y>20</y>
+            <width>111</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="value">
+           <number>24</number>
           </property>
          </widget>
         </widget>
@@ -1662,8 +1717,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>100</width>
-           <height>30</height>
+           <width>1111</width>
+           <height>488</height>
           </rect>
          </property>
          <attribute name="label">
@@ -2044,7 +2099,7 @@
      <x>0</x>
      <y>0</y>
      <width>1282</width>
-     <height>30</height>
+     <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menuYH880_Control_panel">

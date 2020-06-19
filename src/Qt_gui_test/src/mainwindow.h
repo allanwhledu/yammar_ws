@@ -25,13 +25,16 @@ public:
     ~MainWindow();
 
 private slots:
-    void on_pushButtonConnect_clicked();
+    void qnode_init();
     void on_pushButtonSend_clicked();
     void updateLogcamera();
     void updateText();
 
     void displayChart();
     void updateFH();
+    void update_is_obstacle();
+    void update_no_obstacle();
+    void update_reap_height();
     void displayMat(const QImage& image);
     void displayText(const QString& text);
 
@@ -42,6 +45,8 @@ private slots:
     void on_pushButton_5_clicked();
 
     void on_pushButton_13_clicked();
+
+    void on_pushButtonConnect_clicked();
 
 private:
     Ui::MainWindow *ui;

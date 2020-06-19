@@ -25,6 +25,13 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent):
 	// m_pLeftToRightProBar->setMaximum(100);  // 最大值
 	// m_pLeftToRightProBar->setValue(50);  // 当前进度
 
+  std::cout<<"init ros node..."<<std::endl;
+  qnode.init();
+
+  ui->progressBar->setMinimum(0);
+  ui->progressBar->setMaximum(4500);
+  ui->progressBar->setValue(400);
+
 	ui->progressBar1->setMinimum(0);
 	ui->progressBar1->setMaximum(2000);
 	ui->progressBar1->setValue(1000);
@@ -46,7 +53,9 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent):
 	QObject::connect(&qnode,SIGNAL(loggingText()),this,SLOT(updateText()));
 	QObject::connect(&qnode,SIGNAL(loggingChart()),this,SLOT(displayChart()));
 	QObject::connect(&qnode,SIGNAL(loggingFH()),this,SLOT(updateFH()));
-
+  QObject::connect(&qnode,SIGNAL(logging_is_obstacle()),this,SLOT(update_is_obstacle()));
+  QObject::connect(&qnode,SIGNAL(logging_no_obstacle()),this,SLOT(update_no_obstacle()));
+  QObject::connect(&qnode,SIGNAL(logging_reap_height()),this,SLOT(update_reap_height()));
 	// QObject::connect(&qnode, SIGNAL(loggingUpdated()), this, SLOT(updateLoggingView()));
 
 }
@@ -58,7 +67,8 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButtonConnect_clicked()
 {
-	qnode.init();
+  std::cout<<"init button pressed."<<std::endl;
+    qnode.init();
 }
 
 void MainWindow::on_pushButtonSend_clicked()
@@ -90,6 +100,27 @@ void MainWindow::updateFH()
 	//         ui->progressBar1_4->setValue(i);
 	// }
 }
+
+void MainWindow::update_is_obstacle()
+{
+  std::cout<<"obstacle!"<<std::endl;
+  ui->pushButton_10->setStyleSheet("background-color: red");
+}
+
+void MainWindow::update_no_obstacle()
+{
+  std::cout<<"obstacle!"<<std::endl;
+  ui->pushButton_10->setStyleSheet("background-color: green");
+}
+
+void MainWindow::update_reap_height()
+{
+  QString qheight;
+  qheight = QString::number(qnode.reap_height);
+  ui->lineEdit_41->setText(qheight);
+  ui->progressBar->setValue(qnode.reap_height);
+}
+
 void MainWindow::displayMat(const QImage &image)
 {
 	qimage_mutex_.lock();

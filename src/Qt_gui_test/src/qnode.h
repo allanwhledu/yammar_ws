@@ -18,6 +18,8 @@
 #include "ros/subscriber.h"
 #include <std_msgs/String.h>
 #include <std_msgs/Float32.h>
+#include <std_msgs/Bool.h>
+#include <std_msgs/Int64.h>
 #include <string>
 #include <QThread>
 #include <QStringListModel>
@@ -57,6 +59,7 @@ public:
     QString text;
     float chart;
     float FH;
+    double reap_height;
 
     /*********************
     ** Logging
@@ -76,6 +79,8 @@ public:
 
     void ChartCallback(const std_msgs::Float32Ptr &msg);
     void FHCallback(const std_msgs::Float32Ptr &msg);
+    void is_obstacle_Callback(const std_msgs::BoolPtr &msg);
+    void reap_height_Callback(const std_msgs::Int64Ptr &msg);
     void TextCallback(const height_border_msgs::height_borderConstPtr &msg);
     QStringListModel* loggingModelLis()
         {return &logging_listen;}
@@ -90,6 +95,9 @@ Q_SIGNALS:
     void loggingText();
     void loggingChart();
     void loggingFH();
+    void logging_is_obstacle();
+    void logging_no_obstacle();
+    void logging_reap_height();
 
 private:
     int init_argc;
@@ -98,6 +106,8 @@ private:
     ros::Subscriber text_subscriber;
     ros::Subscriber chart_subscriber;
     ros::Subscriber FH_subscriber;
+    ros::Subscriber obstacle_subscriber;
+    ros::Subscriber reap_height_subscriber;
 
     QStringListModel logging_model;
     QStringListModel logging_listen;

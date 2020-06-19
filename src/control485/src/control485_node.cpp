@@ -16,6 +16,7 @@
 #include<pthread.h>
 
 #include <ros/ros.h>
+#include <std_msgs/Bool.h>
 #include "std_msgs/String.h"
 #include "std_msgs/Int32.h"
 #include "std_msgs/Float32.h"
@@ -44,6 +45,7 @@ int cbRatio=5,reelRatio=64,pfRatio=15,fhRatio=10;//减速比
 const int reelMotor=1,cbMotor=2,pfMotor=3,fhMotor=4;
 string port="/dev/ttyUSB0";
 harvesterSpeed carSpeed;
+bool is_obstacle = false;
 
 // 函数申明
 bool openSerial(const char* port);
@@ -231,6 +233,8 @@ int getCBSpeed(double carSpeed)
         carSpeed=0;
     }
     int res= cbRatio*min(467.0,min(398.09*cbCof*carSpeed+131.37,398.09*1.0*carSpeed+238.85));
+    if(is_obstacle == true)
+        res = 0;
     return min(res,3000);
 }
 int getReelSpeed(double carSpeed)
@@ -240,6 +244,8 @@ int getReelSpeed(double carSpeed)
         carSpeed=0;
     }
     int res= reelRatio*min(50.0,min(21.23*reelCof*carSpeed+12.3,21.23*1.0*carSpeed+21.23));
+    if(is_obstacle == true)
+        res = 0;
     return min(res,3000);
 }
 int getPFSpeed(double carSpeed)
@@ -249,6 +255,8 @@ int getPFSpeed(double carSpeed)
         carSpeed=0;
     }
     int res= pfRatio*min(187.0,min(39.16*pfCof*carSpeed+52.47,39.16*3.0*carSpeed+90.07));
+    if(is_obstacle == true)
+        res = 0;
     return min(res,3000);
 }
 int getFHSpeed(double carSpeed)
@@ -258,6 +266,8 @@ int getFHSpeed(double carSpeed)
         carSpeed=0;
     }
     int res= fhRatio*min(324.0,min(76.43*fhCof*carSpeed+90.95,76.43*3.0*carSpeed+152.86));
+    if(is_obstacle == true)
+        res = 0;
     return min(res,3000);
 }
 void* carSpeedFollowMode(void*)
@@ -379,6 +389,7 @@ double readHeight(void)
 }
 
 void callback(const std_msgs::Float32ConstPtr &msg);
+void is_obstacle_callback(const std_msgs::BoolConstPtr &msg);
 
 int main (int argc, char **argv)
 {
@@ -387,9 +398,11 @@ int main (int argc, char **argv)
     ROS_INFO_STREAM("Hello, ROS!") ;
     ros::NodeHandle n_;
     ros::Subscriber sub_;
+    ros::Subscriber sub2_;
 
     //Topic you want to subscribe
-    sub_ = n_.subscribe("subtopic", 1, &callback);
+    sub_ = n_.subscribe("car_speed", 1, &callback);
+    sub2_ = n_.subscribe("is_obstacle", 1, &is_obstacle_callback);
 
     cout<<"usage sudo ./motor"<<endl;
     //modbus_set_debug(com,true);//调试模式 可以显示串口总线的调试信息
@@ -417,4 +430,8 @@ int main (int argc, char **argv)
 void callback(const std_msgs::Float32ConstPtr &msg) {
     ROS_INFO_STREAM("callback! carspeed: "<<msg->data);
     carSpeed.linear = msg->data;
+}
+void is_obstacle_callback(const std_msgs::BoolConstPtr &msg) {
+    ROS_INFO_STREAM("callback! is_obstacle: "<<msg->data);
+    is_obstacle = msg->data;
 }
