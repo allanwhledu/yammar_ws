@@ -8,26 +8,41 @@
 
 #include <controlcan.h>
 #include <vector>
-#include <reap_unit_action/ControlReapAction.h>
-#include <actionlib/server/simple_action_server.h>
-
-typedef actionlib::SimpleActionServer<reap_unit_action::ControlReapAction> Server;
+#include <pthread.h>
+#include <stdio.h>
+#include <sys/types.h>
+#include <sys/stat.h>
+#include <fcntl.h>
+#include <pthread.h>
+#include "controlcan.h"
+#include <ctime>
+#include <cstdlib>
+#include <cstdio>
+#include "unistd.h"
+#include <locale.h>
+#include <ros/ros.h>
 
 class CAN_DEVICE {
 public:
     VCI_BOARD_INFO pInfo; //用来获取设备信息
     int count; //数据列表中，用来存储列表序号
+
+    // 接收线程
     pthread_t receive_thread;
     int m_run0;
+
     std::vector<int> log_error; //用于debug的时候记录变量
-    std::vector<VCI_CAN_OBJ> speed_error; //速度误差
+
     int motor;
     int channel;
 
-    void setMotor(int motor);
+    int angle1 = 0;
+    int angle2 = 0;
 
-    Server* pas;
-    reap_unit_action::ControlReapFeedback pfd;
+    ros::Publisher* pub_c1;
+    ros::Publisher* pub_c2;
+
+    void setMotor(int motor);
 
     CAN_DEVICE(int channel_idx);
 
@@ -47,6 +62,8 @@ public:
     void closeCAN();
 
     void close_receive();
+
+    void init_ICAN();
 };
 
 

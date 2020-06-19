@@ -32,7 +32,6 @@ int main(int argc, char **argv)
 {
 	//Initiate ROS
 	ros::init(argc, argv, "avoiding_obstacle");
-
 	//Create an object of class SubscribeAndPublish that will take care of everything
 	SubscribeAndPublish SAPObject;
 

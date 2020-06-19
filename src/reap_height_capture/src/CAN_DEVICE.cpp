@@ -3,13 +3,16 @@
 //
 
 #include "CAN_DEVICE.h"
+#include "ros/ros.h"
+#include "std_msgs/String.h"
+#include "std_msgs/Int32.h"
+#include "std_msgs/Int64.h"
 
 
 CAN_DEVICE::CAN_DEVICE(int channel_idx) {
     count = 0;
     m_run0 = 0;
-    channel = channel_idx-1;
-    pfd.percent_complete = 10000;
+    channel = channel_idx - 1;
 }
 
 void CAN_DEVICE::init_CAN() {// 进行CAN信号发送
@@ -19,7 +22,7 @@ void CAN_DEVICE::init_CAN() {// 进行CAN信号发送
         printf(">>open device success!\n");//打开设备成功
     } else {
         printf(">>open device error!\n");
-        // exit(1);
+        exit(1);
     }
 
     //初始化参数，严格参数二次开发函数库说明书。
@@ -35,17 +38,19 @@ void CAN_DEVICE::init_CAN() {// 进行CAN信号发送
     {
         printf(">>Init CAN1 error\n");
         VCI_CloseDevice(VCI_USBCAN2, channel);
+        exit(1);
     }
 
     if (VCI_StartCAN(VCI_USBCAN2, channel, 0) != 1) {
         printf(">>Start CAN1 error\n");
         VCI_CloseDevice(VCI_USBCAN2, channel);
+        exit(1);
     }
 }
 
-void* receive_func(void *param)  //接收线程,若接受到的信号为速度反馈，则将之反馈会client。
+void *receive_func(void *param)  //接收线程,若接受到的信号为目标反馈，则将之反馈会client。
 {
-    CAN_DEVICE *pCAN_DEVICE = (CAN_DEVICE*)param;
+    CAN_DEVICE *pCAN_DEVICE = (CAN_DEVICE *) param;
 
     // rec是指一个数据帧，一个rec的类型是VCI_CAN_OBJ。rec.Datelen才是一个数据帧的长度。
     int i, j;
@@ -54,50 +59,61 @@ void* receive_func(void *param)  //接收线程,若接受到的信号为速度�
     VCI_CAN_OBJ rec[3000];//接收缓存，设为3000为佳。但是一次接受不一定能够接到3000个数据帧。
 
     // 结合while循环，可以从外部修改m_run0来控制while循环
-
     while (pCAN_DEVICE->m_run0 & 0x0f) {
         // VCI_Receive(DWORD DeviceType,DWORD DeviceInd,DWORD CANInd,PVCI_CAN_OBJ pReceive,UINT Len,INT WaitTime);
         if ((reclen = VCI_Receive(VCI_USBCAN2, pCAN_DEVICE->channel, ind, rec, 3000, 0)) > 0)//调用接收函数，如果有数据，进行数据处理显示。
         {
             // 上面有一个WaitTime我们可以知道，其实can卡硬件接受的信号频率非常高，只是我们这里过10毫秒来看一次处理一次而已。
-            // 但是为什么没有缓存下来呢？
             for (j = 0; j < reclen; j++) {
-                if (rec[j].Data[2] == 0x92) //判断是否为速度误差反馈
+                if (rec[j].ID == 0x0181) // ICAN channel1 1-5的数据
                 {
-                    unsigned char heigh, low;
-                    heigh = rec[j].Data[5];
-                    low = rec[j].Data[4];
-                    // 因为常常出现反常反馈,所以对于上了60000的数据进行跳过
-                    if ((heigh << 8 | low) > 60000)
+                    unsigned char heigh1, low1;
+                    heigh1 = rec[j].Data[1];
+                    low1 = rec[j].Data[0];
+                    unsigned char heigh2, low2;
+                    heigh2 = rec[j].Data[3];
+                    low2 = rec[j].Data[2];
+                    if ((heigh1 << 8 | low1) > 60000 || (heigh2 << 8 | low2) > 60000)
                         continue;
-                    pCAN_DEVICE->pfd.percent_complete = heigh << 8 | low;
-                    pCAN_DEVICE->pas->publishFeedback(pCAN_DEVICE->pfd);
+                    // 如果为目标信号，则进行相关的操作
+                    int vol1 = (heigh1 << 8 | low1);
+                    pCAN_DEVICE->angle1 = vol1/2;
+                    std_msgs::Int64 data_receive1;
+                    data_receive1.data = pCAN_DEVICE->angle1;
+                    pCAN_DEVICE->pub_c1->publish(data_receive1);
+
+                    int vol2 = (heigh2 << 8 | low2);
+                    pCAN_DEVICE->angle2 = vol2/2;
+                    std_msgs::Int64 data_receive2;
+                    data_receive2.data = pCAN_DEVICE->angle2;
+                    pCAN_DEVICE->pub_c2->publish(data_receive2);
 
                     ROS_INFO(
-                            "Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X speed_error:%04d",
+                            "Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle1:%05d angle2:%05d",
+                            pCAN_DEVICE->count, rec[j].ID,
+                            rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
+                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1, pCAN_DEVICE->angle2);
+                } else if (rec[j].ID == 0x0281) { //ICAN channel2 5-8的数据
+                    unsigned char heigh, low;
+                    heigh = rec[j].Data[1];
+                    low = rec[j].Data[0];
+
+                    if ((heigh << 8 | low) > 60000)
+                        continue;
+                    // 如果为目标信号，则进行相关的操作
+//                    pCAN_DEVICE->angle1 = heigh << 8 | low;
+//                    std_msgs::Int64 data_receive;
+//                    data_receive.data = heigh << 8 | low;
+//                    pCAN_DEVICE->pub_c1->publish(data_receive);
+
+                    ROS_INFO(
+                            "Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle5:%04d",
                             pCAN_DEVICE->count, rec[j].ID,
                             rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
                             rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], heigh << 8 | low);
-                }
-                else if (rec[j].Data[2] == 0xD0)
-                {
-                    unsigned char heigh, low;
-                    heigh = rec[j].Data[5];
-                    low = rec[j].Data[4];
-                    // 因为常常出现反常反馈,所以对于上了60000的数据进行跳过
-                    if ((heigh << 8 | low) > 60000)
-                        continue;
-                    pCAN_DEVICE->pfd.percent_complete = heigh << 8 | low;
-                    pCAN_DEVICE->pas->publishFeedback(pCAN_DEVICE->pfd);
-
-                    ROS_INFO(
-                            "Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X current:%04d",
-                            pCAN_DEVICE->count, rec[j].ID,
-                            rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
-                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], heigh << 8 | low);
-                }
-                else {
-                    ROS_INFO("Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X", pCAN_DEVICE->count,
+                } else {
+                    ROS_INFO("Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X",
+                             pCAN_DEVICE->count,
                              rec[j].ID,
                              rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
                              rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7]);
@@ -226,46 +242,18 @@ void CAN_DEVICE::open_receive() {
 }
 
 void CAN_DEVICE::check_speed() {
-    // 关闭CAN信号接受线程
-    this->callFeedback(motor);
-//    ROS_INFO_STREAM("first call send");
-
-    while(pfd.percent_complete == 10000)
-    {
-        log_error.push_back(pfd.percent_complete);
-//        ROS_INFO_STREAM("still wait");
-        this->callFeedback(motor);
-        usleep(2000);
-    }
-
-    while(pfd.percent_complete > 50)
-    {
-        log_error.push_back(pfd.percent_complete);
-        this->callFeedback(motor);
-        usleep(2000);
-    }
-    ROS_INFO_STREAM("ok error is already small");
-
-    this->m_run0 = 0;
-//    ROS_INFO_STREAM("wait close");
-    pthread_join(receive_thread, NULL);//等待线程关闭
-//    ROS_INFO_STREAM("receive_thread_close.");
-}
-
-void CAN_DEVICE::wait_current() {
-    // 关闭CAN信号接受线程
-    this->callCurrent(motor);
-//    ROS_INFO_STREAM("call send");
-
-    while(pfd.percent_complete == 10000)
-    {
-        log_error.push_back(pfd.percent_complete);
-//        ROS_INFO_STREAM("still wait current feedback");
-        this->callCurrent(motor);
-        usleep(2000);
-    }
-    ROS_INFO_STREAM("current got.");
-
+//    // 关闭CAN信号接受线程
+//    this->callFeedback(motor);
+////    ROS_INFO_STREAM("first call send");
+//
+//    while(pfd.percent_complete == 10000)
+//    {
+//        log_error.push_back(pfd.percent_complete);
+////        ROS_INFO_STREAM("still wait");
+//        this->callFeedback(motor);
+//        usleep(2000);
+//    }
+//
 //    while(pfd.percent_complete > 50)
 //    {
 //        log_error.push_back(pfd.percent_complete);
@@ -273,17 +261,44 @@ void CAN_DEVICE::wait_current() {
 //        usleep(2000);
 //    }
 //    ROS_INFO_STREAM("ok error is already small");
-
-    this->m_run0 = 0;
-//    ROS_INFO_STREAM("wait close");
-    pthread_join(receive_thread, NULL);//等待线程关闭
-//    ROS_INFO_STREAM("receive_thread_close.");
+//
+//    this->m_run0 = 0;
+////    ROS_INFO_STREAM("wait close");
+//    pthread_join(receive_thread, NULL);//等待线程关闭
+////    ROS_INFO_STREAM("receive_thread_close.");
 }
-void CAN_DEVICE::close_receive(){
-    ROS_INFO_STREAM("wait receive close...");
+
+void CAN_DEVICE::wait_current() {
+//    // 关闭CAN信号接受线程
+//    this->callCurrent(motor);
+////    ROS_INFO_STREAM("call send");
+//
+//    while(pfd.percent_complete == 10000)
+//    {
+//        log_error.push_back(pfd.percent_complete);
+////        ROS_INFO_STREAM("still wait current feedback");
+//        this->callCurrent(motor);
+//        usleep(2000);
+//    }
+//    ROS_INFO_STREAM("current got.");
+//
+////    while(pfd.percent_complete > 50)
+////    {
+////        log_error.push_back(pfd.percent_complete);
+////        this->callFeedback(motor);
+////        usleep(2000);
+////    }
+////    ROS_INFO_STREAM("ok error is already small");
+//
+//    this->m_run0 = 0;
+////    ROS_INFO_STREAM("wait close");
+//    pthread_join(receive_thread, NULL);//等待线程关闭
+////    ROS_INFO_STREAM("receive_thread_close.");
+}
+
+void CAN_DEVICE::close_receive() {
     this->m_run0 = 0;
     pthread_join(receive_thread, NULL);//等待线程关闭
-    ROS_INFO_STREAM("receive thread closed.");
 }
 
 void CAN_DEVICE::closeCAN() {
@@ -300,4 +315,25 @@ void CAN_DEVICE::closeCAN() {
 
 void CAN_DEVICE::setMotor(int motor) {
     CAN_DEVICE::motor = motor;
+}
+
+void CAN_DEVICE::init_ICAN(){
+    VCI_CAN_OBJ msg[1];
+
+    msg[0].ID = 0;
+    msg[0].SendType = 0;
+    msg[0].RemoteFlag = 0;
+    msg[0].ExternFlag = 0;
+    msg[0].DataLen = 2;
+
+    msg[0].Data[0] = 0x01;
+    msg[0].Data[1] = 0x01;
+//    msg[0].Data[2] = 0xD0;
+//    msg[0].Data[3] = 0x00;
+//    msg[0].Data[4] = 0x00;
+//    msg[0].Data[5] = 0x00;
+//    msg[0].Data[6] = 0x00;
+//    msg[0].Data[7] = 0x00;
+
+    transmit_msg(msg, "init ICAN");
 }
