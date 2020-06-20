@@ -1,0 +1,25 @@
+<launch>
+
+#### bag play ################################################
+
+  <param name="/use_sim_time" value="true"/>
+
+  <node pkg="rosbag" type="play" name="play" 
+    args="$(find launch_file)/bag/2020-06-20-10-21-48_mmw_radar.bag --delay=5 --clock"/>
+
+#### HMI ####################################################
+
+  <node pkg="trail" type="app_node" name="HMI" output="screen"/>
+
+#### HMI ####################################################
+
+  <node pkg="control485" type="control485_node" name="control485" output="screen"/>
+
+#### visulization ################################################
+
+  <node pkg="rviz" type="rviz" name="rviz" 
+    args="-d $(find launch_file)/rviz_config/rviz.rviz"/>
+
+  <node pkg="rqt_graph" type="rqt_graph" name="rqt_graph"/>
+
+</launch>

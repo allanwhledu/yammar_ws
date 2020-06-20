@@ -103,13 +103,13 @@ void MainWindow::updateFH()
 
 void MainWindow::update_is_obstacle()
 {
-  std::cout<<"obstacle!"<<std::endl;
+//  std::cout<<"obstacle!"<<std::endl;
   ui->pushButton_10->setStyleSheet("background-color: red");
 }
 
 void MainWindow::update_no_obstacle()
 {
-  std::cout<<"obstacle!"<<std::endl;
+//  std::cout<<"obstacle!"<<std::endl;
   ui->pushButton_10->setStyleSheet("background-color: green");
 }
 
