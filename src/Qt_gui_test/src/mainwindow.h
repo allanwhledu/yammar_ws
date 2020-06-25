@@ -30,7 +30,7 @@ private slots:
     void updateText();
 
     void displayChart();
-    void updateFH();
+    void updateREEL();
     void update_is_obstacle();
     void update_no_obstacle();
     void update_reap_height();

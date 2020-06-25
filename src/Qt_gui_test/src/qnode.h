@@ -62,9 +62,9 @@ public:
     QString str;
     cv::Mat img;
     QImage image;
-    QString text;
+    QString leader_line_error;
     float chart;
-    float FH;
+    float REEL_speed = 0;
     double reap_height;
 
     /*********************
@@ -84,10 +84,10 @@ public:
     void log( const LogLevel &level, const std::string &msg);
 
     void ChartCallback(const std_msgs::Float32Ptr &msg);
-    void FHCallback(const std_msgs::Float32Ptr &msg);
+    void REEL_speed_Callback(const std_msgs::Float32Ptr &msg);
     void is_obstacle_Callback(const std_msgs::BoolPtr &msg);
     void reap_height_Callback(const std_msgs::Int64Ptr &msg);
-    void TextCallback(const height_border_msgs::height_borderConstPtr &msg);
+    void height_border_Callback(const height_border_msgs::height_borderConstPtr &msg);
     QStringListModel* loggingModelLis()
         {return &logging_listen;}
     void log_listen(const LogLevel &level, const std::string &msg);
@@ -98,9 +98,9 @@ Q_SIGNALS:
     void loggingListen();
     void rosShutdown();
     void loggingCamera();
-    void loggingText();
+    void logging_leader_line_error();
     void loggingChart();
-    void loggingFH();
+    void logging_REEL_speed();
     void logging_is_obstacle();
     void logging_no_obstacle();
     void logging_reap_height();

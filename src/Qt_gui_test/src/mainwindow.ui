@@ -293,28 +293,6 @@
                 </property>
                </widget>
               </item>
-              <item>
-               <widget class="QTextBrowser" name="leadingLine_param">
-                <property name="sizePolicy">
-                 <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
-                  <horstretch>0</horstretch>
-                  <verstretch>20</verstretch>
-                 </sizepolicy>
-                </property>
-                <property name="minimumSize">
-                 <size>
-                  <width>0</width>
-                  <height>20</height>
-                 </size>
-                </property>
-                <property name="maximumSize">
-                 <size>
-                  <width>16777215</width>
-                  <height>30</height>
-                 </size>
-                </property>
-               </widget>
-              </item>
              </layout>
             </item>
             <item>
@@ -1598,13 +1576,6 @@
            </property>
           </widget>
          </item>
-         <item>
-          <widget class="QProgressBar" name="progressBar1_4">
-           <property name="value">
-            <number>24</number>
-           </property>
-          </widget>
-         </item>
         </layout>
        </widget>
        <widget class="QLabel" name="label_15">
@@ -1928,7 +1899,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QTextBrowser" name="textBrowser">
+            <widget class="QTextBrowser" name="leadingLine_param">
              <property name="sizePolicy">
               <sizepolicy hsizetype="Expanding" vsizetype="Minimum">
                <horstretch>0</horstretch>
@@ -1938,7 +1909,7 @@
              <property name="minimumSize">
               <size>
                <width>0</width>
-               <height>30</height>
+               <height>20</height>
               </size>
              </property>
              <property name="maximumSize">
@@ -1989,6 +1960,32 @@
         </property>
         <property name="text">
          <string>Obstacle!</string>
+        </property>
+       </widget>
+       <widget class="QProgressBar" name="progressBar1_4">
+        <property name="geometry">
+         <rect>
+          <x>750</x>
+          <y>140</y>
+          <width>171</width>
+          <height>25</height>
+         </rect>
+        </property>
+        <property name="value">
+         <number>24</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_52">
+        <property name="geometry">
+         <rect>
+          <x>580</x>
+          <y>130</y>
+          <width>111</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>REEL speed:</string>
         </property>
        </widget>
       </widget>

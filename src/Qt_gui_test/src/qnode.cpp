@@ -80,9 +80,9 @@ bool QNode::init()
   image_transport::ImageTransport it(im);
 
   // Add your ros communications here.
-  text_subscriber = n.subscribe("/perceptual_nodes/harvest_line_data",100,&QNode::TextCallback, this);
+  text_subscriber = n.subscribe("/perceptual_nodes/harvest_line_data", 100, &QNode::height_border_Callback, this);
   chart_subscriber = n.subscribe("/chart",1,&QNode::ChartCallback,this);
-  FH_subscriber = n.subscribe("/FH_speed",1,&QNode::FHCallback,this);
+  FH_subscriber = n.subscribe("/REEL_speed", 1, &QNode::REEL_speed_Callback, this);
   obstacle_subscriber = n.subscribe("/is_obstacle",1,&QNode::is_obstacle_Callback,this);
   reap_height_subscriber = n.subscribe("/reap_angle1",1,&QNode::reap_height_Callback,this);
 //  image_sub = it.subscribe("/perceptual_nodes/harvest_line_stream",100,&QNode::myCallback_img,this);//相机尝试
@@ -112,10 +112,10 @@ bool QNode::init()
 }
 
 
-void QNode::TextCallback(const height_border_msgs::height_borderConstPtr &msg)
+void QNode::height_border_Callback(const height_border_msgs::height_borderConstPtr &msg)
 {
-  text = QString::number(msg->height);
-  Q_EMIT loggingText();
+    leader_line_error = QString::number(msg->height);
+  Q_EMIT logging_leader_line_error();
 }
 
 void QNode::ChartCallback(const std_msgs::Float32Ptr &msg)
@@ -125,11 +125,11 @@ void QNode::ChartCallback(const std_msgs::Float32Ptr &msg)
   Q_EMIT loggingChart();
 }
 
-void QNode::FHCallback(const std_msgs::Float32Ptr &msg)
+void QNode::REEL_speed_Callback(const std_msgs::Float32Ptr &msg)
 {
-  FH = msg->data;
-  ROS_INFO_STREAM("FH receive: "<<FH);
-  Q_EMIT loggingFH();
+    REEL_speed = msg->data;
+  ROS_INFO_STREAM("REEL_speed receive: " << REEL_speed);
+  Q_EMIT logging_REEL_speed();
 }
 
 void QNode::is_obstacle_Callback(const std_msgs::BoolPtr &msg)

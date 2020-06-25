@@ -50,9 +50,9 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent):
 
 	QObject::connect(&qnode, SIGNAL(rosShutdown()), this, SLOT(close()));
 	QObject::connect(&qnode,SIGNAL(loggingCamera()),this,SLOT(updateLogcamera()));
-	QObject::connect(&qnode,SIGNAL(loggingText()),this,SLOT(updateText()));
+	QObject::connect(&qnode,SIGNAL(logging_leader_line_error()),this,SLOT(updateText()));
 	QObject::connect(&qnode,SIGNAL(loggingChart()),this,SLOT(displayChart()));
-	QObject::connect(&qnode,SIGNAL(loggingFH()),this,SLOT(updateFH()));
+	QObject::connect(&qnode,SIGNAL(logging_REEL_speed()),this,SLOT(updateREEL()));
   QObject::connect(&qnode,SIGNAL(logging_is_obstacle()),this,SLOT(update_is_obstacle()));
   QObject::connect(&qnode,SIGNAL(logging_no_obstacle()),this,SLOT(update_no_obstacle()));
   QObject::connect(&qnode,SIGNAL(logging_reap_height()),this,SLOT(update_reap_height()));
@@ -83,7 +83,7 @@ void MainWindow::updateLogcamera()
 
 void MainWindow::updateText()
 {
-	displayText(qnode.text);
+	displayText(qnode.leader_line_error);
 }
 
 void MainWindow::displayChart()
@@ -91,11 +91,11 @@ void MainWindow::displayChart()
 	ui->widget->c = qnode.chart;
 }
 
-void MainWindow::updateFH()
+void MainWindow::updateREEL()
 {
-	ui->progressBar1_4->setValue(qnode.FH);
+	ui->progressBar1_4->setValue(qnode.REEL_speed);
 
-	// for(int i=1;i<qnode.FH;i++)
+	// for(int i=1;i<qnode.REEL_speed;i++)
 	// {
 	//         ui->progressBar1_4->setValue(i);
 	// }

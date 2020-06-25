@@ -47,6 +47,7 @@ string port="/dev/ttyUSB0";
 harvesterSpeed carSpeed;
 bool is_obstacle = false;
 bool is_stop = false;
+ros::Publisher* pub_reel_speed;
 
 // 函数申明
 bool openSerial(const char* port);
@@ -172,7 +173,7 @@ void motorSetSpeed(int motor,int speed)
 }
 int motorReadSpeed(int motor)
 {
-    uint16_t temp=0;
+    uint16_t temp=-1000;
     modbus_set_slave(com,motor);
     int flag=modbus_read_registers(com,motorSpeedFeedbackAddr,1,&temp);
 
@@ -304,6 +305,11 @@ void* carSpeedFollowMode(void*)
 
         //get motor real speed
         reelRealSpeed=motorReadSpeed(reelMotor);
+        if (reelRealSpeed != -1000) {
+            std_msgs::Float32 reel_speed_msg;
+            reel_speed_msg.data = reelRealSpeed;
+            pub_reel_speed->publish(reel_speed_msg);
+        }
 //        cbRealSpeed=motorReadSpeed(cbMotor);
 //        pfRealSpeed=motorReadSpeed(pfMotor);
 //        fhRealSpeed=motorReadSpeed(fhMotor);
@@ -410,6 +416,10 @@ int main (int argc, char **argv)
     ros::Subscriber sub_;
     ros::Subscriber sub2_;
     ros::Subscriber sub3_;
+    ros::Publisher pub_;
+
+    pub_ = n_.advertise<std_msgs::Float32>("REEL_speed", 10);
+    pub_reel_speed = &pub_;
 
     //Topic you want to subscribe
     sub_ = n_.subscribe("car_speed", 1, &car_speed_callback);
@@ -421,7 +431,7 @@ int main (int argc, char **argv)
     openSerial(port.c_str());
     motorInit();
     pthread_t motorControlThread;
-    pthread_create(&motorControlThread, nullptr, carSpeedFollowMode, nullptr);
+    pthread_create(&motorControlThread, nullptr, carSpeedFollowMode, &pub_);
     ROS_INFO_STREAM("spread make.");
 
     int count = 0;
