@@ -16,13 +16,16 @@ CAN_DEVICE::CAN_DEVICE(int channel_idx) {
 }
 
 void CAN_DEVICE::init_CAN() {// 进行CAN信号发送
-    printf(">>start CAN device !\r\n");//指示程序已运行
-    if (VCI_OpenDevice(VCI_USBCAN2, channel, 0) == 1)//打开设备
+    if (channel == 0)
     {
-        printf(">>open device success!\n");//打开设备成功
-    } else {
-        printf(">>open device error!\n");
-        exit(1);
+        printf(">>start CAN device !\r\n");//指示程序已运行
+        if (VCI_OpenDevice(VCI_USBCAN2, 0, 0) == 1)//打开设备
+        {
+            printf(">>open device success!\n");//打开设备成功
+        } else {
+            printf(">>open device error!\n");
+            exit(1);
+        }
     }
 
     //初始化参数，严格参数二次开发函数库说明书。
@@ -34,16 +37,16 @@ void CAN_DEVICE::init_CAN() {// 进行CAN信号发送
     config.Timing1 = 0x14;
     config.Mode = 0;//正常模式
 
-    if (VCI_InitCAN(VCI_USBCAN2, channel, 0, &config) != 1)//CAN1
+    if (VCI_InitCAN(VCI_USBCAN2, 0, channel, &config) != 1)//CAN1
     {
-        printf(">>Init CAN1 error\n");
-        VCI_CloseDevice(VCI_USBCAN2, channel);
+        printf(">>Init CAN error\n");
+        VCI_CloseDevice(VCI_USBCAN2, 0);
         exit(1);
     }
 
-    if (VCI_StartCAN(VCI_USBCAN2, channel, 0) != 1) {
-        printf(">>Start CAN1 error\n");
-        VCI_CloseDevice(VCI_USBCAN2, channel);
+    if (VCI_StartCAN(VCI_USBCAN2, 0, channel) != 1) {
+        printf(">>Start CAN error\n");
+        VCI_CloseDevice(VCI_USBCAN2, 0);
         exit(1);
     }
 }
@@ -61,11 +64,11 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
     // 结合while循环，可以从外部修改m_run0来控制while循环
     while (pCAN_DEVICE->m_run0 & 0x0f) {
         // VCI_Receive(DWORD DeviceType,DWORD DeviceInd,DWORD CANInd,PVCI_CAN_OBJ pReceive,UINT Len,INT WaitTime);
-        if ((reclen = VCI_Receive(VCI_USBCAN2, pCAN_DEVICE->channel, ind, rec, 3000, 0)) > 0)//调用接收函数，如果有数据，进行数据处理显示。
+        if ((reclen = VCI_Receive(VCI_USBCAN2, 0, pCAN_DEVICE->channel, rec, 3000, 0)) > 0)//调用接收函数，如果有数据，进行数据处理显示。
         {
             // 上面有一个WaitTime我们可以知道，其实can卡硬件接受的信号频率非常高，只是我们这里过10毫秒来看一次处理一次而已。
             for (j = 0; j < reclen; j++) {
-                if (rec[j].ID == 0x0181) // ICAN channel1 1-5的数据
+                if (rec[j].ID == 0x0181) // 采集卡 channel1 1-5的数据
                 {
                     unsigned char heigh1, low1;
                     heigh1 = rec[j].Data[1];
@@ -76,24 +79,25 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     if ((heigh1 << 8 | low1) > 60000 || (heigh2 << 8 | low2) > 60000)
                         continue;
                     // 如果为目标信号，则进行相关的操作
-                    int vol1 = (heigh1 << 8 | low1);
-                    pCAN_DEVICE->angle1 = vol1/2;
+                    float vol1 = (heigh1 << 8 | low1);
+                    pCAN_DEVICE->angle1 = vol1/2*105/4000+5; //因为输入电压是10v，所以除以2
                     std_msgs::Int64 data_receive1;
                     data_receive1.data = pCAN_DEVICE->angle1;
                     pCAN_DEVICE->pub_c1->publish(data_receive1);
 
-                    int vol2 = (heigh2 << 8 | low2);
-                    pCAN_DEVICE->angle2 = vol2/2;
+                    float vol2 = (heigh2 << 8 | low2);
+                    pCAN_DEVICE->angle2 = vol2/2*105/4000+5;
                     std_msgs::Int64 data_receive2;
                     data_receive2.data = pCAN_DEVICE->angle2;
                     pCAN_DEVICE->pub_c2->publish(data_receive2);
 
                     ROS_INFO(
-                            "Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle1:%05d angle2:%05d",
-                            pCAN_DEVICE->count, rec[j].ID,
+                            "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle1:%05d angle2:%05d",
+                            pCAN_DEVICE->channel+1, pCAN_DEVICE->count, rec[j].ID,
                             rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
                             rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1, pCAN_DEVICE->angle2);
-                } else if (rec[j].ID == 0x0281) { //ICAN channel2 5-8的数据
+                }
+                else if (rec[j].ID == 0x0281) { //采集卡 channel2 5-8的数据
                     unsigned char heigh, low;
                     heigh = rec[j].Data[1];
                     low = rec[j].Data[0];
@@ -107,13 +111,34 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
 //                    pCAN_DEVICE->pub_c1->publish(data_receive);
 
                     ROS_INFO(
-                            "Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle5:%04d",
-                            pCAN_DEVICE->count, rec[j].ID,
+                            "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle5:%04d",
+                            pCAN_DEVICE->channel+1, pCAN_DEVICE->count, rec[j].ID,
                             rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
                             rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], heigh << 8 | low);
-                } else {
-                    ROS_INFO("Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X",
-                             pCAN_DEVICE->count,
+                }
+                else if (rec[j].ID == 0xCFF5188)
+                {
+                    double v=0.0,w=0.0;
+                    uint16_t data[8];
+                    for(int i=0;i<8;i++)
+                    {
+                        data[i]=rec[j].Data[i];
+                    }
+                    v=(data[1]<<8)|data[0];
+                    w=(data[3]<<8)|data[2];
+                    v-=32768;
+                    w-=32768;
+                    v/=1000;
+                    w/=1000;
+//                    carSpeed.linear=v;
+//                    carSpeed.rotate=w;
+                    pCAN_DEVICE->car_speed.data = v;
+                    pCAN_DEVICE->pub_c3->publish(pCAN_DEVICE->car_speed);
+                }
+                else {
+                    ROS_INFO("Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X",
+                            pCAN_DEVICE->channel+1,
+                            pCAN_DEVICE->count,
                              rec[j].ID,
                              rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
                              rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7]);
@@ -128,7 +153,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
 
 void CAN_DEVICE::transmit_msg(VCI_CAN_OBJ send[1], char com[10]) //发送函数
 {
-    if (VCI_Transmit(VCI_USBCAN2, channel, 0, send, 1) == 1) {
+    if (VCI_Transmit(VCI_USBCAN2, 0, channel, send, 1) == 1) {
 
         ROS_INFO("Send    msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X COMMAND:%s", count,
                  send[0].ID,
@@ -303,11 +328,11 @@ void CAN_DEVICE::close_receive() {
 
 void CAN_DEVICE::closeCAN() {
     usleep(100000);//延时100ms。
-    VCI_ResetCAN(VCI_USBCAN2, channel, 0);//复位CAN1通道。
+    VCI_ResetCAN(VCI_USBCAN2, 0, 0);//复位CAN1通道。
     usleep(100000);//延时100ms。
-    VCI_ResetCAN(VCI_USBCAN2, channel, 1);//复位CAN2通道。
+    VCI_ResetCAN(VCI_USBCAN2, 0, 1);//复位CAN2通道。
     usleep(100000);//延时100ms。
-    VCI_CloseDevice(VCI_USBCAN2, channel);//关闭设备。
+    VCI_CloseDevice(VCI_USBCAN2, 0);//关闭设备。
     printf(">>close deivce success!\n");//打开设备成功
 // 除收发函数外，其它的函数调用前后，最好加个毫秒级的延时，即不影响程序的运行，又可以让USBCAN设备有充分的时间处理指令。
 // goto ext;

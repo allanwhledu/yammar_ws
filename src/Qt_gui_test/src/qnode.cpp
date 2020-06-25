@@ -19,6 +19,7 @@
 #include "ros/rate.h"
 #include "sensor_msgs/image_encodings.h"
 #include "std_msgs/Bool.h"
+#include "std_msgs/Float32.h"
 
 
 /*****************************************************************************
@@ -48,6 +49,7 @@ void QNode::myCallback_img(const sensor_msgs::ImageConstPtr &msg)
 {
   try
   {
+    ROS_INFO_STREAM("image_received.");
     //cv::imshow("gui_subscriber", cv_bridge::toCvShare(msg, "bgr8")->image);
     cv_bridge::CvImageConstPtr cv_ptr = cv_bridge::toCvShare(msg, sensor_msgs::image_encodings::RGB8);
     img = cv_ptr->image;
@@ -73,17 +75,21 @@ bool QNode::init()
   }
 
   ros::start(); // explicitly needed since our nodehandle is going out of scope.
-  ros::NodeHandle nSub;
+  ros::NodeHandle n;
   ros::NodeHandle im;
   image_transport::ImageTransport it(im);
 
   // Add your ros communications here.
-  text_subscriber = nSub.subscribe("/perceptual_nodes/harvest_line_data",100,&QNode::TextCallback, this);
-  chart_subscriber = nSub.subscribe("/chart",1,&QNode::ChartCallback,this);
-  FH_subscriber = nSub.subscribe("/FH_speed",1,&QNode::FHCallback,this);
-  obstacle_subscriber = nSub.subscribe("/is_obstacle",1,&QNode::is_obstacle_Callback,this);
-  reap_height_subscriber = nSub.subscribe("/reap_angle1",1,&QNode::reap_height_Callback,this);
-  image_sub = it.subscribe("/perceptual_nodes/harvest_line_stream",100,&QNode::myCallback_img,this);//相机尝试
+  text_subscriber = n.subscribe("/perceptual_nodes/harvest_line_data",100,&QNode::TextCallback, this);
+  chart_subscriber = n.subscribe("/chart",1,&QNode::ChartCallback,this);
+  FH_subscriber = n.subscribe("/FH_speed",1,&QNode::FHCallback,this);
+  obstacle_subscriber = n.subscribe("/is_obstacle",1,&QNode::is_obstacle_Callback,this);
+  reap_height_subscriber = n.subscribe("/reap_angle1",1,&QNode::reap_height_Callback,this);
+//  image_sub = it.subscribe("/perceptual_nodes/harvest_line_stream",100,&QNode::myCallback_img,this);//相机尝试
+  image_sub = it.subscribe("/boud_depth",100,&QNode::myCallback_img,this);//相机尝试
+
+  car_speed_pub = n.advertise<std_msgs::Float32>("/car_speed", 1);
+  is_stop_pub = n.advertise<std_msgs::Bool>("/is_stop", 1);
 
   start();
   ROS_INFO_STREAM("inited qnode.");
@@ -171,6 +177,20 @@ void QNode::run()
 void QNode::ros_test(const std::string s)
 {
   ROS_INFO_STREAM(s);
+}
+
+void QNode::pub_car_speed(double msg)
+{
+  std_msgs::Float32 car_speed;
+  car_speed.data = msg;
+  car_speed_pub.publish(car_speed);
+}
+
+void QNode::pub_is_stop(bool msg)
+{
+  std_msgs::Bool is_stop;
+  is_stop.data = msg;
+  is_stop_pub.publish(is_stop);
 }
 
 void QNode::log(const LogLevel &level, const std::string &msg)

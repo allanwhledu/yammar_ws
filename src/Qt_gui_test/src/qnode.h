@@ -53,6 +53,12 @@ public:
     void run();
     void myCallback_img(const sensor_msgs::ImageConstPtr& msg);//camera callback function
 
+    ros::Publisher car_speed_pub;
+    void pub_car_speed(double msg);
+
+    ros::Publisher is_stop_pub;
+    void pub_is_stop(bool msg);
+
     QString str;
     cv::Mat img;
     QImage image;

@@ -25,7 +25,6 @@ public:
     ~MainWindow();
 
 private slots:
-    void qnode_init();
     void on_pushButtonSend_clicked();
     void updateLogcamera();
     void updateText();
@@ -47,6 +46,10 @@ private slots:
     void on_pushButton_13_clicked();
 
     void on_pushButtonConnect_clicked();
+
+    void on_stop_button_clicked();
+
+    void on_ublock_button_clicked();
 
 private:
     Ui::MainWindow *ui;

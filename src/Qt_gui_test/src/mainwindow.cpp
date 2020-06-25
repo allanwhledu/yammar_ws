@@ -28,9 +28,9 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent):
   std::cout<<"init ros node..."<<std::endl;
   qnode.init();
 
-  ui->progressBar->setMinimum(0);
-  ui->progressBar->setMaximum(4500);
-  ui->progressBar->setValue(400);
+  ui->progressBar->setMinimum(18);
+  ui->progressBar->setMaximum(120);
+  ui->progressBar->setValue(18);
 
 	ui->progressBar1->setMinimum(0);
 	ui->progressBar1->setMaximum(2000);
@@ -158,15 +158,28 @@ void MainWindow::on_horizontalSlider_sliderMoved(int position)
 void MainWindow::on_pushButton_5_clicked()
 {
 	double speed = this->ui->lineEdit_13->text().toDouble();
-	speed = speed-0.2;
+  speed = speed-0.1;
 	QString qspeed = QString::number(speed);
 	this->ui->lineEdit_13->setText(qspeed);
+  qnode.pub_car_speed(speed);
 }
 
 void MainWindow::on_pushButton_13_clicked()
 {
 	double speed = this->ui->lineEdit_13->text().toDouble();
-	speed = speed+0.2;
+  speed = speed+0.1;
 	QString qspeed = QString::number(speed);
 	this->ui->lineEdit_13->setText(qspeed);
+  qnode.pub_car_speed(speed);
+}
+
+void MainWindow::on_stop_button_clicked()
+{
+    bool is_stop = true;
+    qnode.pub_is_stop(is_stop);
+}
+void MainWindow::on_ublock_button_clicked()
+{
+    bool is_stop = false;
+    qnode.pub_is_stop(is_stop);
 }

@@ -21,6 +21,7 @@
 #include "unistd.h"
 #include <locale.h>
 #include <ros/ros.h>
+#include <std_msgs/Float32.h>
 
 class CAN_DEVICE {
 public:
@@ -38,9 +39,11 @@ public:
 
     int angle1 = 0;
     int angle2 = 0;
+    std_msgs::Float32 car_speed;
 
     ros::Publisher* pub_c1;
     ros::Publisher* pub_c2;
+    ros::Publisher* pub_c3;
 
     void setMotor(int motor);
 
