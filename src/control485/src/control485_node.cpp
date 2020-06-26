@@ -175,16 +175,18 @@ int motorReadSpeed(int motor)
 {
     uint16_t temp=-1000;
     modbus_set_slave(com,motor);
-    int flag=modbus_read_registers(com,motorSpeedFeedbackAddr,1,&temp);
+    int flag = -1;
+    do {
+        flag = modbus_read_registers(com, motorSpeedFeedbackAddr, 1, &temp);
 
-    // todo 这里为什么ankang写作等待？事实上不是可以写成一直循环查看吗？
-    usleep(2000);
-    if(flag==-1)
-    {
-        cout<<"error read motor"<<motor<<" speed."<<endl;
-    } else{
-        cout<<"succeed read motor"<<motor<<" speed."<<endl;
-    }
+        // todo 这里为什么ankang写作等待？事实上不是可以写成一直循环查看吗？
+        //    usleep(2000);
+        if (flag == -1) {
+            cout << "error read motor" << motor << " speed." << endl;
+        } else {
+            cout << "succeed read motor" << motor << " speed." << endl;
+        }
+    } while (flag == -1);
     return temp;
 }
 
@@ -278,6 +280,7 @@ int getFHSpeed(double carSpeed)
         res = 0;
     return min(res,3000);
 }
+
 void* carSpeedFollowMode(void*)
 {
     fstream outFile;
@@ -319,7 +322,7 @@ void* carSpeedFollowMode(void*)
         if(abs(reelSpeed-reelRealSpeed)>10)
         {
             motorSetSpeed(reelMotor,reelSpeed);
-            ROS_INFO_STREAM("reel change");
+            ROS_INFO_STREAM("reel speed change");
         }
 //        if(abs(cbSpeed-cbRealSpeed)>10)
 //        {
