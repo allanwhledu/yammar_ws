@@ -20,6 +20,9 @@
 #include "std_msgs/String.h"
 #include "std_msgs/Int32.h"
 #include "std_msgs/Float32.h"
+#include <actionlib/server/simple_action_server.h>
+#include "control485/DriveMotorAction.h"
+
 
 using namespace std;
 
@@ -73,6 +76,42 @@ void test1(void);
 void rotate(void);
 void rotateR(void);
 volatile sig_atomic_t endFlag = 0;
+
+
+// 测试action
+typedef actionlib::SimpleActionServer<control485::DriveMotorAction> Server;
+
+void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
+    ROS_INFO("Start Motor %d.", goal->motor_id);
+
+    int target_speed = 0;
+    int actual_speed = 0;
+
+    target_speed = getReelSpeed(carSpeed.linear);//reel
+    actual_speed = motorReadSpeed(goal->motor_id);
+
+//    if (actual_speed != -1000) {
+//        std_msgs::Float32 reel_speed_msg;
+//        reel_speed_msg.data = actual_speed;
+//        pub_reel_speed->publish(reel_speed_msg);
+//    }
+
+    while(abs(target_speed - actual_speed) > 10)
+    {
+        motorSetSpeed(goal->motor_id, target_speed);
+        ROS_INFO_STREAM("reel speed change： "<<abs(target_speed - actual_speed));
+        usleep(2000);
+        actual_speed = motorReadSpeed(goal->motor_id);
+    }
+
+    cout << "carVl=" << carSpeed.linear << " carVw=" << carSpeed.rotate <<
+         " reelv=" << actual_speed << " reelvNew=" << target_speed << endl;
+
+    as->setSucceeded();
+
+    ROS_INFO_STREAM("Action complete. Wait for next invoke.\n");
+}
+
 
 //在程序退出前 调用电机停止指令
 static void my_handler(int sig){ // can be called asynchronously
@@ -142,6 +181,14 @@ void motorInit(void)
     motorSetModbus(reelMotor,1);
     motorSetDirection(reelMotor,2);//正转
     motorSetSpeed(reelMotor,0);
+
+    motorSetModbus(cbMotor,1);
+    motorSetDirection(cbMotor,2);//正转
+    motorSetSpeed(cbMotor,0);
+
+    motorSetModbus(pfMotor,1);
+    motorSetDirection(pfMotor,2);//正转
+    motorSetSpeed(pfMotor,0);
 }
 
 // 使能某电机的rs485通讯
@@ -322,7 +369,7 @@ void* carSpeedFollowMode(void*)
         if(abs(reelSpeed-reelRealSpeed)>10)
         {
             motorSetSpeed(reelMotor,reelSpeed);
-            ROS_INFO_STREAM("reel speed change");
+            ROS_INFO_STREAM("reel speed change： "<<abs(reelSpeed-reelRealSpeed));
         }
 //        if(abs(cbSpeed-cbRealSpeed)>10)
 //        {
@@ -433,23 +480,18 @@ int main (int argc, char **argv)
     //modbus_set_debug(com,true);//调试模式 可以显示串口总线的调试信息
     openSerial(port.c_str());
     motorInit();
-    pthread_t motorControlThread;
-    pthread_create(&motorControlThread, nullptr, carSpeedFollowMode, &pub_);
-    ROS_INFO_STREAM("spread make.");
 
-    int count = 0;
-    while (ros::ok()){
-//        ROS_INFO_STREAM("spinonce");
-        ros::spinOnce();
-        count++;
-        if(count == 100000){
-            break;
-        }
-        ros::Rate(100).sleep();
-    }
-    ROS_INFO_STREAM("wait spread close.");
-    pthread_kill(motorControlThread, 0);
-    ros::Duration(10);
+    // 定义一个服务器，control485就是topic
+    Server server(n_, "control485", boost::bind(&execute, _1, &server), false);
+
+    // 服务器开始运行
+    server.start();
+
+    ros::spin();
+
+    // todo 停下所有电机
+
+    return 0;
 }
 
 void car_speed_callback(const std_msgs::Float32ConstPtr &msg) {

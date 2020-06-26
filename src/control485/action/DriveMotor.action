@@ -1,0 +1,8 @@
+# Define the goal
+uint32 motor_id  # Specify which motor we want to use
+---
+# Define the result
+uint32 result
+---
+# Define a feedback message
+float32 speed_now

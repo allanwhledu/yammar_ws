@@ -11,6 +11,8 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
+        actionlib
+        actionlib_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -63,8 +65,7 @@ find_package(catkin REQUIRED COMPONENTS
 ## Generate actions in the 'action' folder
 # add_action_files(
 #   FILES
-#   Action1.action
-#   Action2.action
+#   DriveMotor.action
 # )
 
 ## Generate added messages and services with any dependencies listed here
@@ -92,6 +93,11 @@ find_package(catkin REQUIRED COMPONENTS
 #   cfg/DynReconf1.cfg
 #   cfg/DynReconf2.cfg
 # )
+
+# 需要生成action的消息类型
+find_package(catkin REQUIRED genmsg actionlib_msgs actionlib)
+add_action_files(DIRECTORY action FILES DriveMotor.action)
+generate_messages(DEPENDENCIES actionlib_msgs)
 
 ###################################
 ## catkin specific configuration ##
