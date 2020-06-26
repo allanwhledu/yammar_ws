@@ -1,5 +1,6 @@
 # Define the goal
 uint32 motor_id  # Specify which motor we want to use
+uint32 target_speed
 ---
 # Define the result
 uint32 result

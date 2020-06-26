@@ -50,7 +50,9 @@ string port="/dev/ttyUSB0";
 harvesterSpeed carSpeed;
 bool is_obstacle = false;
 bool is_stop = false;
-ros::Publisher* pub_reel_speed;
+ros::Publisher* pub_modified_car_speed;
+std_msgs::Float32 modified_car_speed;
+float last_modified_car_speed = 0;
 
 // 函数申明
 bool openSerial(const char* port);
@@ -75,7 +77,8 @@ void singleMotorCurrentRecord(int motor);
 void test1(void);
 void rotate(void);
 void rotateR(void);
-volatile sig_atomic_t endFlag = 0;
+
+bool endFlag = false;
 
 
 // 测试action
@@ -85,23 +88,35 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
     ROS_INFO("Start Motor %d.", goal->motor_id);
 
     int target_speed = 0;
-    int actual_speed = 0;
+    int actual_speed = -1000;
+    int actual_speed_pre = -1000;
 
-    target_speed = getReelSpeed(carSpeed.linear);//reel
+    // 计算目标速度，读取真实速度
+    target_speed = goal->target_speed;//reel
     actual_speed = motorReadSpeed(goal->motor_id);
 
-//    if (actual_speed != -1000) {
-//        std_msgs::Float32 reel_speed_msg;
-//        reel_speed_msg.data = actual_speed;
-//        pub_reel_speed->publish(reel_speed_msg);
-//    }
+    ROS_INFO_STREAM("the difference of speed still: "<<abs(target_speed - actual_speed));
+    motorSetSpeed(goal->motor_id, target_speed);
+    usleep(20000);
 
-    while(abs(target_speed - actual_speed) > 10)
-    {
-        motorSetSpeed(goal->motor_id, target_speed);
-        ROS_INFO_STREAM("reel speed change： "<<abs(target_speed - actual_speed));
-        usleep(2000);
+    // 测试真实速度是否已经稳定
+//        actual_speed = motorReadSpeed(goal->motor_id);
+//        if(actual_speed == -1000){
+//            do {
+//                motorSetSpeed(goal->motor_id, target_speed);
+//                actual_speed = motorReadSpeed(goal->motor_id);
+//            } while (actual_speed == -1000);
+//        }
+    int count = 0;
+    while (true) {
         actual_speed = motorReadSpeed(goal->motor_id);
+        if (abs(actual_speed - actual_speed_pre) < 10)
+            count++;
+        if(count > 5)
+            break;
+
+        ROS_WARN_STREAM("pre and actual:" <<actual_speed_pre<<" "<< actual_speed);
+        actual_speed_pre = actual_speed;
     }
 
     cout << "carVl=" << carSpeed.linear << " carVw=" << carSpeed.rotate <<
@@ -330,89 +345,22 @@ int getFHSpeed(double carSpeed)
 
 void* carSpeedFollowMode(void*)
 {
-    fstream outFile;
-    string file=getTime();
-    string filename=file+".txt";
-    outFile.open(filename,ios_base::app);
-    outFile<<"startTime="<<file<<" cbRatio="<<cbCof<<" reelRatio="<<reelCof<<" pfRatio="<<pfCof<<" fhRatio="<<fhCof<<endl;
-    outFile<<"format:time carvl carvw cbv cbvNew cbI reelv reelvNew reelI pfv pfvNew pfI fhv fhvNew fhI"<<endl;
-    outFile.close();
-    signal(SIGINT, my_handler);
-    int cbSpeed=0,reelSpeed=0,fhSpeed=0,pfSpeed=0;
-    int cbRealSpeed=0,reelRealSpeed=0,pfRealSpeed=0,fhRealSpeed=0;
-    vector<double> current;
-    cout.setf(ios_base::fixed);
-    cout.precision(3);
-    outFile.setf(ios_base::fixed);
-    outFile.precision(3);
-    while(1)
+    while(!endFlag)
     {
-        //calculate new motor speed
-        reelSpeed=getReelSpeed(carSpeed.linear);//reel
-//        cbSpeed=getCBSpeed(carSpeed.linear);//cb
-//        fhSpeed=getFHSpeed(carSpeed.linear);//feedHouse
-//        pfSpeed=getPFSpeed(carSpeed.linear);//PlatformAuger
-
-        //get motor real speed
-        reelRealSpeed=motorReadSpeed(reelMotor);
-        if (reelRealSpeed != -1000) {
-            std_msgs::Float32 reel_speed_msg;
-            reel_speed_msg.data = reelRealSpeed;
-            pub_reel_speed->publish(reel_speed_msg);
+        if(is_stop || is_obstacle){
+            modified_car_speed.data = 0;
+        } else{
+            modified_car_speed.data = carSpeed.linear;
         }
-//        cbRealSpeed=motorReadSpeed(cbMotor);
-//        pfRealSpeed=motorReadSpeed(pfMotor);
-//        fhRealSpeed=motorReadSpeed(fhMotor);
-//        current=motorReadCurrent();
 
-        //check if motor speed differnece is very small
-        if(abs(reelSpeed-reelRealSpeed)>10)
-        {
-            motorSetSpeed(reelMotor,reelSpeed);
-            ROS_INFO_STREAM("reel speed change： "<<abs(reelSpeed-reelRealSpeed));
+        if(modified_car_speed.data != last_modified_car_speed){
+            ROS_WARN_STREAM("modified speed will be change.");
         }
-//        if(abs(cbSpeed-cbRealSpeed)>10)
-//        {
-//            ROS_INFO_STREAM("cb change");
-//            motorSetSpeed(cbMotor,cbSpeed);
-//        }
-//        if(abs(fhSpeed-fhRealSpeed)>10)
-//        {
-//            ROS_INFO_STREAM("fh change");
-//            motorSetSpeed(fhMotor,fhSpeed);
-//        }
-//        if(abs(pfSpeed-pfRealSpeed)>10)
-//        {
-//            ROS_INFO_STREAM("pf change");
-//            motorSetSpeed(pfMotor,pfSpeed);
-//        }
-        string time=getTime();
-        cout<<time<<" carVl="<<carSpeed.linear<<" carVw="<<carSpeed.rotate<<
-            " reelv="<<reelRealSpeed<<" reelvNew="<<reelSpeed<<endl;
-
-//        string time=getTime();
-//        cout<<time<<" carVl="<<carSpeed.linear<<" carVw="<<carSpeed.rotate<<
-//            " reelv="<<reelRealSpeed<<" reelvNew="<<reelSpeed<<" reelI="<<current[0]<<
-//            " cbv="<<cbRealSpeed<<" cbvNew="<<cbSpeed<<" cbI="<<current[1]<<
-//            " pfv="<<pfRealSpeed<<" pfvNew="<<pfSpeed<<" pfI="<<current[2]<<
-//            " fhv="<<fhRealSpeed<<" fhvNew="<<fhSpeed<<" fhI="<<current[3]<<endl;
-//        outFile.open(filename,ios_base::app);
-//        outFile<<time<<" "<<carSpeed.linear<<" "<<carSpeed.rotate<<
-//               " "<<reelRealSpeed<<" "<<reelSpeed<<" "<<current[0]<<
-//               " "<<cbRealSpeed<<" "<<cbSpeed<<" "<<current[1]<<
-//               " "<<pfRealSpeed<<" "<<pfSpeed<<" "<<current[2]<<
-//               " "<<fhRealSpeed<<" "<<fhSpeed<<" "<<current[3]<<endl;
-//        outFile.close();
-        if(endFlag)
-        {
-//            usleep(2000);
-            motorSetSpeed(0,0);
-            modbus_close(com);
-            modbus_free(com);
-            cout<<"program terminated."<<endl;
-            break;
-        }
+        pub_modified_car_speed->publish(modified_car_speed);
+        last_modified_car_speed = modified_car_speed.data;
     }
+    ROS_WARN_STREAM("carspeedfollow stoped.");
+    endFlag = false;
 }
 vector<double> motorReadCurrent(void)
 {
@@ -463,48 +411,58 @@ int main (int argc, char **argv)
     ros::NodeHandle nh;
     ROS_INFO_STREAM("Hello, ROS!") ;
     ros::NodeHandle n_;
-    ros::Subscriber sub_;
+
     ros::Subscriber sub2_;
     ros::Subscriber sub3_;
+    ros::Subscriber sub_;
+
     ros::Publisher pub_;
 
-    pub_ = n_.advertise<std_msgs::Float32>("REEL_speed", 10);
-    pub_reel_speed = &pub_;
+    pub_ = n_.advertise<std_msgs::Float32>("modified_car_speed", 1);
+    pub_modified_car_speed = &pub_;
 
     //Topic you want to subscribe
-    sub_ = n_.subscribe("car_speed", 1, &car_speed_callback);
     sub2_ = n_.subscribe("is_obstacle", 1, &is_obstacle_callback);
     sub3_ = n_.subscribe("is_stop", 1, &is_stop_callback);
+    sub_ = n_.subscribe("car_speed", 1, &car_speed_callback);
 
     cout<<"usage sudo ./motor"<<endl;
     //modbus_set_debug(com,true);//调试模式 可以显示串口总线的调试信息
     openSerial(port.c_str());
     motorInit();
 
+    pthread_t motorControlThread;
+    pthread_create(&motorControlThread, nullptr, carSpeedFollowMode, nullptr);
+    ROS_INFO_STREAM("spread make.");
+
     // 定义一个服务器，control485就是topic
     Server server(n_, "control485", boost::bind(&execute, _1, &server), false);
-
     // 服务器开始运行
     server.start();
-
     ros::spin();
+
+    ROS_INFO_STREAM("wait spread close.");
+    endFlag = true;
+    pthread_kill(motorControlThread, 0);
+    ros::Duration(10);
 
     // todo 停下所有电机
 
     return 0;
 }
 
-void car_speed_callback(const std_msgs::Float32ConstPtr &msg) {
-//    ROS_INFO_STREAM("callback! carspeed: "<<msg->data);
-    carSpeed.linear = msg->data;
-    carSpeed.rotate = 0;
-}
 void is_obstacle_callback(const std_msgs::BoolConstPtr &msg) {
 //    ROS_INFO_STREAM("callback! is_obstacle: "<<msg->data);
     is_obstacle = msg->data;
 }
 
 void is_stop_callback(const std_msgs::BoolConstPtr &msg) {
-//    ROS_INFO_STREAM("callback! is_stop: "<<msg->data);
+    ROS_INFO_STREAM("callback! is_stop: "<<msg->data);
     is_stop = msg->data;
+}
+
+void car_speed_callback(const std_msgs::Float32ConstPtr &msg) {
+    ROS_INFO_STREAM("callback! carspeed: "<<msg->data);
+    carSpeed.linear = msg->data;
+    carSpeed.rotate = 0;
 }

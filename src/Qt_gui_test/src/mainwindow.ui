@@ -350,8 +350,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>100</width>
-           <height>30</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
@@ -605,8 +605,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>100</width>
-           <height>30</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
@@ -860,8 +860,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>100</width>
-           <height>30</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
@@ -951,8 +951,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>100</width>
-           <height>30</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
@@ -1296,8 +1296,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>100</width>
-           <height>30</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
@@ -1459,8 +1459,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>100</width>
-           <height>30</height>
+           <width>98</width>
+           <height>28</height>
           </rect>
          </property>
          <attribute name="label">
@@ -1719,7 +1719,7 @@
          <string>0</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_8">
+       <widget class="QPushButton" name="go_right_button">
         <property name="geometry">
          <rect>
           <x>370</x>
@@ -1805,7 +1805,7 @@
          <string>↓</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_12">
+       <widget class="QPushButton" name="go_left_button">
         <property name="geometry">
          <rect>
           <x>60</x>

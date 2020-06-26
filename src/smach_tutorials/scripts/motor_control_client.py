@@ -5,23 +5,25 @@ import rospy
 import smach
 import smach_ros
 
-# from std_msgs.msg import Empty
-
+from std_msgs.msg import Empty
+from std_msgs.msg import Float32
 from std_msgs.msg import Int32
 
 from smach_ros import SimpleActionState
-from reap_unit_action.msg import ControlReapAction
+from control485.msg import DriveMotorAction
 
-motors = [40, 39, 38, 37]
+motors = [1, 1, 1, 1]
 motor_goal = list()
 
 for i in motors:
-    motor_client = ControlReapAction()
-    motor_client.action_goal.goal.dishwasher_id = i
+    motor_client = DriveMotorAction()
+    motor_client.action_goal.goal.motor_id = i
     motor_goal.append(motor_client)
 
 target_speed = Int32()
 target_speed.data = 0
+
+last_target = -1000
 
 
 # i = Int32()
@@ -86,6 +88,8 @@ target_speed.data = 0
 #         return 'foo_reset'
 #     else:
 #         return 'foo_done'
+
+# for publish result
 pub = rospy.Publisher('smach_fback', Int32, queue_size=1)
 class end(smach.State):
     def __init__(self):
@@ -101,15 +105,22 @@ class end(smach.State):
         return 'end_succeeded'
 
 def monitor_cb(self, msg):
-    motor_goal[0].action_goal.goal.target_speed = 1 * msg.data
-    motor_goal[1].action_goal.goal.target_speed = 2 * msg.data
-    motor_goal[2].action_goal.goal.target_speed = 2.5 * msg.data
-    motor_goal[3].action_goal.goal.target_speed = 3 * msg.data
 
-    for motor in motor_goal:
-        print motor.action_goal.goal.dishwasher_id, ' ', motor.action_goal.goal.target_speed
+    global last_target
+    if last_target != msg.data:
 
-    return False
+        motor_goal[0].action_goal.goal.target_speed = 2000 * msg.data
+        motor_goal[1].action_goal.goal.target_speed = 4000 * msg.data
+        motor_goal[2].action_goal.goal.target_speed = 5000 * msg.data
+        motor_goal[3].action_goal.goal.target_speed = 6000 * msg.data
+
+        for motor in motor_goal:
+            print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
+
+        last_target = msg.data
+        return False
+
+    return True
 
 
 def main():
@@ -138,36 +149,36 @@ def main():
     # 配置状态机
     sm = smach.StateMachine(outcomes=['DONE'])
     with sm:
-        smach.StateMachine.add('WAIT', smach_ros.MonitorState("/sm_reset", Int32, monitor_cb),
+        smach.StateMachine.add('WAIT', smach_ros.MonitorState("/modified_car_speed", Float32, monitor_cb),
                                transitions={'invalid': 'MOTOR1', 'valid': 'WAIT', 'preempted': 'WAIT'})
 
         smach.StateMachine.add('MOTOR1',
-                               SimpleActionState('control_reap',
-                                                 ControlReapAction,
+                               SimpleActionState('control485',
+                                                 DriveMotorAction,
                                                  goal=motor_goal[0].action_goal.goal),
                                transitions={'succeeded': 'MOTOR2',
                                             'preempted': 'MOTOR1',
                                             'aborted': 'MOTOR1'})
 
         smach.StateMachine.add('MOTOR2',
-                               SimpleActionState('control_reap',
-                                                 ControlReapAction,
+                               SimpleActionState('control485',
+                                                 DriveMotorAction,
                                                  goal=motor_goal[1].action_goal.goal),
                                transitions={'succeeded': 'MOTOR3',
                                             'preempted': 'MOTOR2',
                                             'aborted': 'MOTOR2'})
 
         smach.StateMachine.add('MOTOR3',
-                               SimpleActionState('control_reap',
-                                                 ControlReapAction,
+                               SimpleActionState('control485',
+                                                 DriveMotorAction,
                                                  goal=motor_goal[2].action_goal.goal),
                                transitions={'succeeded': 'MOTOR4',
                                             'preempted': 'MOTOR3',
                                             'aborted': 'MOTOR3'})
 
         smach.StateMachine.add('MOTOR4',
-                               SimpleActionState('control_reap',
-                                                 ControlReapAction,
+                               SimpleActionState('control485',
+                                                 DriveMotorAction,
                                                  goal=motor_goal[3].action_goal.goal),
                                transitions={'succeeded': 'END',
                                             'preempted': 'MOTOR4',
