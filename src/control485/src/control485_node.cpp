@@ -51,6 +51,10 @@ harvesterSpeed carSpeed;
 bool is_obstacle = false;
 bool is_stop = false;
 ros::Publisher* pub_modified_car_speed;
+ros::Publisher* pub_reel_speed;
+ros::Publisher* pub_cb_speed;
+ros::Publisher* pub_pf_speed;
+
 std_msgs::Float32 modified_car_speed;
 float last_modified_car_speed = 0;
 
@@ -417,9 +421,21 @@ int main (int argc, char **argv)
     ros::Subscriber sub_;
 
     ros::Publisher pub_;
+    ros::Publisher pub1_;
+    ros::Publisher pub2_;
+    ros::Publisher pub3_;
 
     pub_ = n_.advertise<std_msgs::Float32>("modified_car_speed", 1);
     pub_modified_car_speed = &pub_;
+
+    pub1_ = n_.advertise<std_msgs::Float32>("REEL_speed", 1);
+    pub_reel_speed = &pub1_;
+
+    pub2_ = n_.advertise<std_msgs::Float32>("CB_speed", 1);
+    pub_reel_speed = &pub2_;
+
+    pub3_ = n_.advertise<std_msgs::Float32>("PF_speed", 1);
+    pub_reel_speed = &pub3_;
 
     //Topic you want to subscribe
     sub2_ = n_.subscribe("is_obstacle", 1, &is_obstacle_callback);
