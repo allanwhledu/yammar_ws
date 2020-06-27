@@ -62,7 +62,9 @@ public:
     QString str;
     cv::Mat img;
     QImage image;
-    QString leader_line_error;
+    QString leader_line_error_string;
+    float leader_line_error;
+
     float chart;
     float REEL_speed = 0;
     double reap_height;

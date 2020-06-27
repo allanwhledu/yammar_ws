@@ -4,6 +4,8 @@
 #include <pcl/point_types.h>
 #include <pcl_conversions/pcl_conversions.h>
 #include <sensor_msgs/PointCloud2.h>
+#include <std_msgs/Bool.h>
+#include <std_msgs/String.h>
 #include "ICANCmd.h"
 
 using namespace std;
@@ -16,6 +18,9 @@ int main(int argc, char **argv)
 	ros::init(argc, argv, "mmw_capture");
 	ros::NodeHandle nh;
 	ros::Publisher pub = nh.advertise<sensor_msgs::PointCloud2>("millimeter_wave", 2);
+	ros::Publisher pub_2 = nh.advertise<std_msgs::Bool>("is_obstacle",1);	
+	bool objDetected = FALSE;
+	double objDist = 100;
 	
 	if(dwDeviceHandle = CAN_DeviceOpen(ACUSB_132B, 0, 0) == 1)
 	{
@@ -120,6 +125,18 @@ int main(int argc, char **argv)
 							prob = frame_obj[j].arryData[6]>>5;
 							confidence_list.push_back(prob);
 						}
+
+						//determine whether is obstacle is in field
+						double objDistTemp = sqrt(xx*xx + yy*yy);
+						if(0.2 <= objDistTemp && objDistTemp <= 5){
+							objDetected = TRUE;
+						}
+						// else
+						// {
+						// 	objDetected = FALSE;
+						// }
+						
+
 					}
 					
 					pcl::PointCloud<pcl::PointXYZ> radar_point;
@@ -140,6 +157,11 @@ int main(int argc, char **argv)
 					msg_radar.header.stamp = ros::Time::now();
 					pub.publish(msg_radar);
 
+					// publish the objDetect state
+					std_msgs::Bool objState;
+					objState.data = objDetected;
+					pub_2.publish(objState);
+					cout<<"Object state "<<objDetected<<endl;
 					//clear
 					radar_point.clear();
 					xx_list.clear();
@@ -149,6 +171,8 @@ int main(int argc, char **argv)
 					confidence_list.clear();
 					obj_id_list.clear();
 					frame_obj.clear();
+
+					objDetected = FALSE;
                 }
             }
 		}

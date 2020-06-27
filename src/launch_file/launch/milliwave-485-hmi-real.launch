@@ -7,9 +7,6 @@
   <node pkg="rosbag" type="play" name="play1"
     args="$(find launch_file)/bag/2020-06-20-10-21-48_mmw_radar.bag --delay=5 --clock"/>
 
-  <node pkg="rosbag" type="play" name="play2"
-    args="$(find launch_file)/bag/move.bag --delay=5 -r 0.05 --clock"/>
-
 #### HMI ####################################################
 
   <node pkg="trail" type="app_node" name="HMI" />
@@ -21,6 +18,10 @@
 #### read signals from CAN bus ####################################################
 
   <node pkg="read_CAN" type="read_CAN_node" name="read_CAN" />
+
+#### for line detect ####################################################
+
+  <node pkg="boud_rgbd" type="boud_rgbd" name="line_detect" />
 
 #### visulization ################################################
 

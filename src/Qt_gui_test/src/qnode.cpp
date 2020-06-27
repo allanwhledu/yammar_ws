@@ -80,7 +80,7 @@ bool QNode::init()
   image_transport::ImageTransport it(im);
 
   // Add your ros communications here.
-  text_subscriber = n.subscribe("/perceptual_nodes/harvest_line_data", 100, &QNode::height_border_Callback, this);
+  text_subscriber = n.subscribe("/height_border_param", 100, &QNode::height_border_Callback, this);
   chart_subscriber = n.subscribe("/chart",1,&QNode::ChartCallback,this);
   FH_subscriber = n.subscribe("/REEL_speed", 1, &QNode::REEL_speed_Callback, this);
   obstacle_subscriber = n.subscribe("/is_obstacle",1,&QNode::is_obstacle_Callback,this);
@@ -114,7 +114,8 @@ bool QNode::init()
 
 void QNode::height_border_Callback(const height_border_msgs::height_borderConstPtr &msg)
 {
-    leader_line_error = QString::number(msg->height);
+    leader_line_error_string = QString::fromStdString(msg->angle);
+    leader_line_error = atof(msg->angle.c_str());
   Q_EMIT logging_leader_line_error();
 }
 

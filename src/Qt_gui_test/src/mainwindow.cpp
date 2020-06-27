@@ -83,7 +83,19 @@ void MainWindow::updateLogcamera()
 
 void MainWindow::updateText()
 {
-	displayText(qnode.leader_line_error);
+  displayText(qnode.leader_line_error_string);
+  if(qnode.leader_line_error < -2){
+    ui->go_left_button->setStyleSheet("background-color: red");
+    ui->go_right_button->setStyleSheet("background-color: white");
+  }
+  else if(qnode.leader_line_error > 2){
+    ui->go_left_button->setStyleSheet("background-color: white");
+    ui->go_right_button->setStyleSheet("background-color: red");
+  }
+else{
+    ui->go_left_button->setStyleSheet("background-color: white");
+    ui->go_right_button->setStyleSheet("background-color: white");
+}
 }
 
 void MainWindow::displayChart()

@@ -1,0 +1,5 @@
+<launch>
+	<node pkg="tf" type="static_transform_publisher" name="camera_pub" args="0 0 0  0 0 0 1    /camera_link  /camera_optical_frame 30"/>
+  <node name="realsense2_driver_node" pkg="realsense2_driver" type="realsense2_driver" output="screen" />
+  <node name="realsense2_server_node" pkg="realsense2_driver" type="realsense2_server" />
+</launch>
