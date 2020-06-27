@@ -12,7 +12,7 @@ from std_msgs.msg import Int32
 from smach_ros import SimpleActionState
 from control485.msg import DriveMotorAction
 
-motors = [1, 1, 1, 1]
+motors = [1, 2, 3]
 motor_goal = list()
 
 for i in motors:
@@ -109,10 +109,9 @@ def monitor_cb(self, msg):
     global last_target
     if last_target != msg.data:
 
-        motor_goal[0].action_goal.goal.target_speed = 2000 * msg.data
+        motor_goal[0].action_goal.goal.target_speed = 4000 * msg.data
         motor_goal[1].action_goal.goal.target_speed = 4000 * msg.data
-        motor_goal[2].action_goal.goal.target_speed = 5000 * msg.data
-        motor_goal[3].action_goal.goal.target_speed = 6000 * msg.data
+        motor_goal[2].action_goal.goal.target_speed = 4000 * msg.data
 
         for motor in motor_goal:
             print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
@@ -172,17 +171,10 @@ def main():
                                SimpleActionState('control485',
                                                  DriveMotorAction,
                                                  goal=motor_goal[2].action_goal.goal),
-                               transitions={'succeeded': 'MOTOR4',
+                               transitions={'succeeded': 'END',
                                             'preempted': 'MOTOR3',
                                             'aborted': 'MOTOR3'})
 
-        smach.StateMachine.add('MOTOR4',
-                               SimpleActionState('control485',
-                                                 DriveMotorAction,
-                                                 goal=motor_goal[3].action_goal.goal),
-                               transitions={'succeeded': 'END',
-                                            'preempted': 'MOTOR4',
-                                            'aborted': 'MOTOR4'})
         smach.StateMachine.add('END',
                                end(), transitions={'end_succeeded': 'WAIT'})
 
