@@ -42,7 +42,7 @@ void transform_to_pointcloud(Mat& rgb,Mat& depth,pcl::PointCloud<pcl::PointXYZRG
 void filter_pointcloud(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloudin,pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud_filtered);
 void uncutRegion_search(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud_filtered,pcl::PointCloud<pcl::PointXYZRGB>::Ptr& plane_uncut);
 Eigen::VectorXf boundpoints_clusterd(Mat& rgb,Mat& depth, pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud_in, pcl::PointCloud<pcl::PointXYZRGB>::Ptr& plane_uncut,
-                          vector<Point2i>& pointdepthimg,vector<Point3f>& pointdepthimg_3d);
+                                     vector<Point2i>& pointdepthimg,vector<Point3f>& pointdepthimg_3d);
 void heigth_detection(Mat& rgb,Mat& depth,pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloudin,height_border_msgs::height_border& height_borderMsg,Eigen::VectorXf& coeff_uncut);
 void boud_points_process(Mat& rgb,vector<Point2i>& pointdepthimg,vector<Point3f>& pointdepthimg_3d, height_border_msgs::height_border& height_borderMsg,pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloudin);
 void curve_detect(Mat& rgb, vector<Point2i>& pointdepthimg);
@@ -103,7 +103,7 @@ void boud_depth(Mat& rgb, Mat& depth)
     cloud_filtered->width = cloud_filtered->points.size();
     pcl::toROSMsg(*cloudin + *plane_uncut, cloud_boud);
     pointcloud_pub.publish(cloud_boud);
-   // pcl::io::savePCDFile( "/home/wj/Desktop/pointcloud.pcd", *cloudin + *plane_uncut);
+    // pcl::io::savePCDFile( "/home/wj/Desktop/pointcloud.pcd", *cloudin + *plane_uncut);
     imshow("rgb", rgb);
     waitKey(1);
 }
@@ -238,8 +238,8 @@ Eigen::VectorXf boundpoints_clusterd(Mat& rgb, Mat& depth,pcl::PointCloud<pcl::P
 
     Point3f  pointdepth_3d; //分界线点的三维坐标
     Point2i  pointdepth; //分界线点的二维坐标
-
-    float A=0.022391413,B= -0.991479484,C= -0.127744922,D= 1.79071477;  //偏差基准面
+    float A=0.04488149,B=	-0.986913152,C=	-0.153237743,D=	1.906296245;
+    //float A=0.022391413,B= -0.991479484,C= -0.127744922,D= 1.79071477;  //偏差基准面
 
     pcl::PointXYZRGB Point;
 
@@ -314,9 +314,10 @@ void boud_points_process(Mat& rgb,vector<Point2i>& pointdepthimg,vector<Point3f>
         fitLine(pointdepthimg_3d, line_para_3d, cv::DIST_WELSCH, 0, 1e-2, 1e-2);
 
         //cout<<line_para_3d[0]<<" "<<line_para_3d[1]<<" "<<line_para_3d[2]<<" "<<line_para_3d[3]<<" "<<line_para_3d[4]<<" "<<line_para_3d[5]<<endl;
-
-        float Standard_line_fun_0 = 0.00251082, Standard_line_fun_1 =-0.127729, Standard_line_fun_2= 0.991806,  //分界线标准线
-              Standard_line_fun_3= 0.451316,Standard_line_fun_4= 1.08251, Standard_line_fun_5=5.69316;
+        float Standard_line_fun_0=-0.006598471,	Standard_line_fun_1=-0.153720695,Standard_line_fun_2=0.988091626,
+                Standard_line_fun_3=0.568678908,Standard_line_fun_4=1.099983282,Standard_line_fun_5=	5.516045191;
+        //float Standard_line_fun_0 = 0.00251082, Standard_line_fun_1 =-0.127729, Standard_line_fun_2= 0.991806,  //分界线标准线
+        //      Standard_line_fun_3= 0.451316,Standard_line_fun_4= 1.08251, Standard_line_fun_5=5.69316;
 
         if(line_para_3d[2]<0)  //调整矢量方向一致,避免余弦角计算1变179问题
         {
@@ -330,7 +331,8 @@ void boud_points_process(Mat& rgb,vector<Point2i>& pointdepthimg,vector<Point3f>
         float arc_cosvalue_inangle = acos(cosvalue);
         if(!left) arc_cosvalue_inangle=-arc_cosvalue_inangle;
 
-        float A_standard_plane=0.022391413,B_standard_plane= -0.991479484,C_standard_plane= -0.127744922,D_standard_plane= 1.79071477; //该平面为偏差基准面
+        float A_standard_plane=0.04488149,B_standard_plane=	-0.986913152,C_standard_plane=-0.153237743,D_standard_plane=1.906296245;
+        //float A_standard_plane=0.022391413,B_standard_plane= -0.991479484,C_standard_plane= -0.127744922,D_standard_plane= 1.79071477; //该平面为偏差基准面
 
         Point3f begin_standard = Point3f(Standard_line_fun_3, Standard_line_fun_4, Standard_line_fun_5);
         Point3f end_standard = Point3f(Standard_line_fun_3+Standard_line_fun_0, Standard_line_fun_4+Standard_line_fun_1, Standard_line_fun_5+Standard_line_fun_2);
@@ -351,7 +353,7 @@ void boud_points_process(Mat& rgb,vector<Point2i>& pointdepthimg,vector<Point3f>
             {
                 Point3f tmp_rotate_point = random_rotateObject( pointdepthimg_3d[i].x,pointdepthimg_3d[i].y,pointdepthimg_3d[i].z, 0, 0, 0,
                                                                 A_standard_plane,B_standard_plane,C_standard_plane+0.03,
-                                                               arc_cosvalue_inangle);
+                                                                arc_cosvalue_inangle);
                 rotate_point.push_back(tmp_rotate_point);
             }
 
@@ -473,23 +475,23 @@ void curve_detect(Mat& rgb,vector<Point2i>& pointdepthimg) {
 
 //绘制方向箭头
 void drawArrow(cv::Mat& img, cv::Point pStart, cv::Point pEnd, int len, int alpha,
-     cv::Scalar& color, int thickness, int lineType)
- {
-     const double PI = 3.1415926;
-     Point arrow;
+               cv::Scalar& color, int thickness, int lineType)
+{
+    const double PI = 3.1415926;
+    Point arrow;
     //计算 θ 角（最简单的一种情况在下面图示中已经展示，关键在于 atan2 函数，详情见下面）
-     double angle = atan2((double)(pStart.y - pEnd.y), (double)(pStart.x - pEnd.x));
-     line(img, pStart, pEnd, color, thickness, lineType);
-     //计算箭角边的另一端的端点位置（上面的还是下面的要看箭头的指向，也就是pStart和pEnd的位置）
-     arrow.x = pEnd.x + len * cos(angle + PI * alpha / 180);
-     arrow.y = pEnd.y + len * sin(angle + PI * alpha / 180);
-     line(img, pEnd, arrow, color, thickness, lineType);
-     arrow.x = pEnd.x + len * cos(angle - PI * alpha / 180);
-     arrow.y = pEnd.y + len * sin(angle - PI * alpha / 180);
-     line(img, pEnd, arrow, color, thickness, lineType);
- }
+    double angle = atan2((double)(pStart.y - pEnd.y), (double)(pStart.x - pEnd.x));
+    line(img, pStart, pEnd, color, thickness, lineType);
+    //计算箭角边的另一端的端点位置（上面的还是下面的要看箭头的指向，也就是pStart和pEnd的位置）
+    arrow.x = pEnd.x + len * cos(angle + PI * alpha / 180);
+    arrow.y = pEnd.y + len * sin(angle + PI * alpha / 180);
+    line(img, pEnd, arrow, color, thickness, lineType);
+    arrow.x = pEnd.x + len * cos(angle - PI * alpha / 180);
+    arrow.y = pEnd.y + len * sin(angle - PI * alpha / 180);
+    line(img, pEnd, arrow, color, thickness, lineType);
+}
 
- //计算作物高度
+//计算作物高度
 float max_num(vector<float> height)
 {
     int count =1;
@@ -598,34 +600,34 @@ void heigth_detection(Mat& rgb,Mat& depth,pcl::PointCloud<pcl::PointXYZRGB>::Ptr
 {
     //height detection
 
-        vector<float> height;
-        pcl::PointXYZRGB Point;
+    vector<float> height;
+    pcl::PointXYZRGB Point;
 
-        float A=0.022391413,B= -0.991479484,C= -0.127744922,D= 1.79071477;
+    float A=0.022391413,B= -0.991479484,C= -0.127744922,D= 1.79071477;
 
-        for (int row = 400; row < depth.rows; row++)
-            for (int col = 200; col < 400; col++) {
-                    float z = float(depth.at<ushort>(row, col)) / 1000;
-                    float y = (row - 232.171) * z / 615.312;
-                    float x = (col - 323.844) * z / 615.372;
+    for (int row = 400; row < depth.rows; row++)
+        for (int col = 200; col < 400; col++) {
+            float z = float(depth.at<ushort>(row, col)) / 1000;
+            float y = (row - 232.171) * z / 615.312;
+            float x = (col - 323.844) * z / 615.372;
 
-                    float distanceheight = abs(A * x + B * y + C * z + D) *100;
-                    if(distanceheight>80) {
-                        distanceheight = floor(distanceheight);
-                        height.push_back(distanceheight);
-                        Point.x = x;
-                        Point.y = y;
-                        Point.z = z;
-                        Point.b = 255;
-                        cloudin->points.push_back(Point);
-                    }
+            float distanceheight = abs(A * x + B * y + C * z + D) *100;
+            if(distanceheight>80) {
+                distanceheight = floor(distanceheight);
+                height.push_back(distanceheight);
+                Point.x = x;
+                Point.y = y;
+                Point.z = z;
+                Point.b = 255;
+                cloudin->points.push_back(Point);
             }
+        }
 
-        sort(height.begin(), height.end());
-        int height_reslut = max_num(height);
+    sort(height.begin(), height.end());
+    int height_reslut = max_num(height);
 
-        height_borderMsg.height = height_reslut;
-        height_border_param.publish(height_borderMsg);
+    height_borderMsg.height = height_reslut;
+    height_border_param.publish(height_borderMsg);
 
     for(int row=300;row<depth.rows;row++)
         for(int col=400;col<550;col++ )
