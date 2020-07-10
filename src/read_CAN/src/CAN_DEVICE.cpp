@@ -76,20 +76,30 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     unsigned char heigh2, low2;
                     heigh2 = rec[j].Data[3];
                     low2 = rec[j].Data[2];
-                    if ((heigh1 << 8 | low1) > 60000 || (heigh2 << 8 | low2) > 60000)
+                    unsigned char heigh3, low3;
+                    heigh3 = rec[j].Data[5];
+                    low3 = rec[j].Data[4];
+
+                    if ((heigh1 << 8 | low1) > 60000 || (heigh2 << 8 | low2) > 60000 || (heigh3 << 8 | low3) > 60000)
                         continue;
                     // 如果为目标信号，则进行相关的操作
                     float vol1 = (heigh1 << 8 | low1);
-                    pCAN_DEVICE->angle1 = vol1/2*105/4000+5; //因为输入电压是10v，所以除以2
+                    pCAN_DEVICE->angle1 = vol1/2*105/4000+5-18; //因为输入电压是10v，所以除以2;-18是修正零漂
                     std_msgs::Int64 data_receive1;
                     data_receive1.data = pCAN_DEVICE->angle1;
                     pCAN_DEVICE->pub_c1->publish(data_receive1);
 
                     float vol2 = (heigh2 << 8 | low2);
-                    pCAN_DEVICE->angle2 = vol2/2*105/4000+5;
+                    pCAN_DEVICE->angle2 = vol2/2*105/4000+5-18;
                     std_msgs::Int64 data_receive2;
                     data_receive2.data = pCAN_DEVICE->angle2;
                     pCAN_DEVICE->pub_c2->publish(data_receive2);
+
+                    float torque = (heigh3 << 8 | low3);
+                    pCAN_DEVICE->torque = torque/10000*100;
+                    std_msgs::Float32 data_receive4;
+                    data_receive4.data = pCAN_DEVICE->torque;
+                    pCAN_DEVICE->pub_c4->publish(data_receive4);
 
                     ROS_INFO(
                             "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle1:%05d angle2:%05d",

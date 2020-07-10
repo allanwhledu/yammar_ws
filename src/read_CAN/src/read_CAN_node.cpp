@@ -19,8 +19,10 @@ int main(int argc, char **argv)
 	ros::Publisher chatter_pub1 = n.advertise<std_msgs::Int64>("reap_angle1", 1000);
     ros::Publisher chatter_pub2 = n.advertise<std_msgs::Int64>("reap_angle2", 1000);
     ros::Publisher chatter_pub3 = n.advertise<std_msgs::Float32>("car_speed", 1000);
+    ros::Publisher chatter_pub4 = n.advertise<std_msgs::Float32>("torque", 1000);
 	can_1.pub_c1 = &chatter_pub1;
 	can_1.pub_c2 = &chatter_pub2;
+    can_1.pub_c4 = &chatter_pub4;
 	can_2.pub_c3 = &chatter_pub3;
 
 
