@@ -28,9 +28,17 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent):
   std::cout<<"init ros node..."<<std::endl;
   qnode.init();
 
-  ui->progressBar->setMinimum(18);
+  ui->progressBar->setMinimum(0);
   ui->progressBar->setMaximum(120);
-  ui->progressBar->setValue(18);
+  ui->progressBar->setValue(0);
+
+  ui->progressBar_2->setMinimum(0);
+  ui->progressBar_2->setMaximum(120);
+  ui->progressBar_2->setValue(0);
+
+  ui->progressBar_3->setMinimum(0);
+  ui->progressBar_3->setMaximum(100);
+  ui->progressBar_3->setValue(0);
 
 	ui->progressBar1->setMinimum(0);
 	ui->progressBar1->setMaximum(2000);
@@ -55,7 +63,9 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent):
 	QObject::connect(&qnode,SIGNAL(logging_REEL_speed()),this,SLOT(updateREEL()));
   QObject::connect(&qnode,SIGNAL(logging_is_obstacle()),this,SLOT(update_is_obstacle()));
   QObject::connect(&qnode,SIGNAL(logging_no_obstacle()),this,SLOT(update_no_obstacle()));
-  QObject::connect(&qnode,SIGNAL(logging_reap_height()),this,SLOT(update_reap_height()));
+  QObject::connect(&qnode,SIGNAL(logging_reap_height1()),this,SLOT(update_reap_height1()));
+  QObject::connect(&qnode,SIGNAL(logging_reap_height2()),this,SLOT(update_reap_height2()));
+  QObject::connect(&qnode,SIGNAL(logging_torque()),this,SLOT(update_torque()));
 	// QObject::connect(&qnode, SIGNAL(loggingUpdated()), this, SLOT(updateLoggingView()));
 
 }
@@ -125,12 +135,28 @@ void MainWindow::update_no_obstacle()
   ui->pushButton_10->setStyleSheet("background-color: green");
 }
 
-void MainWindow::update_reap_height()
+void MainWindow::update_reap_height1()
 {
   QString qheight;
-  qheight = QString::number(qnode.reap_height);
+  qheight = QString::number(qnode.reap_height1);
   ui->lineEdit_41->setText(qheight);
-  ui->progressBar->setValue(qnode.reap_height);
+  ui->progressBar->setValue(qnode.reap_height1);
+}
+
+void MainWindow::update_reap_height2()
+{
+  QString qheight;
+  qheight = QString::number(qnode.reap_height2);
+  ui->lineEdit_51->setText(qheight);
+  ui->progressBar_2->setValue(qnode.reap_height2);
+}
+
+void MainWindow::update_torque()
+{
+  QString qtorque;
+  qtorque = QString::number(qnode.torque);
+  ui->lineEdit_52->setText(qtorque);
+  ui->progressBar_3->setValue(10*qnode.torque);
 }
 
 void MainWindow::displayMat(const QImage &image)

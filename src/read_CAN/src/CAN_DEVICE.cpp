@@ -97,6 +97,10 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
 
                     float torque = (heigh3 << 8 | low3);
                     pCAN_DEVICE->torque = torque/10000*100;
+                    if(pCAN_DEVICE->torque < 0.05) // 太小的时候过滤一下
+                    {
+                        pCAN_DEVICE->torque = 0;
+                    }
                     std_msgs::Float32 data_receive4;
                     data_receive4.data = pCAN_DEVICE->torque;
                     pCAN_DEVICE->pub_c4->publish(data_receive4);

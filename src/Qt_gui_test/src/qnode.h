@@ -67,7 +67,9 @@ public:
 
     float chart;
     float REEL_speed = 0;
-    double reap_height;
+    double reap_height1;
+    double reap_height2;
+    double torque;
 
     /*********************
     ** Logging
@@ -88,7 +90,9 @@ public:
     void ChartCallback(const std_msgs::Float32Ptr &msg);
     void REEL_speed_Callback(const std_msgs::Float32Ptr &msg);
     void is_obstacle_Callback(const std_msgs::BoolPtr &msg);
-    void reap_height_Callback(const std_msgs::Int64Ptr &msg);
+    void reap_height1_Callback(const std_msgs::Int64Ptr &msg);
+    void reap_height2_Callback(const std_msgs::Int64Ptr &msg);
+    void torque_Callback(const std_msgs::Float32Ptr &msg);
     void height_border_Callback(const height_border_msgs::height_borderConstPtr &msg);
     QStringListModel* loggingModelLis()
         {return &logging_listen;}
@@ -105,7 +109,9 @@ Q_SIGNALS:
     void logging_REEL_speed();
     void logging_is_obstacle();
     void logging_no_obstacle();
-    void logging_reap_height();
+    void logging_reap_height1();
+    void logging_reap_height2();
+    void logging_torque();
 
 private:
     int init_argc;
@@ -115,7 +121,9 @@ private:
     ros::Subscriber chart_subscriber;
     ros::Subscriber FH_subscriber;
     ros::Subscriber obstacle_subscriber;
-    ros::Subscriber reap_height_subscriber;
+    ros::Subscriber reap_height1_subscriber;
+    ros::Subscriber reap_height2_subscriber;
+    ros::Subscriber torque_subscriber;
 
     QStringListModel logging_model;
     QStringListModel logging_listen;

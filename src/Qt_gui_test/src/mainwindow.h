@@ -33,7 +33,9 @@ private slots:
     void updateREEL();
     void update_is_obstacle();
     void update_no_obstacle();
-    void update_reap_height();
+    void update_reap_height1();
+    void update_reap_height2();
+    void update_torque();
     void displayMat(const QImage& image);
     void displayText(const QString& text);
 

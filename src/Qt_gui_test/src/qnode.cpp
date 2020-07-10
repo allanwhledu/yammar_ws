@@ -84,7 +84,9 @@ bool QNode::init()
   chart_subscriber = n.subscribe("/chart",1,&QNode::ChartCallback,this);
   FH_subscriber = n.subscribe("/REEL_speed", 1, &QNode::REEL_speed_Callback, this);
   obstacle_subscriber = n.subscribe("/is_obstacle",1,&QNode::is_obstacle_Callback,this);
-  reap_height_subscriber = n.subscribe("/reap_angle1",1,&QNode::reap_height_Callback,this);
+  reap_height1_subscriber = n.subscribe("/reap_angle1",1,&QNode::reap_height1_Callback,this);
+  reap_height2_subscriber = n.subscribe("/reap_angle2",1,&QNode::reap_height2_Callback,this);
+  torque_subscriber = n.subscribe("/torque",1,&QNode::torque_Callback,this);
 //  image_sub = it.subscribe("/perceptual_nodes/harvest_line_stream",100,&QNode::myCallback_img,this);//相机尝试
   image_sub = it.subscribe("/boud_depth",100,&QNode::myCallback_img,this);//相机尝试
 
@@ -145,11 +147,25 @@ void QNode::is_obstacle_Callback(const std_msgs::BoolPtr &msg)
   }
 }
 
-void QNode::reap_height_Callback(const std_msgs::Int64Ptr &msg)
+void QNode::reap_height1_Callback(const std_msgs::Int64Ptr &msg)
 {
-  reap_height = msg->data;
-  ROS_INFO_STREAM("angle1: "<<reap_height);
-  Q_EMIT logging_reap_height();
+  reap_height1 = msg->data;
+  ROS_INFO_STREAM("angle1: "<<reap_height1);
+  Q_EMIT logging_reap_height1();
+}
+
+void QNode::reap_height2_Callback(const std_msgs::Int64Ptr &msg)
+{
+  reap_height2 = msg->data;
+  ROS_INFO_STREAM("angle2: "<<reap_height2);
+  Q_EMIT logging_reap_height2();
+}
+
+void QNode::torque_Callback(const std_msgs::Float32Ptr &msg)
+{
+  torque = msg->data;
+  ROS_INFO_STREAM("torque: "<<torque);
+  Q_EMIT logging_torque();
 }
 
 void QNode::run()
