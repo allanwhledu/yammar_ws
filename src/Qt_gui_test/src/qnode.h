@@ -67,6 +67,8 @@ public:
 
     float chart;
     float REEL_speed = 0;
+    float CB_speed = 0;
+    float PF_speed = 0;
     double reap_height1;
     double reap_height2;
     double torque;
@@ -89,6 +91,8 @@ public:
 
     void ChartCallback(const std_msgs::Float32Ptr &msg);
     void REEL_speed_Callback(const std_msgs::Float32Ptr &msg);
+    void CB_speed_Callback(const std_msgs::Float32Ptr &msg);
+    void PF_speed_Callback(const std_msgs::Float32Ptr &msg);
     void is_obstacle_Callback(const std_msgs::BoolPtr &msg);
     void reap_height1_Callback(const std_msgs::Int64Ptr &msg);
     void reap_height2_Callback(const std_msgs::Int64Ptr &msg);
@@ -107,6 +111,8 @@ Q_SIGNALS:
     void logging_leader_line_error();
     void loggingChart();
     void logging_REEL_speed();
+    void logging_CB_speed();
+    void logging_PF_speed();
     void logging_is_obstacle();
     void logging_no_obstacle();
     void logging_reap_height1();
@@ -120,6 +126,8 @@ private:
     ros::Subscriber text_subscriber;
     ros::Subscriber chart_subscriber;
     ros::Subscriber FH_subscriber;
+    ros::Subscriber CB_subscriber;
+    ros::Subscriber PF_subscriber;
     ros::Subscriber obstacle_subscriber;
     ros::Subscriber reap_height1_subscriber;
     ros::Subscriber reap_height2_subscriber;
