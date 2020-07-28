@@ -253,10 +253,13 @@ void MainWindow::on_pushButton_13_clicked()
 void MainWindow::on_stop_button_clicked()
 {
     bool is_stop = true;
+//    ui->pushButton_10->setStyleSheet("background-color: green");
+    this->ui->stop_button->setStyleSheet("background-color: red");
     qnode.pub_is_stop(is_stop);
 }
 void MainWindow::on_ublock_button_clicked()
 {
     bool is_stop = false;
+    this->ui->stop_button->setStyleSheet("background-color: white");
     qnode.pub_is_stop(is_stop);
 }
