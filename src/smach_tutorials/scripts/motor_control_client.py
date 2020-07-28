@@ -1,9 +1,11 @@
-# -*- coding: utf-8 -*-
-# !/usr/bin/env python
+#!/usr/bin/env python
+#coding=utf-8
 
 import rospy
 import smach
 import smach_ros
+import threading
+from   multiprocessing.pool import ThreadPool
 
 from std_msgs.msg import Empty
 from std_msgs.msg import Float32
@@ -22,7 +24,6 @@ for i in motors:
 
 target_speed = Int32()
 target_speed.data = 0
-
 last_target = -1000
 
 
@@ -90,7 +91,8 @@ last_target = -1000
 #         return 'foo_done'
 
 # for publish result
-pub = rospy.Publisher('smach_fback', Int32, queue_size=1)
+pub_result = rospy.Publisher('smach_fback', Int32, queue_size=1)
+
 class end(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes=['end_succeeded'])
@@ -98,7 +100,7 @@ class end(smach.State):
     def execute(self, userdata):
         msg = Int32()
         msg.data = 1
-        pub.publish(msg)
+        pub_result.publish(msg)
         # rospy.sleep(3.0)
         # msg.data = 0
         # pub.publish(msg)
@@ -195,8 +197,21 @@ def main():
 
     # 运行状态机
     sis.start()
-    sm.execute()
+
+    # 创建线程用于接受ctrl+c
+    # Create a thread to execute the smach container
+    smach_thread = threading.Thread(target=sm.execute)
+    smach_thread.start()
+
+    # Wait for ctrl-c
     rospy.spin()
+
+    # Request the container to preempt
+    sm.request_preempt()
+
+    # Block until everything is preempted
+    # (you could do something more complicated to get the execution outcome if you want it)
+    smach_thread.join()
     sis.stop()
 
 

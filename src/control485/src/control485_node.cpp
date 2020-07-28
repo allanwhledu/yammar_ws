@@ -37,7 +37,7 @@ uint16_t motorModbusAddr=0xB6; //0xB6在说明书中用于使能电机的rs485�
 uint16_t motorDirectionAddr=0x66; //在说明书中找到在0x66中访问数据0x01是正转，0x02是反转
 uint16_t motorSpeedAddr=0x56; //在说明书中找到，0x56中设置电机的转速
 uint16_t motorSpeedFeedbackAddr=0x5F; //说明书中可以找到其为读取速度的地址
-uint16_t motorCurrentFeedbackAddr=0xC6; //说明书中找到而补充的，但是应该暂时不用（因为不精确吧）
+uint16_t motorCurrentFeedbackAddr=0xC6; //说明书中找到而补充的电流读取，但是应该暂时不用（因为不精确吧）
 
 uint16_t motorMODBUSAddr=0x43; //这是在网上找到的，设置从站地址
 // 以上，就是现在用到的寄存器地址
@@ -54,6 +54,7 @@ ros::Publisher* pub_modified_car_speed;
 ros::Publisher* pub_reel_speed;
 ros::Publisher* pub_cb_speed;
 ros::Publisher* pub_pf_speed;
+ros::Publisher* pub_fh_speed;
 
 std_msgs::Float32 modified_car_speed;
 float last_modified_car_speed = 0;
@@ -98,11 +99,11 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
     // 计算目标速度，读取真实速度
     target_speed = goal->target_speed;//reel
 //    actual_speed = motorReadSpeed(goal->motor_id);
-    actual_speed = motorReadSpeed(1);
+    actual_speed = motorReadSpeed(goal->motor_id);
 
     ROS_INFO_STREAM("the difference of speed still: "<<abs(target_speed - actual_speed));
 //    motorSetSpeed(goal->motor_id, target_speed);
-    motorSetSpeed(1, target_speed);
+    motorSetSpeed(goal->motor_id, target_speed);
     usleep(20000);
 
     // 测试真实速度是否已经稳定
@@ -116,7 +117,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
     int count = 0;
     while (true) {
 //        actual_speed = motorReadSpeed(goal->motor_id);
-        actual_speed = motorReadSpeed(1);
+        actual_speed = motorReadSpeed(goal->motor_id);
         if (abs(actual_speed - actual_speed_pre) < 10)
             count++;
         if(count > 5)
@@ -148,6 +149,14 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
                     pub_pf_speed->publish(pf_speed);
                     break;
                 }
+                case 4:
+                {
+                    ROS_INFO_STREAM("pub fh speed.");
+                    std_msgs::Float32 fh_speed;
+                    fh_speed.data = actual_speed;
+                    pub_fh_speed->publish(fh_speed);
+                    break;
+                }
 
             }
             break;
@@ -158,7 +167,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
     }
 
     cout << "carVl=" << carSpeed.linear << " carVw=" << carSpeed.rotate <<
-         " reelv=" << actual_speed << " reelvNew=" << target_speed << endl;
+         " realv=" << actual_speed << " realvNew=" << target_speed << endl;
 
     as->setSucceeded();
 
@@ -235,13 +244,17 @@ void motorInit(void)
     motorSetDirection(reelMotor,2);//正转
     motorSetSpeed(reelMotor,0);
 
-//    motorSetModbus(cbMotor,1);
-//    motorSetDirection(cbMotor,2);//正转
-//    motorSetSpeed(cbMotor,0);
-//
-//    motorSetModbus(pfMotor,1);
-//    motorSetDirection(pfMotor,2);//正转
-//    motorSetSpeed(pfMotor,0);
+    motorSetModbus(cbMotor,1);
+    motorSetDirection(cbMotor,2);//正转
+    motorSetSpeed(cbMotor,0);
+
+    motorSetModbus(pfMotor,1);
+    motorSetDirection(pfMotor,2);//正转
+    motorSetSpeed(pfMotor,0);
+
+    motorSetModbus(fhMotor,1);
+    motorSetDirection(fhMotor,2);//正转
+    motorSetSpeed(fhMotor,0);
 }
 
 // 使能某电机的rs485通讯
@@ -281,7 +294,7 @@ int motorReadSpeed(int motor)
         flag = modbus_read_registers(com, motorSpeedFeedbackAddr, 1, &temp);
 
         // todo 这里为什么ankang写作等待？事实上不是可以写成一直循环查看吗？
-        //    usleep(2000);
+        // usleep(2000);
         if (flag == -1) {
             cout << "error read motor" << motor << " speed." << endl;
         } else {
@@ -401,6 +414,8 @@ void* carSpeedFollowMode(void*)
     ROS_WARN_STREAM("carspeedfollow stoped.");
     endFlag = false;
 }
+
+// --- 函数暂时废弃 --- //
 vector<double> motorReadCurrent(void)
 {
     vector<double> current(4);
@@ -439,6 +454,7 @@ double readHeight(void)
     height=0.2+analog/32767.0*1.2*5.0/5.0*(3-0.2);
     return height;
 }
+// --- --- //
 
 void car_speed_callback(const std_msgs::Float32ConstPtr &msg);
 void is_obstacle_callback(const std_msgs::BoolConstPtr &msg);
