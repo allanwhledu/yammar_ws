@@ -148,6 +148,10 @@ int main(int argc, char** argv)
     can_1.set_motor_speed(32, 0);
     can_1.set_motor_speed(31, 0);
 
+    can_1.set_motor_speed(24, 0);
+    can_1.set_motor_speed(25, 0);
+    can_1.set_motor_speed(26, 0);
+
     can_1.closeCAN();
 
     return 0;
