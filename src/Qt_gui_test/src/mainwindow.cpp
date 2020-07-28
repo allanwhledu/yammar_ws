@@ -56,11 +56,21 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent):
 	ui->progressBar1_4->setMaximum(3000);
 	ui->progressBar1_4->setValue(0);
 
+  ui->progressBar1_5->setMinimum(0);
+  ui->progressBar1_5->setMaximum(3000);
+  ui->progressBar1_5->setValue(0);
+
+  ui->progressBar1_6->setMinimum(0);
+  ui->progressBar1_6->setMaximum(3000);
+  ui->progressBar1_6->setValue(0);
+
 	QObject::connect(&qnode, SIGNAL(rosShutdown()), this, SLOT(close()));
 	QObject::connect(&qnode,SIGNAL(loggingCamera()),this,SLOT(updateLogcamera()));
 	QObject::connect(&qnode,SIGNAL(logging_leader_line_error()),this,SLOT(updateText()));
 	QObject::connect(&qnode,SIGNAL(loggingChart()),this,SLOT(displayChart()));
 	QObject::connect(&qnode,SIGNAL(logging_REEL_speed()),this,SLOT(updateREEL()));
+  QObject::connect(&qnode,SIGNAL(logging_CB_speed()),this,SLOT(updateCB()));
+  QObject::connect(&qnode,SIGNAL(logging_PF_speed()),this,SLOT(updatePF()));
   QObject::connect(&qnode,SIGNAL(logging_is_obstacle()),this,SLOT(update_is_obstacle()));
   QObject::connect(&qnode,SIGNAL(logging_no_obstacle()),this,SLOT(update_no_obstacle()));
   QObject::connect(&qnode,SIGNAL(logging_reap_height1()),this,SLOT(update_reap_height1()));
@@ -115,12 +125,41 @@ void MainWindow::displayChart()
 
 void MainWindow::updateREEL()
 {
+  QString qstr;
+  qstr = QString::number(qnode.REEL_speed);
+  ui->lineEdit_50->setText(qstr);
 	ui->progressBar1_4->setValue(qnode.REEL_speed);
 
 	// for(int i=1;i<qnode.REEL_speed;i++)
 	// {
 	//         ui->progressBar1_4->setValue(i);
 	// }
+}
+
+void MainWindow::updateCB()
+{
+  QString qstr;
+  qstr = QString::number(qnode.CB_speed);
+  ui->lineEdit_54->setText(qstr);
+  ui->progressBar1_5->setValue(qnode.CB_speed);
+
+  // for(int i=1;i<qnode.REEL_speed;i++)
+  // {
+  //         ui->progressBar1_4->setValue(i);
+  // }
+}
+
+void MainWindow::updatePF()
+{
+  QString qstr;
+  qstr = QString::number(qnode.PF_speed);
+  ui->lineEdit_55->setText(qstr);
+  ui->progressBar1_6->setValue(qnode.PF_speed);
+
+  // for(int i=1;i<qnode.REEL_speed;i++)
+  // {
+  //         ui->progressBar1_4->setValue(i);
+  // }
 }
 
 void MainWindow::update_is_obstacle()

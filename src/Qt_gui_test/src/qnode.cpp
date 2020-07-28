@@ -83,6 +83,8 @@ bool QNode::init()
   text_subscriber = n.subscribe("/height_border_param", 100, &QNode::height_border_Callback, this);
   chart_subscriber = n.subscribe("/chart",1,&QNode::ChartCallback,this);
   FH_subscriber = n.subscribe("/REEL_speed", 1, &QNode::REEL_speed_Callback, this);
+  CB_subscriber = n.subscribe("/CB_speed", 1, &QNode::CB_speed_Callback, this);
+  PF_subscriber = n.subscribe("/PF_speed", 1, &QNode::PF_speed_Callback, this);
   obstacle_subscriber = n.subscribe("/is_obstacle",1,&QNode::is_obstacle_Callback,this);
   reap_height1_subscriber = n.subscribe("/reap_angle1",1,&QNode::reap_height1_Callback,this);
   reap_height2_subscriber = n.subscribe("/reap_angle2",1,&QNode::reap_height2_Callback,this);
@@ -133,6 +135,20 @@ void QNode::REEL_speed_Callback(const std_msgs::Float32Ptr &msg)
     REEL_speed = msg->data;
   ROS_INFO_STREAM("REEL_speed receive: " << REEL_speed);
   Q_EMIT logging_REEL_speed();
+}
+
+void QNode::CB_speed_Callback(const std_msgs::Float32Ptr &msg)
+{
+    CB_speed = msg->data;
+  ROS_INFO_STREAM("REEL_speed receive: " << CB_speed);
+  Q_EMIT logging_CB_speed();
+}
+
+void QNode::PF_speed_Callback(const std_msgs::Float32Ptr &msg)
+{
+    PF_speed = msg->data;
+  ROS_INFO_STREAM("REEL_speed receive: " << PF_speed);
+  Q_EMIT logging_PF_speed();
 }
 
 void QNode::is_obstacle_Callback(const std_msgs::BoolPtr &msg)

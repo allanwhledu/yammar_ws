@@ -31,6 +31,8 @@ private slots:
 
     void displayChart();
     void updateREEL();
+    void updateCB();
+    void updatePF();
     void update_is_obstacle();
     void update_no_obstacle();
     void update_reap_height1();
