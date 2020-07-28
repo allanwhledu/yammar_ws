@@ -14,7 +14,8 @@ from std_msgs.msg import Int32
 from smach_ros import SimpleActionState
 from control485.msg import DriveMotorAction
 
-motors = [3, 2, 1]
+# 设定电机序号
+motors = [2, 2, 2]
 motor_goal = list()
 
 for i in motors:

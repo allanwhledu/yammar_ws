@@ -26,4 +26,6 @@
 
   <node pkg="rqt_graph" type="rqt_graph" name="rqt_graph"/>
 
+  <node pkg="smach_viewer" type="smach_viewer.py" name="smach_viewer"/>
+
 </launch>

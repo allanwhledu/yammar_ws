@@ -39,7 +39,7 @@ uint16_t motorSpeedAddr=0x56; //在说明书中找到，0x56中设置电机的�
 uint16_t motorSpeedFeedbackAddr=0x5F; //说明书中可以找到其为读取速度的地址
 uint16_t motorCurrentFeedbackAddr=0xC6; //说明书中找到而补充的电流读取，但是应该暂时不用（因为不精确吧）
 
-uint16_t motorMODBUSAddr=0x43; //这是在网上找到的，设置从站地址
+uint16_t motorIDAddr=0x43; //这是在网上找到的，设置从站地址
 // 以上，就是现在用到的寄存器地址
 
 
