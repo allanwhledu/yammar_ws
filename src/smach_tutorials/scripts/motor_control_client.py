@@ -114,9 +114,9 @@ def monitor_cb(self, msg):
         motor_goal[0].action_goal.goal.motor_id = 3
         motor_goal[1].action_goal.goal.motor_id = 1
         motor_goal[2].action_goal.goal.motor_id = 2
-        motor_goal[0].action_goal.goal.target_speed = 6000 * msg.data
-        motor_goal[1].action_goal.goal.target_speed = 6000 * msg.data
-        motor_goal[2].action_goal.goal.target_speed = 6000 * msg.data
+        motor_goal[0].action_goal.goal.target_speed = 4000 * msg.data
+        motor_goal[1].action_goal.goal.target_speed = 4000 * msg.data
+        motor_goal[2].action_goal.goal.target_speed = 4000 * msg.data
 
         for motor in motor_goal:
             print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
@@ -128,9 +128,9 @@ def monitor_cb(self, msg):
         motor_goal[0].action_goal.goal.motor_id = 2
         motor_goal[1].action_goal.goal.motor_id = 1
         motor_goal[2].action_goal.goal.motor_id = 3
-        motor_goal[0].action_goal.goal.target_speed = 6000 * msg.data
-        motor_goal[1].action_goal.goal.target_speed = 6000 * msg.data
-        motor_goal[2].action_goal.goal.target_speed = 6000 * msg.data
+        motor_goal[0].action_goal.goal.target_speed = 4000 * msg.data
+        motor_goal[1].action_goal.goal.target_speed = 4000 * msg.data
+        motor_goal[2].action_goal.goal.target_speed = 4000 * msg.data
 
         for motor in motor_goal:
             print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed

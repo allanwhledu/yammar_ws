@@ -405,7 +405,7 @@ void* carSpeedFollowMode(void*)
         if(is_stop || is_obstacle){
             modified_car_speed.data = 0;
         } else{
-            modified_car_speed.data = carSpeed.linear;
+            modified_car_speed.data = carSpeed.linear+0.1;
         }
 
         if(modified_car_speed.data != last_modified_car_speed){
