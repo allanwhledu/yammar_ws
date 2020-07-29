@@ -15,7 +15,7 @@ from smach_ros import SimpleActionState
 from control485.msg import DriveMotorAction
 
 # 设定电机序号
-motors = [0, 0, 0]
+motors = [3, 1, 2]
 motor_goal = list()
 
 for i in motors:
@@ -110,7 +110,7 @@ class end(smach.State):
 def monitor_cb(self, msg):
 
     global last_target
-    if last_target > msg.data:
+    if last_target < msg.data:
         motor_goal[0].action_goal.goal.motor_id = 3
         motor_goal[1].action_goal.goal.motor_id = 1
         motor_goal[2].action_goal.goal.motor_id = 2
@@ -124,7 +124,7 @@ def monitor_cb(self, msg):
         last_target = msg.data
         return False
 
-    elif last_target < msg.data:
+    elif last_target > msg.data:
         motor_goal[0].action_goal.goal.motor_id = 2
         motor_goal[1].action_goal.goal.motor_id = 1
         motor_goal[2].action_goal.goal.motor_id = 3

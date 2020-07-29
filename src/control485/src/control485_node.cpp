@@ -127,7 +127,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
         {
             ROS_INFO_STREAM("speed was steaby.");
             switch (goal->motor_id) {
-                case 1:
+                case 2:
                 {
                     ROS_INFO_STREAM("pub reel speed.");
                     std_msgs::Float32 reel_speed;
@@ -136,7 +136,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
                     ROS_INFO_STREAM("pubed reel speed.");
                     break;
                 }
-                case 2:
+                case 1:
                 {
                     ROS_INFO_STREAM("pub cb speed.");
                     std_msgs::Float32 cb_speed;
