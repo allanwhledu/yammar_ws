@@ -118,8 +118,11 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
     while (true) {
 //        actual_speed = motorReadSpeed(goal->motor_id);
         actual_speed = motorReadSpeed(goal->motor_id);
-        if (abs(actual_speed - actual_speed_pre) < 10)
+        if (abs(actual_speed - actual_speed_pre) < 50)
             count++;
+        else
+            motorSetSpeed(goal->motor_id, target_speed);
+        
         if(count > 5)
         {
             ROS_INFO_STREAM("speed was steaby.");

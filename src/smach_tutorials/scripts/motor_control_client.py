@@ -15,7 +15,7 @@ from smach_ros import SimpleActionState
 from control485.msg import DriveMotorAction
 
 # 设定电机序号
-motors = [2, 2, 2]
+motors = [3, 1, 2]
 motor_goal = list()
 
 for i in motors:
@@ -111,7 +111,7 @@ def monitor_cb(self, msg):
 
     global last_target
     if last_target != msg.data:
-
+        
         motor_goal[0].action_goal.goal.target_speed = 4000 * msg.data
         motor_goal[1].action_goal.goal.target_speed = 6000 * msg.data
         motor_goal[2].action_goal.goal.target_speed = 8000 * msg.data
