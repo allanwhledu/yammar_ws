@@ -15,7 +15,7 @@ from smach_ros import SimpleActionState
 from control485.msg import DriveMotorAction
 
 # 设定电机序号
-motors = [3, 1, 2]
+motors = [0, 0, 0]
 motor_goal = list()
 
 for i in motors:
@@ -110,11 +110,13 @@ class end(smach.State):
 def monitor_cb(self, msg):
 
     global last_target
-    if last_target != msg.data:
-        
-        motor_goal[0].action_goal.goal.target_speed = 4000 * msg.data
+    if last_target > msg.data:
+        motor_goal[0].action_goal.goal.motor_id = 3
+        motor_goal[1].action_goal.goal.motor_id = 1
+        motor_goal[2].action_goal.goal.motor_id = 2
+        motor_goal[0].action_goal.goal.target_speed = 6000 * msg.data
         motor_goal[1].action_goal.goal.target_speed = 6000 * msg.data
-        motor_goal[2].action_goal.goal.target_speed = 8000 * msg.data
+        motor_goal[2].action_goal.goal.target_speed = 6000 * msg.data
 
         for motor in motor_goal:
             print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
@@ -122,7 +124,22 @@ def monitor_cb(self, msg):
         last_target = msg.data
         return False
 
-    return True
+    elif last_target < msg.data:
+        motor_goal[0].action_goal.goal.motor_id = 2
+        motor_goal[1].action_goal.goal.motor_id = 1
+        motor_goal[2].action_goal.goal.motor_id = 3
+        motor_goal[0].action_goal.goal.target_speed = 6000 * msg.data
+        motor_goal[1].action_goal.goal.target_speed = 6000 * msg.data
+        motor_goal[2].action_goal.goal.target_speed = 6000 * msg.data
+
+        for motor in motor_goal:
+            print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
+
+        last_target = msg.data
+        return False
+
+    else:
+        return True
 
 
 def main():
