@@ -9,7 +9,9 @@
 #include<termios.h> /* POSIX terminal control definitions */
 #include<sys/time.h>    //for time
 #include<modbus.h>
-#include<fstream>
+#include<iostream>
+#include<fstream>    // 读写文件的头文件
+#include<string>
 #include<vector>
 #include<algorithm>
 #include<signal.h>
@@ -58,9 +60,13 @@ ros::Publisher* pub_fh_speed;
 std_msgs::Float32 modified_car_speed;
 float last_modified_car_speed = 0;
 
+string current_time = "";
+ofstream* open_file;
+
+
 // 函数申明
 bool openSerial(const char* port);
-string getTime(void);//获取当前系统时间
+void* getTime(void*);//获取当前系统时间
 void motorInit(void);
 void motorSetModbus(int motor,int enable);
 void motorSetDirection(int motor,int dir);
@@ -108,12 +114,24 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
     int count = 0;
     while (true) {
         actual_speed = motorReadSpeed(goal->motor_id);
+
+        // 记录速度
+        string actual_speed_str = to_string(actual_speed);
+        while (actual_speed_str.size()<4)
+        {
+            actual_speed_str="0"+actual_speed_str;
+        }
+        *(open_file) << current_time << " " << goal->motor_id << " " <<actual_speed_str << endl;
+
         if (abs(actual_speed - actual_speed_pre) < 50)
+        {
+            ROS_WARN_STREAM("Steady count ++");
             count++;
+        }
         else
             motorSetSpeed(goal->motor_id, target_speed);
         
-        if(count > 3)
+        if(count > 5)
         {
             ROS_INFO_STREAM("speed was steaby.");
             switch (goal->motor_id) {
@@ -194,41 +212,53 @@ bool openSerial(const char* port)
         cout<<"Connected modbus at port:"<<port<<endl;
     return true;
 }
-string getTime(void)
+void* getTime(void*)
 {
-    timeval tv;
-    time_t timep;
-    tm* timeNow;
-    gettimeofday(&tv, NULL);//获取当下精确的s和us的时间
-    time(&timep);//获取从1900年至今的秒数
-    timeNow = gmtime(&timep); //注意tm_year和tm_mon的转换后才是实际的时间
-    timeNow->tm_year+=1900;//实际年
-    timeNow->tm_mon+=1;//实际月
-    timeNow->tm_hour+=8;//实际小时
-    if(timeNow->tm_hour>=24)
+    while(!endFlag)
     {
-        timeNow->tm_hour-=24;
-    }
-    long int ms = (tv.tv_sec*1000.0 + tv.tv_usec / 1000.0) - timep * 1000.0; //实际ms
-    string res="";
-    res+='[';
-    res+=to_string(timeNow->tm_year);
-    res+='-';
-    res+=to_string(timeNow->tm_mon);
-    res+='-';
-    res+=to_string(timeNow->tm_mday);
-    res+=' ';
-    res+=to_string(timeNow->tm_hour);
-    res+=':';
-    res+=to_string(timeNow->tm_min);
-    res+=':';
-    res+=to_string(timeNow->tm_sec);
-    res+=':';
-    res+=to_string(int(ms));
-    res+=']';
-    return res;
+        timeval tv;
+        time_t timep;
+        tm* timeNow;
+        gettimeofday(&tv, NULL);//获取当下精确的s和us的时间
+        time(&timep);//获取从1900年至今的秒数
+        timeNow = gmtime(&timep); //注意tm_year和tm_mon的转换后才是实际的时间
+        timeNow->tm_year+=1900;//实际年
+        timeNow->tm_mon+=1;//实际月
+        timeNow->tm_hour+=8;//实际小时
+        if(timeNow->tm_hour>=24)
+        {
+            timeNow->tm_hour-=24;
+        }
+        long int ms = (tv.tv_sec*1000.0 + tv.tv_usec / 1000.0) - timep * 1000.0; //实际ms
 
-    // todo 获取时间的函数好像执行很慢，感觉可以之后开一个线程让它在后台慢慢执行
+        current_time ="";
+        current_time+='[';
+        current_time+=to_string(timeNow->tm_year);
+        current_time+='-';
+        current_time+=to_string(timeNow->tm_mon);
+        current_time+='-';
+        current_time+=to_string(timeNow->tm_mday);
+        current_time+=' ';
+        current_time+=to_string(timeNow->tm_hour);
+        current_time+=':';
+        current_time+=to_string(timeNow->tm_min);
+        current_time+=':';
+        current_time+=to_string(timeNow->tm_sec);
+        current_time+=':';
+        string ms_string = to_string(int(ms));
+        while (ms_string.size()<3)
+        {
+            ms_string="0"+ms_string;
+        }
+        current_time+=ms_string;
+        current_time+=']';
+
+//        ROS_WARN_STREAM("current time: "<<current_time);
+        // todo 获取时间的函数好像执行很慢，感觉可以之后开一个线程让它在后台慢慢执行
+        usleep(20000);
+    }
+    ROS_WARN_STREAM("current time sync stoped.");
+//    endFlag = false;
 }
 void motorInit(void)
 {
@@ -410,7 +440,7 @@ void* carSpeedFollowMode(void*)
         last_modified_car_speed = modified_car_speed.data;
     }
     ROS_WARN_STREAM("carspeedfollow stoped.");
-    endFlag = false;
+//    endFlag = false;
 }
 
 // --- 函数暂时废弃 --- //
@@ -460,6 +490,15 @@ void is_stop_callback(const std_msgs::BoolConstPtr &msg);
 
 int main (int argc, char **argv)
 {
+    ofstream ofs;
+    ofs.open("/home/sjtu_wanghaili/yammar_ws/speed.txt", ios::out);
+    if(!ofs)
+    {
+        cerr<<"Open File Fail."<<endl;
+        exit(1);
+    }
+    open_file = &ofs;
+
     ros::init(argc, argv, "hello") ;
     ROS_INFO_STREAM("Hello, ROS!") ;
     ros::NodeHandle n_;
@@ -497,7 +536,11 @@ int main (int argc, char **argv)
 
     pthread_t motorControlThread;
     pthread_create(&motorControlThread, nullptr, carSpeedFollowMode, nullptr);
-    ROS_INFO_STREAM("spread make.");
+    ROS_INFO_STREAM("motor control spread make.");
+
+    pthread_t time_sync;
+    pthread_create(&time_sync, nullptr, getTime, nullptr);
+    ROS_INFO_STREAM("time sync spread make.");
 
     // 定义一个服务器，control485就是topic
     Server server(n_, "control485", boost::bind(&execute, _1, &server), false);
@@ -508,10 +551,11 @@ int main (int argc, char **argv)
     ROS_INFO_STREAM("wait spread close.");
     endFlag = true;
     pthread_kill(motorControlThread, 0);
+    pthread_kill(time_sync, 0);
     ros::Duration(10);
 
     // todo 停下所有电机
-
+    ofs.close();
     return 0;
 }
 

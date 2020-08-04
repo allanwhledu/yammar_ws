@@ -5,7 +5,7 @@
 
 #### control motors vis RS485 bus ####################################################
 
-  <node pkg="control485" type="control485_node" name="control485"/>
+  <node pkg="control485" type="control485_node" name="control485" output="screen"/>
 
 #### read signals from CAN bus ####################################################
 
@@ -19,7 +19,7 @@
 
 #### for logic control flow ####################################################
 
-  <node pkg="smach_tutorials" type="motor_control_client.py" name="motor_control_client" output="screen"/>
+  <node pkg="smach_tutorials" type="motor_control_client.py" name="motor_control_client" />
 
 #### visulization ################################################
 
