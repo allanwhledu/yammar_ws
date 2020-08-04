@@ -38,7 +38,6 @@ uint16_t motorDirectionAddr=0x66; //在说明书中找到在0x66中访问数据0
 uint16_t motorSpeedAddr=0x56; //在说明书中找到，0x56中设置电机的转速
 uint16_t motorSpeedFeedbackAddr=0x5F; //说明书中可以找到其为读取速度的地址
 uint16_t motorCurrentFeedbackAddr=0xC6; //说明书中找到而补充的电流读取，但是应该暂时不用（因为不精确吧）
-
 uint16_t motorIDAddr=0x43; //这是在网上找到的，设置从站地址
 // 以上，就是现在用到的寄存器地址
 
@@ -97,33 +96,24 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
     int actual_speed_pre = -1000;
 
     // 计算目标速度，读取真实速度
-    target_speed = goal->target_speed;//reel
-//    actual_speed = motorReadSpeed(goal->motor_id);
+    target_speed = goal->target_speed;
     actual_speed = motorReadSpeed(goal->motor_id);
 
-    ROS_INFO_STREAM("the difference of speed still: "<<abs(target_speed - actual_speed));
-//    motorSetSpeed(goal->motor_id, target_speed);
-    motorSetSpeed(goal->motor_id, target_speed);
-    usleep(20000);
+    ROS_WARN_STREAM("the current speed is: "<<actual_speed);
+    ROS_WARN_STREAM("the target speed is: "<<target_speed);
+    ROS_WARN_STREAM("the difference of speed still: "<<abs(target_speed - actual_speed));
 
-    // 测试真实速度是否已经稳定
-//        actual_speed = motorReadSpeed(goal->motor_id);
-//        if(actual_speed == -1000){
-//            do {
-//                motorSetSpeed(goal->motor_id, target_speed);
-//                actual_speed = motorReadSpeed(goal->motor_id);
-//            } while (actual_speed == -1000);
-//        }
+    motorSetSpeed(goal->motor_id, target_speed);
+
     int count = 0;
     while (true) {
-//        actual_speed = motorReadSpeed(goal->motor_id);
         actual_speed = motorReadSpeed(goal->motor_id);
         if (abs(actual_speed - actual_speed_pre) < 50)
             count++;
         else
             motorSetSpeed(goal->motor_id, target_speed);
         
-        if(count > 5)
+        if(count > 3)
         {
             ROS_INFO_STREAM("speed was steaby.");
             switch (goal->motor_id) {
@@ -243,35 +233,41 @@ string getTime(void)
 void motorInit(void)
 {
     // 只有这里才打开了电机，这里首先仅仅开启了reel电机
+    ROS_WARN_STREAM("init reelmotor...");
     motorSetModbus(reelMotor,1);
     motorSetDirection(reelMotor,2);//正转
-    motorSetSpeed(reelMotor,0);
+//    motorSetSpeed(reelMotor,0);
 
+    ROS_WARN_STREAM("init cbmotor...");
     motorSetModbus(cbMotor,1);
     motorSetDirection(cbMotor,2);//正转
-    motorSetSpeed(cbMotor,0);
+//    motorSetSpeed(cbMotor,0);
 
+    ROS_WARN_STREAM("init pfmotor...");
     motorSetModbus(pfMotor,1);
     motorSetDirection(pfMotor,2);//正转
-    motorSetSpeed(pfMotor,0);
+//    motorSetSpeed(pfMotor,0);
 
+    ROS_WARN_STREAM("init fhmotor...");
     motorSetModbus(fhMotor,1);
     motorSetDirection(fhMotor,2);//正转
-    motorSetSpeed(fhMotor,0);
+//    motorSetSpeed(fhMotor,0);
 }
 
 // 使能某电机的rs485通讯
 void motorSetModbus(int motor,int enable)
 {
     modbus_set_slave(com,motor); //这句话的意思是不是将某从机设置为当前要访问的对象？
+    usleep(5000);
     modbus_write_register(com,motorModbusAddr,enable);
-//    usleep(3000);
+    usleep(5000);
 }
 void motorSetDirection(int motor,int dir)
 {
     modbus_set_slave(com,motor);
+    usleep(5000);
     modbus_write_register(com,motorDirectionAddr,dir);
-//    usleep(3000);
+    usleep(5000);
 }
 void motorSetSpeed(int motor,int speed)
 {
@@ -284,8 +280,9 @@ void motorSetSpeed(int motor,int speed)
         speed=0;
     }
     modbus_set_slave(com,motor);
+    usleep(5000);
     modbus_write_register(com,motorSpeedAddr,speed);
-//    usleep(3000);
+    usleep(5000);
 }
 int motorReadSpeed(int motor)
 {
@@ -294,10 +291,8 @@ int motorReadSpeed(int motor)
     modbus_set_slave(com,motor);
     int flag = -1;
     do {
+        usleep(5000);
         flag = modbus_read_registers(com, motorSpeedFeedbackAddr, 1, &temp);
-
-        // todo 这里为什么ankang写作等待？事实上不是可以写成一直循环查看吗？
-        // usleep(2000);
         if (flag == -1) {
             cout << "error read motor" << motor << " speed." << endl;
         } else {
@@ -466,7 +461,6 @@ void is_stop_callback(const std_msgs::BoolConstPtr &msg);
 int main (int argc, char **argv)
 {
     ros::init(argc, argv, "hello") ;
-//    ros::NodeHandle nh;
     ROS_INFO_STREAM("Hello, ROS!") ;
     ros::NodeHandle n_;
 
