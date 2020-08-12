@@ -59,6 +59,7 @@ bool openSerial(const char* port)
 void motorSetModbus(int motor)
 {
     modbus_set_slave(com,motor); //这句话的意思是不是将某从机设置为当前要访问的对象？
+    usleep(5000);
     modbus_write_register(com,motorModbusAddr,1 );
     usleep(5000);
 }
@@ -95,8 +96,8 @@ int main (int argc, char **argv)
     ros::init(argc, argv, "hello") ;
     ros::NodeHandle n_;
 
-    int motor_id = 1;
-    int speed = 500;
+    int motor_id = 3;
+    int speed = 1000;
 
     ROS_INFO_STREAM(">>Open Serial!") ;
     if(openSerial(port.c_str()))
@@ -107,6 +108,9 @@ int main (int argc, char **argv)
 
         usleep(2000000);
         ROS_INFO_STREAM(">>Current speed: "<<motorReadSpeed(motor_id));
+        usleep(5000000);
+        motorSetSpeed(motor_id, 0);
+
         ROS_INFO_STREAM("Done!") ;
 
         ROS_INFO_STREAM(">>Exit!") ;

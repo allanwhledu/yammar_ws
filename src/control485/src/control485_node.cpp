@@ -214,6 +214,7 @@ bool openSerial(const char* port)
 }
 void* getTime(void*)
 {
+    // 时间在后台20ms更新一次
     while(!endFlag)
     {
         timeval tv;
@@ -265,12 +266,12 @@ void motorInit(void)
     // 只有这里才打开了电机，这里首先仅仅开启了reel电机
     ROS_WARN_STREAM("init reelmotor...");
     motorSetModbus(reelMotor,1);
-    motorSetDirection(reelMotor,2);//正转
+    motorSetDirection(reelMotor,1);//正转
 //    motorSetSpeed(reelMotor,0);
 
     ROS_WARN_STREAM("init cbmotor...");
     motorSetModbus(cbMotor,1);
-    motorSetDirection(cbMotor,2);//正转
+    motorSetDirection(cbMotor,1);//正转
 //    motorSetSpeed(cbMotor,0);
 
     ROS_WARN_STREAM("init pfmotor...");
@@ -280,7 +281,7 @@ void motorInit(void)
 
     ROS_WARN_STREAM("init fhmotor...");
     motorSetModbus(fhMotor,1);
-    motorSetDirection(fhMotor,2);//正转
+    motorSetDirection(fhMotor,1);//正转
 //    motorSetSpeed(fhMotor,0);
 }
 
@@ -288,16 +289,22 @@ void motorInit(void)
 void motorSetModbus(int motor,int enable)
 {
     modbus_set_slave(com,motor); //这句话的意思是不是将某从机设置为当前要访问的对象？
-    usleep(5000);
-    modbus_write_register(com,motorModbusAddr,enable);
-    usleep(5000);
+    usleep(20000);
+    while (!modbus_write_register(com,motorModbusAddr,enable))
+    {
+        ROS_WARN_STREAM(motor<<"set modbus failed.");
+        usleep(20000);
+    }
 }
 void motorSetDirection(int motor,int dir)
 {
     modbus_set_slave(com,motor);
-    usleep(5000);
-    modbus_write_register(com,motorDirectionAddr,dir);
-    usleep(5000);
+    usleep(20000);
+    while (!modbus_write_register(com,motorDirectionAddr,dir))
+    {
+        ROS_WARN_STREAM(motor<<"set direction failed.");
+        usleep(20000);
+    }
 }
 void motorSetSpeed(int motor,int speed)
 {
@@ -309,10 +316,15 @@ void motorSetSpeed(int motor,int speed)
     {
         speed=0;
     }
+
     modbus_set_slave(com,motor);
-    usleep(5000);
-    modbus_write_register(com,motorSpeedAddr,speed);
-    usleep(5000);
+//    ROS_WARN_STREAM("set speed result: "<<modbus_write_register(com,motorSpeedAddr,speed));
+    usleep(20000);
+    while (!modbus_write_register(com,motorSpeedAddr,speed))
+    {
+        ROS_WARN_STREAM(motor<<"set speed failed.");
+        usleep(20000);
+    }
 }
 int motorReadSpeed(int motor)
 {
@@ -321,7 +333,7 @@ int motorReadSpeed(int motor)
     modbus_set_slave(com,motor);
     int flag = -1;
     do {
-        usleep(5000);
+        usleep(10000);
         flag = modbus_read_registers(com, motorSpeedFeedbackAddr, 1, &temp);
         if (flag == -1) {
             cout << "error read motor" << motor << " speed." << endl;

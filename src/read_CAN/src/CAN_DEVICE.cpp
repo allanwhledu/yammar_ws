@@ -33,8 +33,11 @@ void CAN_DEVICE::init_CAN() {// 进行CAN信号发送
     config.AccCode = 0;
     config.AccMask = 0xFFFFFFFF;
     config.Filter = 1;//接收所有帧
+//    config.Timing0 = 0x00;/*波特率1000 Kbps  Timing0=0x00 Timing1= 0x14*/
+//    config.Timing1 = 0x14;
+    // 这里，已经改成了500kbps，适应车辆
     config.Timing0 = 0x00;/*波特率1000 Kbps  Timing0=0x00 Timing1= 0x14*/
-    config.Timing1 = 0x14;
+    config.Timing1 = 0x1C;
     config.Mode = 0;//正常模式
 
     if (VCI_InitCAN(VCI_USBCAN2, 0, channel, &config) != 1)//CAN1
