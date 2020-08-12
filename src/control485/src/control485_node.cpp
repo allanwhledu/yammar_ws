@@ -244,7 +244,12 @@ void* getTime(void*)
         current_time+=':';
         current_time+=to_string(timeNow->tm_min);
         current_time+=':';
-        current_time+=to_string(timeNow->tm_sec);
+        string s_string = to_string(timeNow->tm_sec);
+        while (s_string.size()<2)
+        {
+            s_string="0"+s_string;
+        }
+        current_time+=s_string;
         current_time+=':';
         string ms_string = to_string(int(ms));
         while (ms_string.size()<3)
