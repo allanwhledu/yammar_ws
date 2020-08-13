@@ -37,7 +37,7 @@ MainWindow::MainWindow(int argc, char** argv, QWidget *parent):
   ui->progressBar_2->setValue(0);
 
   ui->progressBar_3->setMinimum(0);
-  ui->progressBar_3->setMaximum(100);
+  ui->progressBar_3->setMaximum(30);
   ui->progressBar_3->setValue(0);
 
 	ui->progressBar1->setMinimum(0);

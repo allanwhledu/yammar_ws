@@ -96,7 +96,7 @@ int main (int argc, char **argv)
     ros::init(argc, argv, "hello") ;
     ros::NodeHandle n_;
 
-    int motor_id = 1;
+    int motor_id = 2;
     int speed = 1000;
 
     ROS_INFO_STREAM(">>Open Serial!") ;

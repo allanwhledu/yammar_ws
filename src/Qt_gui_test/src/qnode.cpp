@@ -88,7 +88,8 @@ bool QNode::init()
   obstacle_subscriber = n.subscribe("/is_obstacle",1,&QNode::is_obstacle_Callback,this);
   reap_height1_subscriber = n.subscribe("/reap_angle1",1,&QNode::reap_height1_Callback,this);
   reap_height2_subscriber = n.subscribe("/reap_angle2",1,&QNode::reap_height2_Callback,this);
-  torque_subscriber = n.subscribe("/torque",1,&QNode::torque_Callback,this);
+  torque_subscriber = n.subscribe("/car_speed",1,&QNode::torque_Callback,this);
+  //暂时借用，显示速度
 //  image_sub = it.subscribe("/perceptual_nodes/harvest_line_stream",100,&QNode::myCallback_img,this);//相机尝试
   image_sub = it.subscribe("/boud_depth",100,&QNode::myCallback_img,this);//相机尝试
 

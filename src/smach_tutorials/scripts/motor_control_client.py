@@ -127,7 +127,7 @@ class end(smach.State):
 def monitor_cb(self, msg):
 
     global last_target
-    if msg.data == -1 and msg.data != last_target:
+    if msg.data < 0 and abs(msg.data - last_target) > 0.05:
         motor_goal[0].action_goal.goal.motor_id = reel
         motor_goal[1].action_goal.goal.motor_id = cb
         motor_goal[2].action_goal.goal.motor_id = pf
@@ -143,7 +143,7 @@ def monitor_cb(self, msg):
 
         last_target = msg.data
         return False
-    elif last_target < msg.data:
+    elif last_target < msg.data and msg.data - last_target >= 0.05:
         motor_goal[0].action_goal.goal.motor_id = pf
         motor_goal[1].action_goal.goal.motor_id = cb
         motor_goal[2].action_goal.goal.motor_id = reel
@@ -160,7 +160,7 @@ def monitor_cb(self, msg):
         last_target = msg.data
         return False
 
-    elif last_target > msg.data:
+    elif last_target > msg.data and last_target - msg.data >= 0.5:
         motor_goal[0].action_goal.goal.motor_id = reel
         motor_goal[1].action_goal.goal.motor_id = cb
         motor_goal[2].action_goal.goal.motor_id = pf

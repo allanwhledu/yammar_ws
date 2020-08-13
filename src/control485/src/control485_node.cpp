@@ -113,6 +113,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
 
     int count = 0;
     while (true) {
+        usleep(100000);
         actual_speed = motorReadSpeed(goal->motor_id);
 
         // 记录速度
@@ -121,23 +122,26 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
         {
             actual_speed_str="0"+actual_speed_str;
         }
-        *(open_file) << current_time << " " << goal->motor_id << " " <<actual_speed_str << endl;
+        *(open_file) << current_time << " " << goal->motor_id << " " <<actual_speed_str << " " << carSpeed.linear << endl;
 
-//        if (abs(actual_speed - actual_speed_pre) < 50)
-//        {
-//            ROS_WARN_STREAM("Steady count ++");
-//            count++;
-//        }
 
-        if (abs(actual_speed - target_speed) < 50)
+        if (abs(actual_speed - actual_speed_pre) < 50)
         {
             ROS_WARN_STREAM("Steady count ++");
             count++;
         }
+//        if (abs(actual_speed - target_speed) < 50)
+//        {
+//            ROS_WARN_STREAM("Steady count ++");
+//            count++;
+//        }
         else
+        {
+            usleep(100000);
             motorSetSpeed(goal->motor_id, target_speed);
+        }
         
-        if(count > 5)
+        if(count > 3)
         {
             ROS_INFO_STREAM("speed was steaby.");
             switch (goal->motor_id) {
@@ -313,7 +317,7 @@ void motorSetDirection(int motor,int dir)
     usleep(20000);
     while (!modbus_write_register(com,motorDirectionAddr,dir))
     {
-        ROS_WARN_STREAM(motor<<"set direction failed.");
+        ROS_WARN_STREAM(motor<<"set direction failed, try again.");
         usleep(20000);
     }
 }
@@ -333,7 +337,7 @@ void motorSetSpeed(int motor,int speed)
     usleep(20000);
     while (!modbus_write_register(com,motorSpeedAddr,speed))
     {
-        ROS_WARN_STREAM(motor<<"set speed failed.");
+        ROS_WARN_STREAM(motor<<"set speed failed， try again.");
         usleep(20000);
     }
 }
@@ -342,16 +346,18 @@ int motorReadSpeed(int motor)
     ROS_INFO_STREAM("Will control motor: "<<motor);
     uint16_t temp=-1000;
     modbus_set_slave(com,motor);
+    int faild_num = 0;
     int flag = -1;
     do {
-        usleep(10000);
+        usleep(20000);
         flag = modbus_read_registers(com, motorSpeedFeedbackAddr, 1, &temp);
         if (flag == -1) {
             cout << "error read motor" << motor << " speed." << endl;
+            faild_num++;
         } else {
             cout << "succeed read motor" << motor << " speed." << endl;
         }
-    } while (flag == -1);
+    } while (flag == -1 && faild_num<10);
     return temp;
 }
 
@@ -513,18 +519,24 @@ void is_stop_callback(const std_msgs::BoolConstPtr &msg);
 
 int main (int argc, char **argv)
 {
+    ros::init(argc, argv, "hello") ;
+    ROS_INFO_STREAM("Hello, ROS!") ;
+    ros::NodeHandle n_;
+
+    pthread_t time_sync;
+    pthread_create(&time_sync, nullptr, getTime, nullptr);
+    ROS_INFO_STREAM("time sync spread make.");
+
     ofstream ofs;
-    ofs.open("/home/sjtu_wanghaili/yammar_ws/speed.txt", ios::out);
+    string filename = "/home/sjtu_wanghaili/yammar_ws/speed_result/";
+    filename = filename + current_time + "_speed.txt";
+    ofs.open(filename, ios::out);
     if(!ofs)
     {
         cerr<<"Open File Fail."<<endl;
         exit(1);
     }
     open_file = &ofs;
-
-    ros::init(argc, argv, "hello") ;
-    ROS_INFO_STREAM("Hello, ROS!") ;
-    ros::NodeHandle n_;
 
     ros::Subscriber sub2_;
     ros::Subscriber sub3_;
@@ -561,10 +573,6 @@ int main (int argc, char **argv)
     pthread_create(&motorControlThread, nullptr, carSpeedFollowMode, nullptr);
     ROS_INFO_STREAM("motor control spread make.");
 
-    pthread_t time_sync;
-    pthread_create(&time_sync, nullptr, getTime, nullptr);
-    ROS_INFO_STREAM("time sync spread make.");
-
     // 定义一个服务器，control485就是topic
     Server server(n_, "control485", boost::bind(&execute, _1, &server), false);
     // 服务器开始运行
@@ -578,6 +586,12 @@ int main (int argc, char **argv)
     ros::Duration(10);
 
     // todo 停下所有电机
+    motorSetSpeed(1, 0);
+    usleep(100000);
+    motorSetSpeed(2, 0);
+    usleep(100000);
+    motorSetSpeed(3, 0);
+    usleep(100000);
     ofs.close();
     return 0;
 }
