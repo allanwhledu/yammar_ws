@@ -128,7 +128,7 @@ int main(int argc, char **argv)
 
 						//determine whether is obstacle is in field
 						double objDistTemp = sqrt(xx*xx + yy*yy);
-						if(0.2 <= objDistTemp && objDistTemp <= 5){
+						if(0.2 <= objDistTemp && objDistTemp <= 1){
 							objDetected = TRUE;
 						}
 						// else

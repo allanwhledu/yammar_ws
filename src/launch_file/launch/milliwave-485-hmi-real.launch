@@ -19,7 +19,7 @@
 
 #### for logic control flow ####################################################
 
-  <node pkg="smach_tutorials" type="motor_control_client.py" name="motor_control_client" />
+  <node pkg="smach_tutorials" type="motor_control_client.py" name="motor_control_client" output="screen"/>
 
 #### visulization ################################################
 

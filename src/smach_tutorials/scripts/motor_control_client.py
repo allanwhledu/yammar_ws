@@ -14,8 +14,25 @@ from std_msgs.msg import Int32
 from smach_ros import SimpleActionState
 from control485.msg import DriveMotorAction
 
+# 同调率
+cbCof = 1.2
+reelCof = 1.6
+pfCof = 4.44
+fhCof = 3.94
+
+# 减速比
+cbRatio = 5
+reelRatio = 64
+pfRatio = 15
+fhRatio = 10
+
+# 电机序号
+reel = 2
+cb = 1
+pf = 3
+
 # 设定电机序号
-motors = [3, 1, 2]
+motors = [pf, cb, reel]
 motor_goal = list()
 
 for i in motors:
@@ -110,13 +127,32 @@ class end(smach.State):
 def monitor_cb(self, msg):
 
     global last_target
-    if last_target < msg.data:
-        motor_goal[0].action_goal.goal.motor_id = 3
-        motor_goal[1].action_goal.goal.motor_id = 1
-        motor_goal[2].action_goal.goal.motor_id = 2
-        motor_goal[0].action_goal.goal.target_speed = 4000 * msg.data
-        motor_goal[1].action_goal.goal.target_speed = 4000 * msg.data
-        motor_goal[2].action_goal.goal.target_speed = 8000 * msg.data
+    if msg.data == -1 and msg.data != last_target:
+        motor_goal[0].action_goal.goal.motor_id = reel
+        motor_goal[1].action_goal.goal.motor_id = cb
+        motor_goal[2].action_goal.goal.motor_id = pf
+        # motor_goal[0].action_goal.goal.motor_id = cb
+        # motor_goal[1].action_goal.goal.motor_id = cb
+        # motor_goal[2].action_goal.goal.motor_id = cb
+        motor_goal[0].action_goal.goal.target_speed = 0
+        motor_goal[1].action_goal.goal.target_speed = 0
+        motor_goal[2].action_goal.goal.target_speed = 0
+
+        for motor in motor_goal:
+            print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
+
+        last_target = msg.data
+        return False
+    elif last_target < msg.data:
+        motor_goal[0].action_goal.goal.motor_id = pf
+        motor_goal[1].action_goal.goal.motor_id = cb
+        motor_goal[2].action_goal.goal.motor_id = reel
+        # motor_goal[0].action_goal.goal.motor_id = cb
+        # motor_goal[1].action_goal.goal.motor_id = cb
+        # motor_goal[2].action_goal.goal.motor_id = cb
+        motor_goal[0].action_goal.goal.target_speed = pfRatio*min(187.0,min(39.16*pfCof*msg.data+52.47,39.16*3.0*msg.data+90.07))
+        motor_goal[1].action_goal.goal.target_speed = cbRatio*min(467.0,min(398.09*cbCof*msg.data+131.37,398.09*1.0*msg.data+238.85))
+        motor_goal[2].action_goal.goal.target_speed = reelRatio*min(50.0,min(21.23*reelCof*msg.data+12.3,21.23*1.0*msg.data+21.23))
 
         for motor in motor_goal:
             print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
@@ -125,12 +161,15 @@ def monitor_cb(self, msg):
         return False
 
     elif last_target > msg.data:
-        motor_goal[0].action_goal.goal.motor_id = 2
-        motor_goal[1].action_goal.goal.motor_id = 1
-        motor_goal[2].action_goal.goal.motor_id = 3
-        motor_goal[0].action_goal.goal.target_speed = 8000 * msg.data
-        motor_goal[1].action_goal.goal.target_speed = 4000 * msg.data
-        motor_goal[2].action_goal.goal.target_speed = 4000 * msg.data
+        motor_goal[0].action_goal.goal.motor_id = reel
+        motor_goal[1].action_goal.goal.motor_id = cb
+        motor_goal[2].action_goal.goal.motor_id = pf
+        # motor_goal[0].action_goal.goal.motor_id = cb
+        # motor_goal[1].action_goal.goal.motor_id = cb
+        # motor_goal[2].action_goal.goal.motor_id = cb
+        motor_goal[0].action_goal.goal.target_speed = reelRatio*min(50.0,min(21.23*reelCof*msg.data+12.3,21.23*1.0*msg.data+21.23))
+        motor_goal[1].action_goal.goal.target_speed = cbRatio*min(467.0,min(398.09*cbCof*msg.data+131.37,398.09*1.0*msg.data+238.85))
+        motor_goal[2].action_goal.goal.target_speed = pfRatio*min(187.0,min(39.16*pfCof*msg.data+52.47,39.16*3.0*msg.data+90.07))
 
         for motor in motor_goal:
             print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed

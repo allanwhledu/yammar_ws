@@ -67,6 +67,32 @@ int main(int argc,char** argv)
     return 0;
 }
 
+void boud_RGBD(const sensor_msgs::ImageConstPtr& rgbimg,const sensor_msgs::ImageConstPtr& depthimg) {
+//图像预处理，深度信息,颜色信息
+    Mat depth_raw;
+    cv_bridge::CvImageConstPtr cv_ptrdepth;
+    cv_ptrdepth = cv_bridge::toCvShare(depthimg);
+    depth_raw = cv_ptrdepth->image;
+
+    Mat rgb;
+    cv_bridge::CvImageConstPtr cv_ptrrgb;
+    cv_ptrrgb = cv_bridge::toCvShare(rgbimg);
+    rgb = cv_ptrrgb->image;
+
+    Mat depth(depth_raw.size(),CV_16UC1);
+    for(int row=0;row<rgb.rows;row++)
+        for(int col=0;col<rgb.cols;col++ ) {
+            float z = float(depth_raw.at<float>(row, col)) * 1000;
+            depth.at<ushort>(row, col) = z;
+
+            Vec3b temp = rgb.at<Vec3b>(row, col);
+            rgb.at<Vec3b>(row, col)[0] = temp[2];
+            rgb.at<Vec3b>(row, col)[2] = temp[0];
+        }
+    boud_depth(rgb, depth);
+
+}
+
 void boud_depth(Mat& rgb, Mat& depth)
 {
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloudin (new pcl::PointCloud<pcl::PointXYZRGB>);
@@ -101,38 +127,12 @@ void boud_depth(Mat& rgb, Mat& depth)
     image_pub.publish(im);
     sensor_msgs::PointCloud2 cloud_boud;
     cloud_filtered->width = cloud_filtered->points.size();
-    pcl::toROSMsg(*cloudin + *plane_uncut, cloud_boud);
-    pointcloud_pub.publish(cloud_boud);
-   // pcl::io::savePCDFile( "/home/wj/Desktop/pointcloud.pcd", *cloudin + *plane_uncut);
+    //pcl::toROSMsg(*cloudin + *plane_uncut, cloud_boud);
+    //pointcloud_pub.publish(cloud_boud);
     imshow("rgb", rgb);
     waitKey(1);
 }
 
-void boud_RGBD(const sensor_msgs::ImageConstPtr& rgbimg,const sensor_msgs::ImageConstPtr& depthimg) {
-//图像预处理，深度信息,颜色信息
-    Mat depth_raw;
-    cv_bridge::CvImageConstPtr cv_ptrdepth;
-    cv_ptrdepth = cv_bridge::toCvShare(depthimg);
-    depth_raw = cv_ptrdepth->image;
-
-    Mat rgb;
-    cv_bridge::CvImageConstPtr cv_ptrrgb;
-    cv_ptrrgb = cv_bridge::toCvShare(rgbimg);
-    rgb = cv_ptrrgb->image;
-
-    Mat depth(depth_raw.size(),CV_16UC1);
-    for(int row=0;row<rgb.rows;row++)
-        for(int col=0;col<rgb.cols;col++ ) {
-            float z = float(depth_raw.at<float>(row, col)) * 1000;
-            depth.at<ushort>(row, col) = z;
-
-            Vec3b temp = rgb.at<Vec3b>(row, col);
-            rgb.at<Vec3b>(row, col)[0] = temp[2];
-            rgb.at<Vec3b>(row, col)[2] = temp[0];
-        }
-    boud_depth(rgb, depth);
-
-}
 void transform_to_pointcloud(Mat& rgb,Mat& depth,pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloudin)
 {
     cloudin->header.frame_id="/frame";
@@ -205,7 +205,7 @@ void uncutRegion_search(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloud_filtered,p
     //plane_fitting uncut region
     for (int index=0; index<cloud_filtered->size();index++)
     {
-        if(cloud_filtered->points[index].x>0.5 && cloud_filtered->points[index].z<7 && cloud_filtered->points[index].x<2.5) //未收割区域,DSACN选取或人工调整
+        if(cloud_filtered->points[index].x>0.5 && cloud_filtered->points[index].z<6 && cloud_filtered->points[index].x<2.5) //未收割区域,DSACN选取或人工调整
         {
             cloud_filtered->points[index].r=0;
             cloud_filtered->points[index].g=255;
@@ -239,7 +239,8 @@ Eigen::VectorXf boundpoints_clusterd(Mat& rgb, Mat& depth,pcl::PointCloud<pcl::P
     Point3f  pointdepth_3d; //分界线点的三维坐标
     Point2i  pointdepth; //分界线点的二维坐标
 
-    float A=0.022391413,B= -0.991479484,C= -0.127744922,D= 1.79071477;  //偏差基准面
+    float A=0.04488149,B=-0.986913152,C=-0.153237743,D=1.906296245;
+    //float A=0.022391413,B= -0.991479484,C= -0.127744922,D= 1.79071477;  //偏差基准面
 
     pcl::PointXYZRGB Point;
 
@@ -330,7 +331,8 @@ void boud_points_process(Mat& rgb,vector<Point2i>& pointdepthimg,vector<Point3f>
         float arc_cosvalue_inangle = acos(cosvalue);
         if(!left) arc_cosvalue_inangle=-arc_cosvalue_inangle;
 
-        float A_standard_plane=0.022391413,B_standard_plane= -0.991479484,C_standard_plane= -0.127744922,D_standard_plane= 1.79071477; //该平面为偏差基准面
+        float A_standard_plane=0.04488149,B_standard_plane=-0.986913152,C_standard_plane=-0.153237743,D_standard_plane=1.906296245;
+        //float A_standard_plane=0.022391413,B_standard_plane= -0.991479484,C_standard_plane= -0.127744922,D_standard_plane= 1.79071477; //该平面为偏差基准面
 
         Point3f begin_standard = Point3f(Standard_line_fun_3, Standard_line_fun_4, Standard_line_fun_5);
         Point3f end_standard = Point3f(Standard_line_fun_3+Standard_line_fun_0, Standard_line_fun_4+Standard_line_fun_1, Standard_line_fun_5+Standard_line_fun_2);
@@ -418,11 +420,11 @@ void boud_points_process(Mat& rgb,vector<Point2i>& pointdepthimg,vector<Point3f>
             float value_inangle = arc_cosvalue_inangle * 180 / 3.1415926;
             int xs_value_inangle = (value_inangle - int(value_inangle)) * 10;//保留一位小数
             string angle =
-                    "Ang: " + std::to_string(int(value_inangle)) + '.' + std::to_string(abs(xs_value_inangle));
+                    "Ang: " + std::to_string(int(value_inangle)) + '.' + std::to_string(abs(xs_value_inangle))+"deg";
             cv::putText(rgb, angle, Point2i(400, 50), cv::FONT_HERSHEY_SIMPLEX, 1, CV_RGB(255, 0, 0), 4);
 
             int zs_distance = distance;
-            string dis = "Dis: " + std::to_string(zs_distance);
+            string dis = "Dis: " + std::to_string(zs_distance)+"cm";
             cv::putText(rgb, dis, Point2i(400, 100), cv::FONT_HERSHEY_SIMPLEX, 1, CV_RGB(255, 0, 0), 5);
         }
     }
@@ -597,7 +599,6 @@ void dis_cal(vector<float>& dis,vector<Point3f>& pointdepthimg_3d,Point3f begin_
 void heigth_detection(Mat& rgb,Mat& depth,pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloudin,height_border_msgs::height_border& height_borderMsg,Eigen::VectorXf& coeff_uncut)
 {
     //height detection
-
         vector<float> height;
         pcl::PointXYZRGB Point;
 
@@ -620,33 +621,34 @@ void heigth_detection(Mat& rgb,Mat& depth,pcl::PointCloud<pcl::PointXYZRGB>::Ptr
                         cloudin->points.push_back(Point);
                     }
             }
-
-        sort(height.begin(), height.end());
-        int height_reslut = max_num(height);
-
-        height_borderMsg.height = height_reslut;
-        height_border_param.publish(height_borderMsg);
-
-    for(int row=300;row<depth.rows;row++)
-        for(int col=400;col<550;col++ )
+        if(height.size()>200) //避免检测不到高度
         {
-            float z = float(depth.at<ushort>(row,col))/1000;
-            float y = (row - 232.171) * z / 615.312;
-            float x = (col - 323.844) * z / 615.372;
+            sort(height.begin(), height.end());
+            int height_reslut = max_num(height);
 
-            float distanceheight = abs(A * x + B * y + C * z + D) *100;
-            distanceheight=floor(distanceheight);
-            if(distanceheight==height_reslut)
-            {
-                Point.x = x;
-                Point.y = y;
-                Point.z = z;
-                Point.b = 0;
-                Point.g = 0;
-                Point.r = 255;
-                cloudin->points.push_back(Point);
-            }
+            height_borderMsg.height = height_reslut;
+            height_border_param.publish(height_borderMsg);
+
+            for(int row=300;row<depth.rows;row++)
+                for(int col=400;col<550;col++ )
+                {
+                    float z = float(depth.at<ushort>(row,col))/1000;
+                    float y = (row - 232.171) * z / 615.312;
+                    float x = (col - 323.844) * z / 615.372;
+
+                    float distanceheight = abs(A * x + B * y + C * z + D) *100;
+                    distanceheight=floor(distanceheight);
+                    if(distanceheight==height_reslut)
+                    {
+                        Point.x = x;
+                        Point.y = y;
+                        Point.z = z;
+                        Point.b = 0;
+                        Point.g = 0;
+                        Point.r = 255;
+                        cloudin->points.push_back(Point);
+                    }
+                }
         }
-
 }
 

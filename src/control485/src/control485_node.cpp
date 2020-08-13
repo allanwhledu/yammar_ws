@@ -123,7 +123,13 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
         }
         *(open_file) << current_time << " " << goal->motor_id << " " <<actual_speed_str << endl;
 
-        if (abs(actual_speed - actual_speed_pre) < 50)
+//        if (abs(actual_speed - actual_speed_pre) < 50)
+//        {
+//            ROS_WARN_STREAM("Steady count ++");
+//            count++;
+//        }
+
+        if (abs(actual_speed - target_speed) < 50)
         {
             ROS_WARN_STREAM("Steady count ++");
             count++;
@@ -445,9 +451,9 @@ void* carSpeedFollowMode(void*)
     while(!endFlag)
     {
         if(is_stop || is_obstacle){
-            modified_car_speed.data = 0;
+            modified_car_speed.data = -1;
         } else{
-            modified_car_speed.data = carSpeed.linear+0.1;
+            modified_car_speed.data = carSpeed.linear;
         }
 
         if(modified_car_speed.data != last_modified_car_speed){

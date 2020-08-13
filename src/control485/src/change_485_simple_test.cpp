@@ -96,7 +96,7 @@ int main (int argc, char **argv)
     ros::init(argc, argv, "hello") ;
     ros::NodeHandle n_;
 
-    int motor_id = 3;
+    int motor_id = 1;
     int speed = 1000;
 
     ROS_INFO_STREAM(">>Open Serial!") ;
@@ -106,7 +106,7 @@ int main (int argc, char **argv)
         motorSetModbus(motor_id);
         motorSetSpeed(motor_id, speed);
 
-        usleep(2000000);
+        usleep(5000000);
         ROS_INFO_STREAM(">>Current speed: "<<motorReadSpeed(motor_id));
         usleep(5000000);
         motorSetSpeed(motor_id, 0);
