@@ -16,22 +16,26 @@ import numpy as np
 list_time = [[], [], []]
 list_speed = [[], [], []]
 
-with open('/home/sjtu_wanghaili/yammar_ws/speed.txt', 'r') as f:
+with open('/home/sjtu_wanghaili/yammar_ws/speed_result/speed.txt', 'r') as f:
     for line in f.readlines():
-        if len(line.strip()) != 31:
+        # if len(line.strip()) != 31:
+        if len(line.strip()) < 10:
             print "This line msg is not standard."
             continue
         else:
-            minutes = int(line.strip()[14:16])
-            seconds = int(line.strip()[17:19])
-            milliseconds = int(line.strip()[20:23])
-            motor_number = int(line.strip()[25])
-            speed = int(line.strip()[27:31])
+            try:
+                minutes = int(line.strip()[14:16])
+                seconds = int(line.strip()[17:19])
+                milliseconds = int(line.strip()[20:23])
+                motor_number = int(line.strip()[25])
+                speed = int(line.strip()[27:31])
 
-            time = minutes*60*1000 + seconds*1000 + milliseconds
+                time = minutes*60*1000 + seconds*1000 + milliseconds
 
-            list_time[motor_number-1].append(time)
-            list_speed[motor_number-1].append(speed)
+                list_time[motor_number-1].append(time)
+                list_speed[motor_number-1].append(speed)
+            except:
+                pass
 
 for i in [0, 1, 2]:
     try:

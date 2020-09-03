@@ -113,7 +113,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
 
     int count = 0;
     while (true) {
-        usleep(100000);
+        usleep(20000);
         actual_speed = motorReadSpeed(goal->motor_id);
 
         // 记录速度
@@ -137,7 +137,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
 //        }
         else
         {
-            usleep(100000);
+            usleep(20000);
             motorSetSpeed(goal->motor_id, target_speed);
         }
         
