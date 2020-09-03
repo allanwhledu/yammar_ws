@@ -17,9 +17,11 @@ modbus_t* com;//com用于电机速度控制反馈
 uint16_t motorModbusAddr=0xB6; //0xB6在说明书中用于使能电机的rs485功能
 uint16_t motorDirectionAddr=0x66; //在说明书中找到在0x66中访问数据0x01是正转，0x02是反转
 uint16_t motorSpeedAddr=0x56; //在说明书中找到，0x56中设置电机的转速
-uint16_t motorSpeedFeedbackAddr=0x5F; //说明书中可以找到其为读取速度的地址
+//uint16_t motorSpeedFeedbackAddr=0x5F; //说明书中可以找到其为读取速度的地址
+uint16_t motorSpeedFeedbackAddr=0x56; //对于摩托车版本的驱动器，可以找到其为读取速度的地址
+uint16_t motorSpeedMode=0x49;
+uint16_t motorRS485Adress=0x43;
 uint16_t motorCurrentFeedbackAddr=0xC6; //说明书中找到而补充的电流读取，但是应该暂时不用（因为不精确吧）
-uint16_t motorIDAddr=0x43; //这是在网上找到的，设置从站地址
 // 以上，就是现在用到的寄存器地址
 
 string port="/dev/ttyUSB0";
@@ -32,6 +34,8 @@ void motorSetDirection(int motor,int dir);
 void motorSetSpeed(int motor,int speed);
 int motorReadSpeed(int motor);
 int motorReadSpeed(int motor);
+
+void test_speed_control(int motor_id, int speed);
 
 bool openSerial(const char* port)
 {
@@ -64,6 +68,28 @@ void motorSetModbus(int motor)
     usleep(5000);
 }
 
+// 设置速度模式
+void motorSetSpeedmode(int motor)
+{
+    modbus_set_slave(com,motor);
+    usleep(5000);
+    int flag = 0;
+    flag = modbus_write_register(com,motorSpeedMode,1);
+    ROS_INFO_STREAM("speed mode set result: "<<flag);
+    usleep(5000);
+}
+
+// 改变从站地址
+void motorSetAdress(int motor, int new_id)
+{
+    modbus_set_slave(com,motor);
+    usleep(5000);
+    int flag = 0;
+    flag = modbus_write_register(com,motorRS485Adress,new_id);
+    ROS_INFO_STREAM("id set result: "<<flag);
+    usleep(5000);
+}
+
 void motorSetSpeed(int motor_id, int speed)
 {
     modbus_set_slave(com, motor_id);
@@ -78,12 +104,18 @@ int motorReadSpeed(int motor)
 {
     uint16_t temp=-1000;
     modbus_set_slave(com,motor);
+    int error_count = 0;
     int flag = -1;
     do {
+        if(error_count > 5){
+            ROS_INFO_STREAM("can't read motor's speed.");
+            break;
+        }
         usleep(5000);
         flag = modbus_read_registers(com, motorSpeedFeedbackAddr, 1, &temp);
         if (flag == -1) {
             cout << "error read motor" << motor << " speed." << endl;
+            error_count++;
         } else {
             cout << "succeed read motor" << motor << " speed." << endl;
         }
@@ -96,24 +128,32 @@ int main (int argc, char **argv)
     ros::init(argc, argv, "hello") ;
     ros::NodeHandle n_;
 
-    int motor_id = 2;
-    int speed = 1000;
+    int motor_id = 1;
+//    int new_motor_id = 1;
+    int speed = 1200;
 
     ROS_INFO_STREAM(">>Open Serial!") ;
     if(openSerial(port.c_str()))
     {
         ROS_INFO_STREAM(">>Enable RS485...") ;
         motorSetModbus(motor_id);
-        motorSetSpeed(motor_id, speed);
+//        motorSetAdress(motor_id, new_motor_id);
+        test_speed_control(motor_id, speed);
 
-        usleep(5000000);
-        ROS_INFO_STREAM(">>Current speed: "<<motorReadSpeed(motor_id));
-        usleep(5000000);
-        motorSetSpeed(motor_id, 0);
 
         ROS_INFO_STREAM("Done!") ;
 
         ROS_INFO_STREAM(">>Exit!") ;
     }
     return 0;
+}
+
+void test_speed_control(int motor_id, int speed) {
+    motorSetSpeedmode(motor_id);
+    motorSetSpeed(motor_id, speed);
+
+    usleep(5000000);
+    ROS_INFO_STREAM(">>Current speed: " << motorReadSpeed(motor_id));
+    usleep(5000000);
+    motorSetSpeed(motor_id, 0);
 }
