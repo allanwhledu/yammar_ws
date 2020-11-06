@@ -38,9 +38,11 @@ modbus_t* com;//com用于电机速度控制反馈
 uint16_t motorModbusAddr=0xB6; //0xB6在说明书中用于使能电机的rs485功能
 uint16_t motorDirectionAddr=0x66; //在说明书中找到在0x66中访问数据0x01是正转，0x02是反转
 uint16_t motorSpeedAddr=0x56; //在说明书中找到，0x56中设置电机的转速
-uint16_t motorSpeedFeedbackAddr=0x5F; //说明书中可以找到其为读取速度的地址
+//uint16_t motorSpeedFeedbackAddr=0x5F; //说明书中可以找到其为读取速度的地址
+uint16_t motorSpeedFeedbackAddr=0x56; //对于摩托车版本的驱动器，可以找到其为读取速度的地址
+uint16_t motorSpeedMode=0x49;
+uint16_t motorRS485Adress=0x43;
 uint16_t motorCurrentFeedbackAddr=0xC6; //说明书中找到而补充的电流读取，但是应该暂时不用（因为不精确吧）
-uint16_t motorIDAddr=0x43; //这是在网上找到的，设置从站地址
 // 以上，就是现在用到的寄存器地址
 
 
@@ -99,15 +101,14 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
 
     int target_speed = 0;
     int actual_speed = -1000;
-    int actual_speed_pre = -1000;
 
     // 计算目标速度，读取真实速度
     target_speed = goal->target_speed;
     actual_speed = motorReadSpeed(goal->motor_id);
 
-    ROS_WARN_STREAM("the current speed is: "<<actual_speed);
-    ROS_WARN_STREAM("the target speed is: "<<target_speed);
-    ROS_WARN_STREAM("the difference of speed still: "<<abs(target_speed - actual_speed));
+    ROS_INFO_STREAM("the current speed is: "<<actual_speed);
+    ROS_INFO_STREAM("the target speed is: "<<target_speed);
+    ROS_INFO_STREAM("the difference of speed still: "<<abs(target_speed - actual_speed));
 
     motorSetSpeed(goal->motor_id, target_speed);
 
@@ -125,36 +126,19 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
         *(open_file) << current_time << " " << goal->motor_id << " " <<actual_speed_str << " " << carSpeed.linear << endl;
 
 
-        if (abs(actual_speed - actual_speed_pre) < 50)
+        if (abs(actual_speed - target_speed) < 50)
         {
-            ROS_WARN_STREAM("Steady count ++");
-            count++;
-        }
-//        if (abs(actual_speed - target_speed) < 50)
-//        {
-//            ROS_WARN_STREAM("Steady count ++");
-//            count++;
-//        }
-        else
-        {
-            usleep(20000);
-            motorSetSpeed(goal->motor_id, target_speed);
-        }
-        
-        if(count > 3)
-        {
-            ROS_INFO_STREAM("speed was steaby.");
+            ROS_WARN_STREAM("Speed is ok.");
             switch (goal->motor_id) {
-                case 2:
+                case 1:
                 {
                     ROS_INFO_STREAM("pub reel speed.");
                     std_msgs::Float32 reel_speed;
                     reel_speed.data = actual_speed;
                     pub_reel_speed->publish(reel_speed);
-                    ROS_INFO_STREAM("pubed reel speed.");
                     break;
                 }
-                case 1:
+                case 2:
                 {
                     ROS_INFO_STREAM("pub cb speed.");
                     std_msgs::Float32 cb_speed;
@@ -182,13 +166,15 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
             }
             break;
         }
-
-        ROS_WARN_STREAM("pre and actual:" <<actual_speed_pre<<" "<< actual_speed);
-        actual_speed_pre = actual_speed;
+        else
+        {
+            usleep(20000);
+            motorSetSpeed(goal->motor_id, target_speed);
+        }
     }
 
-    cout << "carVl=" << carSpeed.linear << " carVw=" << carSpeed.rotate <<
-         " realv=" << actual_speed << " realvNew=" << target_speed << endl;
+//    cout << "carVl=" << carSpeed.linear << " carVw=" << carSpeed.rotate <<
+//         " realv=" << actual_speed << " realvNew=" << target_speed << endl;
 
     as->setSucceeded();
 

@@ -5,7 +5,6 @@ import rospy
 import smach
 import smach_ros
 import threading
-from   multiprocessing.pool import ThreadPool
 
 from std_msgs.msg import Empty
 from std_msgs.msg import Float32
@@ -28,8 +27,8 @@ fhRatio = 10
 
 # 电机序号
 reel = 1
-cb = 1
-pf = 1
+cb = 2
+pf = 3
 
 # 设定电机序号
 # motors = [cb, reel]
@@ -128,6 +127,18 @@ class end(smach.State):
 def monitor_cb(self, msg):
 
     global last_target
+
+    reel_ta = reelRatio*min(50.0,min(21.23*reelCof*msg.data+12.3,21.23*1.0*msg.data+21.23))
+    cb_ta = 0.5*cbRatio*min(467.0,min(398.09*cbCof*msg.data+131.37,398.09*1.0*msg.data+238.85))
+    pf_ta = pfRatio*min(187.0,min(39.16*pfCof*msg.data+52.47,39.16*3.0*msg.data+90.07))
+
+    if reel_ta > 2800:
+        reel_ta = 2800
+    if cb_ta > 2800:
+        cb_ta = 2800
+    if pf_ta > 2800:
+        pf_ta = 2800
+
     if msg.data < 0 and abs(msg.data - last_target) > 0.025:
         motor_goal[0].action_goal.goal.motor_id = reel
         motor_goal[1].action_goal.goal.motor_id = cb
@@ -152,9 +163,9 @@ def monitor_cb(self, msg):
         # motor_goal[0].action_goal.goal.motor_id = cb
         # motor_goal[1].action_goal.goal.motor_id = cb
         # motor_goal[2].action_goal.goal.motor_id = cb
-        motor_goal[0].action_goal.goal.target_speed = pfRatio*min(187.0,min(39.16*pfCof*msg.data+52.47,39.16*3.0*msg.data+90.07))
-        motor_goal[1].action_goal.goal.target_speed = cbRatio*min(467.0,min(398.09*cbCof*msg.data+131.37,398.09*1.0*msg.data+238.85))
-        motor_goal[2].action_goal.goal.target_speed = reelRatio*min(50.0,min(21.23*reelCof*msg.data+12.3,21.23*1.0*msg.data+21.23))
+        motor_goal[0].action_goal.goal.target_speed = pf_ta
+        motor_goal[1].action_goal.goal.target_speed = cb_ta
+        motor_goal[2].action_goal.goal.target_speed = reel_ta
 
         for motor in motor_goal:
             print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
@@ -169,10 +180,9 @@ def monitor_cb(self, msg):
         # motor_goal[0].action_goal.goal.motor_id = cb
         # motor_goal[1].action_goal.goal.motor_id = cb
         # motor_goal[2].action_goal.goal.motor_id = cb
-        motor_goal[0].action_goal.goal.target_speed = reelRatio*min(50.0,min(21.23*reelCof*msg.data+12.3,21.23*1.0*msg.data+21.23))
-        motor_goal[1].action_goal.goal.target_speed = cbRatio*min(467.0,min(398.09*cbCof*msg.data+131.37,398.09*1.0*msg.data+238.85))
-        motor_goal[2].action_goal.goal.target_speed = pfRatio*min(187.0,min(39.16*pfCof*msg.data+52.47,39.16*3.0*msg.data+90.07))
-
+        motor_goal[0].action_goal.goal.target_speed = reel_ta
+        motor_goal[1].action_goal.goal.target_speed = cb_ta
+        motor_goal[2].action_goal.goal.target_speed = pf_ta
         for motor in motor_goal:
             print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
 

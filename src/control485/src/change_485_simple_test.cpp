@@ -129,7 +129,7 @@ int main (int argc, char **argv)
     ros::NodeHandle n_;
 
     int motor_id = 1;
-//    int new_motor_id = 1;
+    int new_motor_id = 3;
     int speed = 1200;
 
     ROS_INFO_STREAM(">>Open Serial!") ;
