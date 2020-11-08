@@ -3,14 +3,11 @@
 
 typedef actionlib::SimpleActionClient<reap_unit_action::ControlReapAction> Client;
 
-bool finish = false;
-
 // 当action完成后会调用次回调函数一次
 void doneCb(const actionlib::SimpleClientGoalState& state,
         const reap_unit_action::ControlReapResultConstPtr& result)
 {
     ROS_INFO("Yay! The dishes are now clean");
-    finish = true;
 }
 
 // 当action激活后会调用次回调函数一次
@@ -22,7 +19,7 @@ void activeCb()
 // 收到feedback后调用的回调函数
 void feedbackCb(const reap_unit_action::ControlReapFeedbackConstPtr& feedback)
 {
-    ROS_INFO(" percent_complete : %d ", feedback->percent_complete);
+    ROS_INFO(" percent_complete : %d ", feedback->process);
 }
 
 int main(int argc, char** argv)
@@ -39,33 +36,9 @@ int main(int argc, char** argv)
 
 	// 创建一个action的goal
     reap_unit_action::ControlReapGoal goal;
-    goal.dishwasher_id = 24;
-    goal.target_speed = 500;
+    goal.control_mode = 0;
     // 发送action的goal给服务器端，并且设置回调函数
     client.sendGoal(goal,  &doneCb, &activeCb, &feedbackCb);
-
-    while (finish == false)
-    {
-        ros::Rate(1).sleep();
-    }
-    finish = false;
-
-    reap_unit_action::ControlReapGoal goal2;
-    goal2.dishwasher_id = 25;
-    goal2.target_speed = 500;
-    // 发送action的goal给服务器端，并且设置回调函数
-    client.sendGoal(goal2,  &doneCb, &activeCb, &feedbackCb);
-    while (finish == false)
-    {
-        ros::Rate(1).sleep();
-    }
-    finish = false;
-
-    reap_unit_action::ControlReapGoal goal3;
-    goal3.dishwasher_id = 26;
-    goal3.target_speed = 500;
-    // 发送action的goal给服务器端，并且设置回调函数
-    client.sendGoal(goal3,  &doneCb, &activeCb, &feedbackCb);
 
     ros::spin();
 

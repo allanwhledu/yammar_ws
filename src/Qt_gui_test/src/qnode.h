@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file /include/test_gui/qnode.hpp
  *
  * @brief Communications central!
@@ -33,6 +33,9 @@
 
 #include "height_border_msgs/height_border.h"
 
+#include <actionlib/client/simple_action_client.h>
+#include "reap_unit_action/ControlReapAction.h"
+
 /*****************************************************************************
 ** Namespaces
 *****************************************************************************/
@@ -42,6 +45,7 @@ namespace test_gui
 /*****************************************************************************
 ** Class
 *****************************************************************************/
+
 class QNode : public QThread
 {
 Q_OBJECT
@@ -58,6 +62,9 @@ public:
 
     ros::Publisher is_stop_pub;
     void pub_is_stop(bool msg);
+
+    ros::Publisher height_control_mode_pub;
+    void pub_height_control_mode(float msg);
 
     QString str;
     cv::Mat img;

@@ -1,0 +1,11 @@
+<launch>
+
+#### Height control server ####################################################
+
+  <node pkg="control_reap_height_by_remote_io" type="ionode" name="height_control_server" output="screen"/>
+
+#### HMI ####################################################
+
+  <node pkg="trail" type="app_node" name="HMI" />
+
+</launch>

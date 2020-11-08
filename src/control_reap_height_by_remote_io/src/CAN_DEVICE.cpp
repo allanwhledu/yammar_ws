@@ -9,7 +9,6 @@ CAN_DEVICE::CAN_DEVICE(int channel_idx) {
     count = 0;
     m_run0 = 0;
     channel = channel_idx-1;
-    pfd.process = 10000;
 }
 
 void CAN_DEVICE::init_CAN() {// 进行CAN信号发送
@@ -61,25 +60,7 @@ void CAN_DEVICE::control_height(int mode) //驱动第num_motor号电机，速度
     // 设置电机为CAN控制，速度模式
     VCI_CAN_OBJ msg[1];
 
-    if (mode == 0) // 静止
-    {
-        msg[0].ID = 0x0200;
-        msg[0].SendType = 0;
-        msg[0].RemoteFlag = 0;
-        msg[0].ExternFlag = 0;
-        msg[0].DataLen = 8;
-
-        msg[0].Data[0] = 0x01;
-        msg[0].Data[1] = 0x11;
-        msg[0].Data[2] = 0x09;
-        msg[0].Data[3] = 0x00;
-        msg[0].Data[4] = 0x00;
-        msg[0].Data[5] = 0x00;
-        msg[0].Data[6] = 0x00;
-        msg[0].Data[7] = 0x19;
-    }
-
-    if (mode == 1) // 上升（y3口）
+    if (mode == 110) // 上升（y3口）
     {
         msg[0].ID = 0x0200;
         msg[0].SendType = 0;
@@ -97,7 +78,7 @@ void CAN_DEVICE::control_height(int mode) //驱动第num_motor号电机，速度
         msg[0].Data[7] = 0x1D;
     }
 
-    if (mode == 2) // 下降（y4）
+    if (mode == 120) // 下降（y4）
     {
         msg[0].ID = 0x0200;
         msg[0].SendType = 0;
@@ -116,6 +97,24 @@ void CAN_DEVICE::control_height(int mode) //驱动第num_motor号电机，速度
     }
 
     transmit_msg(msg, "set  height");
+
+    // 半秒后停止控制
+    ros::Duration(0.25).sleep();
+    msg[0].ID = 0x0200;
+    msg[0].SendType = 0;
+    msg[0].RemoteFlag = 0;
+    msg[0].ExternFlag = 0;
+    msg[0].DataLen = 8;
+
+    msg[0].Data[0] = 0x01;
+    msg[0].Data[1] = 0x11;
+    msg[0].Data[2] = 0x09;
+    msg[0].Data[3] = 0x00;
+    msg[0].Data[4] = 0x00;
+    msg[0].Data[5] = 0x00;
+    msg[0].Data[6] = 0x00;
+    msg[0].Data[7] = 0x19;
+    transmit_msg(msg, "set  Stady");
 }
 
 void CAN_DEVICE::closeCAN() {
