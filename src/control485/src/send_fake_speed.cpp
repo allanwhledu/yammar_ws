@@ -22,7 +22,7 @@ public:
 private:
     ros::NodeHandle n_;
     ros::Publisher pub_;
-    ros::Subscriber sub_;
+    ros::Subscriber height_sub_;
 
 };//End of class SubscribeAndPublish
 

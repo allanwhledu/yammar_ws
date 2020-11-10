@@ -10,7 +10,7 @@ class SubscribeAndPublish
 			pub_ = n_.advertise<std_msgs::String>("detected_obstacle", 1);
 
 			//Topic you want to subscribe
-			sub_ = n_.subscribe("/capture_nodes/millimeter_wave", 1, &SubscribeAndPublish::callback, this);
+			height_sub_ = n_.subscribe("/capture_nodes/millimeter_wave", 1, &SubscribeAndPublish::callback, this);
 		}
 
 		void callback(const std_msgs::StringConstPtr& input)
@@ -23,7 +23,7 @@ class SubscribeAndPublish
 	private:
 		ros::NodeHandle n_; 
 		ros::Publisher pub_;
-		ros::Subscriber sub_;
+		ros::Subscriber height_sub_;
 
 };//End of class SubscribeAndPublish
 

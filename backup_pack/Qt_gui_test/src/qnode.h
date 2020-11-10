@@ -1,4 +1,4 @@
-﻿/**
+/**
  * @file /include/test_gui/qnode.hpp
  *
  * @brief Communications central!
@@ -20,7 +20,6 @@
 #include <std_msgs/Float32.h>
 #include <std_msgs/Bool.h>
 #include <std_msgs/Int64.h>
-#include <std_msgs/Int16.h>
 #include <string>
 #include <QThread>
 #include <QStringListModel>
@@ -34,6 +33,9 @@
 
 #include "height_border_msgs/height_border.h"
 
+#include <actionlib/client/simple_action_client.h>
+#include "reap_unit_action/ControlReapAction.h"
+
 /*****************************************************************************
 ** Namespaces
 *****************************************************************************/
@@ -43,6 +45,7 @@ namespace test_gui
 /*****************************************************************************
 ** Class
 *****************************************************************************/
+
 class QNode : public QThread
 {
 Q_OBJECT
@@ -55,13 +58,10 @@ public:
     void myCallback_img(const sensor_msgs::ImageConstPtr& msg);//camera callback function
 
     ros::Publisher car_speed_pub;
-    void pub_car_speed(int msg);
+    void pub_car_speed(double msg);
 
     ros::Publisher is_stop_pub;
-    void pub_is_stop(int msg);
-
-    ros::Publisher car_turn_pub;
-    void  pub_car_turn(int msg);
+    void pub_is_stop(bool msg);
 
     ros::Publisher height_control_mode_pub;
     void pub_height_control_mode(float msg);

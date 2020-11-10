@@ -34,7 +34,6 @@ public:
 
     std::vector<int> log_error; //用于debug的时候记录变量
 
-    int motor;
     int channel;
 
     int angle1 = 0;
@@ -47,22 +46,14 @@ public:
     ros::Publisher* pub_c3;
     ros::Publisher *pub_c4;
 
-    void setMotor(int motor);
-
     CAN_DEVICE(int channel_idx);
 
     void init_CAN();
     friend void* receive_func(void* param);
     void transmit_msg(VCI_CAN_OBJ *send, char *com);
-    void set_speed_mode(int num_motor);
-    void set_motor_speed(int num_motor, int speed);
-    void callFeedback(int num_motor);
-
-    void callCurrent(int num_motor);
-    void wait_current();
+    void control_height(int mode); //驱动第num_motor号电机，速度为speed.
 
     void open_receive();
-    void check_speed();
 
     void closeCAN();
 

@@ -10,7 +10,7 @@ class SubscribeAndPublish
 			pub_ = n_.advertise<std_msgs::String>("grain_height_stream", 1);
 			pub2_ = n_.advertise<std_msgs::String>("grain_height_data", 1);
 
-			sub_ = n_.subscribe("/realsense_sr300/ylx/rgb", 1, &SubscribeAndPublish::callback, this);
+            height_sub_ = n_.subscribe("/realsense_sr300/ylx/rgb", 1, &SubscribeAndPublish::callback, this);
 			sub2_ = n_.subscribe("/realsense_sr300/ylx/depth", 1, &SubscribeAndPublish::callback2, this);
 		}
 
@@ -31,7 +31,7 @@ class SubscribeAndPublish
 		ros::NodeHandle n_; 
 		ros::Publisher pub_;
 		ros::Publisher pub2_;
-		ros::Subscriber sub_;
+		ros::Subscriber height_sub_;
 		ros::Subscriber sub2_;
 
 };//End of class SubscribeAndPublish

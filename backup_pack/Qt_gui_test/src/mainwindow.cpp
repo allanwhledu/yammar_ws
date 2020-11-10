@@ -1,16 +1,8 @@
-﻿#include "mainwindow.h"
+#include "mainwindow.h"
 #include "bigcamera.h"
 #include "ui_mainwindow.h"
 #include <Widget.h>
 #include <qnamespace.h>
-#include <QPainter>
-#include <QPixmap>
-#include <MyDrawImage.h>
-#include <QImageReader>
-#include <QDebug>
-
-int carspeed = 0;
-int position =0;
 
 MainWindow::MainWindow(int argc, char **argv, QWidget *parent) :
         QMainWindow(parent),
@@ -22,7 +14,6 @@ MainWindow::MainWindow(int argc, char **argv, QWidget *parent) :
     // paint_line.show();
     // 实际上这里不需要做任何的事情，因为promote的widget出来就是自己显示的。
     ui->widget->show();
-//    ui->widget_2->show();
     // 在主函数里仅仅可以强制隐藏。
     // ui->widget->hide();
     // displayChart();
@@ -32,8 +23,6 @@ MainWindow::MainWindow(int argc, char **argv, QWidget *parent) :
     // m_pLeftToRightProBar->setMinimum(0);  // 最小值
     // m_pLeftToRightProBar->setMaximum(100);  // 最大值
     // m_pLeftToRightProBar->setValue(50);  // 当前进度
-
-
 
     std::cout << "init ros node..." << std::endl;
     qnode.init();
@@ -88,8 +77,6 @@ MainWindow::MainWindow(int argc, char **argv, QWidget *parent) :
     QObject::connect(&qnode, SIGNAL(logging_torque()), this, SLOT(update_torque()));
     // QObject::connect(&qnode, SIGNAL(loggingUpdated()), this, SLOT(updateLoggingView()));
 
-    qDebug() << "Supported formats:" << QImageReader::supportedImageFormats();
-
 }
 
 MainWindow::~MainWindow() {
@@ -110,28 +97,28 @@ void MainWindow::updateLogcamera() {
 }
 
 void MainWindow::updateText() {
-  displayText(qnode.leader_line_error_string, qnode.height_string);
-  if (qnode.leader_line_error < -2) {
-      ui->go_left_button->setStyleSheet("background-color: red");
-      ui->go_right_button->setStyleSheet("background-color: white");
-  } else if (qnode.leader_line_error > 2) {
-      ui->go_left_button->setStyleSheet("background-color: white");
-      ui->go_right_button->setStyleSheet("background-color: red");
-  } else {
-      ui->go_left_button->setStyleSheet("background-color: white");
-      ui->go_right_button->setStyleSheet("background-color: white");
-  }
+    displayText(qnode.leader_line_error_string, qnode.height_string);
+    if (qnode.leader_line_error < -2) {
+        ui->go_left_button->setStyleSheet("background-color: red");
+        ui->go_right_button->setStyleSheet("background-color: white");
+    } else if (qnode.leader_line_error > 2) {
+        ui->go_left_button->setStyleSheet("background-color: white");
+        ui->go_right_button->setStyleSheet("background-color: red");
+    } else {
+        ui->go_left_button->setStyleSheet("background-color: white");
+        ui->go_right_button->setStyleSheet("background-color: white");
+    }
 
-  if (qnode.height_value < -2) {
-      ui->height_button->setStyleSheet("background-color: red");
-      ui->down_button->setStyleSheet("background-color: white");
-  } else if (qnode.height_value > 2) {
-      ui->height_button->setStyleSheet("background-color: white");
-      ui->down_button->setStyleSheet("background-color: red");
-  } else {
-      ui->height_button->setStyleSheet("background-color: white");
-      ui->down_button->setStyleSheet("background-color: white");
-  }
+    if (qnode.height_value < -2) {
+        ui->height_button->setStyleSheet("background-color: red");
+        ui->down_button->setStyleSheet("background-color: white");
+    } else if (qnode.height_value > 2) {
+        ui->height_button->setStyleSheet("background-color: white");
+        ui->down_button->setStyleSheet("background-color: red");
+    } else {
+        ui->height_button->setStyleSheet("background-color: white");
+        ui->down_button->setStyleSheet("background-color: white");
+    }
 }
 
 void MainWindow::displayChart() {
@@ -213,8 +200,8 @@ void MainWindow::displayMat(const QImage &image) {
 }
 
 void MainWindow::displayText(const QString &line_error_string, const QString &height_string) {
-  ui->leadingLine_param->setText(line_error_string);
-  ui->height_value->setText(height_string);
+    ui->leadingLine_param->setText(line_error_string);
+    ui->height_value->setText(height_string);
 }
 
 void MainWindow::on_pushButton_clicked() {
@@ -237,26 +224,24 @@ void MainWindow::on_horizontalSlider_sliderMoved(int position) {
 }
 
 void MainWindow::on_pushButton_5_clicked() {
-    carspeed = carspeed - 1000;
-    int speed = this->ui->lineEdit_13->text().toDouble();
-    speed = carspeed;
+    double speed = this->ui->lineEdit_13->text().toDouble();
+    speed = speed - 0.1;
     QString qspeed = QString::number(speed);
     this->ui->lineEdit_13->setText(qspeed);
     qnode.pub_car_speed(speed);
 }
 
 void MainWindow::on_pushButton_13_clicked() {
-    carspeed = carspeed + 1000;
-    int speed = this->ui->lineEdit_13->text().toDouble();
-    speed = carspeed;
+    double speed = this->ui->lineEdit_13->text().toDouble();
+    speed = speed + 0.1;
     QString qspeed = QString::number(speed);
     this->ui->lineEdit_13->setText(qspeed);
     qnode.pub_car_speed(speed);
 }
 
 void MainWindow::on_stop_button_clicked() {
-    int is_stop = 1;
-    ui->pushButton_10->setStyleSheet("background-color: green");
+    bool is_stop = true;
+//    ui->pushButton_10->setStyleSheet("background-color: green");
     this->ui->stop_button->setStyleSheet("background-color: red");
     qnode.pub_is_stop(is_stop);
 }
@@ -265,25 +250,6 @@ void MainWindow::on_ublock_button_clicked() {
     bool is_stop = false;
     this->ui->stop_button->setStyleSheet("background-color: white");
     qnode.pub_is_stop(is_stop);
-}
-
-
-void MainWindow::on_go_left_button_clicked()
-{
-  position = position +1000;
-  int turn = position;
-  QString qturn = QString::number(turn);
-  this->ui->lineEdit_13->setText(qturn);
-  qnode.pub_car_turn(turn);
-  std::cout<<"left_mainwindows"<<std::endl;
-}
-
-void MainWindow::on_go_right_button_clicked()
-{
-  position = position -1000;
-  int turn = position;
-  qnode.pub_car_turn(turn);
-
 }
 
 void MainWindow::on_height_button_clicked()

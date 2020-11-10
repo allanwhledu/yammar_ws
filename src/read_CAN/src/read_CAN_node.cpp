@@ -2,6 +2,7 @@
 #include "std_msgs/String.h"
 #include "std_msgs/Int32.h"
 #include "std_msgs/Int64.h"
+#include "std_msgs/UInt16.h"
 #include "std_msgs/Float32.h"
 #include <sstream>
 #include "unistd.h"
@@ -12,10 +13,19 @@
 CAN_DEVICE can_1(1);
 CAN_DEVICE can_2(2);
 
+
+void height_control_mode_callback(const std_msgs::UInt16::ConstPtr& msg)
+{
+    ROS_INFO("got control mode: ", msg->data);
+    can_2.control_height(msg->data);
+}
+
 int main(int argc, char **argv)
 {
 	ros::init(argc, argv, "reap_height_capture");
 	ros::NodeHandle n;
+
+	// 采集信号后发布到制定topic
 	ros::Publisher chatter_pub1 = n.advertise<std_msgs::Int64>("reap_angle1", 1000);
     ros::Publisher chatter_pub2 = n.advertise<std_msgs::Int64>("reap_angle2", 1000);
     ros::Publisher chatter_pub3 = n.advertise<std_msgs::Float32>("car_speed", 1000);
@@ -23,7 +33,10 @@ int main(int argc, char **argv)
 	can_1.pub_c1 = &chatter_pub1;
 	can_1.pub_c2 = &chatter_pub2;
     can_1.pub_c4 = &chatter_pub4;
-	can_2.pub_c3 = &chatter_pub3;
+	can_1.pub_c3 = &chatter_pub3;
+
+	// 接受topic指令后发送can信号
+    ros::Subscriber sub = n.subscribe("height_control_mode", 1, height_control_mode_callback);
 
 
 //    can_1.m_run0 = 0;
@@ -37,23 +50,31 @@ int main(int argc, char **argv)
     can_1.open_receive();
 
 //    //测试是否可以双通道运行
-//    can_1.close_receive();
-//    can_1.closeCAN();
 
     can_2.init_CAN();
-    ROS_INFO_STREAM("can2 receive thread starting...");
-    can_2.open_receive();
+//    ROS_INFO_STREAM("can2 receive thread starting...");
+//    can_2.open_receive();
 
-    ros::Rate loop_rate(1);
-	int count = 0;
-	while (ros::ok() && count < 10000)
-	{
-        ROS_INFO_STREAM("Watchdog running...");
-		loop_rate.sleep();
-		++count;
-	}
+    int spin_or_watchdog = 0;
+    if(spin_or_watchdog == 0)
+    {
+        ros::spin();
+    }
+    else if(spin_or_watchdog == 1)
+    {
+        ros::Rate loop_rate(1);
+        int count = 0;
+        while (ros::ok() && count < 10000)
+        {
+            ROS_INFO_STREAM("Watchdog running...");
+            loop_rate.sleep();
+            ++count;
+        }
+    }
 
     can_1.close_receive();
 	can_1.closeCAN();
+//    can_2.close_receive();
+    can_2.closeCAN();
 	return 0;
 }

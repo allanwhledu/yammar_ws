@@ -1,0 +1,36 @@
+<launch>
+
+  <node pkg="rosbag" type="play" name="play1"
+    args="$(find launch_file)/bag/2020-11-16_75_75-tracking.bag --delay=3 -r 0.1 --clock"/>
+
+#### HMI ####################################################
+
+  <node pkg="trail" type="app_node" name="HMI" />
+
+#### control motors vis RS485 bus ####################################################
+
+  <node pkg="control485" type="control485_node" name="control485" output="screen"/>
+
+#### read signals from CAN bus ####################################################
+
+  <node pkg="read_CAN" type="read_CAN_node" name="read_CAN" />
+
+#### for line detect ####################################################
+
+  <node pkg="boud_rgbd" type="boud_rgbd" name="line_detect" />
+  <node pkg="mmw_capture" type="mmw_capture_node" name="obstacle_detect" />
+
+#### for logic control flow ####################################################
+
+  <node pkg="smach_tutorials" type="motor_control_client.py" name="motor_control_client" output="screen"/>
+
+#### visulization ################################################
+
+  <node pkg="rviz" type="rviz" name="rviz" 
+    args="-d $(find launch_file)/rviz_config/rviz.rviz"/>
+
+  <node pkg="rqt_graph" type="rqt_graph" name="rqt_graph"/>
+
+  <node pkg="smach_viewer" type="smach_viewer.py" name="smach_viewer"/>
+
+</launch>

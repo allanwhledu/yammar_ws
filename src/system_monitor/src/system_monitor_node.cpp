@@ -10,7 +10,7 @@ class SubscribeAndPublish
 			pub_ = n_.advertise<std_msgs::String>("system_status", 1);
 
 			//Topic you want to subscribe
-			sub_ = n_.subscribe("/perceptual_nodes/full_view_stream", 1, &SubscribeAndPublish::callback, this);
+			height_sub_ = n_.subscribe("/perceptual_nodes/full_view_stream", 1, &SubscribeAndPublish::callback, this);
 			sub2_ = n_.subscribe("/perceptual_nodes/detected_obstacle", 1, &SubscribeAndPublish::callback2, this);
 			sub3_ = n_.subscribe("/perceptual_nodes/harvest_line_data", 1, &SubscribeAndPublish::callback3, this);
 			sub4_ = n_.subscribe("/perceptual_nodes/grain_height_data", 1, &SubscribeAndPublish::callback4, this);
@@ -72,7 +72,7 @@ class SubscribeAndPublish
 	private:
 		ros::NodeHandle n_; 
 		ros::Publisher pub_;
-		ros::Subscriber sub_;
+		ros::Subscriber height_sub_;
 		ros::Subscriber sub2_;
 		ros::Subscriber sub3_;
 		ros::Subscriber sub4_;

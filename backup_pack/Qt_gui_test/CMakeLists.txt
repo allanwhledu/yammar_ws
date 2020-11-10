@@ -26,8 +26,6 @@ set(SOURCES
   src/qnode.cpp
   src/main.cpp
   src/Widget.cpp
-  src/back.cpp
-  src/MyDrawImage.cpp
 )
 
 set(FORMS

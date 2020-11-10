@@ -12,7 +12,7 @@ class SubscribeAndPublish
 			pub2_ = n_.advertise<std_msgs::String>("path_data", 1);
 
 			//Topic you want to subscribe
-			sub_ = n_.subscribe("/perceptual_nodes/harvest_line_data", 1, &SubscribeAndPublish::callback, this);
+			height_sub_ = n_.subscribe("/perceptual_nodes/harvest_line_data", 1, &SubscribeAndPublish::callback, this);
 		}
 
 		void callback(const std_msgs::StringConstPtr& input)
@@ -26,7 +26,7 @@ class SubscribeAndPublish
 		ros::NodeHandle n_; 
 		ros::Publisher pub_;
 		ros::Publisher pub2_;
-		ros::Subscriber sub_;
+		ros::Subscriber height_sub_;
 
 };//End of class SubscribeAndPublish
 

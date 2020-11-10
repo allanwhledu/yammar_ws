@@ -13,7 +13,7 @@ CAN_DEVICE::CAN_DEVICE(int channel_idx) {
 
 void CAN_DEVICE::init_CAN() {// 进行CAN信号发送
     printf(">>start CAN device !\r\n");//指示程序已运行
-    if (VCI_OpenDevice(VCI_USBCAN2, channel, 0) == 1)//打开设备
+    if (VCI_OpenDevice(VCI_USBCAN2, 0, 0) == 1)//打开设备
     {
         printf(">>open device success!\n");//打开设备成功
     } else {
@@ -30,15 +30,15 @@ void CAN_DEVICE::init_CAN() {// 进行CAN信号发送
     config.Timing1 = 0x1C;
     config.Mode = 0;//正常模式
 
-    if (VCI_InitCAN(VCI_USBCAN2, channel, 0, &config) != 1)//CAN1
+    if (VCI_InitCAN(VCI_USBCAN2, 0, channel, &config) != 1)//CAN1
     {
         printf(">>Init CAN1 error\n");
-        VCI_CloseDevice(VCI_USBCAN2, channel);
+        VCI_CloseDevice(VCI_USBCAN2, 0);
     }
 
-    if (VCI_StartCAN(VCI_USBCAN2, channel, 0) != 1) {
+    if (VCI_StartCAN(VCI_USBCAN2, 0, channel) != 1) {
         printf(">>Start CAN1 error\n");
-        VCI_CloseDevice(VCI_USBCAN2, channel);
+        VCI_CloseDevice(VCI_USBCAN2, 0);
     }
 }
 
@@ -119,11 +119,9 @@ void CAN_DEVICE::control_height(int mode) //驱动第num_motor号电机，速度
 
 void CAN_DEVICE::closeCAN() {
     usleep(100000);//延时100ms。
-    VCI_ResetCAN(VCI_USBCAN2, channel, 0);//复位CAN1通道。
+    VCI_ResetCAN(VCI_USBCAN2, 0, channel);//复位CAN1通道。
     usleep(100000);//延时100ms。
-    VCI_ResetCAN(VCI_USBCAN2, channel, 1);//复位CAN2通道。
-    usleep(100000);//延时100ms。
-    VCI_CloseDevice(VCI_USBCAN2, channel);//关闭设备。
+    VCI_CloseDevice(VCI_USBCAN2, 0);//关闭设备。
     printf(">>close deivce success!\n");//打开设备成功
 // 除收发函数外，其它的函数调用前后，最好加个毫秒级的延时，即不影响程序的运行，又可以让USBCAN设备有充分的时间处理指令。
 // goto ext;

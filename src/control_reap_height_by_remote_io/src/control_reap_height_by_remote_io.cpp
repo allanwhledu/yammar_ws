@@ -21,12 +21,12 @@
 #include <bitset>
 
 // channel_idx应该是1或2
-CAN_DEVICE can_1(1);
+CAN_DEVICE can_2(2);
 
 void Callback(const std_msgs::UInt16::ConstPtr& msg)
 {
     ROS_INFO("got control mode: ", msg->data);
-    can_1.control_height(msg->data);
+    can_2.control_height(msg->data);
 }
 
 int main(int argc, char** argv)
@@ -37,13 +37,13 @@ int main(int argc, char** argv)
     ros::NodeHandle n;
 
     // 初始化CAN卡
-    can_1.init_CAN();
+    can_2.init_CAN();
 
     ros::Subscriber sub = n.subscribe("height_control_mode", 1, Callback);
 
     ros::spin();
 
-    can_1.closeCAN();
+    can_2.closeCAN();
 
     return 0;
 }

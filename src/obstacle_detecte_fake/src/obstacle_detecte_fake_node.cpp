@@ -17,7 +17,7 @@ class SubscribeAndPublish
 			pub_ = n_.advertise<std_msgs::String>("PNPConditionEvent", 1);
 
 			//Topic you want to subscribe
-			sub_ = n_.subscribe("/scan", 1, &SubscribeAndPublish::callback, this);
+			height_sub_ = n_.subscribe("/scan", 1, &SubscribeAndPublish::callback, this);
 
 			obstacle = 0;
 			sign_obstacle = 0;
@@ -69,7 +69,7 @@ class SubscribeAndPublish
 	private:
 		ros::NodeHandle n_; 
 		ros::Publisher pub_;
-		ros::Subscriber sub_;
+		ros::Subscriber height_sub_;
 
 };//End of class SubscribeAndPublish
 

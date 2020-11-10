@@ -36,7 +36,7 @@ void CAN_DEVICE::init_CAN() {// 进行CAN信号发送
 //    config.Timing0 = 0x00;/*波特率1000 Kbps  Timing0=0x00 Timing1= 0x14*/
 //    config.Timing1 = 0x14;
     // 这里，已经改成了500kbps，适应车辆
-    config.Timing0 = 0x00;/*波特率1000 Kbps  Timing0=0x00 Timing1= 0x14*/
+    config.Timing0 = 0x03;/*波特率1000 Kbps  Timing0=0x00 Timing1= 0x14*/
     config.Timing1 = 0x1C;
     config.Mode = 0;//正常模式
 
@@ -44,13 +44,13 @@ void CAN_DEVICE::init_CAN() {// 进行CAN信号发送
     {
         printf(">>Init CAN error\n");
         VCI_CloseDevice(VCI_USBCAN2, 0);
-        exit(1);
+//        exit(1);
     }
 
     if (VCI_StartCAN(VCI_USBCAN2, 0, channel) != 1) {
         printf(">>Start CAN error\n");
         VCI_CloseDevice(VCI_USBCAN2, 0);
-        exit(1);
+//        exit(1);
     }
 }
 
@@ -86,15 +86,24 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     if ((heigh1 << 8 | low1) > 60000 || (heigh2 << 8 | low2) > 60000 || (heigh3 << 8 | low3) > 60000)
                         continue;
                     // 1号角度传感器
-                    float vol1 = (heigh1 << 8 | low1);
-                    pCAN_DEVICE->angle1 = vol1/2*105/4000+5-18; //因为输入电压是10v，所以除以2;-18是修正零漂
+                    int vol1 = (heigh1 << 8 | low1);
+                    ROS_INFO_STREAM(vol1);
+                    float vol1_norm = float(vol1)/1000;
+                    ROS_INFO_STREAM(vol1_norm);
+                    float angle1 = 31.56 - vol1_norm * 31.56/(4.06 - 1);
+                    ROS_INFO_STREAM(angle1);
+                    pCAN_DEVICE->angle1 = angle1;
+                    // pCAN_DEVICE->angle1 = vol1/2*105/4000+5-18; //因为输入电压是10v，所以除以2;-18是修正零漂
                     std_msgs::Int64 data_receive1;
                     data_receive1.data = pCAN_DEVICE->angle1;
                     pCAN_DEVICE->pub_c1->publish(data_receive1);
 
                     // 2号角度传感器
-                    float vol2 = (heigh2 << 8 | low2);
-                    pCAN_DEVICE->angle2 = vol2/2*105/4000+5-18;
+                    int vol2 = (heigh2 << 8 | low2);
+                    float vol2_norm = float(vol2)/1000;
+                    float angle2 = 0 + vol2_norm * 39.13/(3.92 - 0.72);
+                    pCAN_DEVICE->angle2 = angle2;
+                    // pCAN_DEVICE->angle2 = vol2/2*105/4000+5-18;
                     std_msgs::Int64 data_receive2;
                     data_receive2.data = pCAN_DEVICE->angle2;
                     pCAN_DEVICE->pub_c2->publish(data_receive2);
@@ -170,7 +179,7 @@ void CAN_DEVICE::transmit_msg(VCI_CAN_OBJ send[1], char com[10]) //发送函数
 {
     if (VCI_Transmit(VCI_USBCAN2, 0, channel, send, 1) == 1) {
 
-        ROS_INFO("Send    msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X COMMAND:%s", count,
+        ROS_INFO("Send msg:%04d ID:%04X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X COMMAND:%s", count,
                  send[0].ID,
                  send[0].Data[0], send[0].Data[1], send[0].Data[2], send[0].Data[3],
                  send[0].Data[4], send[0].Data[5], send[0].Data[6], send[0].Data[7], com);
@@ -179,98 +188,68 @@ void CAN_DEVICE::transmit_msg(VCI_CAN_OBJ send[1], char com[10]) //发送函数
     }
 }
 
-void CAN_DEVICE::set_speed_mode(int num_motor) //驱动第num_motor号电机，速度为speed.
+void CAN_DEVICE::control_height(int mode) //驱动第num_motor号电机，速度为speed.
 {
     // 设置电机为CAN控制，速度模式
     VCI_CAN_OBJ msg[1];
 
-    msg[0].ID = num_motor;
+    if (mode == 110) // 下降（y3口）
+    {
+        msg[0].ID = 0x00000200;
+        msg[0].SendType = 0;
+        msg[0].RemoteFlag = 0;
+        msg[0].ExternFlag = 0;
+        msg[0].DataLen = 8;
+
+        msg[0].Data[0] = 0x01;
+        msg[0].Data[1] = 0x11;
+        msg[0].Data[2] = 0x09;
+        msg[0].Data[3] = 0x00;
+        msg[0].Data[4] = 0x04;
+        msg[0].Data[5] = 0x00;
+        msg[0].Data[6] = 0x00;
+        msg[0].Data[7] = 0x1D;
+
+        transmit_msg(msg, "set  down");
+    }
+
+    if (mode == 120) // 上升（y4）
+    {
+        msg[0].ID = 0x00000200;
+        msg[0].SendType = 0;
+        msg[0].RemoteFlag = 0;
+        msg[0].ExternFlag = 0;
+        msg[0].DataLen = 8;
+
+        msg[0].Data[0] = 0x01;
+        msg[0].Data[1] = 0x11;
+        msg[0].Data[2] = 0x09;
+        msg[0].Data[3] = 0x00;
+        msg[0].Data[4] = 0x08;
+        msg[0].Data[5] = 0x00;
+        msg[0].Data[6] = 0x00;
+        msg[0].Data[7] = 0x11;
+
+        transmit_msg(msg, "set  up");
+    }
+
+    // 半秒后停止控制
+    ros::Duration(0.25).sleep();
+    msg[0].ID = 0x00000200;
     msg[0].SendType = 0;
     msg[0].RemoteFlag = 0;
     msg[0].ExternFlag = 0;
     msg[0].DataLen = 8;
 
-    msg[0].Data[0] = 0x04;
-    msg[0].Data[1] = num_motor;
-    msg[0].Data[2] = 0x2A;
+    msg[0].Data[0] = 0x01;
+    msg[0].Data[1] = 0x11;
+    msg[0].Data[2] = 0x09;
     msg[0].Data[3] = 0x00;
     msg[0].Data[4] = 0x00;
     msg[0].Data[5] = 0x00;
     msg[0].Data[6] = 0x00;
-    msg[0].Data[7] = 0x00;
-
-    transmit_msg(msg, "set  MODE");
-}
-
-void CAN_DEVICE::set_motor_speed(int num_motor, int speed) //驱动第num_motor号电机，速度为speed.
-{
-    // 将速度指令拆分为高低位
-    unsigned char heigh, low;
-    heigh = (speed >> 8) & 0xff;
-    low = speed & 0xff;
-
-    VCI_CAN_OBJ msg[1];
-
-    msg[0].ID = num_motor;
-    msg[0].SendType = 0;
-    msg[0].RemoteFlag = 0;
-    msg[0].ExternFlag = 0;
-    msg[0].DataLen = 8;
-
-    msg[0].Data[0] = 0x08;
-    msg[0].Data[1] = num_motor;
-    msg[0].Data[2] = 0x90;
-    msg[0].Data[3] = 0x00;
-    msg[0].Data[4] = low;
-    msg[0].Data[5] = heigh;
-    msg[0].Data[6] = 0x00;
-    msg[0].Data[7] = 0x00;
-
-    transmit_msg(msg, "set SPEED");
-}
-
-void CAN_DEVICE::callFeedback(int num_motor) //读取第num_motor号电机的速度误差
-{
-    VCI_CAN_OBJ msg[1];
-
-    msg[0].ID = num_motor;
-    msg[0].SendType = 0;
-    msg[0].RemoteFlag = 0;
-    msg[0].ExternFlag = 0;
-    msg[0].DataLen = 8;
-
-    msg[0].Data[0] = 0x04;
-    msg[0].Data[1] = num_motor;
-    msg[0].Data[2] = 0x92;
-    msg[0].Data[3] = 0x00;
-    msg[0].Data[4] = 0x00;
-    msg[0].Data[5] = 0x00;
-    msg[0].Data[6] = 0x00;
-    msg[0].Data[7] = 0x00;
-
-    transmit_msg(msg, "call ERRO");
-}
-
-void CAN_DEVICE::callCurrent(int num_motor) //读取第num_motor号电机的速度误差
-{
-    VCI_CAN_OBJ msg[1];
-
-    msg[0].ID = num_motor;
-    msg[0].SendType = 0;
-    msg[0].RemoteFlag = 0;
-    msg[0].ExternFlag = 0;
-    msg[0].DataLen = 8;
-
-    msg[0].Data[0] = 0x04;
-    msg[0].Data[1] = num_motor;
-    msg[0].Data[2] = 0xD0;
-    msg[0].Data[3] = 0x00;
-    msg[0].Data[4] = 0x00;
-    msg[0].Data[5] = 0x00;
-    msg[0].Data[6] = 0x00;
-    msg[0].Data[7] = 0x00;
-
-    transmit_msg(msg, "call CURR");
+    msg[0].Data[7] = 0x19;
+    transmit_msg(msg, "set  Stady");
 }
 
 void CAN_DEVICE::open_receive() {
@@ -279,61 +258,6 @@ void CAN_DEVICE::open_receive() {
     m_run0 = 1;
     ret = pthread_create(&receive_thread, NULL, receive_func, this);
     ROS_INFO_STREAM("receive_thread_create.");
-}
-
-void CAN_DEVICE::check_speed() {
-//    // 关闭CAN信号接受线程
-//    this->callFeedback(motor);
-////    ROS_INFO_STREAM("first call send");
-//
-//    while(pfd.percent_complete == 10000)
-//    {
-//        log_error.push_back(pfd.percent_complete);
-////        ROS_INFO_STREAM("still wait");
-//        this->callFeedback(motor);
-//        usleep(2000);
-//    }
-//
-//    while(pfd.percent_complete > 50)
-//    {
-//        log_error.push_back(pfd.percent_complete);
-//        this->callFeedback(motor);
-//        usleep(2000);
-//    }
-//    ROS_INFO_STREAM("ok error is already small");
-//
-//    this->m_run0 = 0;
-////    ROS_INFO_STREAM("wait close");
-//    pthread_join(receive_thread, NULL);//等待线程关闭
-////    ROS_INFO_STREAM("receive_thread_close.");
-}
-
-void CAN_DEVICE::wait_current() {
-//    // 关闭CAN信号接受线程
-//    this->callCurrent(motor);
-////    ROS_INFO_STREAM("call send");
-//
-//    while(pfd.percent_complete == 10000)
-//    {
-//        log_error.push_back(pfd.percent_complete);
-////        ROS_INFO_STREAM("still wait current feedback");
-//        this->callCurrent(motor);
-//        usleep(2000);
-//    }
-//    ROS_INFO_STREAM("current got.");
-//
-////    while(pfd.percent_complete > 50)
-////    {
-////        log_error.push_back(pfd.percent_complete);
-////        this->callFeedback(motor);
-////        usleep(2000);
-////    }
-////    ROS_INFO_STREAM("ok error is already small");
-//
-//    this->m_run0 = 0;
-////    ROS_INFO_STREAM("wait close");
-//    pthread_join(receive_thread, NULL);//等待线程关闭
-////    ROS_INFO_STREAM("receive_thread_close.");
 }
 
 void CAN_DEVICE::close_receive() {
@@ -353,13 +277,8 @@ void CAN_DEVICE::closeCAN() {
 // goto ext;
 }
 
-void CAN_DEVICE::setMotor(int motor) {
-    CAN_DEVICE::motor = motor;
-}
-
 void CAN_DEVICE::init_ICAN(){
     // 使能模拟量转can
-
     VCI_CAN_OBJ msg[1];
 
     msg[0].ID = 0;
@@ -370,12 +289,6 @@ void CAN_DEVICE::init_ICAN(){
 
     msg[0].Data[0] = 0x01;
     msg[0].Data[1] = 0x01;
-//    msg[0].Data[2] = 0xD0;
-//    msg[0].Data[3] = 0x00;
-//    msg[0].Data[4] = 0x00;
-//    msg[0].Data[5] = 0x00;
-//    msg[0].Data[6] = 0x00;
-//    msg[0].Data[7] = 0x00;
 
     transmit_msg(msg, "init ICAN");
 }

@@ -11,7 +11,7 @@ class SubscribeAndPublish
 			pub_ = n_.advertise<std_msgs::String>("/automatic_nodes/cmd_vel", 1);
 
 			//Topic you want to subscribe
-			sub_ = n_.subscribe("cmd_avoiding_obstacle", 1, &SubscribeAndPublish::callback, this);
+			height_sub_ = n_.subscribe("cmd_avoiding_obstacle", 1, &SubscribeAndPublish::callback, this);
 			sub2_ = n_.subscribe("path_data", 1, &SubscribeAndPublish::callback2, this);
 		}
 
@@ -31,7 +31,7 @@ class SubscribeAndPublish
 	private:
 		ros::NodeHandle n_; 
 		ros::Publisher pub_;
-		ros::Subscriber sub_;
+		ros::Subscriber height_sub_;
 		ros::Subscriber sub2_;
 
 };//End of class SubscribeAndPublish
