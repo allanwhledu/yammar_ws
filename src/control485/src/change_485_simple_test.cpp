@@ -8,8 +8,12 @@
 #include<sys/time.h>    //for time
 #include<modbus.h>
 
+#include <fstream>
+#include <pthread.h>
+
 #include <ros/ros.h>
 #include <actionlib/server/simple_action_server.h>
+#include "std_msgs/Float32.h"
 
 
 using namespace std;
@@ -26,6 +30,13 @@ uint16_t motorCurrentFeedbackAddr=0xC6; //说明书中找到而补充的电流�
 
 string port="/dev/ttyUSB0";
 
+string current_time = "";
+ofstream* open_file;
+
+float motorCurrent = 0;
+
+bool endFlag = false;
+
 // 函数申明
 bool openSerial(const char* port);
 void motorInit(void);
@@ -36,6 +47,8 @@ int motorReadSpeed(int motor);
 int motorReadSpeed(int motor);
 
 void test_speed_control(int motor_id, int speed);
+
+void* getTime(void*);//获取当前系统时间
 
 bool openSerial(const char* port)
 {
@@ -123,28 +136,67 @@ int motorReadSpeed(int motor)
     return temp;
 }
 
+void current_cb(const std_msgs::Float32ConstPtr &msg){
+    ROS_INFO_STREAM("Call back! current:"<<msg->data);
+    motorCurrent = msg->data;
+}
+
 int main (int argc, char **argv)
 {
     ros::init(argc, argv, "hello") ;
     ros::NodeHandle n_;
+    ros::Subscriber sub_motor_current;
+
+    //Subscribe topic of current
+
+    sub_motor_current = n_.subscribe("motor_current", 1, &current_cb);
+
+    pthread_t time_sync;
+//    pthread_t speed_read;
+    pthread_create(&time_sync, nullptr, getTime, nullptr);
+    ROS_INFO_STREAM("time sync spread make.");
+
+    ofstream ofs;
+    string filename = "/home/yangzt/yammar_ws/src/control485/speed_result/";
+    filename = filename + current_time + "_speed.txt";
 
     int motor_id = 1;
-    int new_motor_id = 3;
-    int speed = 1200;
+    int targetRev = 0;
+    int realRev = 0;
 
     ROS_INFO_STREAM(">>Open Serial!") ;
-    if(openSerial(port.c_str()))
+
+    int count = 0;
+//    while (openSerial(port.c_str()) && ros::ok())
+    while (ros::ok() && targetRev <= 3000)
     {
-        ROS_INFO_STREAM(">>Enable RS485...") ;
-        motorSetModbus(motor_id);
-//        motorSetAdress(motor_id, new_motor_id);
-        test_speed_control(motor_id, speed);
+        ros::spinOnce();
+//        ROS_INFO_STREAM(">>Enable RS485...") ;
+//        motorSetModbus(motor_id);
+//        test_speed_control(motor_id, targetRev);
+//
+//        // Read and save motor speed;
+//        realRev = motorReadSpeed(motor_id);
+        ofs.open(filename, ios_base::app);
+        if(!ofs)
+            cerr<<"Open File Fail."<<endl;
+//            exit(1);
+        ofs<<"Time: "<<current_time<<" Motor rev and current "<<targetRev<<" "<<motorCurrent<<endl;
 
+        cout<<"Real rev and current are "<<targetRev<<" "<<motorCurrent<<endl;
+        ofs.close();
 
-        ROS_INFO_STREAM("Done!") ;
+        if (count > 500) {
+            count = 0;
+            targetRev += 500;
+        }
 
-        ROS_INFO_STREAM(">>Exit!") ;
+        count++;
+        usleep(10000);
     }
+    ROS_INFO_STREAM(">>Exit!") ;
+    pthread_kill(time_sync, 0);
+
     return 0;
 }
 
@@ -156,4 +208,59 @@ void test_speed_control(int motor_id, int speed) {
     ROS_INFO_STREAM(">>Current speed: " << motorReadSpeed(motor_id));
     usleep(5000000);
     motorSetSpeed(motor_id, 0);
+}
+
+void* getTime(void*)
+{
+    // 时间在后台20ms更新一次
+    while(!endFlag)
+    {
+        timeval tv;
+        time_t timep;
+        tm* timeNow;
+        gettimeofday(&tv, NULL);//获取当下精确的s和us的时间
+        time(&timep);//获取从1900年至今的秒数
+        timeNow = gmtime(&timep); //注意tm_year和tm_mon的转换后才是实际的时间
+        timeNow->tm_year+=1900;//实际年
+        timeNow->tm_mon+=1;//实际月
+        timeNow->tm_hour+=8;//实际小时
+        if(timeNow->tm_hour>=24)
+        {
+            timeNow->tm_hour-=24;
+        }
+        long int ms = (tv.tv_sec*1000.0 + tv.tv_usec / 1000.0) - timep * 1000.0; //实际ms
+
+        current_time ="";
+        current_time+='[';
+        current_time+=to_string(timeNow->tm_year);
+        current_time+='-';
+        current_time+=to_string(timeNow->tm_mon);
+        current_time+='-';
+        current_time+=to_string(timeNow->tm_mday);
+        current_time+=' ';
+        current_time+=to_string(timeNow->tm_hour);
+        current_time+=':';
+        current_time+=to_string(timeNow->tm_min);
+        current_time+=':';
+        string s_string = to_string(timeNow->tm_sec);
+        while (s_string.size()<2)
+        {
+            s_string="0"+s_string;
+        }
+        current_time+=s_string;
+        current_time+=':';
+        string ms_string = to_string(int(ms));
+        while (ms_string.size()<3)
+        {
+            ms_string="0"+ms_string;
+        }
+        current_time+=ms_string;
+        current_time+=']';
+
+//        ROS_WARN_STREAM("current time: "<<current_time);
+        // todo 获取时间的函数好像执行很慢，感觉可以之后开一个线程让它在后台慢慢执行
+        usleep(20000);
+    }
+    ROS_WARN_STREAM("current time sync stopped.");
+//    endFlag = false;
 }

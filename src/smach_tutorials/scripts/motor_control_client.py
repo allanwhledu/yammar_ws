@@ -152,7 +152,7 @@ def monitor_cb(self, msg):
         motor_goal[2].action_goal.goal.target_speed = 0
 
         for motor in motor_goal:
-            print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
+            print (motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed)
 
         last_target = msg.data
         return False
@@ -168,7 +168,7 @@ def monitor_cb(self, msg):
         motor_goal[2].action_goal.goal.target_speed = reel_ta
 
         for motor in motor_goal:
-            print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
+            print (motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed)
 
         last_target = msg.data
         return False
@@ -184,7 +184,7 @@ def monitor_cb(self, msg):
         motor_goal[1].action_goal.goal.target_speed = cb_ta
         motor_goal[2].action_goal.goal.target_speed = pf_ta
         for motor in motor_goal:
-            print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
+            print (motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed)
 
         last_target = msg.data
         return False

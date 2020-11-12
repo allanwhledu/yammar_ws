@@ -259,7 +259,7 @@ void* getTime(void*)
         // todo 获取时间的函数好像执行很慢，感觉可以之后开一个线程让它在后台慢慢执行
         usleep(20000);
     }
-    ROS_WARN_STREAM("current time sync stoped.");
+    ROS_WARN_STREAM("current time sync stopped.");
 //    endFlag = false;
 }
 void motorInit(void)
@@ -514,7 +514,7 @@ int main (int argc, char **argv)
     ROS_INFO_STREAM("time sync spread make.");
 
     ofstream ofs;
-    string filename = "/home/sjtu_wanghaili/yammar_ws/speed_result/";
+    string filename = "/home/yangzt/yammar_ws/src/control485/speed_result/";
     filename = filename + current_time + "_speed.txt";
     ofs.open(filename, ios::out);
     if(!ofs)

@@ -8,3 +8,13 @@ bag/
 src/.clangd/
 
 src/.idea/
+
+src/control485/speed_result/venv/
+
+src/control485/speed_result/.idea/
+
+src/cmake-build-debug/
+
+src/smach_tutorials/venv/
+
+src/smach_tutorials/.idea/

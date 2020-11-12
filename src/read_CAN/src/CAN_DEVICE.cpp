@@ -36,7 +36,7 @@ void CAN_DEVICE::init_CAN() {// 进行CAN信号发送
 //    config.Timing0 = 0x00;/*波特率1000 Kbps  Timing0=0x00 Timing1= 0x14*/
 //    config.Timing1 = 0x14;
     // 这里，已经改成了500kbps，适应车辆
-    config.Timing0 = 0x03;/*波特率1000 Kbps  Timing0=0x00 Timing1= 0x14*/
+    config.Timing0 = 0x03;/*波特率1000 Kbps (Should be 125 Kbps?) Timing0=0x00 Timing1= 0x14*/
     config.Timing1 = 0x1C;
     config.Mode = 0;//正常模式
 
@@ -71,22 +71,27 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
         {
             // 上面有一个WaitTime我们可以知道，其实can卡硬件接受的信号频率非常高，只是我们这里过10毫秒来看一次处理一次而已。
             for (j = 0; j < reclen; j++) {
-                if (rec[j].ID == 0x0181) // 采集卡 channel1 1-5的数据
+                if (rec[j].ID == 0x0181) // 采集卡 channel1 1-4的数据
                 {
-                    unsigned char heigh1, low1;
-                    heigh1 = rec[j].Data[1];
+                    unsigned char high1, low1;
+                    high1 = rec[j].Data[1];
                     low1 = rec[j].Data[0];
-                    unsigned char heigh2, low2;
-                    heigh2 = rec[j].Data[3];
+                    unsigned char high2, low2;
+                    high2 = rec[j].Data[3];
                     low2 = rec[j].Data[2];
-                    unsigned char heigh3, low3;
-                    heigh3 = rec[j].Data[5];
+                    unsigned char high3, low3;
+                    high3 = rec[j].Data[5];
                     low3 = rec[j].Data[4];
 
-                    if ((heigh1 << 8 | low1) > 60000 || (heigh2 << 8 | low2) > 60000 || (heigh3 << 8 | low3) > 60000)
+                    // 临时选用采集卡Ch4记录电流
+                    unsigned char high4, low4;
+                    high4 = rec[j].Data[7];
+                    low4 = rec[j].Data[6];
+
+                    if ((high1 << 8 | low1) > 60000 || (high2 << 8 | low2) > 60000 || (high3 << 8 | low3) > 60000)
                         continue;
                     // 1号角度传感器
-                    int vol1 = (heigh1 << 8 | low1);
+                    int vol1 = (high1 << 8 | low1);
                     ROS_INFO_STREAM(vol1);
                     float vol1_norm = float(vol1)/1000;
                     ROS_INFO_STREAM(vol1_norm);
@@ -99,7 +104,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     pCAN_DEVICE->pub_c1->publish(data_receive1);
 
                     // 2号角度传感器
-                    int vol2 = (heigh2 << 8 | low2);
+                    int vol2 = (high2 << 8 | low2);
                     float vol2_norm = float(vol2)/1000;
                     float angle2 = 0 + vol2_norm * 39.13/(3.92 - 0.72);
                     pCAN_DEVICE->angle2 = angle2;
@@ -109,7 +114,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     pCAN_DEVICE->pub_c2->publish(data_receive2);
 
                     // 力矩传感器
-                    float torque = (heigh3 << 8 | low3);
+                    float torque = (high3 << 8 | low3);
                     pCAN_DEVICE->torque = torque/10000*100;
                     if(pCAN_DEVICE->torque < 0.05) // 太小的时候过滤一下
                     {
@@ -119,6 +124,15 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     data_receive4.data = pCAN_DEVICE->torque;
                     pCAN_DEVICE->pub_c4->publish(data_receive4);
 
+                    //电流检测
+                    float current = (high4 << 8 | low4);
+                    pCAN_DEVICE->current = current;
+                    /* some process */
+                    std_msgs::Float32 data_receive_current;
+                    data_receive4.data = pCAN_DEVICE->current;
+                    pCAN_DEVICE->pub_c5->publish(data_receive_current);
+
+
                     ROS_INFO(
                             "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle1:%05d angle2:%05d",
                             pCAN_DEVICE->channel+1, pCAN_DEVICE->count, rec[j].ID,
@@ -126,11 +140,11 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                             rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1, pCAN_DEVICE->angle2);
                 }
                 else if (rec[j].ID == 0x0281) { //采集卡 channel2 5-8的数据
-                    unsigned char heigh, low;
-                    heigh = rec[j].Data[1];
+                    unsigned char high, low;
+                    high = rec[j].Data[1];
                     low = rec[j].Data[0];
 
-                    if ((heigh << 8 | low) > 60000)
+                    if ((high << 8 | low) > 60000)
                         continue;
                     // ... ...
 
@@ -138,7 +152,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                             "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle5:%04d",
                             pCAN_DEVICE->channel+1, pCAN_DEVICE->count, rec[j].ID,
                             rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
-                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], heigh << 8 | low);
+                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], high << 8 | low);
                 }
                 else if (rec[j].ID == 0xCFF5188) //车速数据
                 {
@@ -166,6 +180,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                              rec[j].ID,
                              rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
                              rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7]);
+
                 }
                 pCAN_DEVICE->count++;//序号递增
             }

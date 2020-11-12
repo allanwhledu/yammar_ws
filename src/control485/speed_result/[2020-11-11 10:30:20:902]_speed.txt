@@ -1,0 +1,4328 @@
+Time: [2020-11-11 10:30:20:902] Motor rev is 0
+Current is 0
+Time: [2020-11-11 10:30:20:902] Motor rev is 0
+Current is 0
+Time: [2020-11-11 10:30:20:922] Motor rev is 0
+Current is 0
+Time: [2020-11-11 10:30:20:922] Motor rev is 0
+Current is 0
+Time: [2020-11-11 10:30:20:942] Motor rev is 0
+Current is 0
+Time: [2020-11-11 10:30:20:942] Motor rev is 0
+Current is 0
+Time: [2020-11-11 10:30:20:962] Motor rev is 0
+Current is 0
+Time: [2020-11-11 10:30:20:962] Motor rev is 0
+Current is 0
+Time: [2020-11-11 10:30:20:982] Motor rev is 0
+Current is 0
+Time: [2020-11-11 10:30:20:982] Motor rev is 0
+Current is 0
+Time: [2020-11-11 10:30:20:1002] Motor rev is 0
+Current is 0
+Time: [2020-11-11 10:30:20:1002] Motor rev is 0
+Current is 0
+Time: [2020-11-11 10:30:21:022] Motor rev is 0
+Current is 0
+Time: [2020-11-11 10:30:21:022] Motor rev is 0
+Current is 0
+Time: [2020-11-11 10:30:21:042] Motor rev is 0
+Current is 0
+Time: [2020-11-11 10:30:21:042] Motor rev is 0
+Current is 0
+Time: [2020-11-11 10:30:21:062] Motor rev is 0
+Current is 0
+Time: [2020-11-11 10:30:21:062] Motor rev is 0
+Current is 0
+Time: [2020-11-11 10:30:21:082] Motor rev is 0
+Current is 0
+Time: [2020-11-11 10:30:21:082] Motor rev is 0
+Current is 0
+Time: [2020-11-11 10:30:21:103] Motor rev is 0
+Current is 0
+Time: [2020-11-11 10:30:21:103] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:123] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:123] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:143] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:143] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:163] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:163] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:183] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:183] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:203] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:203] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:223] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:223] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:243] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:243] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:263] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:263] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:283] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:283] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:303] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:303] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:324] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:324] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:344] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:344] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:364] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:364] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:384] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:384] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:404] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:404] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:424] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:424] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:444] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:464] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:464] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:484] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:484] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:504] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:504] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:525] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:525] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:545] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:545] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:565] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:565] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:585] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:585] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:605] Motor rev is 0
+Current is 2288
+Time: [2020-11-11 10:30:21:605] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:625] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:625] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:645] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:645] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:665] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:665] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:685] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:685] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:705] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:705] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:726] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:726] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:746] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:746] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:766] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:766] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:786] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:786] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:806] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:806] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:826] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:826] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:846] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:846] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:866] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:866] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:886] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:886] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:906] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:906] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:926] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:926] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:947] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:987] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:21:987] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:22:007] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:22:007] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:22:027] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:22:027] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:22:047] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:22:047] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:22:067] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:22:067] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:22:087] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:22:087] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:22:107] Motor rev is 0
+Current is 2289
+Time: [2020-11-11 10:30:22:107] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:127] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:127] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:148] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:148] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:168] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:168] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:188] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:188] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:208] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:208] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:228] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:228] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:248] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:248] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:268] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:268] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:288] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:288] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:308] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:308] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:328] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:328] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:348] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:369] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:369] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:389] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:389] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:409] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:409] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:429] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:429] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:449] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:449] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:469] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:469] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:489] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:489] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:509] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:509] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:529] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:529] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:549] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:549] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:570] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:570] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:590] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:590] Motor rev is 0
+Current is 2290
+Time: [2020-11-11 10:30:22:610] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:610] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:630] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:630] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:650] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:650] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:670] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:670] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:690] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:690] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:710] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:710] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:730] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:730] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:751] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:751] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:771] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:771] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:791] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:791] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:811] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:811] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:831] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:831] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:851] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:851] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:871] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:871] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:891] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:891] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:911] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:931] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:931] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:952] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:952] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:972] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:972] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:992] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:22:992] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:23:012] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:23:012] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:23:032] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:23:032] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:23:052] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:23:052] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:23:072] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:23:072] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:23:092] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:23:092] Motor rev is 0
+Current is 2291
+Time: [2020-11-11 10:30:23:112] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:112] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:132] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:132] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:152] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:152] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:173] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:173] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:193] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:193] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:213] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:213] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:233] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:233] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:253] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:253] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:273] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:273] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:293] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:293] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:313] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:313] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:333] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:333] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:353] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:353] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:374] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:374] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:394] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:394] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:414] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:414] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:434] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:454] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:454] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:474] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:474] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:494] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:494] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:514] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:514] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:534] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:534] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:555] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:555] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:575] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:575] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:595] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:595] Motor rev is 0
+Current is 2292
+Time: [2020-11-11 10:30:23:615] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:615] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:635] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:635] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:655] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:655] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:675] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:675] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:695] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:695] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:715] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:715] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:736] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:736] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:756] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:756] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:776] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:776] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:796] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:796] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:816] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:816] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:836] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:836] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:856] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:856] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:876] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:876] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:896] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:896] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:917] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:917] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:937] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:937] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:957] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:957] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:977] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:997] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:23:997] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:24:017] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:24:017] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:24:037] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:24:037] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:24:057] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:24:057] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:24:077] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:24:077] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:24:097] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:24:097] Motor rev is 0
+Current is 2293
+Time: [2020-11-11 10:30:24:118] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:118] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:138] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:138] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:158] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:158] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:178] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:178] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:198] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:198] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:218] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:218] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:238] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:238] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:258] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:258] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:278] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:278] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:299] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:299] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:319] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:319] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:339] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:339] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:359] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:359] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:379] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:379] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:399] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:399] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:419] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:419] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:439] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:439] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:459] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:459] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:480] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:480] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:500] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:500] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:520] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:540] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:540] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:560] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:560] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:580] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:580] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:600] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:600] Motor rev is 0
+Current is 2294
+Time: [2020-11-11 10:30:24:620] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:620] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:640] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:640] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:661] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:661] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:681] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:681] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:701] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:701] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:721] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:721] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:741] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:741] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:761] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:761] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:781] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:781] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:802] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:802] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:822] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:822] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:842] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:842] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:862] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:862] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:882] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:882] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:902] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:902] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:922] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:922] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:942] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:942] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:962] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:962] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:982] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:982] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:1002] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:24:1002] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:25:023] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:25:023] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:25:043] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:25:043] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:25:063] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:25:063] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:25:083] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:25:103] Motor rev is 0
+Current is 2295
+Time: [2020-11-11 10:30:25:103] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:123] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:123] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:143] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:143] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:163] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:163] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:183] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:183] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:204] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:204] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:224] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:224] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:244] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:244] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:264] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:264] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:284] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:284] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:304] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:304] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:324] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:324] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:344] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:344] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:364] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:364] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:384] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:384] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:404] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:404] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:425] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:425] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:445] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:445] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:465] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:465] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:485] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:485] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:505] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:505] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:525] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:525] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:545] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:545] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:565] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:565] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:585] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:585] Motor rev is 0
+Current is 2296
+Time: [2020-11-11 10:30:25:605] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:605] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:626] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:646] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:646] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:666] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:666] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:686] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:686] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:706] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:706] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:726] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:726] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:746] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:746] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:766] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:766] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:786] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:786] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:806] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:806] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:827] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:827] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:847] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:847] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:867] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:867] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:887] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:887] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:907] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:907] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:927] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:927] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:947] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:947] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:967] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:967] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:987] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:25:987] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:26:008] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:26:008] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:26:028] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:26:028] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:26:048] Motor rev is 0
+Current is 2297
+Time: [2020-11-11 10:30:26:048] Motor rev is 500
+Current is 2297
+Time: [2020-11-11 10:30:26:068] Motor rev is 500
+Current is 2297
+Time: [2020-11-11 10:30:26:068] Motor rev is 500
+Current is 2297
+Time: [2020-11-11 10:30:26:088] Motor rev is 500
+Current is 2297
+Time: [2020-11-11 10:30:26:088] Motor rev is 500
+Current is 2297
+Time: [2020-11-11 10:30:26:108] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:108] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:128] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:128] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:148] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:148] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:168] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:168] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:189] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:209] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:209] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:229] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:229] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:249] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:249] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:269] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:269] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:289] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:289] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:309] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:309] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:329] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:329] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:349] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:349] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:369] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:369] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:390] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:390] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:410] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:410] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:430] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:430] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:450] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:450] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:470] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:470] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:490] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:490] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:510] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:510] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:530] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:530] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:550] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:550] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:571] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:571] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:591] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:591] Motor rev is 500
+Current is 2298
+Time: [2020-11-11 10:30:26:611] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:611] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:631] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:631] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:651] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:651] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:671] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:671] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:691] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:691] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:711] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:731] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:731] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:751] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:751] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:772] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:772] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:792] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:792] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:812] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:812] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:832] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:832] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:852] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:852] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:872] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:872] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:892] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:892] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:912] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:912] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:932] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:932] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:952] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:952] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:993] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:26:993] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:27:013] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:27:013] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:27:033] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:27:033] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:27:053] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:27:053] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:27:073] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:27:073] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:27:093] Motor rev is 500
+Current is 2299
+Time: [2020-11-11 10:30:27:113] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:113] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:134] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:134] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:154] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:154] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:174] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:174] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:194] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:194] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:214] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:214] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:234] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:234] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:254] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:254] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:274] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:274] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:294] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:294] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:314] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:314] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:335] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:335] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:355] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:355] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:375] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:375] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:395] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:395] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:415] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:415] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:435] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:435] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:455] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:455] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:475] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:475] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:495] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:495] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:515] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:515] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:536] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:536] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:556] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:556] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:576] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:576] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:596] Motor rev is 500
+Current is 2300
+Time: [2020-11-11 10:30:27:596] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:616] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:616] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:636] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:656] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:656] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:676] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:676] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:696] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:696] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:716] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:716] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:736] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:736] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:757] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:757] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:777] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:777] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:797] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:797] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:817] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:817] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:837] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:837] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:857] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:857] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:877] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:877] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:897] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:897] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:917] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:917] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:937] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:937] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:958] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:958] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:978] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:978] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:998] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:27:998] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:28:018] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:28:018] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:28:038] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:28:038] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:28:058] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:28:058] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:28:078] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:28:078] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:28:098] Motor rev is 500
+Current is 2301
+Time: [2020-11-11 10:30:28:098] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:118] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:118] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:138] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:138] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:158] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:158] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:179] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:179] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:199] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:199] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:219] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:219] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:239] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:239] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:259] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:279] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:279] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:299] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:299] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:319] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:319] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:339] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:339] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:359] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:359] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:379] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:379] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:400] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:400] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:420] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:420] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:440] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:440] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:460] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:460] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:480] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:480] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:500] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:500] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:520] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:520] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:540] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:540] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:560] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:560] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:580] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:580] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:600] Motor rev is 500
+Current is 2302
+Time: [2020-11-11 10:30:28:600] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:621] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:621] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:641] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:641] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:661] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:661] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:681] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:681] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:701] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:701] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:721] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:721] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:741] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:741] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:761] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:761] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:781] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:781] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:801] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:801] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:822] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:842] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:842] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:862] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:862] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:882] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:882] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:902] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:902] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:922] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:922] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:942] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:942] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:962] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:962] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:982] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:982] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:1003] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:28:1003] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:29:023] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:29:023] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:29:043] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:29:043] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:29:063] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:29:063] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:29:083] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:29:083] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:29:103] Motor rev is 500
+Current is 2303
+Time: [2020-11-11 10:30:29:103] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:123] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:123] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:143] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:143] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:163] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:163] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:183] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:183] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:204] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:204] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:224] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:224] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:244] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:244] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:264] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:264] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:284] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:284] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:304] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:304] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:324] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:324] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:344] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:344] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:364] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:384] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:384] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:405] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:405] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:425] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:425] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:445] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:445] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:465] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:465] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:485] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:485] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:505] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:505] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:525] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:525] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:545] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:545] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:565] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:565] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:585] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:585] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:606] Motor rev is 500
+Current is 2304
+Time: [2020-11-11 10:30:29:606] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:626] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:626] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:646] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:646] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:666] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:666] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:686] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:686] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:706] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:706] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:726] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:726] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:746] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:746] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:766] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:766] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:787] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:787] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:807] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:807] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:827] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:827] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:847] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:847] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:867] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:887] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:887] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:907] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:907] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:927] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:927] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:947] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:947] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:967] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:967] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:988] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:29:988] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:30:008] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:30:008] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:30:028] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:30:028] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:30:048] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:30:048] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:30:068] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:30:068] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:30:088] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:30:088] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:30:108] Motor rev is 500
+Current is 2305
+Time: [2020-11-11 10:30:30:108] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:128] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:128] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:148] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:148] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:168] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:168] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:189] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:189] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:209] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:209] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:229] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:229] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:249] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:249] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:269] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:269] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:289] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:289] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:309] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:309] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:329] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:329] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:349] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:349] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:369] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:369] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:390] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:390] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:410] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:430] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:430] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:450] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:450] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:470] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:470] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:490] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:490] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:510] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:510] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:530] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:530] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:550] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:550] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:570] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:570] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:591] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:591] Motor rev is 500
+Current is 2306
+Time: [2020-11-11 10:30:30:611] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:611] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:631] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:631] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:651] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:651] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:671] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:671] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:691] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:691] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:711] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:711] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:731] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:731] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:751] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:751] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:772] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:772] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:792] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:792] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:812] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:812] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:832] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:832] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:852] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:852] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:872] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:872] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:892] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:892] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:912] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:912] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:932] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:932] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:952] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:972] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:972] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:993] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:30:993] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:31:013] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:31:013] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:31:033] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:31:033] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:31:053] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:31:053] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:31:073] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:31:073] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:31:093] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:31:093] Motor rev is 500
+Current is 2307
+Time: [2020-11-11 10:30:31:113] Motor rev is 500
+Current is 2308
+Time: [2020-11-11 10:30:31:113] Motor rev is 500
+Current is 2308
+Time: [2020-11-11 10:30:31:133] Motor rev is 500
+Current is 2308
+Time: [2020-11-11 10:30:31:133] Motor rev is 500
+Current is 2308
+Time: [2020-11-11 10:30:31:153] Motor rev is 500
+Current is 2308
+Time: [2020-11-11 10:30:31:153] Motor rev is 500
+Current is 2308
+Time: [2020-11-11 10:30:31:173] Motor rev is 500
+Current is 2308
+Time: [2020-11-11 10:30:31:173] Motor rev is 500
+Current is 2308
+Time: [2020-11-11 10:30:31:194] Motor rev is 500
+Current is 2308
+Time: [2020-11-11 10:30:31:194] Motor rev is 500
+Current is 2308
+Time: [2020-11-11 10:30:31:214] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:214] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:234] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:234] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:254] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:254] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:274] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:274] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:294] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:294] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:314] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:314] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:334] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:334] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:354] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:354] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:375] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:375] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:395] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:395] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:415] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:415] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:435] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:435] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:455] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:455] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:475] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:475] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:495] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:515] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:515] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:535] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:535] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:556] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:556] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:576] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:576] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:596] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:596] Motor rev is 1000
+Current is 2308
+Time: [2020-11-11 10:30:31:616] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:616] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:636] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:636] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:656] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:656] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:676] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:676] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:696] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:696] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:716] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:716] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:736] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:736] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:757] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:757] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:777] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:777] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:797] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:797] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:817] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:817] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:837] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:837] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:857] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:857] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:877] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:877] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:897] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:897] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:917] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:917] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:938] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:938] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:958] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:958] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:978] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:978] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:998] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:31:998] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:32:018] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:32:018] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:32:038] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:32:038] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:32:058] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:32:078] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:32:078] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:32:098] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:32:098] Motor rev is 1000
+Current is 2309
+Time: [2020-11-11 10:30:32:119] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:119] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:139] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:139] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:159] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:159] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:179] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:179] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:199] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:199] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:219] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:219] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:239] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:239] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:259] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:259] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:279] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:279] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:299] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:299] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:320] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:320] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:340] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:340] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:360] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:360] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:380] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:380] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:400] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:400] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:420] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:420] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:440] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:440] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:460] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:460] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:480] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:480] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:501] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:501] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:521] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:521] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:541] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:541] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:561] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:561] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:581] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:581] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:601] Motor rev is 1000
+Current is 2310
+Time: [2020-11-11 10:30:32:601] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:621] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:641] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:641] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:661] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:661] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:681] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:681] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:702] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:702] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:722] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:722] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:742] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:742] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:762] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:762] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:782] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:782] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:802] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:802] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:822] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:822] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:842] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:842] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:862] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:862] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:882] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:882] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:902] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:902] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:923] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:923] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:943] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:943] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:963] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:963] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:983] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:983] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:1003] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:32:1003] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:33:023] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:33:023] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:33:043] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:33:043] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:33:063] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:33:063] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:33:083] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:33:083] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:33:104] Motor rev is 1000
+Current is 2311
+Time: [2020-11-11 10:30:33:104] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:124] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:124] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:144] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:144] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:164] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:164] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:184] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:204] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:204] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:224] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:224] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:244] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:244] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:264] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:264] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:284] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:284] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:304] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:304] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:325] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:325] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:345] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:345] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:365] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:365] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:385] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:385] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:405] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:405] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:425] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:425] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:445] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:445] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:465] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:465] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:485] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:485] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:505] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:505] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:526] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:526] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:546] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:546] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:566] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:566] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:586] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:586] Motor rev is 1000
+Current is 2312
+Time: [2020-11-11 10:30:33:606] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:606] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:626] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:626] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:646] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:646] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:666] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:666] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:686] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:686] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:706] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:727] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:727] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:747] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:747] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:767] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:767] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:787] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:787] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:807] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:807] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:827] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:827] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:847] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:847] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:867] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:867] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:887] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:887] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:908] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:908] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:928] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:928] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:948] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:948] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:968] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:968] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:988] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:33:988] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:34:008] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:34:008] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:34:028] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:34:028] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:34:048] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:34:048] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:34:068] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:34:068] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:34:088] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:34:088] Motor rev is 1000
+Current is 2313
+Time: [2020-11-11 10:30:34:108] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:108] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:129] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:129] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:149] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:149] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:169] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:169] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:189] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:189] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:209] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:209] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:229] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:249] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:249] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:269] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:269] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:289] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:289] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:309] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:309] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:330] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:330] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:350] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:350] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:370] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:370] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:390] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:390] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:410] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:410] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:430] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:430] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:450] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:450] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:470] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:470] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:490] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:490] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:511] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:511] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:531] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:531] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:551] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:551] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:571] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:571] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:591] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:591] Motor rev is 1000
+Current is 2314
+Time: [2020-11-11 10:30:34:611] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:611] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:631] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:631] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:651] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:651] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:671] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:671] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:691] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:691] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:712] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:712] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:732] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:732] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:752] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:772] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:772] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:792] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:792] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:812] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:812] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:832] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:832] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:852] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:852] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:872] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:872] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:892] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:892] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:912] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:912] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:933] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:933] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:953] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:953] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:973] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:973] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:993] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:34:993] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:35:013] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:35:013] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:35:033] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:35:033] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:35:053] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:35:053] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:35:073] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:35:073] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:35:094] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:35:094] Motor rev is 1000
+Current is 2315
+Time: [2020-11-11 10:30:35:114] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:114] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:134] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:134] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:154] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:154] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:174] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:174] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:194] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:194] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:214] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:214] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:234] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:234] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:254] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:254] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:275] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:275] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:295] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:295] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:315] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:335] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:335] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:355] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:355] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:375] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:375] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:395] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:395] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:415] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:415] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:435] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:435] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:455] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:455] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:475] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:475] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:496] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:496] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:516] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:516] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:536] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:536] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:556] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:556] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:576] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:576] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:596] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:596] Motor rev is 1000
+Current is 2316
+Time: [2020-11-11 10:30:35:616] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:616] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:636] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:636] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:656] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:656] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:676] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:676] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:697] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:697] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:717] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:717] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:737] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:737] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:757] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:757] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:777] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:777] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:797] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:797] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:817] Motor rev is 1000
+Current is 2317
+Time: [ 020-11-11 10:30:35:817] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:837] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:857] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:857] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:877] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:877] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:898] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:898] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:918] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:918] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:938] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:938] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:958] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:958] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:978] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:978] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:998] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:35:998] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:36:018] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:36:018] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:36:038] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:36:038] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:36:058] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:36:058] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:36:079] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:36:079] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:36:099] Motor rev is 1000
+Current is 2317
+Time: [2020-11-11 10:30:36:099] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:119] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:119] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:139] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:139] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:159] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:159] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:179] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:179] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:199] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:199] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:219] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:219] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:239] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:239] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:260] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:260] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:280] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:280] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:300] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:300] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:320] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:320] Motor rev is 1000
+Current is 2318
+Time: [2020-11-11 10:30:36:340] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:340] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:360] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:360] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:380] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:400] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:400] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:420] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:420] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:440] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:440] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:461] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:461] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:481] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:481] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:501] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:501] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:521] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:521] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:541] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:541] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:561] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:561] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:581] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:581] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:601] Motor rev is 1500
+Current is 2318
+Time: [2020-11-11 10:30:36:601] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:621] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:621] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:642] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:642] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:662] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:662] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:682] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:682] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:702] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:702] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:722] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:722] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:742] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:742] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:762] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:762] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:782] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:782] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:802] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:802] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:822] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:822] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:843] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:843] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:863] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:863] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:883] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:883] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:903] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:903] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:923] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:943] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:943] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:963] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:963] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:983] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:36:1003] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:37:023] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:37:023] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:37:044] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:37:044] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:37:064] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:37:064] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:37:084] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:37:084] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:37:104] Motor rev is 1500
+Current is 2319
+Time: [2020-11-11 10:30:37:104] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:124] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:124] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:144] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:144] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:164] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:164] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:184] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:184] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:204] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:204] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:225] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:225] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:245] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:245] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:265] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:265] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:285] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:285] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:305] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:325] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:325] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:345] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:345] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:365] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:365] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:385] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:385] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:406] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:406] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:426] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:426] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:446] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:446] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:466] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:466] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:486] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:486] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:506] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:506] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:526] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:526] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:546] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:546] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:566] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:566] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:586] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:586] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:607] Motor rev is 1500
+Current is 2320
+Time: [2020-11-11 10:30:37:607] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:627] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:627] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:647] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:647] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:667] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:667] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:687] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:687] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:707] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:707] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:727] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:727] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:747] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:747] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:767] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:767] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:788] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:788] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:808] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:808] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:828] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:828] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:848] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:848] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:868] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:888] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:888] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:908] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:908] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:928] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:928] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:948] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:948] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:968] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:968] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:988] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:37:988] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:38:009] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:38:009] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:38:029] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:38:029] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:38:049] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:38:049] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:38:069] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:38:069] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:38:089] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:38:089] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:38:109] Motor rev is 1500
+Current is 2321
+Time: [2020-11-11 10:30:38:109] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:129] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:129] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:149] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:149] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:169] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:169] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:189] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:189] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:210] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:210] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:230] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:230] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:250] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:250] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:270] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:270] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:290] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:290] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:310] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:310] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:330] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:330] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:350] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:350] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:370] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:370] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:391] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:391] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:411] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:431] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:431] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:451] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:451] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:471] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:471] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:491] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:491] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:511] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:511] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:531] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:531] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:551] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:551] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:571] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:571] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:592] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:592] Motor rev is 1500
+Current is 2322
+Time: [2020-11-11 10:30:38:612] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:612] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:632] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:632] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:652] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:652] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:672] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:672] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:692] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:692] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:712] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:712] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:732] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:732] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:752] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:752] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:772] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:772] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:793] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:793] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:813] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:813] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:833] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:833] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:853] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:853] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:873] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:873] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:893] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:893] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:913] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:913] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:933] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:953] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:953] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:973] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:973] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:993] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:38:993] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:39:014] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:39:014] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:39:034] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:39:034] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:39:054] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:39:054] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:39:074] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:39:074] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:39:094] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:39:094] Motor rev is 1500
+Current is 2323
+Time: [2020-11-11 10:30:39:114] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:114] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:134] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:134] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:154] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:154] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:174] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:174] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:194] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:194] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:215] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:215] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:235] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:235] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:255] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:255] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:275] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:275] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:295] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:295] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:315] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:315] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:335] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:335] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:355] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:355] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:375] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:375] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:395] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:395] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:415] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:415] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:436] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:456] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:456] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:476] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:476] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:496] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:496] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:516] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:516] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:536] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:536] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:556] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:556] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:576] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:576] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:596] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:596] Motor rev is 1500
+Current is 2324
+Time: [2020-11-11 10:30:39:617] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:617] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:637] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:637] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:657] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:657] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:677] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:677] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:697] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:697] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:717] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:717] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:737] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:737] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:757] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:757] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:777] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:777] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:797] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:797] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:817] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:817] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:838] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:838] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:858] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:858] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:878] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:878] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:898] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:898] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:918] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:918] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:938] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:938] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:958] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:958] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:978] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:998] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:39:998] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:40:019] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:40:019] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:40:039] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:40:039] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:40:059] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:40:059] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:40:079] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:40:079] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:40:099] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:40:099] Motor rev is 1500
+Current is 2325
+Time: [2020-11-11 10:30:40:119] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:119] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:139] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:139] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:159] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:159] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:179] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:179] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:199] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:199] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:220] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:220] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:240] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:240] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:260] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:260] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:280] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:280] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:300] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:300] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:320] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:320] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:340] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:340] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:360] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:360] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:380] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:380] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:400] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:400] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:421] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:421] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:441] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:441] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:461] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:461] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:481] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:481] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:501] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:501] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:521] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:541] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:541] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:561] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:561] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:581] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:581] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:601] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:601] Motor rev is 1500
+Current is 2326
+Time: [2020-11-11 10:30:40:622] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:622] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:642] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:642] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:662] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:662] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:682] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:682] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:702] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:702] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:722] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:722] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:742] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:742] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:762] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:762] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:782] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:782] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:803] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:803] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:823] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:823] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:843] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:843] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:863] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:863] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:883] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:883] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:903] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:903] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:923] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:923] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:943] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:943] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:963] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:963] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:984] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:984] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:1004] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:40:1004] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:41:024] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:41:024] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:41:044] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:41:044] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:41:064] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:41:064] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:41:084] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:41:084] Motor rev is 1500
+Current is 2327
+Time: [2020-11-11 10:30:41:104] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:124] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:124] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:145] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:145] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:165] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:165] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:185] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:185] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:205] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:205] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:225] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:225] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:245] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:245] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:265] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:265] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:285] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:285] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:305] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:305] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:325] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:325] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:346] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:346] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:366] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:366] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:386] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:386] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:406] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:406] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:426] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:426] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:446] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:446] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:466] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:466] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:486] Motor rev is 1500
+Current is 2328
+Time: [2020-11-11 10:30:41:486] Motor rev is 2000
+Current is 2328
+Time: [2020-11-11 10:30:41:506] Motor rev is 2000
+Current is 2328
+Time: [2020-11-11 10:30:41:506] Motor rev is 2000
+Current is 2328
+Time: [2020-11-11 10:30:41:527] Motor rev is 2000
+Current is 2328
+Time: [2020-11-11 10:30:41:527] Motor rev is 2000
+Current is 2328
+Time: [2020-11-11 10:30:41:547] Motor rev is 2000
+Current is 2328
+Time: [2020-11-11 10:30:41:547] Motor rev is 2000
+Current is 2328
+Time: [2020-11-11 10:30:41:567] Motor rev is 2000
+Current is 2328
+Time: [2020-11-11 10:30:41:567] Motor rev is 2000
+Current is 2328
+Time: [2020-11-11 10:30:41:587] Motor rev is 2000
+Current is 2328
+Time: [2020-11-11 10:30:41:587] Motor rev is 2000
+Current is 2328
+Time: [2020-11-11 10:30:41:607] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:607] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:627] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:647] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:647] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:667] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:667] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:688] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:688] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:708] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:708] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:728] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:728] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:748] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:748] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:768] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:768] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:788] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:788] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:808] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:808] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:828] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:828] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:848] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:848] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:868] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:868] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:889] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:889] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:909] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:909] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:929] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:929] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:949] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:949] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:969] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:41:969] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:42:029] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:42:029] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:42:049] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:42:049] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:42:070] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:42:070] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:42:090] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:42:090] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:42:110] Motor rev is 2000
+Current is 2329
+Time: [2020-11-11 10:30:42:110] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:130] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:130] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:150] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:150] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:170] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:170] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:190] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:190] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:210] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:210] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:230] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:230] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:251] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:251] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:271] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:271] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:291] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:291] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:311] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:311] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:331] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:331] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:351] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:351] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:371] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:371] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:391] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:391] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:411] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:411] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:432] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:432] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:452] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:452] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:472] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:472] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:492] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:492] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:512] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:512] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:532] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:532] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:552] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:552] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:572] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:572] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:592] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:612] Motor rev is 2000
+Current is 2330
+Time: [2020-11-11 10:30:42:612] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:633] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:633] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:653] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:653] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:673] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:673] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:693] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:693] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:713] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:713] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:733] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:733] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:753] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:753] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:773] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:773] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:793] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:793] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:813] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:813] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:834] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:834] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:854] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:854] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:874] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:874] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:894] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:894] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:914] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:914] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:934] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:934] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:954] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:954] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:974] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:974] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:994] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:42:994] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:43:015] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:43:015] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:43:035] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:43:035] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:43:035] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:43:055] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:43:055] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:43:075] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:43:095] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:43:095] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:43:115] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:43:115] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:43:135] Motor rev is 2000
+Current is 2331
+Time: [2020-11-11 10:30:43:135] Motor rev is 2000
+Current is 2331

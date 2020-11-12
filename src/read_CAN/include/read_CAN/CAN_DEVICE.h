@@ -40,11 +40,13 @@ public:
     int angle2 = 0;
     std_msgs::Float32 car_speed;
     float torque = 0;
+    float current = 0.0;
 
     ros::Publisher* pub_c1;
     ros::Publisher* pub_c2;
     ros::Publisher* pub_c3;
-    ros::Publisher *pub_c4;
+    ros::Publisher* pub_c4;
+    ros::Publisher* pub_c5;
 
     CAN_DEVICE(int channel_idx);
 

@@ -35,6 +35,10 @@ int main(int argc, char **argv)
     can_1.pub_c4 = &chatter_pub4;
 	can_1.pub_c3 = &chatter_pub3;
 
+	// Current capture
+	ros::Publisher pub_current = n.advertise<std_msgs::Float32>("motor_current", 1000);
+	can_1.pub_c5 = &pub_current;
+
 	// 接受topic指令后发送can信号
     ros::Subscriber sub = n.subscribe("height_control_mode", 1, height_control_mode_callback);
 
