@@ -8,3 +8,5 @@ bag/
 src/.clangd/
 
 src/.idea/
+
+pyenv/
