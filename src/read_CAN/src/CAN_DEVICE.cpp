@@ -92,7 +92,8 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     ROS_INFO_STREAM(vol1_norm);
                     float angle1 = 31.56 - vol1_norm * 31.56/(4.06 - 1);
                     ROS_INFO_STREAM(angle1);
-                    pCAN_DEVICE->angle1 = angle1;
+//                    pCAN_DEVICE->angle1 = angle1;
+                    pCAN_DEVICE->angle1 = vol1;
                     // pCAN_DEVICE->angle1 = vol1/2*105/4000+5-18; //因为输入电压是10v，所以除以2;-18是修正零漂
                     std_msgs::Int64 data_receive1;
                     data_receive1.data = pCAN_DEVICE->angle1;
@@ -102,7 +103,8 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     int vol2 = (heigh2 << 8 | low2);
                     float vol2_norm = float(vol2)/1000;
                     float angle2 = 0 + vol2_norm * 39.13/(3.92 - 0.72);
-                    pCAN_DEVICE->angle2 = angle2;
+//                    pCAN_DEVICE->angle2 = angle2;
+                    pCAN_DEVICE->angle2 = vol2;
                     // pCAN_DEVICE->angle2 = vol2/2*105/4000+5-18;
                     std_msgs::Int64 data_receive2;
                     data_receive2.data = pCAN_DEVICE->angle2;
@@ -211,6 +213,24 @@ void CAN_DEVICE::control_height(int mode) //驱动第num_motor号电机，速度
         msg[0].Data[7] = 0x1D;
 
         transmit_msg(msg, "set  down");
+
+        // 半秒后停止控制
+        ros::Duration(0.125).sleep();
+        msg[0].ID = 0x00000200;
+        msg[0].SendType = 0;
+        msg[0].RemoteFlag = 0;
+        msg[0].ExternFlag = 0;
+        msg[0].DataLen = 8;
+
+        msg[0].Data[0] = 0x01;
+        msg[0].Data[1] = 0x11;
+        msg[0].Data[2] = 0x09;
+        msg[0].Data[3] = 0x00;
+        msg[0].Data[4] = 0x00;
+        msg[0].Data[5] = 0x00;
+        msg[0].Data[6] = 0x00;
+        msg[0].Data[7] = 0x19;
+        transmit_msg(msg, "set  Stady");
     }
 
     if (mode == 120) // 上升（y4）
@@ -231,25 +251,27 @@ void CAN_DEVICE::control_height(int mode) //驱动第num_motor号电机，速度
         msg[0].Data[7] = 0x11;
 
         transmit_msg(msg, "set  up");
+
+        // 半秒后停止控制
+        ros::Duration(0.25).sleep();
+        msg[0].ID = 0x00000200;
+        msg[0].SendType = 0;
+        msg[0].RemoteFlag = 0;
+        msg[0].ExternFlag = 0;
+        msg[0].DataLen = 8;
+
+        msg[0].Data[0] = 0x01;
+        msg[0].Data[1] = 0x11;
+        msg[0].Data[2] = 0x09;
+        msg[0].Data[3] = 0x00;
+        msg[0].Data[4] = 0x00;
+        msg[0].Data[5] = 0x00;
+        msg[0].Data[6] = 0x00;
+        msg[0].Data[7] = 0x19;
+        transmit_msg(msg, "set  Stady");
+
+
     }
-
-    // 半秒后停止控制
-    ros::Duration(0.25).sleep();
-    msg[0].ID = 0x00000200;
-    msg[0].SendType = 0;
-    msg[0].RemoteFlag = 0;
-    msg[0].ExternFlag = 0;
-    msg[0].DataLen = 8;
-
-    msg[0].Data[0] = 0x01;
-    msg[0].Data[1] = 0x11;
-    msg[0].Data[2] = 0x09;
-    msg[0].Data[3] = 0x00;
-    msg[0].Data[4] = 0x00;
-    msg[0].Data[5] = 0x00;
-    msg[0].Data[6] = 0x00;
-    msg[0].Data[7] = 0x19;
-    transmit_msg(msg, "set  Stady");
 }
 
 void CAN_DEVICE::open_receive() {

@@ -39,11 +39,11 @@ MainWindow::MainWindow(int argc, char **argv, QWidget *parent) :
     qnode.init();
 
     ui->progressBar->setMinimum(0);
-    ui->progressBar->setMaximum(120);
+    ui->progressBar->setMaximum(5000);
     ui->progressBar->setValue(0);
 
     ui->progressBar_2->setMinimum(0);
-    ui->progressBar_2->setMaximum(120);
+    ui->progressBar_2->setMaximum(5000);
     ui->progressBar_2->setValue(0);
 
     ui->progressBar_3->setMinimum(0);

@@ -1,0 +1,8 @@
+<launch>
+
+#### for line detect ####################################################
+  <node pkg="boud_rgbd" type="boud_rgbd" name="line_detect" />
+  <node pkg="realsense2_driver" type="realsense2_driver" name="realsense2_driver" />
+  <node pkg="mmw_capture" type="mmw_capture_node" name="obstacle_detect" />
+
+</launch>

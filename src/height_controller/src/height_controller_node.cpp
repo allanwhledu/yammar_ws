@@ -6,6 +6,7 @@
 #include "std_msgs/String.h"
 #include "std_msgs/UInt16.h"
 #include "height_border_msgs/height_border.h"
+#include <cmath> // Needed for the pow function
 
 class SubscribeAndPublish {
 public:
@@ -23,7 +24,10 @@ public:
         //做一些计算，以确定下一步的控制信号
         std_msgs::UInt16 output;
         //.... do something with the input and generate the output...
-        float true_height = angle1 + angle2;
+        float a1 = 1;
+        float a2 = 1;
+        float a3 = 1;
+        float true_height = std::pow(a1 * angle1, 3) + std::pow(a2 * angle1, 2) + std::pow(a3 * angle1, 1);
         if(true_height - msg->height > 20){
             output.data = 110;
             pub_.publish(output); // 发送控制模式
@@ -53,8 +57,8 @@ private:
     ros::Subscriber angle1_sub_;
     ros::Subscriber angle2_sub_;
 
-    int angle1;
-    int angle2;
+    float angle1;
+    float angle2;
 
 };//End of class SubscribeAndPublish
 
