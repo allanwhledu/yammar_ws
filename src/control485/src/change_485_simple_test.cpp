@@ -161,35 +161,32 @@ int main (int argc, char **argv)
     filename = filename + current_time + "_speed.txt";
 
     int motor_id = 1;
-    int targetRev = 0;
+    int targetRev = 1000;
     int realRev = 0;
 
     ROS_INFO_STREAM(">>Open Serial!") ;
 
+    openSerial(port.c_str());
+    motorSetModbus(motor_id);
+
     int count = 0;
-//    while (openSerial(port.c_str()) && ros::ok())
     while (ros::ok() && targetRev <= 3000)
     {
+        // Read and save motor speed;
+        test_speed_control(motor_id, targetRev);
+        realRev = motorReadSpeed(motor_id);
+        // Update current
         ros::spinOnce();
-//        ROS_INFO_STREAM(">>Enable RS485...") ;
-//        motorSetModbus(motor_id);
-//        test_speed_control(motor_id, targetRev);
-//
-//        // Read and save motor speed;
-//        realRev = motorReadSpeed(motor_id);
         ofs.open(filename, ios_base::app);
         if(!ofs)
             cerr<<"Open File Fail."<<endl;
 //            exit(1);
-        ofs<<"Time: "<<current_time<<" Motor rev and current "<<targetRev<<" "<<motorCurrent<<endl;
+        ofs<<"Time: "<<current_time<<" Motor rev and current "<<realRev<<" "<<motorCurrent<<endl;
 
-        cout<<"Real rev and current are "<<targetRev<<" "<<motorCurrent<<endl;
+        cout<<"Real rev and current are "<<realRev<<" "<<motorCurrent<<endl;
         ofs.close();
 
-        if (count > 500) {
-            count = 0;
-            targetRev += 500;
-        }
+        targetRev += 200;
 
         count++;
         usleep(10000);
