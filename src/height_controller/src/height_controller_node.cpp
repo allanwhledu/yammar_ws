@@ -24,19 +24,22 @@ public:
         //做一些计算，以确定下一步的控制信号
         std_msgs::UInt16 output;
         //.... do something with the input and generate the output...
-        float a1 = 1;
-        float a2 = 1;
-        float a3 = 1;
-        float true_height = std::pow(a1 * angle1, 3) + std::pow(a2 * angle1, 2) + std::pow(a3 * angle1, 1);
-        if(true_height - msg->height > 20){
-            output.data = 110;
-            pub_.publish(output); // 发送控制模式
-        } else if (true_height - msg->height < -20){
-            output.data = 120;
-            pub_.publish(output);
-        } else{
-            output.data = 100;
-            pub_.publish(output);
+        float height_visual = msg->height - 60;
+        if(height_visual > 20){
+            float a1 = -9.62e-7;
+            float a2 = -1.79e-2;
+            float a3 = 92.1;
+            float true_height = std::pow(a1 * angle1, 2) + std::pow(a2 * angle1, 1) + a3;
+            if(true_height - height_visual > 20){
+                output.data = 110;
+                pub_.publish(output); // 发送控制模式
+            } else if (true_height - height_visual < -20){
+                output.data = 120;
+                pub_.publish(output);
+            } else{
+                output.data = 100;
+                pub_.publish(output);
+            }
         }
     }
 
@@ -70,6 +73,10 @@ int main(int argc, char **argv) {
     SubscribeAndPublish SAPObject;
 
     ros::spin();
+    while(ros::ok()){
+        ros::spinOnce();
+        ros::Duration(1).sleep();
+    }
 
     return 0;
 }
