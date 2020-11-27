@@ -8,6 +8,7 @@ project(grain_height_detecte)
 ## if COMPONENTS list like find_package(catkin REQUIRED COMPONENTS xyz)
 ## is used, also find other catkin packages
 find_package(catkin REQUIRED COMPONENTS
+  height_border_msgs
   roscpp
   rospy
   std_msgs

@@ -499,9 +499,9 @@ double readHeight(void)
 }
 // --- --- //
 
-void car_speed_callback(const std_msgs::Float32ConstPtr &msg);
-void is_obstacle_callback(const std_msgs::BoolConstPtr &msg);
-void is_stop_callback(const std_msgs::BoolConstPtr &msg);
+void angle1_callback(const std_msgs::Float32ConstPtr &msg);
+void angle2_callback(const std_msgs::BoolConstPtr &msg);
+void height_control_mode_callback(const std_msgs::BoolConstPtr &msg);
 
 int main (int argc, char **argv)
 {
@@ -546,9 +546,9 @@ int main (int argc, char **argv)
     pub_pf_speed = &pub3_;
 
     //Topic you want to subscribe
-    sub2_ = n_.subscribe("is_obstacle", 1, &is_obstacle_callback);
-    sub3_ = n_.subscribe("is_stop", 1, &is_stop_callback);
-    sub_ = n_.subscribe("car_speed", 1, &car_speed_callback);
+    sub2_ = n_.subscribe("is_obstacle", 1, &angle2_callback);
+    sub3_ = n_.subscribe("is_stop", 1, &height_control_mode_callback);
+    sub_ = n_.subscribe("car_speed", 1, &angle1_callback);
 
     cout<<"usage sudo ./motor"<<endl;
     //modbus_set_debug(com,true);//调试模式 可以显示串口总线的调试信息
@@ -582,17 +582,17 @@ int main (int argc, char **argv)
     return 0;
 }
 
-void is_obstacle_callback(const std_msgs::BoolConstPtr &msg) {
+void angle2_callback(const std_msgs::BoolConstPtr &msg) {
 //    ROS_INFO_STREAM("callback! is_obstacle: "<<msg->data);
     is_obstacle = msg->data;
 }
 
-void is_stop_callback(const std_msgs::BoolConstPtr &msg) {
+void height_control_mode_callback(const std_msgs::BoolConstPtr &msg) {
     ROS_INFO_STREAM("callback! is_stop: "<<msg->data);
     is_stop = msg->data;
 }
 
-void car_speed_callback(const std_msgs::Float32ConstPtr &msg) {
+void angle1_callback(const std_msgs::Float32ConstPtr &msg) {
     ROS_INFO_STREAM("callback! carspeed: "<<msg->data);
     carSpeed.linear = msg->data;
     carSpeed.rotate = 0;

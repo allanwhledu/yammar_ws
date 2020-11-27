@@ -22,25 +22,8 @@ public:
 
     void height_border_Callback(const height_border_msgs::height_borderConstPtr &msg) {
         //做一些计算，以确定下一步的控制信号
-        std_msgs::UInt16 output;
         //.... do something with the input and generate the output...
-        float height_visual = msg->height - 60;
-        if(height_visual > 20){
-            float a1 = -9.62e-7;
-            float a2 = -1.79e-2;
-            float a3 = 92.1;
-            float true_height = std::pow(a1 * angle1, 2) + std::pow(a2 * angle1, 1) + a3;
-            if(true_height - height_visual > 20){
-                output.data = 110;
-                pub_.publish(output); // 发送控制模式
-            } else if (true_height - height_visual < -20){
-                output.data = 120;
-                pub_.publish(output);
-            } else{
-                output.data = 100;
-                pub_.publish(output);
-            }
-        }
+        target_height = msg->height - 60;
     }
 
     void angle1_Callback(const std_msgs::UInt16ConstPtr &msg) {
@@ -53,6 +36,26 @@ public:
         angle2 = msg->data;
     }
 
+    void control_height(){
+        std_msgs::UInt16 output;
+        if(target_height > 20){
+            float a1 = -9.62e-7;
+            float a2 = -1.79e-2;
+            float a3 = 92.1;
+            float true_height = std::pow(a1 * angle1, 2) + std::pow(a2 * angle1, 1) + a3;
+            if(true_height - target_height > 20){
+                output.data = 110;
+                pub_.publish(output); // 发送控制模式
+            } else if (true_height - target_height < -20){
+                output.data = 120;
+                pub_.publish(output);
+            } else{
+                output.data = 100;
+                pub_.publish(output);
+            }
+        }
+    }
+
 private:
     ros::NodeHandle n_;
     ros::Publisher pub_;
@@ -62,6 +65,7 @@ private:
 
     float angle1;
     float angle2;
+    float target_height = 0;
 
 };//End of class SubscribeAndPublish
 
@@ -75,6 +79,7 @@ int main(int argc, char **argv) {
     ros::spin();
     while(ros::ok()){
         ros::spinOnce();
+        SAPObject.control_height();
         ros::Duration(1).sleep();
     }
 
