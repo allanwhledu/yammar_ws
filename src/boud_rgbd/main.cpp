@@ -654,7 +654,7 @@ void heigth_detection(Mat& rgb,Mat& depth,pcl::PointCloud<pcl::PointXYZRGB>::Ptr
             Estimated_height = Estimated_height==0 ? temp_reslut:0.875*Estimated_height+0.125*temp_reslut;
 
             height_borderMsg.height = Estimated_height;
-            cout<<Estimated_height<<endl;
+            //cout<<Estimated_height<<endl;
         }
 }
 
@@ -747,7 +747,7 @@ void deviation_2d(vector<Point2i>& pointdepthimg,float angle, height_border_msgs
         if(angle < 0) res = -res;
         height_borderMsg.dis_2d = to_string(res);
         height_border_param.publish(height_borderMsg);
-        cout<<height_borderMsg.dis_2d<<endl;
+       // cout<<height_borderMsg.dis_2d<<endl;
         //cout<<res<<endl;
 
     }

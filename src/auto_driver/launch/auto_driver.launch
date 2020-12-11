@@ -1,0 +1,11 @@
+<launch>
+  <node pkg="boud_rgbd" type="boud_rgbd" name="boud_rgbd">
+  </node>
+  <node pkg="control485" type="control485_node" name="control485">
+  </node>
+  <node pkg="controldis" type="controldis_node" name="controldis">
+  </node>
+  <node pkg="realsense2_driver" type="realsense2_driver" name="realsense2">
+  </node>
+  
+</launch>

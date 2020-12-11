@@ -1,0 +1,7 @@
+<launch>
+  <node pkg="ORB_SLAM2_Octo" type="RGBD" name="RGBD" args="$(find ORB_SLAM2_Octo)/ORBvoc.bin $(find ORB_SLAM2_Octo)/ZR300.yaml"  output="screen">
+  </node>
+  <include file="$(find ORB_SLAM2_Octo)/launch/octomap.launch">
+  </include>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ORB_SLAM2_Octo)/launch/demo.rviz"/>
+</launch>

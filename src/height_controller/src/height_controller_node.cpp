@@ -5,6 +5,8 @@
 #include <ros/ros.h>
 #include "std_msgs/String.h"
 #include "std_msgs/UInt16.h"
+#include "std_msgs/Int64.h"
+#include "std_msgs/Int16.h"
 #include "height_border_msgs/height_border.h"
 #include <cmath> // Needed for the pow function
 
@@ -15,40 +17,75 @@ public:
         pub_ = n_.advertise<std_msgs::UInt16>("height_control_mode", 1);
 
         //Topic you want to subscribe
-        height_sub_ = n_.subscribe("/height_border_param", 100, &SubscribeAndPublish::height_border_Callback, this);
-        angle1_sub_ = n_.subscribe("/reap_angle1", 100, &SubscribeAndPublish::angle1_Callback, this);
-        angle2_sub_ = n_.subscribe("/reap_angle2", 100, &SubscribeAndPublish::angle2_Callback, this);
+        reap_height_sub_ = n_.subscribe("/height_border_param1", 100, &SubscribeAndPublish::reap_height_Callback, this);
+        height_sub_ = n_.subscribe("/height_border_param", 100, &SubscribeAndPublish::reel_height_Callback, this);
+        angle1_sub_ = n_.subscribe("/reap_angle1", 1, &SubscribeAndPublish::angle1_Callback, this);
+        angle2_sub_ = n_.subscribe("/reap_angle2", 1, &SubscribeAndPublish::angle2_Callback, this);
     }
 
-    void height_border_Callback(const height_border_msgs::height_borderConstPtr &msg) {
+    void reap_height_Callback(const std_msgs::Int16::ConstPtr &msg) {
         //做一些计算，以确定下一步的控制信号
         //.... do something with the input and generate the output...
-        target_height = msg->height - 60;
+        reap_height_visual = msg->data - 40; // reap高度在谷物高度以下40厘米
+    }
+    void reel_height_Callback(const height_border_msgs::height_borderConstPtr &msg) {
+        //做一些计算，以确定下一步的控制信号
+        //.... do something with the input and generate the output...
+        reel_height_visual = msg->height - 20; // reel高度在谷物高度以下20厘米
     }
 
-    void angle1_Callback(const std_msgs::UInt16ConstPtr &msg) {
+    void angle1_Callback(const std_msgs::Int64::ConstPtr &msg) {
         //做一些计算，以确定下一步的控制信号
+        ROS_INFO_STREAM("get angle1");
         angle1 = msg->data;
     }
 
-    void angle2_Callback(const std_msgs::UInt16ConstPtr &msg) {
+    void angle2_Callback(const std_msgs::Int64::ConstPtr &msg) {
         //做一些计算，以确定下一步的控制信号
         angle2 = msg->data;
     }
 
-    void control_height(){
+    void control_reap_height() {
         std_msgs::UInt16 output;
-        if(target_height > 20){
-            float a1 = -9.62e-7;
-            float a2 = -1.79e-2;
+        if(reap_height_visual > 20){
+            float a1 = 0;
+            float a2 = -0.0179;
             float a3 = 92.1;
-            float true_height = std::pow(a1 * angle1, 2) + std::pow(a2 * angle1, 1) + a3;
-            if(true_height - target_height > 20){
+            float true_height = a1 * angle1 * angle1 + a2 * angle1 + a3;
+            ROS_INFO_STREAM("angle1 is:"<<angle1);
+            ROS_INFO_STREAM("true height:"<<true_height);
+            if(true_height - reap_height_visual > 20){
                 output.data = 110;
                 pub_.publish(output); // 发送控制模式
-            } else if (true_height - target_height < -20){
+                ROS_INFO_STREAM("set down");
+            } else if (true_height - reap_height_visual < -20){
                 output.data = 120;
                 pub_.publish(output);
+                ROS_INFO_STREAM("set up");
+            } else{
+                output.data = 100;
+                pub_.publish(output);
+            }
+        }
+    }
+
+    void control_reel_height() {
+        std_msgs::UInt16 output;
+        if(reel_height_visual > 20){
+            float a1 = 0;
+            float a2 = 0.00427;
+            float a3 = 77.68;
+            float true_height = a1 * angle2 * angle2 + a2 * angle2 + a3;
+            ROS_INFO_STREAM("angle2 is:"<<angle2);
+            ROS_INFO_STREAM("reel true height:"<<true_height);
+            if(true_height - reel_height_visual > 20){
+                output.data = 101;
+                pub_.publish(output); // 发送控制模式
+                ROS_INFO_STREAM("set reel down");
+            } else if (true_height - reel_height_visual < -20){
+                output.data = 102;
+                pub_.publish(output);
+                ROS_INFO_STREAM("set reel up");
             } else{
                 output.data = 100;
                 pub_.publish(output);
@@ -59,13 +96,15 @@ public:
 private:
     ros::NodeHandle n_;
     ros::Publisher pub_;
+    ros::Subscriber reap_height_sub_;
     ros::Subscriber height_sub_;
     ros::Subscriber angle1_sub_;
     ros::Subscriber angle2_sub_;
 
     float angle1;
     float angle2;
-    float target_height = 0;
+    float reap_height_visual;
+    float reel_height_visual;
 
 };//End of class SubscribeAndPublish
 
@@ -76,13 +115,12 @@ int main(int argc, char **argv) {
     //Create an object of class SubscribeAndPublish that will take care of everything
     SubscribeAndPublish SAPObject;
 
-    ros::spin();
     while(ros::ok()){
         ros::spinOnce();
-        SAPObject.control_height();
-        ros::Duration(1).sleep();
+        SAPObject.control_reap_height();
+        SAPObject.control_reel_height();
+        usleep(1000000);
     }
 
     return 0;
 }
-

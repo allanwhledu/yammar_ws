@@ -1,0 +1,7 @@
+<launch>
+  <node pkg="orb_slam_pointcloud" type="RGBD_SLAM" name="RGBD_SLAM" args="$(find orb_slam_pointcloud)/data/ORBvoc.bin $(find orb_slam_pointcloud)/data/kinect2.yaml"  output="screen">
+  </node>
+  <include file="$(find orb_slam_pointcloud)/launch/octomap.launch">
+  </include>
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find ORB_SLAM2_Octo)/launch/demo.rviz"/>
+</launch>

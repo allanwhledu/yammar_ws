@@ -16,8 +16,7 @@ CAN_DEVICE::CAN_DEVICE(int channel_idx) {
 }
 
 void CAN_DEVICE::init_CAN() {// 进行CAN信号发送
-    if (channel == 0)
-    {
+    if (channel == 0) {
         printf(">>start CAN device !\r\n");//指示程序已运行
         if (VCI_OpenDevice(VCI_USBCAN2, 0, 0) == 1)//打开设备
         {
@@ -88,9 +87,9 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     // 1号角度传感器
                     int vol1 = (heigh1 << 8 | low1);
                     ROS_INFO_STREAM(vol1);
-                    float vol1_norm = float(vol1)/1000;
+                    float vol1_norm = float(vol1) / 1000;
                     ROS_INFO_STREAM(vol1_norm);
-                    float angle1 = 31.56 - vol1_norm * 31.56/(4.06 - 1);
+                    float angle1 = 31.56 - vol1_norm * 31.56 / (4.06 - 1);
                     ROS_INFO_STREAM(angle1);
 //                    pCAN_DEVICE->angle1 = angle1;
                     pCAN_DEVICE->angle1 = vol1;
@@ -101,8 +100,8 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
 
                     // 2号角度传感器
                     int vol2 = (heigh2 << 8 | low2);
-                    float vol2_norm = float(vol2)/1000;
-                    float angle2 = 0 + vol2_norm * 39.13/(3.92 - 0.72);
+                    float vol2_norm = float(vol2) / 1000;
+                    float angle2 = 0 + vol2_norm * 39.13 / (3.92 - 0.72);
 //                    pCAN_DEVICE->angle2 = angle2;
                     pCAN_DEVICE->angle2 = vol2;
                     // pCAN_DEVICE->angle2 = vol2/2*105/4000+5-18;
@@ -112,8 +111,8 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
 
                     // 力矩传感器
                     float torque = (heigh3 << 8 | low3);
-                    pCAN_DEVICE->torque = torque/10000*100;
-                    if(pCAN_DEVICE->torque < 0.05) // 太小的时候过滤一下
+                    pCAN_DEVICE->torque = torque / 10000 * 100;
+                    if (pCAN_DEVICE->torque < 0.05) // 太小的时候过滤一下
                     {
                         pCAN_DEVICE->torque = 0;
                     }
@@ -123,11 +122,11 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
 
                     ROS_INFO(
                             "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle1:%05d angle2:%05d",
-                            pCAN_DEVICE->channel+1, pCAN_DEVICE->count, rec[j].ID,
+                            pCAN_DEVICE->channel + 1, pCAN_DEVICE->count, rec[j].ID,
                             rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
-                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1, pCAN_DEVICE->angle2);
-                }
-                else if (rec[j].ID == 0x0281) { //采集卡 channel2 5-8的数据
+                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1,
+                            pCAN_DEVICE->angle2);
+                } else if (rec[j].ID == 0x0281) { //采集卡 channel2 5-8的数据
                     unsigned char heigh, low;
                     heigh = rec[j].Data[1];
                     low = rec[j].Data[0];
@@ -138,33 +137,30 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
 
                     ROS_INFO(
                             "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle5:%04d",
-                            pCAN_DEVICE->channel+1, pCAN_DEVICE->count, rec[j].ID,
+                            pCAN_DEVICE->channel + 1, pCAN_DEVICE->count, rec[j].ID,
                             rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
                             rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], heigh << 8 | low);
-                }
-                else if (rec[j].ID == 0xCFF5188) //车速数据
+                } else if (rec[j].ID == 0xCFF5188) //车速数据
                 {
-                    double v=0.0,w=0.0;
+                    double v = 0.0, w = 0.0;
                     uint16_t data[8];
-                    for(int i=0;i<8;i++)
-                    {
-                        data[i]=rec[j].Data[i];
+                    for (int i = 0; i < 8; i++) {
+                        data[i] = rec[j].Data[i];
                     }
-                    v=(data[1]<<8)|data[0];
-                    w=(data[3]<<8)|data[2];
-                    v-=32768;
-                    w-=32768;
-                    v/=1000;
-                    w/=1000;
+                    v = (data[1] << 8) | data[0];
+                    w = (data[3] << 8) | data[2];
+                    v -= 32768;
+                    w -= 32768;
+                    v /= 1000;
+                    w /= 1000;
 //                    carSpeed.linear=v;
 //                    carSpeed.rotate=w;
                     pCAN_DEVICE->car_speed.data = v;
                     pCAN_DEVICE->pub_c3->publish(pCAN_DEVICE->car_speed);
-                }
-                else {
+                } else {
                     ROS_INFO("Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X",
-                            pCAN_DEVICE->channel+1,
-                            pCAN_DEVICE->count,
+                             pCAN_DEVICE->channel + 1,
+                             pCAN_DEVICE->count,
                              rec[j].ID,
                              rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
                              rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7]);
@@ -190,12 +186,29 @@ void CAN_DEVICE::transmit_msg(VCI_CAN_OBJ send[1], char com[10]) //发送函数
     }
 }
 
-void CAN_DEVICE::control_height(int mode) //驱动第num_motor号电机，速度为speed.
+void CAN_DEVICE::control_height(int mode) //驱动拨禾轮和割台的高度调节
 {
     // 设置电机为CAN控制，速度模式
     VCI_CAN_OBJ msg[1];
 
-    if (mode == 110) // 下降（y3口）
+    if (mode == 100) {
+        msg[0].ID = 0x00000200;
+        msg[0].SendType = 0;
+        msg[0].RemoteFlag = 0;
+        msg[0].ExternFlag = 0;
+        msg[0].DataLen = 8;
+
+        msg[0].Data[0] = 0x01;
+        msg[0].Data[1] = 0x11;
+        msg[0].Data[2] = 0x09;
+        msg[0].Data[3] = 0x00;
+        msg[0].Data[4] = 0x00;
+        msg[0].Data[5] = 0x00;
+        msg[0].Data[6] = 0x00;
+        msg[0].Data[7] = 0x19;
+        transmit_msg(msg, "set  Stady");
+    }
+    if (mode == 110) // 下降割台（y3口）
     {
         msg[0].ID = 0x00000200;
         msg[0].SendType = 0;
@@ -213,27 +226,9 @@ void CAN_DEVICE::control_height(int mode) //驱动第num_motor号电机，速度
         msg[0].Data[7] = 0x1D;
 
         transmit_msg(msg, "set  down");
-
-        // 半秒后停止控制
-        ros::Duration(0.125).sleep();
-        msg[0].ID = 0x00000200;
-        msg[0].SendType = 0;
-        msg[0].RemoteFlag = 0;
-        msg[0].ExternFlag = 0;
-        msg[0].DataLen = 8;
-
-        msg[0].Data[0] = 0x01;
-        msg[0].Data[1] = 0x11;
-        msg[0].Data[2] = 0x09;
-        msg[0].Data[3] = 0x00;
-        msg[0].Data[4] = 0x00;
-        msg[0].Data[5] = 0x00;
-        msg[0].Data[6] = 0x00;
-        msg[0].Data[7] = 0x19;
-        transmit_msg(msg, "set  Stady");
     }
 
-    if (mode == 120) // 上升（y4）
+    if (mode == 120) // 上升割台（y4）
     {
         msg[0].ID = 0x00000200;
         msg[0].SendType = 0;
@@ -251,9 +246,10 @@ void CAN_DEVICE::control_height(int mode) //驱动第num_motor号电机，速度
         msg[0].Data[7] = 0x11;
 
         transmit_msg(msg, "set  up");
+    }
 
-        // 半秒后停止控制
-        ros::Duration(0.25).sleep();
+    if (mode == 101) // 下降拨禾轮（y5口）
+    {
         msg[0].ID = 0x00000200;
         msg[0].SendType = 0;
         msg[0].RemoteFlag = 0;
@@ -264,13 +260,32 @@ void CAN_DEVICE::control_height(int mode) //驱动第num_motor号电机，速度
         msg[0].Data[1] = 0x11;
         msg[0].Data[2] = 0x09;
         msg[0].Data[3] = 0x00;
-        msg[0].Data[4] = 0x00;
+        msg[0].Data[4] = 0x10;
         msg[0].Data[5] = 0x00;
         msg[0].Data[6] = 0x00;
-        msg[0].Data[7] = 0x19;
-        transmit_msg(msg, "set  Stady");
+        msg[0].Data[7] = 0x09;
 
+        transmit_msg(msg, "set  down bh");
+    }
 
+    if (mode == 102) // 上升拨禾轮（y6口）
+    {
+        msg[0].ID = 0x00000200;
+        msg[0].SendType = 0;
+        msg[0].RemoteFlag = 0;
+        msg[0].ExternFlag = 0;
+        msg[0].DataLen = 8;
+
+        msg[0].Data[0] = 0x01;
+        msg[0].Data[1] = 0x11;
+        msg[0].Data[2] = 0x09;
+        msg[0].Data[3] = 0x00;
+        msg[0].Data[4] = 0x20;
+        msg[0].Data[5] = 0x00;
+        msg[0].Data[6] = 0x00;
+        msg[0].Data[7] = 0x39;
+
+        transmit_msg(msg, "set  up bh");
     }
 }
 
@@ -299,7 +314,7 @@ void CAN_DEVICE::closeCAN() {
 // goto ext;
 }
 
-void CAN_DEVICE::init_ICAN(){
+void CAN_DEVICE::init_ICAN() {
     // 使能模拟量转can
     VCI_CAN_OBJ msg[1];
 

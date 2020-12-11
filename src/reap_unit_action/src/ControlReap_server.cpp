@@ -33,7 +33,7 @@ void execute(const reap_unit_action::ControlReapGoalConstPtr& goal, Server* as)
     ROS_INFO("Control mode", goal->control_mode);
 
     can_1.control_height(goal->control_mode);
-//    can_1.control_height(0); // 控制之后需要静止
+//    can_1.control_reap_height(0); // 控制之后需要静止
 
     as->setSucceeded();
 
