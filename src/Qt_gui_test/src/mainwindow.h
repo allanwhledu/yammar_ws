@@ -78,6 +78,12 @@ private slots:
 
     void on_down_button_clicked();
 
+    void on_height_button_2_clicked();
+
+    void on_down_button_2_clicked();
+
+    void on_pushButton_8_clicked();
+
 private:
     Ui::MainWindow *ui;
     QNode qnode;

@@ -289,9 +289,32 @@ void MainWindow::on_go_right_button_clicked()
 void MainWindow::on_height_button_clicked()
 {
     qnode.pub_height_control_mode(120);
+    usleep(500000);
+    qnode.pub_height_control_mode(100);
 }
 
 void MainWindow::on_down_button_clicked()
 {
     qnode.pub_height_control_mode(110);
+    usleep(500000);
+    qnode.pub_height_control_mode(100);
+}
+
+void MainWindow::on_height_button_2_clicked()
+{
+    qnode.pub_height_control_mode(102);
+    usleep(500000);
+    qnode.pub_height_control_mode(100);
+}
+
+void MainWindow::on_down_button_2_clicked()
+{
+    qnode.pub_height_control_mode(101);
+    usleep(500000);
+    qnode.pub_height_control_mode(100);
+}
+
+void MainWindow::on_pushButton_8_clicked()
+{
+    qnode.pub_height_control_mode(100);
 }

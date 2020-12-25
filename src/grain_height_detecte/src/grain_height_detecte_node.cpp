@@ -39,9 +39,6 @@ int angle2=0;
 int control_mode = 100;
 float height_visual = 0;
 
-bool save_height = false;
-bool save_mode = false;
-
 
 // 函数申明
 void* getTime(void*)
@@ -100,30 +97,44 @@ void* getTime(void*)
 }
 // --- --- //
 
-void angle2_callback(const std_msgs::BoolConstPtr &msg) {
-
+void angle2_callback(const std_msgs::Int64ConstPtr &msg) {
+    ROS_INFO_STREAM("callback! angle2: "<<msg->data);
+    angle2 = msg->data;
 }
 
 void height_control_mode_callback(const std_msgs::UInt16ConstPtr &msg) {
     ROS_INFO_STREAM("callback! controlmode: "<<msg->data);
     control_mode = msg->data;
-    save_mode = true;
 }
 
 void height_callback(const height_border_msgs::height_borderConstPtr &msg) {
     ROS_INFO_STREAM("callback! height: "<<msg->height);
     height_visual = msg->height;
-    save_height = true;
 }
 
 void angle1_callback(const std_msgs::Int64ConstPtr &msg) {
-    ROS_INFO_STREAM("callback! carspeed: "<<msg->data);
+    ROS_INFO_STREAM("callback! angle1: "<<msg->data);
     angle1 = msg->data;
+    float a1 = 0;
+    float a2 = -0.0179;
+    float a3 = 92.1;
+    float true_height1 = a1 * angle1 * angle1 + a2 * angle1 + a3;
     // 记录速度
-    string angle1_str = to_string(angle1);
+    string angle1_str = to_string(int(true_height1));
     while (angle1_str.size() < 4)
     {
         angle1_str= "0" + angle1_str;
+    }
+
+    float b1 = 0.0000047;
+    float b2 = 0.00427;
+    float b3 = 77.68;
+    float true_height2 = b1 * angle2 * angle2 + b2 * angle2 + b3;
+    // 记录速度
+    string angle2_str = to_string(int(true_height2));
+    while (angle2_str.size() < 4)
+    {
+        angle2_str= "0" + angle2_str;
     }
 
     int height_int = height_visual;
@@ -137,16 +148,13 @@ void angle1_callback(const std_msgs::Int64ConstPtr &msg) {
     }
 
     string controlmode_str = "0100";
-    if(save_mode){
-        controlmode_str = to_string(control_mode);
-        while (controlmode_str.size() < 4)
-        {
-            controlmode_str= "0" + controlmode_str;
-        }
-        save_mode = false;
+    controlmode_str = to_string(control_mode);
+    while (controlmode_str.size() < 4)
+    {
+        controlmode_str= "0" + controlmode_str;
     }
 
-    *(open_file) << angle1_str << " " << height_str << " " << controlmode_str << endl;
+    *(open_file) << angle1_str << " " << angle2_str << " " << height_str << " " << controlmode_str << endl;
 }
 
 int main (int argc, char **argv)
@@ -161,7 +169,7 @@ int main (int argc, char **argv)
 
     ofstream ofs;
     string filename = "/home/sjtu_wanghaili/yammar_ws/experiment20201113/";
-    filename = filename + current_time + "_speed.txt";
+    filename = filename + current_time + "_io_rgbd.txt";
     ofs.open(filename, ios::out);
     if(!ofs)
     {
@@ -170,17 +178,16 @@ int main (int argc, char **argv)
     }
     open_file = &ofs;
 
+    ros::Subscriber sub_;
     ros::Subscriber sub2_;
     ros::Subscriber sub3_;
-    ros::Subscriber sub_;
     ros::Subscriber sub4_;
 
     //Topic you want to subscribe
-
-    sub3_ = n_.subscribe("/height_control_mode", 1, &height_control_mode_callback);
-    sub4_ = n_.subscribe("/height_border_param", 1, &height_callback);
     sub_ = n_.subscribe("/reap_angle1", 1, &angle1_callback);
     sub2_ = n_.subscribe("/reap_angle2", 1, &angle2_callback);
+    sub3_ = n_.subscribe("/height_control_mode", 1, &height_control_mode_callback);
+    sub4_ = n_.subscribe("/height_border_param", 1, &height_callback);
 
     ros::spin();
 

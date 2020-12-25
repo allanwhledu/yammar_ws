@@ -4,7 +4,7 @@
   <param name="/use_sim_time" value="true"/>
 
   <node pkg="rosbag" type="play" name="play1"
-    args="$(find launch_file)/bag/test_height_control_1113.bag --clock"/>
+    args="$(find launch_file)/bag/test_height_control_2020-12-11-16-55-59.bag --clock"/>
 
 #### Height control server ####################################################
   <node pkg="read_CAN" type="read_CAN_node" name="height_control_server" output="screen"/>
