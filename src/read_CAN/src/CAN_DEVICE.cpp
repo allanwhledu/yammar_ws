@@ -233,6 +233,18 @@ void CAN_DEVICE::control_height(int mode) //驱动拨禾轮和割台的高度调
         msg[0].RemoteFlag = 0;
         msg[0].ExternFlag = 0;
         msg[0].DataLen = 8;
+
+        msg[0].Data[0] = 0x01;
+        msg[0].Data[1] = 0x11;
+        msg[0].Data[2] = 0x09;
+        msg[0].Data[3] = 0x00;
+        msg[0].Data[4] = 0x00;
+        msg[0].Data[5] = 0x00;
+        msg[0].Data[6] = 0x00;
+        msg[0].Data[7] = 0x19;
+        transmit_msg(msg, "set  Stady");
+    }
+    if (mode == 110) // 下降割台（y3口）
     {
         msg[0].ID = 0x00000200;
         msg[0].SendType = 0;
@@ -252,7 +264,7 @@ void CAN_DEVICE::control_height(int mode) //驱动拨禾轮和割台的高度调
         transmit_msg(msg, "set  down");
     }
 
-    if (mode == 120) // 上升（y4）
+    if (mode == 120) // 上升割台（y4）
     {
         msg[0].ID = 0x00000200;
         msg[0].SendType = 0;
