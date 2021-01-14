@@ -30,19 +30,17 @@ int main(int argc, char **argv)
     ros::Publisher chatter_pub2 = n.advertise<std_msgs::Int64>("reap_angle2", 1000);
     ros::Publisher chatter_pub3 = n.advertise<std_msgs::Float32>("car_speed", 1000);
     ros::Publisher chatter_pub4 = n.advertise<std_msgs::Float32>("torque", 1000);
+    ros::Publisher chatter_pub5 = n.advertise<std_msgs::Float32>("current_rms", 1000);
     ros::Publisher chatter_pub6 = n.advertise<std_msgs::Float32>("angle_turn", 1000);
     ros::Publisher chatter_pub7 = n.advertise<std_msgs::Float32>("angle_speed", 1000);
 	can_1.pub_c1 = &chatter_pub1;
 	can_1.pub_c2 = &chatter_pub2;
-    can_1.pub_c4 = &chatter_pub4;
 	can_1.pub_c3 = &chatter_pub3;
+    can_1.pub_c4 = &chatter_pub4;
+    can_1.pub_c5 = &chatter_pub5;
     can_1.pub_turn_c6= &chatter_pub6;
     can_1.pub_speed_c7= &chatter_pub7;
 
-
-	// Current capture
-	ros::Publisher pub_current = n.advertise<std_msgs::Float32>("motor_current", 1000);
-	can_1.pub_c5 = &pub_current;
 
 	// 接受topic指令后发送can信号
     ros::Subscriber sub = n.subscribe("height_control_mode", 1, height_control_mode_callback);

@@ -33,6 +33,8 @@ public:
     int m_run0;
 
     std::vector<int> log_error; //用于debug的时候记录变量
+    std::vector<float> current_buffer;
+    int buffer_length = 50;
 
     int channel;
 
@@ -42,7 +44,6 @@ public:
     std_msgs::Float32 car_speed;
     float torque = 0;
     float current = 0.0;
-    ///****************sunhan name
     int angle_turn = 0;
     int angle_speed = 0;
 
@@ -58,6 +59,7 @@ public:
 
     void init_CAN();
     friend void* receive_func(void* param);
+    float calculate_rms(float current_now);
     void transmit_msg(VCI_CAN_OBJ *send, char *com);
     void control_height(int mode); //驱动第num_motor号电机，速度为speed.
 
