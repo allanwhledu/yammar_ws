@@ -14,17 +14,10 @@ CAN_DEVICE can_1(1);
 CAN_DEVICE can_2(2);
 
 
-void height_control_mode_callback(const std_msgs::UInt16::ConstPtr& msg)  // 虽然这个包主要用来读取can消息，但是也通过这个函数来发送一些控制信息
+void height_control_mode_callback(const std_msgs::UInt16::ConstPtr& msg)
 {
     ROS_INFO("got control mode: ", msg->data);
     can_2.control_height(msg->data);
-}
-
-void test_topic_callback(const std_msgs::UInt16::ConstPtr& msg)  // 虽然这个包主要用来读取can消息，但是也通过这个函数来发送一些控制信息
-{
-    float current_now = msg->data;
-    float rms = can_2.calculate_rms(current_now);
-    ROS_INFO_STREAM("rms: "<<rms);
 }
 
 int main(int argc, char **argv)
@@ -37,16 +30,22 @@ int main(int argc, char **argv)
     ros::Publisher chatter_pub2 = n.advertise<std_msgs::Int64>("reap_angle2", 1000);
     ros::Publisher chatter_pub3 = n.advertise<std_msgs::Float32>("car_speed", 1000);
     ros::Publisher chatter_pub4 = n.advertise<std_msgs::Float32>("torque", 1000);
-    ros::Publisher chatter_pub5 = n.advertise<std_msgs::Float32>("current_rms", 1000);
+    ros::Publisher chatter_pub6 = n.advertise<std_msgs::Float32>("angle_turn", 1000);
+    ros::Publisher chatter_pub7 = n.advertise<std_msgs::Float32>("angle_speed", 1000);
 	can_1.pub_c1 = &chatter_pub1;
 	can_1.pub_c2 = &chatter_pub2;
-    can_1.pub_c3 = &chatter_pub3;
-	can_1.pub_c4 = &chatter_pub4;
-    can_1.pub_c5 = &chatter_pub5;
+    can_1.pub_c4 = &chatter_pub4;
+	can_1.pub_c3 = &chatter_pub3;
+    can_1.pub_turn_c6= &chatter_pub6;
+    can_1.pub_speed_c7= &chatter_pub7;
+
+
+	// Current capture
+	ros::Publisher pub_current = n.advertise<std_msgs::Float32>("motor_current", 1000);
+	can_1.pub_c5 = &pub_current;
 
 	// 接受topic指令后发送can信号
     ros::Subscriber sub = n.subscribe("height_control_mode", 1, height_control_mode_callback);
-    ros::Subscriber sub_test = n.subscribe("test_topic", 1, test_topic_callback);
 
 
 //    can_1.m_run0 = 0;
@@ -62,8 +61,8 @@ int main(int argc, char **argv)
 //    //测试是否可以双通道运行
 
     can_2.init_CAN();
-//    ROS_INFO_STREAM("can2 receive thread starting...");
-//    can_2.open_receive();
+   ROS_INFO_STREAM("can2 receive thread starting...");
+   can_2.open_receive();
 
     int spin_or_watchdog = 0;
     if(spin_or_watchdog == 0)
@@ -84,7 +83,7 @@ int main(int argc, char **argv)
 
     can_1.close_receive();
 	can_1.closeCAN();
-//    can_2.close_receive();
+    can_2.close_receive();
     can_2.closeCAN();
 	return 0;
 }
