@@ -27,8 +27,8 @@ fhRatio = 10
 
 # 电机序号
 reel = 1
-cb = 2
-pf = 3
+cb = 7
+pf = 7
 
 # 设定电机序号
 # motors = [cb, reel]
