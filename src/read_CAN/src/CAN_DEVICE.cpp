@@ -13,22 +13,18 @@ CAN_DEVICE::CAN_DEVICE(int channel_idx) {
     count = 0;
     m_run0 = 0;
     channel = channel_idx - 1;
-
-    for (int i =0;i<buffer_length;i++)
-    {
-        current_buffer.push_back(0);
-    }  // 本来应该是初始化直接有定义的，但是没有成功，所以这样替代做
 }
 
 void CAN_DEVICE::init_CAN() {// 进行CAN信号发送
-    if (channel == 0) {
+    if (channel == 0)
+    {
         printf(">>start CAN device !\r\n");//指示程序已运行
         if (VCI_OpenDevice(VCI_USBCAN2, 0, 0) == 1)//打开设备
         {
             printf(">>open device success!\n");//打开设备成功
         } else {
             printf(">>open device error!\n");
-//            exit(1);
+            exit(1);
         }
     }
 
@@ -37,19 +33,21 @@ void CAN_DEVICE::init_CAN() {// 进行CAN信号发送
     config.AccCode = 0;
     config.AccMask = 0xFFFFFFFF;
     config.Filter = 1;//接收所有帧
-    config.Timing0 = 0x03;//波特率的计算方式请查看参考资料
+//    config.Timing0 = 0x00;/*波特率1000 Kbps  Timing0=0x00 Timing1= 0x14*/
+//    config.Timing1 = 0x14;
+    // 这里，已经改成了500kbps，适应车辆
+    config.Timing0 = 0x00;/*波特率1000 Kbps (Should be 125 Kbps?) Timing0=0x00 Timing1= 0x14*/
     config.Timing1 = 0x1C;
     config.Mode = 0;//正常模式
 
-    if (VCI_InitCAN(VCI_USBCAN2, 0, channel, &config) != 1)//初始化can卡
+    if (VCI_InitCAN(VCI_USBCAN2, 0, channel, &config) != 1)//CAN1
     {
         printf(">>Init CAN error\n");
         VCI_CloseDevice(VCI_USBCAN2, 0);
 //        exit(1);
     }
 
-    if (VCI_StartCAN(VCI_USBCAN2, 0, channel) != 1) //打开can卡
-    {
+    if (VCI_StartCAN(VCI_USBCAN2, 0, channel) != 1) {
         printf(">>Start CAN error\n");
         VCI_CloseDevice(VCI_USBCAN2, 0);
 //        exit(1);
@@ -73,55 +71,52 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
         {
             // 上面有一个WaitTime我们可以知道，其实can卡硬件接受的信号频率非常高，只是我们这里过10毫秒来看一次处理一次而已。
             for (j = 0; j < reclen; j++) {
-
-                //// 通过can id来确定不同类型的数据
-                //// 采集卡 channel1 1-5的数据
-                if (rec[j].ID == 0x0181)
+                if (rec[j].ID == 0x0181) // 采集卡 channel1 1-4的数据
                 {
-                    unsigned char heigh1, low1;
-                    heigh1 = rec[j].Data[1];
+                    unsigned char high1, low1;
+                    high1 = rec[j].Data[1];
                     low1 = rec[j].Data[0];
-                    unsigned char heigh2, low2;
-                    heigh2 = rec[j].Data[3];
+                    unsigned char high2, low2;
+                    high2 = rec[j].Data[3];
                     low2 = rec[j].Data[2];
-                    unsigned char heigh3, low3;
-                    heigh3 = rec[j].Data[5];
+                    unsigned char high3, low3;
+                    high3 = rec[j].Data[5];
                     low3 = rec[j].Data[4];
-                    unsigned char heigh4, low4;
-                    heigh4 = rec[j].Data[7];
+
+                    // 临时选用采集卡Ch4记录电流
+                    unsigned char high4, low4;
+                    high4 = rec[j].Data[7];
                     low4 = rec[j].Data[6];
 
-                    if ((heigh1 << 8 | low1) > 60000 || (heigh2 << 8 | low2) > 60000 || (heigh3 << 8 | low3) > 60000)
+                    if ((high1 << 8 | low1) > 60000 || (high2 << 8 | low2) > 60000 || (high3 << 8 | low3) > 60000)
                         continue;
                     // 1号角度传感器
-                    int vol1 = (heigh1 << 8 | low1);
+                    int vol1 = (high1 << 8 | low1);
                     ROS_INFO_STREAM(vol1);
-                    float vol1_norm = float(vol1) / 1000;
+                    float vol1_norm = float(vol1)/1000;
                     ROS_INFO_STREAM(vol1_norm);
-                    float angle1 = 31.56 - vol1_norm * 31.56 / (4.06 - 1);
+                    float angle1 = 31.56 - vol1_norm * 31.56/(4.06 - 1);
                     ROS_INFO_STREAM(angle1);
-//                    pCAN_DEVICE->angle1 = angle1;
-                    pCAN_DEVICE->angle1 = vol1;
+                    pCAN_DEVICE->angle1 = angle1;
                     // pCAN_DEVICE->angle1 = vol1/2*105/4000+5-18; //因为输入电压是10v，所以除以2;-18是修正零漂
                     std_msgs::Int64 data_receive1;
                     data_receive1.data = pCAN_DEVICE->angle1;
                     pCAN_DEVICE->pub_c1->publish(data_receive1);
 
                     // 2号角度传感器
-                    int vol2 = (heigh2 << 8 | low2);
-                    float vol2_norm = float(vol2) / 1000;
-                    float angle2 = 0 + vol2_norm * 39.13 / (3.92 - 0.72);
-//                    pCAN_DEVICE->angle2 = angle2;
-                    pCAN_DEVICE->angle2 = vol2;
+                    int vol2 = (high2 << 8 | low2);
+                    float vol2_norm = float(vol2)/1000;
+                    float angle2 = 0 + vol2_norm * 39.13/(3.92 - 0.72);
+                    pCAN_DEVICE->angle2 = angle2;
                     // pCAN_DEVICE->angle2 = vol2/2*105/4000+5-18;
                     std_msgs::Int64 data_receive2;
                     data_receive2.data = pCAN_DEVICE->angle2;
                     pCAN_DEVICE->pub_c2->publish(data_receive2);
 
                     // 力矩传感器
-                    float torque = (heigh3 << 8 | low3);
-                    pCAN_DEVICE->torque = torque / 10000 * 100;
-                    if (pCAN_DEVICE->torque < 0.05) // 太小的时候过滤一下
+                    float torque = (high3 << 8 | low3);
+                    pCAN_DEVICE->torque = torque/10000*100;
+                    if(pCAN_DEVICE->torque < 0.05) // 太小的时候过滤一下
                     {
                         pCAN_DEVICE->torque = 0;
                     }
@@ -129,62 +124,82 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     data_receive4.data = pCAN_DEVICE->torque;
                     pCAN_DEVICE->pub_c4->publish(data_receive4);
 
-                    int current = (heigh4 << 8 | low4);
-                    float rms = pCAN_DEVICE->calculate_rms(current);
-                    std_msgs::Float32 data_current;
-                    data_current.data = rms;
-                    pCAN_DEVICE->pub_c5->publish(data_current);
+                    //电流检测
+                    float current = (high4 << 8 | low4);
+                    pCAN_DEVICE->current = current;
+                    /* some process */
+                    std_msgs::Float32 data_receive_current;
+                    data_receive4.data = pCAN_DEVICE->current;
+                    pCAN_DEVICE->pub_c5->publish(data_receive_current);
+
 
                     ROS_INFO(
                             "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle1:%05d angle2:%05d",
-                            pCAN_DEVICE->channel + 1, pCAN_DEVICE->count, rec[j].ID,
+                            pCAN_DEVICE->channel+1, pCAN_DEVICE->count, rec[j].ID,
                             rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
-                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1,
-                            pCAN_DEVICE->angle2);
+                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1, pCAN_DEVICE->angle2);
                 }
+                else if (rec[j].ID == 0x0281) { //采集卡 channel2 5-8的数据
+                //sunhan   for 
+                    unsigned char high5, low5;
+                    high5 = rec[j].Data[1];
+                    low5 = rec[j].Data[0];
+                    unsigned char high6, low6;
+                    high6 = rec[j].Data[3];
+                    low6 = rec[j].Data[2];
 
-                //// 采集卡 channel2 5-8的数据
-                else if (rec[j].ID == 0x0281) {
-                    unsigned char heigh, low;
-                    heigh = rec[j].Data[1];
-                    low = rec[j].Data[0];
-
-                    if ((heigh << 8 | low) > 60000)
+                    //******************************************
+                  if ((high5 << 8 | low5) > 60000 || (high6 << 8 | low6) > 60000 )
                         continue;
-                    // ... ...
+                    // turn号角度传感器
+                    int vol5 = (high5 << 8 | low5);
+                    ROS_INFO_STREAM(vol5);
+                     pCAN_DEVICE->angle_turn = vol5;
+                    std_msgs::Float32 data_receive_turn;
+                   data_receive_turn.data = vol5;
+                    pCAN_DEVICE->pub_turn_c6->publish(data_receive_turn);
+
+                    // speed号角度传感器
+                    int vol6 = (high6 << 8 | low6);
+                    ROS_INFO_STREAM(vol6);
+                     pCAN_DEVICE->angle_turn = vol6;
+                    std_msgs::Float32 data_receive_speed;
+                   data_receive_speed.data = vol6;
+                    pCAN_DEVICE->pub_speed_c7->publish(data_receive_speed);
 
                     ROS_INFO(
-                            "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle5:%04d",
-                            pCAN_DEVICE->channel + 1, pCAN_DEVICE->count, rec[j].ID,
+                            "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X turn:%04f",
+                            pCAN_DEVICE->channel+1, pCAN_DEVICE->count, rec[j].ID,
                             rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
-                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], heigh << 8 | low);
+                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], vol5/1000);
                 }
-
-                //// 车速数据
-                else if (rec[j].ID == 0xCFF5188)
+                else if (rec[j].ID == 0xCFF5188) //车速数据
                 {
-                    double v = 0.0, w = 0.0;
+                    double v=0.0,w=0.0;
                     uint16_t data[8];
-                    for (int i = 0; i < 8; i++) {
-                        data[i] = rec[j].Data[i];
+                    for(int i=0;i<8;i++)
+                    {
+                        data[i]=rec[j].Data[i];
                     }
-                    v = (data[1] << 8) | data[0];
-                    w = (data[3] << 8) | data[2];
-                    v -= 32768;
-                    w -= 32768;
-                    v /= 1000;
-                    w /= 1000;
+                    v=(data[1]<<8)|data[0];
+                    w=(data[3]<<8)|data[2];
+                    v-=32768;
+                    w-=32768;
+                    v/=1000;
+                    w/=1000;
 //                    carSpeed.linear=v;
 //                    carSpeed.rotate=w;
                     pCAN_DEVICE->car_speed.data = v;
                     pCAN_DEVICE->pub_c3->publish(pCAN_DEVICE->car_speed);
-                } else {
+                }
+                else {
                     ROS_INFO("Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X",
-                             pCAN_DEVICE->channel + 1,
-                             pCAN_DEVICE->count,
+                            pCAN_DEVICE->channel+1,
+                            pCAN_DEVICE->count,
                              rec[j].ID,
                              rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
                              rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7]);
+
                 }
                 pCAN_DEVICE->count++;//序号递增
             }
@@ -192,21 +207,6 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
     }
     ROS_INFO_STREAM("Exit receive pthread.");//退出接收线程
     pthread_exit(0);
-}
-
-float CAN_DEVICE::calculate_rms(float current_now)
-{
-    current_buffer.insert(current_buffer.begin(),current_now);
-    current_buffer.pop_back();
-
-    float power2sum = 0;
-    for(float & iter : current_buffer)
-    {
-        power2sum = power2sum + iter*iter;
-    }
-    float rms = sqrt(power2sum/buffer_length);
-//    ROS_INFO_STREAM("rms :"<<rms);
-    return rms;
 }
 
 void CAN_DEVICE::transmit_msg(VCI_CAN_OBJ send[1], char com[10]) //发送函数
@@ -222,29 +222,12 @@ void CAN_DEVICE::transmit_msg(VCI_CAN_OBJ send[1], char com[10]) //发送函数
     }
 }
 
-void CAN_DEVICE::control_height(int mode) //驱动拨禾轮和割台的高度调节
+void CAN_DEVICE::control_height(int mode) //驱动第num_motor号电机，速度为speed.
 {
     // 设置电机为CAN控制，速度模式
     VCI_CAN_OBJ msg[1];
 
-    if (mode == 100) {
-        msg[0].ID = 0x00000200;
-        msg[0].SendType = 0;
-        msg[0].RemoteFlag = 0;
-        msg[0].ExternFlag = 0;
-        msg[0].DataLen = 8;
-
-        msg[0].Data[0] = 0x01;
-        msg[0].Data[1] = 0x11;
-        msg[0].Data[2] = 0x09;
-        msg[0].Data[3] = 0x00;
-        msg[0].Data[4] = 0x00;
-        msg[0].Data[5] = 0x00;
-        msg[0].Data[6] = 0x00;
-        msg[0].Data[7] = 0x19;
-        transmit_msg(msg, "set  Stady");
-    }
-    if (mode == 110) // 下降割台（y3口）
+    if (mode == 110) // 下降（y3口）
     {
         msg[0].ID = 0x00000200;
         msg[0].SendType = 0;
@@ -264,7 +247,7 @@ void CAN_DEVICE::control_height(int mode) //驱动拨禾轮和割台的高度调
         transmit_msg(msg, "set  down");
     }
 
-    if (mode == 120) // 上升割台（y4）
+    if (mode == 120) // 上升（y4）
     {
         msg[0].ID = 0x00000200;
         msg[0].SendType = 0;
@@ -284,45 +267,23 @@ void CAN_DEVICE::control_height(int mode) //驱动拨禾轮和割台的高度调
         transmit_msg(msg, "set  up");
     }
 
-    if (mode == 101) // 下降拨禾轮（y5口）
-    {
-        msg[0].ID = 0x00000200;
-        msg[0].SendType = 0;
-        msg[0].RemoteFlag = 0;
-        msg[0].ExternFlag = 0;
-        msg[0].DataLen = 8;
+    // 半秒后停止控制
+    ros::Duration(0.25).sleep();
+    msg[0].ID = 0x00000200;
+    msg[0].SendType = 0;
+    msg[0].RemoteFlag = 0;
+    msg[0].ExternFlag = 0;
+    msg[0].DataLen = 8;
 
-        msg[0].Data[0] = 0x01;
-        msg[0].Data[1] = 0x11;
-        msg[0].Data[2] = 0x09;
-        msg[0].Data[3] = 0x00;
-        msg[0].Data[4] = 0x10;
-        msg[0].Data[5] = 0x00;
-        msg[0].Data[6] = 0x00;
-        msg[0].Data[7] = 0x09;
-
-        transmit_msg(msg, "set  down bh");
-    }
-
-    if (mode == 102) // 上升拨禾轮（y6口）
-    {
-        msg[0].ID = 0x00000200;
-        msg[0].SendType = 0;
-        msg[0].RemoteFlag = 0;
-        msg[0].ExternFlag = 0;
-        msg[0].DataLen = 8;
-
-        msg[0].Data[0] = 0x01;
-        msg[0].Data[1] = 0x11;
-        msg[0].Data[2] = 0x09;
-        msg[0].Data[3] = 0x00;
-        msg[0].Data[4] = 0x20;
-        msg[0].Data[5] = 0x00;
-        msg[0].Data[6] = 0x00;
-        msg[0].Data[7] = 0x39;
-
-        transmit_msg(msg, "set  up bh");
-    }
+    msg[0].Data[0] = 0x01;
+    msg[0].Data[1] = 0x11;
+    msg[0].Data[2] = 0x09;
+    msg[0].Data[3] = 0x00;
+    msg[0].Data[4] = 0x00;
+    msg[0].Data[5] = 0x00;
+    msg[0].Data[6] = 0x00;
+    msg[0].Data[7] = 0x19;
+    transmit_msg(msg, "set  Stady");
 }
 
 void CAN_DEVICE::open_receive() {
@@ -350,7 +311,7 @@ void CAN_DEVICE::closeCAN() {
 // goto ext;
 }
 
-void CAN_DEVICE::init_ICAN() {
+void CAN_DEVICE::init_ICAN(){
     // 使能模拟量转can
     VCI_CAN_OBJ msg[1];
 
@@ -362,6 +323,12 @@ void CAN_DEVICE::init_ICAN() {
 
     msg[0].Data[0] = 0x01;
     msg[0].Data[1] = 0x01;
+    msg[0].Data[2] = 0x00;
+   msg[0].Data[3] = 0x00;
+   msg[0].Data[4] = 0x00;
+   msg[0].Data[5] = 0x00;
+   msg[0].Data[6] = 0x00;
+   msg[0].Data[7] = 0x00;
 
     transmit_msg(msg, "init ICAN");
 }

@@ -33,28 +33,32 @@ public:
     int m_run0;
 
     std::vector<int> log_error; //用于debug的时候记录变量
-    std::vector<float> current_buffer;
-    int buffer_length = 50;
 
     int channel;
 
     int angle1 = 0;
     int angle2 = 0;
+
     std_msgs::Float32 car_speed;
     float torque = 0;
+    float current = 0.0;
+    ///****************sunhan name
+    int angle_turn = 0;
+    int angle_speed = 0;
 
     ros::Publisher* pub_c1;
     ros::Publisher* pub_c2;
     ros::Publisher* pub_c3;
-    ros::Publisher *pub_c4;
-    ros::Publisher *pub_c5;
+    ros::Publisher* pub_c4;
+    ros::Publisher* pub_c5;
+    ros::Publisher* pub_turn_c6;
+    ros::Publisher* pub_speed_c7;
 
     CAN_DEVICE(int channel_idx);
 
     void init_CAN();
     friend void* receive_func(void* param);
     void transmit_msg(VCI_CAN_OBJ *send, char *com);
-    float calculate_rms(float current_now);
     void control_height(int mode); //驱动第num_motor号电机，速度为speed.
 
     void open_receive();
