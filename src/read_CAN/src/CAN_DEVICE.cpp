@@ -13,6 +13,11 @@ CAN_DEVICE::CAN_DEVICE(int channel_idx) {
     count = 0;
     m_run0 = 0;
     channel = channel_idx - 1;
+
+    for (int i =0;i<buffer_length;i++)
+    {
+        current_buffer.push_back(0);
+    }  // 本来应该是初始化直接有定义的，但是没有成功，所以这样替代做
 }
 
 void CAN_DEVICE::init_CAN() {// 进行CAN信号发送
@@ -23,7 +28,7 @@ void CAN_DEVICE::init_CAN() {// 进行CAN信号发送
             printf(">>open device success!\n");//打开设备成功
         } else {
             printf(">>open device error!\n");
-            exit(1);
+//            exit(1);
         }
     }
 
@@ -32,21 +37,19 @@ void CAN_DEVICE::init_CAN() {// 进行CAN信号发送
     config.AccCode = 0;
     config.AccMask = 0xFFFFFFFF;
     config.Filter = 1;//接收所有帧
-//    config.Timing0 = 0x00;/*波特率1000 Kbps  Timing0=0x00 Timing1= 0x14*/
-//    config.Timing1 = 0x14;
-    // 这里，已经改成了500kbps，适应车辆
-    config.Timing0 = 0x03;/*波特率1000 Kbps  Timing0=0x00 Timing1= 0x14*/
+    config.Timing0 = 0x03;//波特率的计算方式请查看参考资料
     config.Timing1 = 0x1C;
     config.Mode = 0;//正常模式
 
-    if (VCI_InitCAN(VCI_USBCAN2, 0, channel, &config) != 1)//CAN1
+    if (VCI_InitCAN(VCI_USBCAN2, 0, channel, &config) != 1)//初始化can卡
     {
         printf(">>Init CAN error\n");
         VCI_CloseDevice(VCI_USBCAN2, 0);
 //        exit(1);
     }
 
-    if (VCI_StartCAN(VCI_USBCAN2, 0, channel) != 1) {
+    if (VCI_StartCAN(VCI_USBCAN2, 0, channel) != 1) //打开can卡
+    {
         printf(">>Start CAN error\n");
         VCI_CloseDevice(VCI_USBCAN2, 0);
 //        exit(1);
@@ -70,7 +73,10 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
         {
             // 上面有一个WaitTime我们可以知道，其实can卡硬件接受的信号频率非常高，只是我们这里过10毫秒来看一次处理一次而已。
             for (j = 0; j < reclen; j++) {
-                if (rec[j].ID == 0x0181) // 采集卡 channel1 1-5的数据
+
+                //// 通过can id来确定不同类型的数据
+                //// 采集卡 channel1 1-5的数据
+                if (rec[j].ID == 0x0181)
                 {
                     unsigned char heigh1, low1;
                     heigh1 = rec[j].Data[1];
@@ -81,6 +87,9 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     unsigned char heigh3, low3;
                     heigh3 = rec[j].Data[5];
                     low3 = rec[j].Data[4];
+                    unsigned char heigh4, low4;
+                    heigh4 = rec[j].Data[7];
+                    low4 = rec[j].Data[6];
 
                     if ((heigh1 << 8 | low1) > 60000 || (heigh2 << 8 | low2) > 60000 || (heigh3 << 8 | low3) > 60000)
                         continue;
@@ -120,13 +129,22 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     data_receive4.data = pCAN_DEVICE->torque;
                     pCAN_DEVICE->pub_c4->publish(data_receive4);
 
+                    int current = (heigh4 << 8 | low4);
+                    float rms = pCAN_DEVICE->calculate_rms(current);
+                    std_msgs::Float32 data_current;
+                    data_current.data = rms;
+                    pCAN_DEVICE->pub_c5->publish(data_current);
+
                     ROS_INFO(
                             "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle1:%05d angle2:%05d",
                             pCAN_DEVICE->channel + 1, pCAN_DEVICE->count, rec[j].ID,
                             rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
                             rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1,
                             pCAN_DEVICE->angle2);
-                } else if (rec[j].ID == 0x0281) { //采集卡 channel2 5-8的数据
+                }
+
+                //// 采集卡 channel2 5-8的数据
+                else if (rec[j].ID == 0x0281) {
                     unsigned char heigh, low;
                     heigh = rec[j].Data[1];
                     low = rec[j].Data[0];
@@ -140,7 +158,10 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                             pCAN_DEVICE->channel + 1, pCAN_DEVICE->count, rec[j].ID,
                             rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
                             rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], heigh << 8 | low);
-                } else if (rec[j].ID == 0xCFF5188) //车速数据
+                }
+
+                //// 车速数据
+                else if (rec[j].ID == 0xCFF5188)
                 {
                     double v = 0.0, w = 0.0;
                     uint16_t data[8];
@@ -171,6 +192,21 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
     }
     ROS_INFO_STREAM("Exit receive pthread.");//退出接收线程
     pthread_exit(0);
+}
+
+float CAN_DEVICE::calculate_rms(float current_now)
+{
+    current_buffer.insert(current_buffer.begin(),current_now);
+    current_buffer.pop_back();
+
+    float power2sum = 0;
+    for(float & iter : current_buffer)
+    {
+        power2sum = power2sum + iter*iter;
+    }
+    float rms = sqrt(power2sum/buffer_length);
+//    ROS_INFO_STREAM("rms :"<<rms);
+    return rms;
 }
 
 void CAN_DEVICE::transmit_msg(VCI_CAN_OBJ send[1], char com[10]) //发送函数
