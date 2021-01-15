@@ -1,8 +1,0 @@
-prefix=/usr/local
-
-Name: fake_msgs
-Description: Description of fake_msgs
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: 

@@ -10,3 +10,5 @@ src/.clangd/
 src/.idea/
 
 pyenv/
+
+src/cmake-build-debug/
