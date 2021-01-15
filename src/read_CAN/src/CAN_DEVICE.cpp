@@ -76,7 +76,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
             for (j = 0; j < reclen; j++) {
 
                 //// 采集卡1：
-                if (rec[j].ID == 0x0181) // 采集卡 channel1 ican1 1-4的数据
+                if (rec[j].ID == 0x0181) // 1-4接口的数据
                 {
                     unsigned char high1, low1;
                     high1 = rec[j].Data[1];
@@ -116,26 +116,13 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     data_receive2.data = pCAN_DEVICE->angle2;
                     pCAN_DEVICE->pub_c2->publish(data_receive2);
 
-                    // 力矩传感器
-                    float torque = (high3 << 8 | low3);
-                    pCAN_DEVICE->torque = torque/10000*100;
-                    if(pCAN_DEVICE->torque < 0.05) // 太小的时候过滤一下
-                    {
-                        pCAN_DEVICE->torque = 0;
-                    }
-                    std_msgs::Float32 data_receive4;
-                    data_receive4.data = pCAN_DEVICE->torque;
-                    pCAN_DEVICE->pub_c4->publish(data_receive4);
-
-
                     ROS_INFO(
                             "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle1:%05d angle2:%05d",
                             pCAN_DEVICE->channel+1, pCAN_DEVICE->count, rec[j].ID,
                             rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
                             rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1, pCAN_DEVICE->angle2);
                 }
-                else if (rec[j].ID == 0x0281) { //采集卡 channel2 5-8的数据
-                //sunhan   for 
+                else if (rec[j].ID == 0x0281) { //5-8接口的数据
                     unsigned char high5, low5;
                     high5 = rec[j].Data[1];
                     low5 = rec[j].Data[0];
@@ -175,7 +162,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                 }
 
                 //// 采集卡2：
-                else if (rec[j].ID == 0x0182) // 采集卡 channel1 ican2 1-4的数据
+                else if (rec[j].ID == 0x0182) // 1-4接口的数据
                 {
                     unsigned char high1, low1;
                     high1 = rec[j].Data[1];
@@ -225,8 +212,8 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                             rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1, pCAN_DEVICE->angle2);
                 }
 
-
-                else if (rec[j].ID == 0xCFF5188) //车速数据
+                //// 车速数据
+                else if (rec[j].ID == 0xCFF5188)
                 {
                     double v=0.0,w=0.0;
                     uint16_t data[8];
