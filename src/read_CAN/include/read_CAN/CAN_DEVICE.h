@@ -34,7 +34,7 @@ public:
 
     std::vector<int> log_error; //用于debug的时候记录变量
     std::vector<float> current_buffer;
-    int buffer_length = 50;
+    int buffer_length = 100;
 
     int channel;
 
@@ -71,7 +71,7 @@ public:
 
     void close_receive();
 
-    void init_ICAN();
+    void init_ICAN(int id);
 };
 
 

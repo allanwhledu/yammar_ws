@@ -2,7 +2,7 @@
 
 #### control motors vis RS485 bus ####################################################
 
-  <node pkg="control485" type="control485_simple_test" name="control485_simple_test" output="screen"/>
+  <node pkg="control485" type="control485_simple_test" name="control485_simple_test" />
 
 #### read signals from CAN bus ####################################################
 

@@ -55,7 +55,7 @@ int main(int argc, char **argv)
 //    pthread_join(can_1.receive_thread, NULL);//等待线程关闭
 //    ROS_INFO_STREAM("receive_thread_close.");
     can_1.init_CAN();
-    can_1.init_ICAN();
+    can_1.init_ICAN(2);
 
     ROS_INFO_STREAM("can1 receive thread starting...");
     can_1.open_receive();

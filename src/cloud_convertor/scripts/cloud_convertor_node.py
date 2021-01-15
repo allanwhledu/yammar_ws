@@ -3,6 +3,7 @@
 
 import rospy
 from std_msgs.msg import Float32
+from std_msgs.msg import Int64
 import requests
 import threading
 
@@ -21,8 +22,8 @@ class Interpreter:
 
         # 把后边可能用到的 sub, pub 在初始化函数中定义好
         rospy.Subscriber('/current_rms', Float32, self.callback_x)
-        rospy.Subscriber('/cloud_traj_x', Float32, self.callback_traj_x)
-        rospy.Subscriber('/cloud_traj_y', Float32, self.callback_traj_y)
+        rospy.Subscriber('/motor_test_speed', Int64, self.callback_traj_x)
+        rospy.Subscriber('/current_cm7290', Float32, self.callback_traj_y)
 
         add_thread = threading.Thread(target=self.thread_job)
         add_thread.start()
@@ -34,7 +35,7 @@ class Interpreter:
         self.var3 = msg
 
     def callback_traj_x(self, data):
-        msg = data.data
+        msg = float(data.data)
         self.var1 = msg
 
     def callback_traj_y(self, data):

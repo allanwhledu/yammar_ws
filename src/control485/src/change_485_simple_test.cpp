@@ -190,7 +190,7 @@ int main (int argc, char **argv)
 
     ofstream ofs;
     string filename = "/home/yangzt/yammar_ws/src/control485/speed_result/";
-    filename = filename + current_time + "test_rms.txt";
+    filename = filename + current_time + "m10_500.txt";
 
     int motor_id = 1;
     int realSpeed = 0;
@@ -201,9 +201,9 @@ int main (int argc, char **argv)
     motorSetModbus(motor_id);
     motorSetSpeedmode(motor_id);
 //    motorSetTorqueMode(motor_id);
-    motorSetSpeed(motor_id, 3000);
+    motorSetSpeed(motor_id, 2000);
 
-    float sec_count = 0.0, sec_duration = 300.0;
+    float sec_count = 0.0, sec_duration = 360.0;
     while (ros::ok() && sec_count <= sec_duration)
     {
         // Read and save motor speed;

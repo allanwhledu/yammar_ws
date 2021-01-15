@@ -188,8 +188,17 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     data_receive4.data = pCAN_DEVICE->torque;
                     pCAN_DEVICE->pub_c4->publish(data_receive4);
 
+                    //电流检测（钳流表）
+                    int current_cm7290_int = (high1 << 8 | low1);
+                    float current_cm7290 = current_cm7290_int;
+                    current_cm7290 = current_cm7290/100;
+                    std_msgs::Float32 data_current_cm7290;
+                    data_current_cm7290.data = current_cm7290;
+                    pCAN_DEVICE->pub_c5_cm7290->publish(data_current_cm7290);
+
                     //电流检测（电流环）
-                    float current = (high1 << 8 | low1);
+                    int current_int = (high2 << 8 | low2);
+                    float current = current_int;
                     float rms = 0.01442504 * pCAN_DEVICE->calculate_rms(current) - 1.69037332;
                     std_msgs::Float32 data_current_raw;
                     data_current_raw.data = current;
@@ -197,12 +206,6 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     std_msgs::Float32 data_current;
                     data_current.data = rms;
                     pCAN_DEVICE->pub_c5->publish(data_current);
-
-                    //电流检测（钳流表）
-                    float current_cm7290 = (high2 << 8 | low2);
-                    std_msgs::Float32 data_current_cm7290;
-                    data_current.data = current_cm7290/100;
-                    pCAN_DEVICE->pub_c5_cm7290->publish(data_current);
 
 
                     ROS_INFO(
@@ -226,33 +229,6 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     unsigned char high7, low7;
                     high7 = rec[j].Data[7];
                     low7 = rec[j].Data[6];
-
-                    // 力矩传感器
-                    float torque = (high4 << 8 | low4);
-                    pCAN_DEVICE->torque = torque/10000*100;
-                    if(pCAN_DEVICE->torque < 0.05) // 太小的时候过滤一下
-                    {
-                        pCAN_DEVICE->torque = 0;
-                    }
-                    std_msgs::Float32 data_receive4;
-                    data_receive4.data = pCAN_DEVICE->torque;
-                    pCAN_DEVICE->pub_c4->publish(data_receive4);
-
-                    //电流检测（电流环）
-                    float current = (high5 << 8 | low5);
-                    float rms = 0.01442504 * pCAN_DEVICE->calculate_rms(current) - 1.69037332;
-                    std_msgs::Float32 data_current_raw;
-                    data_current_raw.data = current;
-                    pCAN_DEVICE->pub_c5_raw->publish(data_current_raw);
-                    std_msgs::Float32 data_current;
-                    data_current.data = rms;
-                    pCAN_DEVICE->pub_c5->publish(data_current);
-
-                    //电流检测（钳流表）
-                    float current_cm7290 = (high6 << 8 | low6);
-                    std_msgs::Float32 data_current_cm7290;
-                    data_current.data = current_cm7290/100;
-                    pCAN_DEVICE->pub_c5_cm7290->publish(data_current);
 
 
                     ROS_INFO(
@@ -453,7 +429,7 @@ void CAN_DEVICE::closeCAN() {
 // goto ext;
 }
 
-void CAN_DEVICE::init_ICAN() {
+void CAN_DEVICE::init_ICAN(int id) {
     // 使能模拟量转can
     VCI_CAN_OBJ msg[1];
 
@@ -464,7 +440,12 @@ void CAN_DEVICE::init_ICAN() {
     msg[0].DataLen = 2;
 
     msg[0].Data[0] = 0x01;
-    msg[0].Data[1] = 0x01;
+
+    if(id == 1){
+        msg[0].Data[1] = 0x01;
+    } else if(id == 2){
+        msg[0].Data[1] = 0x02;
+    }
 
     transmit_msg(msg, "init ICAN");
 }
