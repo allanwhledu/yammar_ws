@@ -20,7 +20,7 @@ class Interpreter:
         self.init_time = rospy.get_rostime()
 
         # 把后边可能用到的 sub, pub 在初始化函数中定义好
-        rospy.Subscriber('/cloud_x', Float32, self.callback_x)
+        rospy.Subscriber('/current_rms', Float32, self.callback_x)
         rospy.Subscriber('/cloud_traj_x', Float32, self.callback_traj_x)
         rospy.Subscriber('/cloud_traj_y', Float32, self.callback_traj_y)
 

@@ -1,0 +1,19 @@
+<launch>
+
+#### control motors vis RS485 bus ####################################################
+
+  <node pkg="control485" type="control485_simple_test" name="control485_simple_test" output="screen"/>
+
+#### read signals from CAN bus ####################################################
+
+  <node pkg="read_CAN" type="read_CAN_node" name="read_CAN" />
+
+#### cloud upper ####################################################
+
+  <node pkg="cloud_convertor" type="cloud_convertor_node.py" name="cloud_convertor" output="screen"/>
+
+#### visulization ################################################
+
+  <node pkg="rqt_graph" type="rqt_graph" name="rqt_graph"/>
+
+</launch>
