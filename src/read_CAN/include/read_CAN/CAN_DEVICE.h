@@ -52,6 +52,8 @@ public:
     ros::Publisher* pub_c3;
     ros::Publisher* pub_c4;
     ros::Publisher* pub_c5;
+    ros::Publisher* pub_c5_raw;
+    ros::Publisher* pub_c5_cm7290;
     ros::Publisher* pub_turn_c6;
     ros::Publisher* pub_speed_c7;
 

@@ -31,6 +31,8 @@ int main(int argc, char **argv)
     ros::Publisher chatter_pub3 = n.advertise<std_msgs::Float32>("car_speed", 1000);
     ros::Publisher chatter_pub4 = n.advertise<std_msgs::Float32>("torque", 1000);
     ros::Publisher chatter_pub5 = n.advertise<std_msgs::Float32>("current_rms", 1000);
+    ros::Publisher chatter_pub_raw_current = n.advertise<std_msgs::Float32>("current_raw", 1000);
+    ros::Publisher chatter_pub_cm7290_current = n.advertise<std_msgs::Float32>("current_cm7290", 1000);
     ros::Publisher chatter_pub6 = n.advertise<std_msgs::Float32>("angle_turn", 1000);
     ros::Publisher chatter_pub7 = n.advertise<std_msgs::Float32>("angle_speed", 1000);
 	can_1.pub_c1 = &chatter_pub1;
@@ -38,6 +40,8 @@ int main(int argc, char **argv)
 	can_1.pub_c3 = &chatter_pub3;
     can_1.pub_c4 = &chatter_pub4;
     can_1.pub_c5 = &chatter_pub5;
+    can_1.pub_c5_raw = &chatter_pub_raw_current;
+    can_1.pub_c5_cm7290 = &chatter_pub_cm7290_current;
     can_1.pub_turn_c6= &chatter_pub6;
     can_1.pub_speed_c7= &chatter_pub7;
 

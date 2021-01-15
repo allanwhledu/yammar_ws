@@ -74,6 +74,8 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
         {
             // 上面有一个WaitTime我们可以知道，其实can卡硬件接受的信号频率非常高，只是我们这里过10毫秒来看一次处理一次而已。
             for (j = 0; j < reclen; j++) {
+
+                //// 采集卡1：
                 if (rec[j].ID == 0x0181) // 采集卡 channel1 ican1 1-4的数据
                 {
                     unsigned char high1, low1;
@@ -125,13 +127,6 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     data_receive4.data = pCAN_DEVICE->torque;
                     pCAN_DEVICE->pub_c4->publish(data_receive4);
 
-                    //电流检测
-                    int current = (high4 << 8 | low4);
-                    float rms = pCAN_DEVICE->calculate_rms(current);
-                    std_msgs::Float32 data_current;
-                    data_current.data = rms;
-                    pCAN_DEVICE->pub_c5->publish(data_current);
-
 
                     ROS_INFO(
                             "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle1:%05d angle2:%05d",
@@ -179,6 +174,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                             rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], vol5/1000);
                 }
 
+                //// 采集卡2：
                 else if (rec[j].ID == 0x0182) // 采集卡 channel1 ican2 1-4的数据
                 {
                     unsigned char high1, low1;
@@ -205,12 +201,21 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     data_receive4.data = pCAN_DEVICE->torque;
                     pCAN_DEVICE->pub_c4->publish(data_receive4);
 
-                    //电流检测
-                    int current = (high2 << 8 | low2);
-                    float rms = pCAN_DEVICE->calculate_rms(current);
+                    //电流检测（电流环）
+                    float current = (high2 << 8 | low2);
+                    float rms = 0.01442504 * pCAN_DEVICE->calculate_rms(current) - 1.69037332;
+                    std_msgs::Float32 data_current_raw;
+                    data_current_raw.data = current;
+                    pCAN_DEVICE->pub_c5_raw->publish(data_current_raw);
                     std_msgs::Float32 data_current;
                     data_current.data = rms;
                     pCAN_DEVICE->pub_c5->publish(data_current);
+
+                    //电流检测（钳流表）
+                    float current_cm7290 = (high3 << 8 | low3);
+                    std_msgs::Float32 data_current_cm7290;
+                    data_current.data = current_cm7290/100;
+                    pCAN_DEVICE->pub_c5_cm7290->publish(data_current);
 
 
                     ROS_INFO(
