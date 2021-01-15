@@ -76,25 +76,25 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
             for (j = 0; j < reclen; j++) {
 
                 //// 采集卡1：
-                if (rec[j].ID == 0x0181) // 1-4接口的数据
+                if (rec[j].ID == 0x0181) // 0-3接口的数据
                 {
+                    unsigned char high0, low0;
+                    high0 = rec[j].Data[1];
+                    low0 = rec[j].Data[0];
                     unsigned char high1, low1;
-                    high1 = rec[j].Data[1];
-                    low1 = rec[j].Data[0];
+                    high1 = rec[j].Data[3];
+                    low1 = rec[j].Data[2];
                     unsigned char high2, low2;
-                    high2 = rec[j].Data[3];
-                    low2 = rec[j].Data[2];
+                    high2 = rec[j].Data[5];
+                    low2 = rec[j].Data[4];
                     unsigned char high3, low3;
-                    high3 = rec[j].Data[5];
-                    low3 = rec[j].Data[4];
-                    unsigned char high4, low4;
-                    high4 = rec[j].Data[7];
-                    low4 = rec[j].Data[6];
+                    high3 = rec[j].Data[7];
+                    low3 = rec[j].Data[6];
 
-                    if ((high1 << 8 | low1) > 60000 || (high2 << 8 | low2) > 60000 || (high3 << 8 | low3) > 60000)
+                    if ((high0 << 8 | low0) > 60000 || (high1 << 8 | low1) > 60000 || (high2 << 8 | low2) > 60000)
                         continue;
                     // 1号角度传感器-割台
-                    int vol1 = (high1 << 8 | low1);
+                    int vol1 = (high0 << 8 | low0);
                     ROS_INFO_STREAM(vol1);
                     float vol1_norm = float(vol1)/1000;
                     ROS_INFO_STREAM(vol1_norm);
@@ -107,7 +107,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     pCAN_DEVICE->pub_c1->publish(data_receive1);
 
                     // 2号角度传感器-拨禾论
-                    int vol2 = (high2 << 8 | low2);
+                    int vol2 = (high1 << 8 | low1);
                     float vol2_norm = float(vol2)/1000;
                     float angle2 = 0 + vol2_norm * 39.13/(3.92 - 0.72);
                     pCAN_DEVICE->angle2 = angle2;
@@ -122,24 +122,24 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                             rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
                             rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1, pCAN_DEVICE->angle2);
                 }
-                else if (rec[j].ID == 0x0281) { //5-8接口的数据
+                else if (rec[j].ID == 0x0281) { //4-7接口的数据
+                    unsigned char high4, low4;
+                    high4 = rec[j].Data[1];
+                    low4 = rec[j].Data[0];
                     unsigned char high5, low5;
-                    high5 = rec[j].Data[1];
-                    low5 = rec[j].Data[0];
+                    high5 = rec[j].Data[3];
+                    low5 = rec[j].Data[2];
                     unsigned char high6, low6;
-                    high6 = rec[j].Data[3];
-                    low6 = rec[j].Data[2];
+                    high6 = rec[j].Data[5];
+                    low6 = rec[j].Data[4];
                     unsigned char high7, low7;
-                    high7 = rec[j].Data[5];
-                    low7 = rec[j].Data[4];
-                    unsigned char high8, low8;
-                    high8 = rec[j].Data[7];
-                    low8 = rec[j].Data[6];
+                    high7 = rec[j].Data[7];
+                    low7 = rec[j].Data[6];
 
                     /// turn号角度传感器
-                    if ((high5 << 8 | low5) > 60000 || (high6 << 8 | low6) > 60000)
+                    if ((high4 << 8 | low4) > 60000 || (high5 << 8 | low5) > 60000)
                         continue;
-                    int vol5 = (high5 << 8 | low5);
+                    int vol5 = (high4 << 8 | low4);
                     ROS_INFO_STREAM(vol5);
                     pCAN_DEVICE->angle_turn = vol5;
                     std_msgs::Float32 data_receive_turn;
@@ -147,7 +147,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     pCAN_DEVICE->pub_turn_c6->publish(data_receive_turn);
 
                     // speed号角度传感器
-                    int vol6 = (high6 << 8 | low6);
+                    int vol6 = (high5 << 8 | low5);
                     ROS_INFO_STREAM(vol6);
                     pCAN_DEVICE->angle_turn = vol6;
                     std_msgs::Float32 data_receive_speed;
@@ -162,23 +162,23 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                 }
 
                 //// 采集卡2：
-                else if (rec[j].ID == 0x0182) // 1-4接口的数据
+                else if (rec[j].ID == 0x0182) // 0-3接口的数据
                 {
+                    unsigned char high0, low0;
+                    high0 = rec[j].Data[1];
+                    low0 = rec[j].Data[0];
                     unsigned char high1, low1;
-                    high1 = rec[j].Data[1];
-                    low1 = rec[j].Data[0];
+                    high1 = rec[j].Data[3];
+                    low1 = rec[j].Data[2];
                     unsigned char high2, low2;
-                    high2 = rec[j].Data[3];
-                    low2 = rec[j].Data[2];
+                    high2 = rec[j].Data[5];
+                    low2 = rec[j].Data[4];
                     unsigned char high3, low3;
-                    high3 = rec[j].Data[5];
-                    low3 = rec[j].Data[4];
-                    unsigned char high4, low4;
-                    high4 = rec[j].Data[7];
-                    low4 = rec[j].Data[6];
+                    high3 = rec[j].Data[7];
+                    low3 = rec[j].Data[6];
 
                     // 力矩传感器
-                    float torque = (high1 << 8 | low1);
+                    float torque = (high0 << 8 | low0);
                     pCAN_DEVICE->torque = torque/10000*100;
                     if(pCAN_DEVICE->torque < 0.05) // 太小的时候过滤一下
                     {
@@ -189,7 +189,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     pCAN_DEVICE->pub_c4->publish(data_receive4);
 
                     //电流检测（电流环）
-                    float current = (high2 << 8 | low2);
+                    float current = (high1 << 8 | low1);
                     float rms = 0.01442504 * pCAN_DEVICE->calculate_rms(current) - 1.69037332;
                     std_msgs::Float32 data_current_raw;
                     data_current_raw.data = current;
@@ -199,7 +199,57 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     pCAN_DEVICE->pub_c5->publish(data_current);
 
                     //电流检测（钳流表）
-                    float current_cm7290 = (high3 << 8 | low3);
+                    float current_cm7290 = (high2 << 8 | low2);
+                    std_msgs::Float32 data_current_cm7290;
+                    data_current.data = current_cm7290/100;
+                    pCAN_DEVICE->pub_c5_cm7290->publish(data_current);
+
+
+                    ROS_INFO(
+                            "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle1:%05d angle2:%05d",
+                            pCAN_DEVICE->channel+1, pCAN_DEVICE->count, rec[j].ID,
+                            rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
+                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1, pCAN_DEVICE->angle2);
+                }
+
+                else if (rec[j].ID == 0x0282) // 4-7接口的数据
+                {
+                    unsigned char high4, low4;
+                    high4 = rec[j].Data[1];
+                    low4 = rec[j].Data[0];
+                    unsigned char high5, low5;
+                    high5 = rec[j].Data[3];
+                    low5 = rec[j].Data[2];
+                    unsigned char high6, low6;
+                    high6 = rec[j].Data[5];
+                    low6 = rec[j].Data[4];
+                    unsigned char high7, low7;
+                    high7 = rec[j].Data[7];
+                    low7 = rec[j].Data[6];
+
+                    // 力矩传感器
+                    float torque = (high4 << 8 | low4);
+                    pCAN_DEVICE->torque = torque/10000*100;
+                    if(pCAN_DEVICE->torque < 0.05) // 太小的时候过滤一下
+                    {
+                        pCAN_DEVICE->torque = 0;
+                    }
+                    std_msgs::Float32 data_receive4;
+                    data_receive4.data = pCAN_DEVICE->torque;
+                    pCAN_DEVICE->pub_c4->publish(data_receive4);
+
+                    //电流检测（电流环）
+                    float current = (high5 << 8 | low5);
+                    float rms = 0.01442504 * pCAN_DEVICE->calculate_rms(current) - 1.69037332;
+                    std_msgs::Float32 data_current_raw;
+                    data_current_raw.data = current;
+                    pCAN_DEVICE->pub_c5_raw->publish(data_current_raw);
+                    std_msgs::Float32 data_current;
+                    data_current.data = rms;
+                    pCAN_DEVICE->pub_c5->publish(data_current);
+
+                    //电流检测（钳流表）
+                    float current_cm7290 = (high6 << 8 | low6);
                     std_msgs::Float32 data_current_cm7290;
                     data_current.data = current_cm7290/100;
                     pCAN_DEVICE->pub_c5_cm7290->publish(data_current);
