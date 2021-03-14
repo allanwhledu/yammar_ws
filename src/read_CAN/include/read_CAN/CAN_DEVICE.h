@@ -33,7 +33,11 @@ public:
     int m_run0;
 
     std::vector<int> log_error; //用于debug的时候记录变量
-    std::vector<float> current_buffer;
+    std::vector<float> current_buffer0;
+    std::vector<float> current_buffer1;
+    std::vector<float> current_buffer2;
+    std::vector<float> current_buffer3;
+    std::vector<float> current_buffer4;
     int buffer_length = 100;
 
     int channel;
@@ -57,11 +61,20 @@ public:
     ros::Publisher* pub_turn_c6;
     ros::Publisher* pub_speed_c7;
 
+    ros::Publisher* pub_c_motor4;
+    ros::Publisher* pub_c_motor4_raw;
+    ros::Publisher* pub_c_motor5;
+    ros::Publisher* pub_c_motor5_raw;
+    ros::Publisher* pub_c_motor6;
+    ros::Publisher* pub_c_motor6_raw;
+    ros::Publisher* pub_c_motor7;
+    ros::Publisher* pub_c_motor7_raw;
+
     CAN_DEVICE(int channel_idx);
 
     void init_CAN();
     friend void* receive_func(void* param);
-    float calculate_rms(float current_now);
+    float calculate_rms(float current_now, int buffer_number);
     void transmit_msg(VCI_CAN_OBJ *send, char *com);
     void control_height(int mode); //驱动第num_motor号电机，速度为speed.
 
