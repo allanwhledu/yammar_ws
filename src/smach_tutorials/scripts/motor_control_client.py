@@ -63,6 +63,19 @@ class end(smach.State):
         return 'end_succeeded'
 
 
+class Mode_classification(smach.State):
+    def __init__(self):
+        smach.State.__init__(self, outcomes=['start_or_stop', 'operating'])
+
+    def execute(self, userdata):
+        global mode
+        if mode == 'start' or mode == 'stop':
+            rospy.loginfo('Start or Stop')
+            return 'start_or_stop'
+        else:
+            return 'operating'
+
+
 def monitor_cb(self, msg):
     global last_target
     global mode
@@ -84,7 +97,28 @@ def monitor_cb(self, msg):
     if fh_ta > 2800:
         fh_ta = 2800
 
-    if msg.data <= 0:  # 停机
+    if abs(msg.data - last_target) < 0.025:  # 恒定
+        mode = 'steady'
+        motor_goal[0].action_goal.goal.motor_id = reel
+        motor_goal[1].action_goal.goal.motor_id = cb
+        motor_goal[2].action_goal.goal.motor_id = pf
+        motor_goal[3].action_goal.goal.motor_id = fh
+
+        # motor_goal[0].action_goal.goal.motor_id = cb
+        # motor_goal[1].action_goal.goal.motor_id = cb
+        # motor_goal[2].action_goal.goal.motor_id = cb
+        motor_goal[0].action_goal.goal.target_speed = fh_ta
+        motor_goal[1].action_goal.goal.target_speed = pf_ta
+        motor_goal[2].action_goal.goal.target_speed = cb_ta
+        motor_goal[3].action_goal.goal.target_speed = reel_ta
+
+        for motor in motor_goal:
+            print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
+
+        # last_target = msg.data
+        return False
+
+    elif msg.data <= 0:  # 停机
         mode = 'stop'
         motor_goal[0].action_goal.goal.motor_id = reel
         motor_goal[1].action_goal.goal.motor_id = cb
@@ -123,27 +157,6 @@ def monitor_cb(self, msg):
             print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
 
         last_target = msg.data
-        return False
-
-    if abs(msg.data - last_target) < 0.025:  # 恒定
-        mode = 'steady'
-        motor_goal[0].action_goal.goal.motor_id = reel
-        motor_goal[1].action_goal.goal.motor_id = cb
-        motor_goal[2].action_goal.goal.motor_id = pf
-        motor_goal[3].action_goal.goal.motor_id = fh
-
-        # motor_goal[0].action_goal.goal.motor_id = cb
-        # motor_goal[1].action_goal.goal.motor_id = cb
-        # motor_goal[2].action_goal.goal.motor_id = cb
-        motor_goal[0].action_goal.goal.target_speed = fh_ta
-        motor_goal[1].action_goal.goal.target_speed = pf_ta
-        motor_goal[2].action_goal.goal.target_speed = cb_ta
-        motor_goal[3].action_goal.goal.target_speed = reel_ta
-
-        for motor in motor_goal:
-            print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
-
-        # last_target = msg.data
         return False
 
     elif last_target < msg.data and msg.data - last_target >= 0.025:  # 加速
@@ -217,14 +230,16 @@ def main():
     with sm:
         smach.StateMachine.add('WAIT', smach_ros.MonitorState("/modified_car_speed", Float32, monitor_cb),
                                transitions={'invalid': 'MOTOR1', 'valid': 'WAIT', 'preempted': 'WAIT'})
-
         smach.StateMachine.add('MOTOR1',
                                SimpleActionState('control485',
                                                  DriveMotorAction,
                                                  goal=motor_goal[0].action_goal.goal),
-                               transitions={'succeeded': 'MOTOR2',
+                               transitions={'succeeded': 'Mode_classification',
                                             'preempted': 'MOTOR1',
                                             'aborted': 'MOTOR1'})
+        smach.StateMachine.add('Mode_classification', Mode_classification(),
+                               transitions={'start_or_stop': 'MOTOR2',
+                                            'operating': 'END'})
 
         smach.StateMachine.add('MOTOR2',
                                SimpleActionState('control485',
