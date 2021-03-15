@@ -55,7 +55,7 @@ public:
     void myCallback_img(const sensor_msgs::ImageConstPtr& msg);//camera callback function
 
     ros::Publisher car_speed_pub;
-    void pub_car_speed(int msg);
+    void pub_car_speed(float msg);
 
     ros::Publisher is_stop_pub;
     void pub_is_stop(int msg);
@@ -78,6 +78,11 @@ public:
     float REEL_speed = 0;
     float CB_speed = 0;
     float PF_speed = 0;
+    float FH_speed = 0;
+    float REEL_current = 0;
+    float CB_current = 0;
+    float PF_current = 0;
+    float FH_current = 0;
     double reap_height1;
     double reap_height2;
     double torque;
@@ -102,6 +107,11 @@ public:
     void REEL_speed_Callback(const std_msgs::Float32Ptr &msg);
     void CB_speed_Callback(const std_msgs::Float32Ptr &msg);
     void PF_speed_Callback(const std_msgs::Float32Ptr &msg);
+    void FH_speed_Callback(const std_msgs::Float32Ptr &msg);
+    void REEL_current_Callback(const std_msgs::Float32Ptr &msg);
+    void CB_current_Callback(const std_msgs::Float32Ptr &msg);
+    void PF_current_Callback(const std_msgs::Float32Ptr &msg);
+    void FH_current_Callback(const std_msgs::Float32Ptr &msg);
     void is_obstacle_Callback(const std_msgs::BoolPtr &msg);
     void reap_height1_Callback(const std_msgs::Int64Ptr &msg);
     void reap_height2_Callback(const std_msgs::Int64Ptr &msg);
@@ -122,6 +132,12 @@ Q_SIGNALS:
     void logging_REEL_speed();
     void logging_CB_speed();
     void logging_PF_speed();
+    void logging_FH_speed();
+    void logging_REEL_current();
+    void logging_CB_current();
+    void logging_PF_current();
+    void logging_FH_current();
+
     void logging_is_obstacle();
     void logging_no_obstacle();
     void logging_reap_height1();
@@ -136,7 +152,14 @@ private:
     ros::Subscriber chart_subscriber;
     ros::Subscriber FH_subscriber;
     ros::Subscriber CB_subscriber;
+    ros::Subscriber REEL_subscriber;
     ros::Subscriber PF_subscriber;
+
+    ros::Subscriber FH_current_subscriber;
+    ros::Subscriber CB_current_subscriber;
+    ros::Subscriber PF_current_subscriber;
+    ros::Subscriber REEL_current_subscriber;
+
     ros::Subscriber obstacle_subscriber;
     ros::Subscriber reap_height1_subscriber;
     ros::Subscriber reap_height2_subscriber;

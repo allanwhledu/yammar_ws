@@ -180,16 +180,17 @@ void *read_motor_speed_background(void *) {
             pf_speed.data = realSpeed_pf;
             pub_pf_speed->publish(pf_speed);
 
-            usleep(40000);
-            realSpeed_fh = motorReadSpeed(motor_id_fh);
-            std_msgs::Float32 fh_speed;
-            fh_speed.data = realSpeed_fh;
-            pub_fh_speed->publish(fh_speed);
+//            usleep(40000);
+//            realSpeed_fh = motorReadSpeed(motor_id_fh);
+//            std_msgs::Float32 fh_speed;
+//            fh_speed.data = realSpeed_fh;
+//            pub_fh_speed->publish(fh_speed);
 
-            usleep(250000); // 250ms ==> 4hz, 每个电机每秒1次
+            usleep(100000); // 250ms ==> 4hz, 每个电机每秒1次
+            ROS_INFO_STREAM("back ground speed.");
         }
         else
-            usleep(250000);
+            usleep(100000);
     }
 }
 
@@ -215,6 +216,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
     while (true) {
         usleep(20000);
         actual_speed = motorReadSpeed(goal->motor_id);
+        ROS_INFO_STREAM("reed speed onground");
 
         // 记录速度
         string actual_speed_str = to_string(actual_speed);
@@ -225,7 +227,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
         *(open_file) << current_time << " " << goal->motor_id << " " <<actual_speed_str << " " << carSpeed.linear << endl;
 
 
-        if (abs(actual_speed - target_speed) < 250)
+        if (abs(actual_speed - target_speed) < 500)
         {
             ROS_WARN_STREAM("Speed is ok.");
             switch (goal->motor_id) {
@@ -365,7 +367,7 @@ void motorSetSpeed(int motor,int speed)
 }
 int motorReadSpeed(int motor)
 {
-    ROS_INFO_STREAM("Will control motor: "<<motor);
+//    ROS_INFO_STREAM("Will read which motor speed: "<<motor);
     uint16_t temp=-1000;
     modbus_set_slave(com,motor);
     int faild_num = 0;
@@ -380,6 +382,8 @@ int motorReadSpeed(int motor)
             cout << "succeed read motor" << motor << " speed." << endl;
         }
     } while (flag == -1 && faild_num<10);
+    if(temp > 5000)
+        temp = 0;
     return temp;
 }
 

@@ -41,6 +41,14 @@ private slots:
     void updateCB();
 
     void updatePF();
+    void updateFH();
+
+    void updateREEL_current();
+
+    void updateCB_current();
+
+    void updatePF_current();
+    void updateFH_current();
 
     void update_is_obstacle();
 

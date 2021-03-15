@@ -48,17 +48,17 @@ int main(int argc, char **argv) {
     can_1.pub_c_motor4 = &chatter_pub_motor4;
     can_1.pub_c_motor4_raw = &chatter_pub_raw_current_motor4;
 
-    ros::Publisher chatter_pub_motor5 = n.advertise<std_msgs::Float32>("current5_rms", 1000);
+    ros::Publisher chatter_pub_motor5 = n.advertise<std_msgs::Float32>("REEL_current", 1000);
     ros::Publisher chatter_pub_raw_current_motor5 = n.advertise<std_msgs::Float32>("current5_raw", 1000);
     can_1.pub_c_motor5 = &chatter_pub_motor5;
     can_1.pub_c_motor5_raw = &chatter_pub_raw_current_motor5;
 
-    ros::Publisher chatter_pub_motor6 = n.advertise<std_msgs::Float32>("current6_rms", 1000);
+    ros::Publisher chatter_pub_motor6 = n.advertise<std_msgs::Float32>("CB_current", 1000);
     ros::Publisher chatter_pub_raw_current_motor6 = n.advertise<std_msgs::Float32>("current6_raw", 1000);
     can_1.pub_c_motor6 = &chatter_pub_motor6;
     can_1.pub_c_motor6_raw = &chatter_pub_raw_current_motor6;
 
-    ros::Publisher chatter_pub_motor7 = n.advertise<std_msgs::Float32>("current7_rms", 1000);
+    ros::Publisher chatter_pub_motor7 = n.advertise<std_msgs::Float32>("PF_current", 1000);
     ros::Publisher chatter_pub_raw_current_motor7 = n.advertise<std_msgs::Float32>("current7_raw", 1000);
     can_1.pub_c_motor7 = &chatter_pub_motor7;
     can_1.pub_c_motor7_raw = &chatter_pub_raw_current_motor7;

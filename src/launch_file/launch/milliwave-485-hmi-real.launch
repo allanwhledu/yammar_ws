@@ -1,21 +1,25 @@
 <launch>
+
+#### rosbag #################################################
+  <node pkg="rosbag" type="record" name="bag_record" args="-a -o test_M875"/>
+
 #### HMI ####################################################
 
   <node pkg="trail" type="app_node" name="HMI" />
 
 #### control motors vis RS485 bus ####################################################
 
-  <node pkg="control485" type="control485_node" name="control485" output="screen"/>
+  <node pkg="control485" type="control485_node" name="control485"  output="screen"/>
 
 #### read signals from CAN bus ####################################################
 
-  <node pkg="read_CAN" type="read_CAN_node" name="read_CAN" />
+  <node pkg="read_CAN" type="read_CAN_node" name="read_CAN"/>
 
 #### for line detect ####################################################
 
-  <node pkg="boud_rgbd" type="boud_rgbd" name="line_detect" />
+  <!--node pkg="boud_rgbd" type="boud_rgbd" name="line_detect" />
   <node pkg="realsense2_driver" type="realsense2_driver" name="realsense2_driver" />
-  <node pkg="mmw_capture" type="mmw_capture_node" name="obstacle_detect" />
+  <node pkg="mmw_capture" type="mmw_capture_node" name="obstacle_detect" /-->
 
 #### for logic control flow ####################################################
 
@@ -23,8 +27,8 @@
 
 #### visulization ################################################
 
-  <node pkg="rviz" type="rviz" name="rviz" 
-    args="-d $(find launch_file)/rviz_config/rviz.rviz"/>
+  <!--node pkg="rviz" type="rviz" name="rviz"
+    args="-d $(find launch_file)/rviz_config/rviz.rviz"/-->
 
   <node pkg="rqt_graph" type="rqt_graph" name="rqt_graph"/>
 

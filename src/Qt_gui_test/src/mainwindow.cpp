@@ -9,7 +9,7 @@
 #include <QImageReader>
 #include <QDebug>
 
-int carspeed = 0;
+float carspeed = 0;
 int position =0;
 
 MainWindow::MainWindow(int argc, char **argv, QWidget *parent) :
@@ -74,6 +74,10 @@ MainWindow::MainWindow(int argc, char **argv, QWidget *parent) :
     ui->progressBar1_6->setMaximum(3000);
     ui->progressBar1_6->setValue(0);
 
+    ui->progressBar1_7->setMinimum(0);
+    ui->progressBar1_7->setMaximum(3000);
+    ui->progressBar1_7->setValue(0);
+
     QObject::connect(&qnode, SIGNAL(rosShutdown()), this, SLOT(close()));
     QObject::connect(&qnode, SIGNAL(loggingCamera()), this, SLOT(updateLogcamera()));
     QObject::connect(&qnode, SIGNAL(logging_leader_line_error()), this, SLOT(updateText()));
@@ -81,6 +85,11 @@ MainWindow::MainWindow(int argc, char **argv, QWidget *parent) :
     QObject::connect(&qnode, SIGNAL(logging_REEL_speed()), this, SLOT(updateREEL()));
     QObject::connect(&qnode, SIGNAL(logging_CB_speed()), this, SLOT(updateCB()));
     QObject::connect(&qnode, SIGNAL(logging_PF_speed()), this, SLOT(updatePF()));
+    QObject::connect(&qnode, SIGNAL(logging_FH_speed()), this, SLOT(updateFH()));
+    QObject::connect(&qnode, SIGNAL(logging_REEL_current()), this, SLOT(updateREEL_current()));
+    QObject::connect(&qnode, SIGNAL(logging_CB_current()), this, SLOT(updateCB_current()));
+    QObject::connect(&qnode, SIGNAL(logging_PF_current()), this, SLOT(updatePF_current()));
+    QObject::connect(&qnode, SIGNAL(logging_FH_current()), this, SLOT(updateFH_current()));
     QObject::connect(&qnode, SIGNAL(logging_is_obstacle()), this, SLOT(update_is_obstacle()));
     QObject::connect(&qnode, SIGNAL(logging_no_obstacle()), this, SLOT(update_no_obstacle()));
     QObject::connect(&qnode, SIGNAL(logging_reap_height1()), this, SLOT(update_reap_height1()));
@@ -174,6 +183,44 @@ void MainWindow::updatePF() {
     // }
 }
 
+void MainWindow::updateFH() {
+    QString qstr;
+    qstr = QString::number(qnode.FH_speed);
+    ui->lineEdit_56->setText(qstr);
+    ui->progressBar1_7->setValue(qnode.FH_speed);
+
+    // for(int i=1;i<qnode.REEL_speed;i++)
+    // {
+    //         ui->progressBar1_4->setValue(i);
+    // }
+}
+
+//// update current
+void MainWindow::updateREEL_current() {
+    QString qstr;
+    qstr = QString::number(qnode.REEL_current);
+    ui->lineEdit_9->setText(qstr);
+}
+
+void MainWindow::updateCB_current() {
+    QString qstr;
+    qstr = QString::number(qnode.CB_current);
+    ui->lineEdit_10->setText(qstr);
+}
+
+void MainWindow::updatePF_current() {
+    QString qstr;
+    qstr = QString::number(qnode.PF_current);
+    ui->lineEdit_11->setText(qstr);
+}
+
+void MainWindow::updateFH_current() {
+    QString qstr;
+    qstr = QString::number(qnode.FH_current);
+    ui->lineEdit_12->setText(qstr);
+}
+//// update current
+
 void MainWindow::update_is_obstacle() {
 //  std::cout<<"obstacle!"<<std::endl;
     ui->pushButton_10->setStyleSheet("background-color: red");
@@ -237,8 +284,8 @@ void MainWindow::on_horizontalSlider_sliderMoved(int position) {
 }
 
 void MainWindow::on_pushButton_5_clicked() {
-    carspeed = carspeed - 1000;
-    int speed = this->ui->lineEdit_13->text().toDouble();
+    carspeed = carspeed - 0.25;
+    float speed = this->ui->lineEdit_13->text().toDouble();
     speed = carspeed;
     QString qspeed = QString::number(speed);
     this->ui->lineEdit_13->setText(qspeed);
@@ -246,8 +293,8 @@ void MainWindow::on_pushButton_5_clicked() {
 }
 
 void MainWindow::on_pushButton_13_clicked() {
-    carspeed = carspeed + 1000;
-    int speed = this->ui->lineEdit_13->text().toDouble();
+    carspeed = carspeed + 0.25;
+    float speed = this->ui->lineEdit_13->text().toDouble();
     speed = carspeed;
     QString qspeed = QString::number(speed);
     this->ui->lineEdit_13->setText(qspeed);

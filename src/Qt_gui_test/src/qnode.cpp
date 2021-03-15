@@ -84,9 +84,14 @@ bool QNode::init()
   // Add your ros communications here.
   text_subscriber = n.subscribe("/height_border_param", 100, &QNode::height_border_Callback, this);
   chart_subscriber = n.subscribe("/chart",1,&QNode::ChartCallback,this);
-  FH_subscriber = n.subscribe("/REEL_speed", 1, &QNode::REEL_speed_Callback, this);
+  REEL_subscriber = n.subscribe("/REEL_speed", 1, &QNode::REEL_speed_Callback, this);
   CB_subscriber = n.subscribe("/CB_speed", 1, &QNode::CB_speed_Callback, this);
   PF_subscriber = n.subscribe("/PF_speed", 1, &QNode::PF_speed_Callback, this);
+  FH_subscriber = n.subscribe("/FH_speed", 1, &QNode::FH_speed_Callback, this);
+  REEL_current_subscriber = n.subscribe("/REEL_current", 1, &QNode::REEL_current_Callback, this);
+  CB_current_subscriber = n.subscribe("/CB_current", 1, &QNode::CB_current_Callback, this);
+  PF_current_subscriber = n.subscribe("/PF_current", 1, &QNode::PF_current_Callback, this);
+  FH_current_subscriber = n.subscribe("/current_cm7290", 1, &QNode::FH_current_Callback, this);
   obstacle_subscriber = n.subscribe("/is_obstacle",1,&QNode::is_obstacle_Callback,this);
   reap_height1_subscriber = n.subscribe("/reap_angle1",1,&QNode::reap_height1_Callback,this);
   reap_height2_subscriber = n.subscribe("/reap_angle2",1,&QNode::reap_height2_Callback,this);
@@ -95,7 +100,7 @@ bool QNode::init()
 //  image_sub = it.subscribe("/perceptual_nodes/harvest_line_stream",100,&QNode::myCallback_img,this);//相机尝试
   image_sub = it.subscribe("/boud_depth",100,&QNode::myCallback_img,this);//相机尝试
 
-  car_speed_pub = n.advertise<std_msgs::Int16>("speed", 1000);
+  car_speed_pub = n.advertise<std_msgs::Float32>("car_speed", 1000);
   is_stop_pub = n.advertise<std_msgs::Int16>("stop", 1000);
   car_turn_pub = n.advertise<std_msgs::Int16>("turn", 1000);
 
@@ -163,6 +168,41 @@ void QNode::PF_speed_Callback(const std_msgs::Float32Ptr &msg)
   Q_EMIT logging_PF_speed();
 }
 
+void QNode::FH_speed_Callback(const std_msgs::Float32Ptr &msg)
+{
+    FH_speed = msg->data;
+  ROS_INFO_STREAM("FH_speed receive: " << FH_speed);
+  Q_EMIT logging_FH_speed();
+}
+
+void QNode::REEL_current_Callback(const std_msgs::Float32Ptr &msg)
+{
+    REEL_current = msg->data;
+  ROS_INFO_STREAM("REEL_current receive: " << REEL_current);
+  Q_EMIT logging_REEL_current();
+}
+
+void QNode::CB_current_Callback(const std_msgs::Float32Ptr &msg)
+{
+    CB_current = msg->data;
+  ROS_INFO_STREAM("CB_current receive: " << CB_current);
+  Q_EMIT logging_CB_current();
+}
+
+void QNode::PF_current_Callback(const std_msgs::Float32Ptr &msg)
+{
+    PF_current = msg->data;
+  ROS_INFO_STREAM("PF_current receive: " << PF_current);
+  Q_EMIT logging_PF_current();
+}
+
+void QNode::FH_current_Callback(const std_msgs::Float32Ptr &msg)
+{
+    FH_current = msg->data;
+  ROS_INFO_STREAM("FH_current receive: " << FH_current);
+  Q_EMIT logging_FH_current();
+}
+
 void QNode::is_obstacle_Callback(const std_msgs::BoolPtr &msg)
 {
   int is_obstacle = msg->data;
@@ -224,10 +264,10 @@ void QNode::ros_test(const std::string s)
   ROS_INFO_STREAM(s);
 }
 
-void QNode::pub_car_speed(int msg)
+void QNode::pub_car_speed(float msg)
 {
 
-  std_msgs::Int16 car_speed;
+  std_msgs::Float32 car_speed;
   car_speed.data = msg;
   car_speed_pub.publish(car_speed);
 }

@@ -74,7 +74,11 @@ public:
 
     void init_CAN();
     friend void* receive_func(void* param);
-    float calculate_rms(float current_now, int buffer_number);
+    float calculate_rms0(float current_now);
+    float calculate_rms1(float current_now);
+    float calculate_rms2(float current_now);
+    float calculate_rms3(float current_now);
+    float calculate_rms4(float current_now);
     void transmit_msg(VCI_CAN_OBJ *send, char *com);
     void control_height(int mode); //驱动第num_motor号电机，速度为speed.
 

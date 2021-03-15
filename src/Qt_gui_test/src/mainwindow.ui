@@ -21,7 +21,7 @@
     <item row="0" column="0">
      <widget class="QTabWidget" name="tabWidget">
       <property name="currentIndex">
-       <number>4</number>
+       <number>3</number>
       </property>
       <widget class="QWidget" name="MonitorTab">
        <attribute name="title">
@@ -1156,342 +1156,6 @@
         </property>
        </widget>
       </widget>
-      <widget class="QWidget" name="sensorTab">
-       <attribute name="title">
-        <string>Sensors</string>
-       </attribute>
-       <widget class="QToolBox" name="toolBox_3">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>35</y>
-          <width>1111</width>
-          <height>581</height>
-         </rect>
-        </property>
-        <property name="currentIndex">
-         <number>0</number>
-        </property>
-        <widget class="QWidget" name="page">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>1111</width>
-           <height>488</height>
-          </rect>
-         </property>
-         <attribute name="label">
-          <string>Reap</string>
-         </attribute>
-         <widget class="QLineEdit" name="lineEdit_11">
-          <property name="geometry">
-           <rect>
-            <x>250</x>
-            <y>280</y>
-            <width>113</width>
-            <height>33</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QWidget" name="layoutWidget">
-          <property name="geometry">
-           <rect>
-            <x>60</x>
-            <y>30</y>
-            <width>166</width>
-            <height>301</height>
-           </rect>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_2">
-           <item>
-            <widget class="QLabel" name="label">
-             <property name="text">
-              <string>Current of CB:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_2">
-             <property name="text">
-              <string>Current of PF:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_3">
-             <property name="text">
-              <string>Current of FH:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_4">
-             <property name="text">
-              <string>Current of REEL:</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_9">
-          <property name="geometry">
-           <rect>
-            <x>250</x>
-            <y>50</y>
-            <width>113</width>
-            <height>33</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_10">
-          <property name="geometry">
-           <rect>
-            <x>250</x>
-            <y>130</y>
-            <width>113</width>
-            <height>33</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_12">
-          <property name="geometry">
-           <rect>
-            <x>250</x>
-            <y>210</y>
-            <width>113</width>
-            <height>33</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_42">
-          <property name="geometry">
-           <rect>
-            <x>480</x>
-            <y>120</y>
-            <width>201</width>
-            <height>51</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Angle of Reaping unit:</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_42">
-          <property name="geometry">
-           <rect>
-            <x>720</x>
-            <y>130</y>
-            <width>113</width>
-            <height>33</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-         </widget>
-        </widget>
-        <widget class="QWidget" name="page_2">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>100</width>
-           <height>30</height>
-          </rect>
-         </property>
-         <attribute name="label">
-          <string>Thresh</string>
-         </attribute>
-         <widget class="QWidget" name="layoutWidget_7">
-          <property name="geometry">
-           <rect>
-            <x>60</x>
-            <y>20</y>
-            <width>166</width>
-            <height>301</height>
-           </rect>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_18">
-           <item>
-            <widget class="QLabel" name="label_43">
-             <property name="text">
-              <string>Current of MF:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_44">
-             <property name="text">
-              <string>Current of RS:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_45">
-             <property name="text">
-              <string>Current of FR:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_46">
-             <property name="text">
-              <string>Current of 1S:</string>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_43">
-          <property name="geometry">
-           <rect>
-            <x>250</x>
-            <y>270</y>
-            <width>113</width>
-            <height>33</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_44">
-          <property name="geometry">
-           <rect>
-            <x>250</x>
-            <y>40</y>
-            <width>113</width>
-            <height>33</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_45">
-          <property name="geometry">
-           <rect>
-            <x>250</x>
-            <y>120</y>
-            <width>113</width>
-            <height>33</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_46">
-          <property name="geometry">
-           <rect>
-            <x>250</x>
-            <y>200</y>
-            <width>113</width>
-            <height>33</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_47">
-          <property name="geometry">
-           <rect>
-            <x>680</x>
-            <y>120</y>
-            <width>113</width>
-            <height>33</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_48">
-          <property name="geometry">
-           <rect>
-            <x>680</x>
-            <y>200</y>
-            <width>113</width>
-            <height>33</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QWidget" name="layoutWidget_8">
-          <property name="geometry">
-           <rect>
-            <x>490</x>
-            <y>20</y>
-            <width>166</width>
-            <height>301</height>
-           </rect>
-          </property>
-          <layout class="QVBoxLayout" name="verticalLayout_19">
-           <item>
-            <widget class="QLabel" name="label_47">
-             <property name="text">
-              <string>Current of 2S:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_48">
-             <property name="text">
-              <string>Current of SS:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_49">
-             <property name="text">
-              <string>Current of 2F:</string>
-             </property>
-            </widget>
-           </item>
-           <item>
-            <widget class="QLabel" name="label_50">
-             <property name="text">
-              <string/>
-             </property>
-            </widget>
-           </item>
-          </layout>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_49">
-          <property name="geometry">
-           <rect>
-            <x>680</x>
-            <y>40</y>
-            <width>113</width>
-            <height>33</height>
-           </rect>
-          </property>
-         </widget>
-        </widget>
-        <widget class="QWidget" name="page_3">
-         <property name="geometry">
-          <rect>
-           <x>0</x>
-           <y>0</y>
-           <width>100</width>
-           <height>30</height>
-          </rect>
-         </property>
-         <attribute name="label">
-          <string>Grain</string>
-         </attribute>
-         <widget class="QLineEdit" name="lineEdit_53">
-          <property name="geometry">
-           <rect>
-            <x>250</x>
-            <y>70</y>
-            <width>113</width>
-            <height>33</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_51">
-          <property name="geometry">
-           <rect>
-            <x>60</x>
-            <y>70</y>
-            <width>142</width>
-            <height>25</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Current of AS:</string>
-          </property>
-         </widget>
-        </widget>
-       </widget>
-      </widget>
       <widget class="QWidget" name="tab">
        <attribute name="title">
         <string>Experiments</string>
@@ -1828,8 +1492,8 @@
        <widget class="QLineEdit" name="lineEdit_41">
         <property name="geometry">
          <rect>
-          <x>409</x>
-          <y>90</y>
+          <x>159</x>
+          <y>100</y>
           <width>41</width>
           <height>33</height>
          </rect>
@@ -1838,8 +1502,8 @@
        <widget class="QLabel" name="label_41">
         <property name="geometry">
          <rect>
-          <x>270</x>
-          <y>80</y>
+          <x>20</x>
+          <y>90</y>
           <width>131</width>
           <height>41</height>
          </rect>
@@ -1851,8 +1515,8 @@
        <widget class="QProgressBar" name="progressBar">
         <property name="geometry">
          <rect>
-          <x>460</x>
-          <y>90</y>
+          <x>210</x>
+          <y>100</y>
           <width>111</width>
           <height>31</height>
          </rect>
@@ -1976,33 +1640,11 @@
          </item>
         </layout>
        </widget>
-       <widget class="QPushButton" name="pushButton_10">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>90</y>
-          <width>191</width>
-          <height>101</height>
-         </rect>
-        </property>
-        <property name="sizePolicy">
-         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
-          <horstretch>0</horstretch>
-          <verstretch>0</verstretch>
-         </sizepolicy>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="text">
-         <string>Obstacle!</string>
-        </property>
-       </widget>
        <widget class="QProgressBar" name="progressBar1_4">
         <property name="geometry">
          <rect>
-          <x>820</x>
-          <y>90</y>
+          <x>570</x>
+          <y>80</y>
           <width>111</width>
           <height>31</height>
          </rect>
@@ -2014,8 +1656,8 @@
        <widget class="QLabel" name="label_52">
         <property name="geometry">
          <rect>
-          <x>650</x>
-          <y>80</y>
+          <x>400</x>
+          <y>70</y>
           <width>111</width>
           <height>41</height>
          </rect>
@@ -2027,8 +1669,8 @@
        <widget class="QLineEdit" name="lineEdit_50">
         <property name="geometry">
          <rect>
-          <x>770</x>
-          <y>90</y>
+          <x>520</x>
+          <y>80</y>
           <width>41</width>
           <height>33</height>
          </rect>
@@ -2037,8 +1679,8 @@
        <widget class="QProgressBar" name="progressBar_2">
         <property name="geometry">
          <rect>
-          <x>461</x>
-          <y>140</y>
+          <x>211</x>
+          <y>150</y>
           <width>111</width>
           <height>31</height>
          </rect>
@@ -2050,8 +1692,8 @@
        <widget class="QLabel" name="label_53">
         <property name="geometry">
          <rect>
-          <x>271</x>
-          <y>130</y>
+          <x>21</x>
+          <y>140</y>
           <width>131</width>
           <height>41</height>
          </rect>
@@ -2063,8 +1705,8 @@
        <widget class="QLineEdit" name="lineEdit_51">
         <property name="geometry">
          <rect>
-          <x>410</x>
-          <y>140</y>
+          <x>160</x>
+          <y>150</y>
           <width>41</width>
           <height>33</height>
          </rect>
@@ -2073,8 +1715,8 @@
        <widget class="QLineEdit" name="lineEdit_52">
         <property name="geometry">
          <rect>
-          <x>409</x>
-          <y>190</y>
+          <x>159</x>
+          <y>200</y>
           <width>41</width>
           <height>33</height>
          </rect>
@@ -2083,8 +1725,8 @@
        <widget class="QProgressBar" name="progressBar_3">
         <property name="geometry">
          <rect>
-          <x>460</x>
-          <y>190</y>
+          <x>210</x>
+          <y>200</y>
           <width>111</width>
           <height>31</height>
          </rect>
@@ -2096,8 +1738,8 @@
        <widget class="QLabel" name="label_54">
         <property name="geometry">
          <rect>
-          <x>310</x>
-          <y>180</y>
+          <x>60</x>
+          <y>190</y>
           <width>81</width>
           <height>41</height>
          </rect>
@@ -2109,8 +1751,8 @@
        <widget class="QLabel" name="label_58">
         <property name="geometry">
          <rect>
-          <x>650</x>
-          <y>130</y>
+          <x>400</x>
+          <y>120</y>
           <width>111</width>
           <height>41</height>
          </rect>
@@ -2122,8 +1764,8 @@
        <widget class="QLineEdit" name="lineEdit_54">
         <property name="geometry">
          <rect>
-          <x>770</x>
-          <y>140</y>
+          <x>520</x>
+          <y>130</y>
           <width>41</width>
           <height>33</height>
          </rect>
@@ -2132,8 +1774,8 @@
        <widget class="QProgressBar" name="progressBar1_5">
         <property name="geometry">
          <rect>
-          <x>820</x>
-          <y>140</y>
+          <x>570</x>
+          <y>130</y>
           <width>111</width>
           <height>31</height>
          </rect>
@@ -2145,8 +1787,8 @@
        <widget class="QProgressBar" name="progressBar1_6">
         <property name="geometry">
          <rect>
-          <x>820</x>
-          <y>190</y>
+          <x>570</x>
+          <y>180</y>
           <width>111</width>
           <height>31</height>
          </rect>
@@ -2158,8 +1800,8 @@
        <widget class="QLabel" name="label_59">
         <property name="geometry">
          <rect>
-          <x>650</x>
-          <y>180</y>
+          <x>400</x>
+          <y>170</y>
           <width>111</width>
           <height>41</height>
          </rect>
@@ -2171,8 +1813,8 @@
        <widget class="QLineEdit" name="lineEdit_55">
         <property name="geometry">
          <rect>
-          <x>770</x>
-          <y>190</y>
+          <x>520</x>
+          <y>180</y>
           <width>41</width>
           <height>33</height>
          </rect>
@@ -2181,7 +1823,7 @@
        <widget class="Line" name="line_5">
         <property name="geometry">
          <rect>
-          <x>600</x>
+          <x>340</x>
           <y>70</y>
           <width>20</width>
           <height>171</height>
@@ -2194,7 +1836,7 @@
        <widget class="QLabel" name="label_22">
         <property name="geometry">
          <rect>
-          <x>270</x>
+          <x>30</x>
           <y>50</y>
           <width>121</width>
           <height>17</height>
@@ -2216,8 +1858,8 @@
        <widget class="QLabel" name="label_23">
         <property name="geometry">
          <rect>
-          <x>620</x>
-          <y>50</y>
+          <x>370</x>
+          <y>40</y>
           <width>121</width>
           <height>17</height>
          </rect>
@@ -2233,41 +1875,6 @@
         </property>
         <property name="text">
          <string>Motor info:</string>
-        </property>
-       </widget>
-       <widget class="Line" name="line_6">
-        <property name="geometry">
-         <rect>
-          <x>230</x>
-          <y>70</y>
-          <width>20</width>
-          <height>171</height>
-         </rect>
-        </property>
-        <property name="orientation">
-         <enum>Qt::Vertical</enum>
-        </property>
-       </widget>
-       <widget class="QLabel" name="label_24">
-        <property name="geometry">
-         <rect>
-          <x>20</x>
-          <y>50</y>
-          <width>121</width>
-          <height>17</height>
-         </rect>
-        </property>
-        <property name="font">
-         <font>
-          <weight>75</weight>
-          <bold>true</bold>
-         </font>
-        </property>
-        <property name="styleSheet">
-         <string notr="true">color: rgb(245, 121, 0);</string>
-        </property>
-        <property name="text">
-         <string>Obstacle info:</string>
         </property>
        </widget>
        <widget class="Line" name="line_7">
@@ -2433,11 +2040,439 @@
          <string>Stady</string>
         </property>
        </widget>
+       <widget class="QProgressBar" name="progressBar1_7">
+        <property name="geometry">
+         <rect>
+          <x>570</x>
+          <y>230</y>
+          <width>111</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="value">
+         <number>24</number>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_62">
+        <property name="geometry">
+         <rect>
+          <x>400</x>
+          <y>220</y>
+          <width>111</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>FH     speed:</string>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_56">
+        <property name="geometry">
+         <rect>
+          <x>520</x>
+          <y>230</y>
+          <width>41</width>
+          <height>33</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_10">
+        <property name="geometry">
+         <rect>
+          <x>870</x>
+          <y>140</y>
+          <width>113</width>
+          <height>33</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_11">
+        <property name="geometry">
+         <rect>
+          <x>870</x>
+          <y>190</y>
+          <width>113</width>
+          <height>33</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_12">
+        <property name="geometry">
+         <rect>
+          <x>870</x>
+          <y>10</y>
+          <width>113</width>
+          <height>33</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLineEdit" name="lineEdit_9">
+        <property name="geometry">
+         <rect>
+          <x>870</x>
+          <y>80</y>
+          <width>113</width>
+          <height>33</height>
+         </rect>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_63">
+        <property name="geometry">
+         <rect>
+          <x>730</x>
+          <y>80</y>
+          <width>121</width>
+          <height>48</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Current of REEL:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_64">
+        <property name="geometry">
+         <rect>
+          <x>730</x>
+          <y>140</y>
+          <width>111</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Current of CB:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_65">
+        <property name="geometry">
+         <rect>
+          <x>730</x>
+          <y>10</y>
+          <width>141</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Current of cm72:</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_66">
+        <property name="geometry">
+         <rect>
+          <x>730</x>
+          <y>170</y>
+          <width>111</width>
+          <height>51</height>
+         </rect>
+        </property>
+        <property name="text">
+         <string>Current of PF:</string>
+        </property>
+       </widget>
+      </widget>
+      <widget class="QWidget" name="sensorTab">
+       <attribute name="title">
+        <string>Sensors</string>
+       </attribute>
+       <widget class="QToolBox" name="toolBox_3">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>35</y>
+          <width>1111</width>
+          <height>581</height>
+         </rect>
+        </property>
+        <property name="currentIndex">
+         <number>0</number>
+        </property>
+        <widget class="QWidget" name="page">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>1111</width>
+           <height>488</height>
+          </rect>
+         </property>
+         <attribute name="label">
+          <string>Reap</string>
+         </attribute>
+         <widget class="QLabel" name="label_42">
+          <property name="geometry">
+           <rect>
+            <x>480</x>
+            <y>120</y>
+            <width>201</width>
+            <height>51</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Angle of Reaping unit:</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_42">
+          <property name="geometry">
+           <rect>
+            <x>720</x>
+            <y>130</y>
+            <width>113</width>
+            <height>33</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string/>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="page_2">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>100</width>
+           <height>30</height>
+          </rect>
+         </property>
+         <attribute name="label">
+          <string>Thresh</string>
+         </attribute>
+         <widget class="QWidget" name="layoutWidget_7">
+          <property name="geometry">
+           <rect>
+            <x>60</x>
+            <y>20</y>
+            <width>166</width>
+            <height>301</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_18">
+           <item>
+            <widget class="QLabel" name="label_43">
+             <property name="text">
+              <string>Current of MF:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_44">
+             <property name="text">
+              <string>Current of RS:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_45">
+             <property name="text">
+              <string>Current of FR:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_46">
+             <property name="text">
+              <string>Current of 1S:</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_43">
+          <property name="geometry">
+           <rect>
+            <x>250</x>
+            <y>270</y>
+            <width>113</width>
+            <height>33</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_44">
+          <property name="geometry">
+           <rect>
+            <x>250</x>
+            <y>40</y>
+            <width>113</width>
+            <height>33</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_45">
+          <property name="geometry">
+           <rect>
+            <x>250</x>
+            <y>120</y>
+            <width>113</width>
+            <height>33</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_46">
+          <property name="geometry">
+           <rect>
+            <x>250</x>
+            <y>200</y>
+            <width>113</width>
+            <height>33</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_47">
+          <property name="geometry">
+           <rect>
+            <x>680</x>
+            <y>120</y>
+            <width>113</width>
+            <height>33</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_48">
+          <property name="geometry">
+           <rect>
+            <x>680</x>
+            <y>200</y>
+            <width>113</width>
+            <height>33</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QWidget" name="layoutWidget_8">
+          <property name="geometry">
+           <rect>
+            <x>490</x>
+            <y>20</y>
+            <width>166</width>
+            <height>301</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_19">
+           <item>
+            <widget class="QLabel" name="label_47">
+             <property name="text">
+              <string>Current of 2S:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_48">
+             <property name="text">
+              <string>Current of SS:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_49">
+             <property name="text">
+              <string>Current of 2F:</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_50">
+             <property name="text">
+              <string/>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_49">
+          <property name="geometry">
+           <rect>
+            <x>680</x>
+            <y>40</y>
+            <width>113</width>
+            <height>33</height>
+           </rect>
+          </property>
+         </widget>
+        </widget>
+        <widget class="QWidget" name="page_3">
+         <property name="geometry">
+          <rect>
+           <x>0</x>
+           <y>0</y>
+           <width>100</width>
+           <height>30</height>
+          </rect>
+         </property>
+         <attribute name="label">
+          <string>Grain</string>
+         </attribute>
+         <widget class="QLineEdit" name="lineEdit_53">
+          <property name="geometry">
+           <rect>
+            <x>250</x>
+            <y>70</y>
+            <width>113</width>
+            <height>33</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_51">
+          <property name="geometry">
+           <rect>
+            <x>60</x>
+            <y>70</y>
+            <width>142</width>
+            <height>25</height>
+           </rect>
+          </property>
+          <property name="text">
+           <string>Current of AS:</string>
+          </property>
+         </widget>
+        </widget>
+       </widget>
       </widget>
       <widget class="MyDrawImage" name="main_tab">
        <attribute name="title">
         <string>main_tab</string>
        </attribute>
+       <widget class="QPushButton" name="pushButton_10">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>70</y>
+          <width>191</width>
+          <height>101</height>
+         </rect>
+        </property>
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Minimum" vsizetype="Expanding">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>Obstacle!</string>
+        </property>
+       </widget>
+       <widget class="QLabel" name="label_24">
+        <property name="geometry">
+         <rect>
+          <x>90</x>
+          <y>50</y>
+          <width>121</width>
+          <height>17</height>
+         </rect>
+        </property>
+        <property name="font">
+         <font>
+          <weight>75</weight>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">color: rgb(245, 121, 0);</string>
+        </property>
+        <property name="text">
+         <string>Obstacle info:</string>
+        </property>
+       </widget>
       </widget>
       <widget class="QWidget" name="tab_4">
        <attribute name="title">
