@@ -153,6 +153,9 @@ include_directories(
 catkin_install_python(PROGRAMS scripts/cloud_convertor_node.py
         DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
         )
+catkin_install_python(PROGRAMS scripts/to_local.py
+        DESTINATION ${CATKIN_PACKAGE_BIN_DESTINATION}
+        )
 
 #############
 ## Install ##

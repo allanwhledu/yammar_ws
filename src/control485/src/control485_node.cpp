@@ -174,11 +174,11 @@ void *read_motor_speed_background(void *) {
             cb_speed.data = realSpeed_cb;
             pub_cb_speed->publish(cb_speed);
 
-            usleep(40000);
-            realSpeed_pf = motorReadSpeed(motor_id_pf);
-            std_msgs::Float32 pf_speed;
-            pf_speed.data = realSpeed_pf;
-            pub_pf_speed->publish(pf_speed);
+//            usleep(40000);
+//            realSpeed_pf = motorReadSpeed(motor_id_pf);
+//            std_msgs::Float32 pf_speed;
+//            pf_speed.data = realSpeed_pf;
+//            pub_pf_speed->publish(pf_speed);
 
 //            usleep(40000);
 //            realSpeed_fh = motorReadSpeed(motor_id_fh);
@@ -227,7 +227,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
         *(open_file) << current_time << " " << goal->motor_id << " " <<actual_speed_str << " " << carSpeed.linear << endl;
 
 
-        if (abs(actual_speed - target_speed) < 500)
+        if (abs(actual_speed - target_speed) < 200)
         {
             ROS_WARN_STREAM("Speed is ok.");
             switch (goal->motor_id) {

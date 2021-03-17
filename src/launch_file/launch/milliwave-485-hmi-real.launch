@@ -1,7 +1,7 @@
 <launch>
 
 #### rosbag #################################################
-  <node pkg="rosbag" type="record" name="bag_record" args="-a -o test_M875"/>
+  <node pkg="rosbag" type="record" name="bag_record" args="-a -o test_M87"/>
 
 #### HMI ####################################################
 

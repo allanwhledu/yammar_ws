@@ -37,7 +37,8 @@ mode = 'stop'
 # 设定电机序号
 # motors = [cb, reel]
 # motors = [pf, cb, reel]
-motors = [reel, cb, pf]
+# motors = [reel, cb, pf]
+motors = [reel, cb]
 motor_goal = list()
 
 for i in motors:
@@ -101,17 +102,17 @@ def monitor_cb(self, msg):
 
     if abs(msg.data - last_target) < 0.025:  # 恒定
         mode = 'steady'
-        motor_goal[0].action_goal.goal.motor_id = pf
-        motor_goal[1].action_goal.goal.motor_id = cb
-        motor_goal[2].action_goal.goal.motor_id = reel
+        motor_goal[0].action_goal.goal.motor_id = cb
+        motor_goal[1].action_goal.goal.motor_id = reel
+        # motor_goal[2].action_goal.goal.motor_id = reel
         # motor_goal[3].action_goal.goal.motor_id = fh
 
         # motor_goal[0].action_goal.goal.motor_id = cb
         # motor_goal[1].action_goal.goal.motor_id = cb
         # motor_goal[2].action_goal.goal.motor_id = cb
-        motor_goal[0].action_goal.goal.target_speed = pf_ta
-        motor_goal[1].action_goal.goal.target_speed = cb_ta
-        motor_goal[2].action_goal.goal.target_speed = reel_ta
+        motor_goal[0].action_goal.goal.target_speed = cb_ta
+        motor_goal[1].action_goal.goal.target_speed = reel_ta
+        # motor_goal[2].action_goal.goal.target_speed = reel_ta
         # motor_goal[3].action_goal.goal.target_speed = reel_ta
 
         for motor in motor_goal:
@@ -124,7 +125,7 @@ def monitor_cb(self, msg):
         mode = 'stop'
         motor_goal[0].action_goal.goal.motor_id = reel
         motor_goal[1].action_goal.goal.motor_id = cb
-        motor_goal[2].action_goal.goal.motor_id = pf
+        # motor_goal[2].action_goal.goal.motor_id = pf
         # motor_goal[3].action_goal.goal.motor_id = fh
 
         # motor_goal[0].action_goal.goal.motor_id = cb
@@ -132,7 +133,7 @@ def monitor_cb(self, msg):
         # motor_goal[2].action_goal.goal.motor_id = cb
         motor_goal[0].action_goal.goal.target_speed = 0
         motor_goal[1].action_goal.goal.target_speed = 0
-        motor_goal[2].action_goal.goal.target_speed = 0
+        # motor_goal[2].action_goal.goal.target_speed = 0
         # motor_goal[3].action_goal.goal.target_speed = 0
 
         for motor in motor_goal:
@@ -143,16 +144,16 @@ def monitor_cb(self, msg):
 
     elif mode == 'stop' and msg.data - last_target >= 0.025:  # 启动
         mode = 'start'
-        motor_goal[0].action_goal.goal.motor_id = pf
-        motor_goal[1].action_goal.goal.motor_id = cb
-        motor_goal[2].action_goal.goal.motor_id = reel
+        motor_goal[0].action_goal.goal.motor_id = cb
+        motor_goal[1].action_goal.goal.motor_id = reel
+        # motor_goal[2].action_goal.goal.motor_id = reel
         # motor_goal[3].action_goal.goal.motor_id = reel
         # motor_goal[0].action_goal.goal.motor_id = cb
         # motor_goal[1].action_goal.goal.motor_id = cb
         # motor_goal[2].action_goal.goal.motor_id = cb
-        motor_goal[0].action_goal.goal.target_speed = pf_ta
-        motor_goal[1].action_goal.goal.target_speed = cb_ta
-        motor_goal[2].action_goal.goal.target_speed = reel_ta
+        motor_goal[0].action_goal.goal.target_speed = cb_ta
+        motor_goal[1].action_goal.goal.target_speed = reel_ta
+        # motor_goal[2].action_goal.goal.target_speed = reel_ta
         # motor_goal[3].action_goal.goal.target_speed = reel_ta
 
         for motor in motor_goal:
@@ -165,14 +166,14 @@ def monitor_cb(self, msg):
         mode = 'speedup'
         motor_goal[0].action_goal.goal.motor_id = reel # 加速这个地方比较特殊，只有reel变化
         motor_goal[1].action_goal.goal.motor_id = cb
-        motor_goal[2].action_goal.goal.motor_id = pf
+        # motor_goal[2].action_goal.goal.motor_id = pf
         # motor_goal[3].action_goal.goal.motor_id = reel
         # motor_goal[0].action_goal.goal.motor_id = cb
         # motor_goal[1].action_goal.goal.motor_id = cb
         # motor_goal[2].action_goal.goal.motor_id = cb
         motor_goal[0].action_goal.goal.target_speed = reel_ta
         motor_goal[1].action_goal.goal.target_speed = cb_ta
-        motor_goal[2].action_goal.goal.target_speed = pf_ta
+        # motor_goal[2].action_goal.goal.target_speed = pf_ta
         # motor_goal[3].action_goal.goal.target_speed = reel_ta
 
         for motor in motor_goal:
@@ -185,14 +186,14 @@ def monitor_cb(self, msg):
         mode = 'speeddown'
         motor_goal[0].action_goal.goal.motor_id = reel # 减速也特殊
         motor_goal[1].action_goal.goal.motor_id = cb
-        motor_goal[2].action_goal.goal.motor_id = pf
+        # motor_goal[2].action_goal.goal.motor_id = pf
         # motor_goal[3].action_goal.goal.motor_id = fh
         # motor_goal[0].action_goal.goal.motor_id = cb
         # motor_goal[1].action_goal.goal.motor_id = cb
         # motor_goal[2].action_goal.goal.motor_id = cb
         motor_goal[0].action_goal.goal.target_speed = reel_ta
         motor_goal[1].action_goal.goal.target_speed = cb_ta
-        motor_goal[2].action_goal.goal.target_speed = pf_ta
+        # motor_goal[2].action_goal.goal.target_speed = pf_ta
         # motor_goal[3].action_goal.goal.target_speed = fh_ta
         for motor in motor_goal:
             print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
@@ -247,17 +248,17 @@ def main():
                                SimpleActionState('control485',
                                                  DriveMotorAction,
                                                  goal=motor_goal[1].action_goal.goal),
-                               transitions={'succeeded': 'MOTOR3',
+                               transitions={'succeeded': 'END',
                                             'preempted': 'MOTOR2',
                                             'aborted': 'MOTOR2'})
 
-        smach.StateMachine.add('MOTOR3',
-                               SimpleActionState('control485',
-                                                 DriveMotorAction,
-                                                 goal=motor_goal[2].action_goal.goal),
-                               transitions={'succeeded': 'END',
-                                            'preempted': 'MOTOR3',
-                                            'aborted': 'MOTOR3'})
+        # smach.StateMachine.add('MOTOR3',
+        #                        SimpleActionState('control485',
+        #                                          DriveMotorAction,
+        #                                          goal=motor_goal[2].action_goal.goal),
+        #                        transitions={'succeeded': 'END',
+        #                                     'preempted': 'MOTOR3',
+        #                                     'aborted': 'MOTOR3'})
         # smach.StateMachine.add('MOTOR4',
         #                        SimpleActionState('control485',
         #                                          DriveMotorAction,
