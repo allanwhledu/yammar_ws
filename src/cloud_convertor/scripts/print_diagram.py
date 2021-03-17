@@ -33,6 +33,7 @@ if __name__ == '__main__':
     ax1 = plt.subplot(211)
     plt.plot(reel_speed[..., 0], reel_speed[..., 1], 'g', label='reel_speed')
     plt.plot(cb_speed[..., 0], cb_speed[..., 1], 'b', label='cb_speed')
+    plt.title('Control motors based on car speed.\npriority and tracking', fontsize=30)
     # 设置坐标刻度大小
     plt.xticks(fontsize=20)
     plt.yticks(fontsize=20)
@@ -84,6 +85,7 @@ if __name__ == '__main__':
     ax4 = plt.subplot(211)
     plt.plot(reel_current[..., 0], reel_current[..., 1]+0.4, 'g', label='reel_current')
     plt.plot(cm7290_current[..., 0], cm7290_current[..., 1], 'b', label='cm7290_current')
+    plt.title('Control motors based on car speed.\nCurrent compared monitoring', fontsize=30)
     # 设置坐标刻度大小
     plt.xticks(fontsize=20)
     plt.yticks(fontsize=20)
