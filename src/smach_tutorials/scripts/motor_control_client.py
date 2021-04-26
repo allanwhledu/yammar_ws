@@ -20,12 +20,12 @@ pfCof = 4.44
 fhCof = 3.94
 
 # 电机序号
-m_1 = 1
-m_2 = 2
-m_3 = 3
-m_4 = 4
-m_5 = 5
-m_6 = 6
+m_1 = 7
+m_2 = 5
+m_3 = 8
+m_4 = 11
+m_5 = 9
+m_6 = 10
 
 # 模式
 mode = 'stop'
@@ -100,27 +100,26 @@ def monitor_cb(self, msg):
     # cb_ta = 0.5 * cbRatio * min(467.0, min(398.09 * cbCof * msg.data + 131.37, 398.09 * 1.0 * msg.data + 238.85))
     # pf_ta = pfRatio * min(187.0, min(39.16 * pfCof * msg.data + 52.47, 39.16 * 3.0 * msg.data + 90.07))
     # fh_ta = fhRatio * min(187.0, min(39.16 * fhCof * msg.data + 52.47, 39.16 * 3.0 * msg.data + 90.07))
-    m_1_target = 3000 * msg.data
-    m_2_target = motor_speed_dict['M5']
-    m_3_target = motor_speed_dict['M7']
-    m_4_target = motor_speed_dict['M8']
-    m_5_target = motor_speed_dict['M9']
-    m_6_target = motor_speed_dict['M10']
+    # m_1_target = 3000 * msg.data
+    m_1_target = 487 / (1/5) * 0.5
+    m_2_target = 1324 / 1 * 0.5
+    m_3_target = 933 / (1/3) * 0.5
+    m_4_target = 2235.8 / 1 * 0.5
+    m_5_target = 1193 / 1 * 0.5
+    m_6_target = 408 / (1/7) * 0.5
 
-    if m_1_target > 2800:
-        m_1_target = 2800
-    if m_2_target > 2800:
-        m_2_target = 2800
-    if m_3_target > 2800:
-        m_3_target = 2800
-    if m_4_target > 2800:
-        m_4_target = 2800
-    if m_5_target > 2800:
-        m_5_target = 2800
-    if m_6_target > 2800:
-        m_6_target = 2800
+    m_1_target = 1500
+    m_2_target = 1500
+    m_3_target = 1500
+    m_4_target = 1500
+    m_5_target = 1500
+    m_6_target = 1500
 
     motors_speed_list = [m_1_target, m_2_target, m_3_target, m_4_target, m_5_target, m_6_target]
+
+    # for motor_index in range(len(motors_speed_list)):  # 限制最大值
+    #     if motors_speed_list[motor_index] > 3000:
+    #         motors_speed_list[motor_index] = 3000
 
     if abs(msg.data - last_target) < 0.025:  # 恒定
         mode = 'steady'
@@ -154,7 +153,7 @@ def monitor_cb(self, msg):
 
         for motor_goal_index in range(len(motor_goal)):
             motor_goal[motor_goal_index].action_goal.goal.motor_id = motors_id[motor_goal_index]
-            motor_goal[motor_goal_index].action_goal.goal.target_speed = motors_speed_list[motor_goal_index]
+            motor_goal[motor_goal_index].action_goal.goal.target_speed = 0
 
         for motor in motor_goal:
             print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
@@ -164,17 +163,31 @@ def monitor_cb(self, msg):
 
     elif mode == 'stop' and msg.data - last_target >= 0.025:  # 启动
         mode = 'start'
-        # motor_goal[0].action_goal.goal.motor_id = m_3
-        # motor_goal[1].action_goal.goal.motor_id = m_2
-        # motor_goal[2].action_goal.goal.motor_id = m_1
-        #
-        # motor_goal[0].action_goal.goal.target_speed = m_3_target
-        # motor_goal[1].action_goal.goal.target_speed = m_2_target
-        # motor_goal[2].action_goal.goal.target_speed = m_1_target
+        motor_goal[0].action_goal.goal.motor_id = m_6
+        motor_goal[1].action_goal.goal.motor_id = m_5
+        motor_goal[2].action_goal.goal.motor_id = m_4
+        motor_goal[3].action_goal.goal.motor_id = m_3
+        motor_goal[4].action_goal.goal.motor_id = m_2
+        motor_goal[5].action_goal.goal.motor_id = m_1
 
-        for motor_goal_index in range(len(motor_goal)):
-            motor_goal[motor_goal_index].action_goal.goal.motor_id = motors_id.reverse()[motor_goal_index]
-            motor_goal[motor_goal_index].action_goal.goal.target_speed = motors_speed_list.reverse()[motor_goal_index]
+        # motor_goal[0].action_goal.goal.target_speed = m_6_target
+        # motor_goal[1].action_goal.goal.target_speed = m_5_target
+        # motor_goal[2].action_goal.goal.target_speed = m_4_target
+        # motor_goal[3].action_goal.goal.target_speed = m_3_target
+        # motor_goal[4].action_goal.goal.target_speed = m_2_target
+        # motor_goal[5].action_goal.goal.target_speed = m_1_target
+
+
+        motor_goal[0].action_goal.goal.target_speed = 1500
+        motor_goal[1].action_goal.goal.target_speed = 1500
+        motor_goal[2].action_goal.goal.target_speed = 1500
+        motor_goal[3].action_goal.goal.target_speed = 1500
+        motor_goal[4].action_goal.goal.target_speed = 1500
+        motor_goal[5].action_goal.goal.target_speed = 1500
+
+        # for motor_goal_index in range(len(motor_goal)):
+        #     motor_goal[motor_goal_index].action_goal.goal.motor_id = motors_id.reverse()[motor_goal_index]
+        #     motor_goal[motor_goal_index].action_goal.goal.target_speed = motors_speed_list.reverse()[motor_goal_index]
 
         for motor in motor_goal:
             print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
@@ -192,9 +205,31 @@ def monitor_cb(self, msg):
         # motor_goal[1].action_goal.goal.target_speed = m_2_target
         # motor_goal[2].action_goal.goal.target_speed = m_3_target
 
-        for motor_goal_index in range(len(motor_goal)):
-            motor_goal[motor_goal_index].action_goal.goal.motor_id = motors_id[motor_goal_index]
-            motor_goal[motor_goal_index].action_goal.goal.target_speed = motors_speed_list[motor_goal_index]
+        motor_goal[0].action_goal.goal.motor_id = m_6
+        motor_goal[1].action_goal.goal.motor_id = m_5
+        motor_goal[2].action_goal.goal.motor_id = m_4
+        motor_goal[3].action_goal.goal.motor_id = m_3
+        motor_goal[4].action_goal.goal.motor_id = m_2
+        motor_goal[5].action_goal.goal.motor_id = m_1
+
+        # motor_goal[0].action_goal.goal.target_speed = m_6_target
+        # motor_goal[1].action_goal.goal.target_speed = m_5_target
+        # motor_goal[2].action_goal.goal.target_speed = m_4_target
+        # motor_goal[3].action_goal.goal.target_speed = m_3_target
+        # motor_goal[4].action_goal.goal.target_speed = m_2_target
+        # motor_goal[5].action_goal.goal.target_speed = m_1_target
+
+        motor_goal[0].action_goal.goal.target_speed = 1500
+        motor_goal[1].action_goal.goal.target_speed = 1500
+        motor_goal[2].action_goal.goal.target_speed = 1500
+        motor_goal[3].action_goal.goal.target_speed = 1500
+        motor_goal[4].action_goal.goal.target_speed = 1500
+        motor_goal[5].action_goal.goal.target_speed = 1500
+
+
+    # for motor_goal_index in range(len(motor_goal)):
+        #     motor_goal[motor_goal_index].action_goal.goal.motor_id = motors_id[motor_goal_index]
+        #     motor_goal[motor_goal_index].action_goal.goal.target_speed = motors_speed_list[motor_goal_index]
 
 
         for motor in motor_goal:
@@ -282,7 +317,7 @@ def main():
                                             'preempted': 'MOTOR3',
                                             'aborted': 'MOTOR3'})
         smach.StateMachine.add('MOTOR4',
-                               SimpleActionState('control485_2',
+                               SimpleActionState('control485',
                                                  DriveMotorAction,
                                                  goal=motor_goal[3].action_goal.goal),
                                transitions={'succeeded': 'MOTOR5',
@@ -290,7 +325,7 @@ def main():
                                             'aborted': 'MOTOR4'})
 
         smach.StateMachine.add('MOTOR5',
-                               SimpleActionState('control485_2',
+                               SimpleActionState('control485',
                                                  DriveMotorAction,
                                                  goal=motor_goal[4].action_goal.goal),
                                transitions={'succeeded': 'MOTOR6',
@@ -298,7 +333,7 @@ def main():
                                             'aborted': 'MOTOR5'})
 
         smach.StateMachine.add('MOTOR6',
-                               SimpleActionState('control485_2',
+                               SimpleActionState('control485',
                                                  DriveMotorAction,
                                                  goal=motor_goal[5].action_goal.goal),
                                transitions={'succeeded': 'END',

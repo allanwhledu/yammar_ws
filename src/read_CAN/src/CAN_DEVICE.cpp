@@ -274,7 +274,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     if(current4>2000)
                         current4 = 0;
                     ROS_INFO_STREAM("current4: "<<current4);
-                    float rms4 = 0.01442504 * pCAN_DEVICE->calculate_rms2(current4) - 1.69037332-0.35;
+                    float rms4 = 0.01442504 * pCAN_DEVICE->calculate_rms4(current4) - 1.69037332-0.35;
                     std_msgs::Float32 data_current_raw4;
                     data_current_raw4.data = current4;
                     pCAN_DEVICE->pub_c_motor4_raw->publish(data_current_raw4);
@@ -288,7 +288,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     if(current5>2000)
                         current5 = 0;
                     ROS_INFO_STREAM("current5: "<<current5);
-                    float rms5 = 0.01442504 * pCAN_DEVICE->calculate_rms3(current5) - 1.69037332+1;
+                    float rms5 = 0.01442504 * pCAN_DEVICE->calculate_rms5(current5) - 1.69037332+1;
                     std_msgs::Float32 data_current_raw5;
                     data_current_raw5.data = current5;
                     pCAN_DEVICE->pub_c_motor5_raw->publish(data_current_raw5);
@@ -305,10 +305,10 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     float rms6 = 0.01442504 * pCAN_DEVICE->calculate_rms4(current6) - 1.69037332+0.75;
                     std_msgs::Float32 data_current_raw6;
                     data_current_raw6.data = current6;
-                    pCAN_DEVICE->pub_c_motor4_raw->publish(data_current_raw6);
+                    pCAN_DEVICE->pub_c_motor6_raw->publish(data_current_raw6);
                     std_msgs::Float32 data_current6;
                     data_current6.data = rms6;
-                    pCAN_DEVICE->pub_c_motor4->publish(data_current6);
+                    pCAN_DEVICE->pub_c_motor6->publish(data_current6);
 
 
                     ROS_INFO(
