@@ -174,11 +174,11 @@ void *read_motor_speed_background(void *) {
             cb_speed.data = realSpeed_cb;
             pub_cb_speed->publish(cb_speed);
 
-//            usleep(40000);
-//            realSpeed_pf = motorReadSpeed(motor_id_pf);
-//            std_msgs::Float32 pf_speed;
-//            pf_speed.data = realSpeed_pf;
-//            pub_pf_speed->publish(pf_speed);
+            usleep(40000);
+            realSpeed_pf = motorReadSpeed(motor_id_pf);
+            std_msgs::Float32 pf_speed;
+            pf_speed.data = realSpeed_pf;
+            pub_pf_speed->publish(pf_speed);
 
 //            usleep(40000);
 //            realSpeed_fh = motorReadSpeed(motor_id_fh);
@@ -213,7 +213,8 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
     motorSetSpeed(goal->motor_id, target_speed);
 
     int count = 0;
-    while (true) {
+    bool speed_ok = false;
+    while (count < 500) {
         usleep(20000);
         actual_speed = motorReadSpeed(goal->motor_id);
         ROS_INFO_STREAM("reed speed onground");
@@ -225,7 +226,6 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
             actual_speed_str="0"+actual_speed_str;
         }
         *(open_file) << current_time << " " << goal->motor_id << " " <<actual_speed_str << " " << carSpeed.linear << endl;
-
 
         if (abs(actual_speed - target_speed) < 200)
         {
@@ -264,17 +264,65 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
                     break;
                 }
             }
+            speed_ok = true;
             break;
         }
         else
         {
+            // 发布速度（未达要求的）
+            ROS_WARN_STREAM("Speed is BAD.");
+            switch (goal->motor_id) {
+                case 1:
+                {
+                    ROS_INFO_STREAM("pub reel speed.");
+                    std_msgs::Float32 reel_speed;
+                    reel_speed.data = actual_speed;
+                    pub_reel_speed->publish(reel_speed);
+                    break;
+                }
+                case 2:
+                {
+                    ROS_INFO_STREAM("pub cb speed.");
+                    std_msgs::Float32 cb_speed;
+                    cb_speed.data = actual_speed;
+                    pub_cb_speed->publish(cb_speed);
+                    break;
+                }
+                case 3:
+                {
+                    ROS_INFO_STREAM("pub pf speed.");
+                    std_msgs::Float32 pf_speed;
+                    pf_speed.data = actual_speed;
+                    pub_pf_speed->publish(pf_speed);
+                    break;
+                }
+                case 4:
+                {
+                    ROS_INFO_STREAM("pub fh speed.");
+                    std_msgs::Float32 fh_speed;
+                    fh_speed.data = actual_speed;
+                    pub_fh_speed->publish(fh_speed);
+                    break;
+                }
+            }
+
             usleep(20000);
             motorSetSpeed(goal->motor_id, target_speed);
         }
+        count++;
     }
 
-    as->setSucceeded();
-    rs485_busy = false;
+    if(speed_ok)
+    {
+        ROS_INFO_STREAM("motor control succeeded!");
+        as->setSucceeded();
+        rs485_busy = false;
+    } else
+    {
+        ROS_WARN_STREAM("motor control FAILED!");
+        as->setSucceeded();
+        rs485_busy = false;
+    }
 
     ROS_INFO_STREAM("motor control complete. Wait for next invoke.\n");
 }
