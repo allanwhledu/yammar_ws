@@ -38,6 +38,8 @@ public:
     std::vector<float> current_buffer2;
     std::vector<float> current_buffer3;
     std::vector<float> current_buffer4;
+    std::vector<float> current_buffer5;
+    std::vector<float> current_buffer6;
     int buffer_length = 100;
 
     int channel;
@@ -51,24 +53,28 @@ public:
     int angle_turn = 0;
     int angle_speed = 0;
 
-    ros::Publisher* pub_c1;
-    ros::Publisher* pub_c2;
-    ros::Publisher* pub_c3;
-    ros::Publisher* pub_c4;
-    ros::Publisher* pub_c5;
-    ros::Publisher* pub_c5_raw;
-    ros::Publisher* pub_c5_cm7290;
-    ros::Publisher* pub_turn_c6;
-    ros::Publisher* pub_speed_c7;
+    ros::Publisher* reap_angle1_pub;
+    ros::Publisher* reap_angle2_pub;
+    ros::Publisher* car_speed_pub;
+    ros::Publisher* torque_pub;
+//    ros::Publisher* pub_c5;
+//    ros::Publisher* pub_c5_raw;
+    ros::Publisher* cm7290_current_pub;
+    ros::Publisher* angle_turn_pub;
+    ros::Publisher* angle_speed_pub;
 
+    ros::Publisher* pub_c_motor1;
+    ros::Publisher* pub_c_motor1_raw;
+    ros::Publisher* pub_c_motor2;
+    ros::Publisher* pub_c_motor2_raw;
+    ros::Publisher* pub_c_motor3;
+    ros::Publisher* pub_c_motor3_raw;
     ros::Publisher* pub_c_motor4;
     ros::Publisher* pub_c_motor4_raw;
     ros::Publisher* pub_c_motor5;
     ros::Publisher* pub_c_motor5_raw;
     ros::Publisher* pub_c_motor6;
     ros::Publisher* pub_c_motor6_raw;
-    ros::Publisher* pub_c_motor7;
-    ros::Publisher* pub_c_motor7_raw;
 
     CAN_DEVICE(int channel_idx);
 
@@ -79,6 +85,8 @@ public:
     float calculate_rms2(float current_now);
     float calculate_rms3(float current_now);
     float calculate_rms4(float current_now);
+    float calculate_rms5(float current_now);
+    float calculate_rms6(float current_now);
     void transmit_msg(VCI_CAN_OBJ *send, char *com);
     void control_height(int mode); //驱动第num_motor号电机，速度为speed.
 

@@ -104,14 +104,14 @@ public:
     void log( const LogLevel &level, const std::string &msg);
 
     void ChartCallback(const std_msgs::Float32Ptr &msg);
-    void REEL_speed_Callback(const std_msgs::Float32Ptr &msg);
-    void CB_speed_Callback(const std_msgs::Float32Ptr &msg);
-    void PF_speed_Callback(const std_msgs::Float32Ptr &msg);
-    void FH_speed_Callback(const std_msgs::Float32Ptr &msg);
-    void REEL_current_Callback(const std_msgs::Float32Ptr &msg);
-    void CB_current_Callback(const std_msgs::Float32Ptr &msg);
-    void PF_current_Callback(const std_msgs::Float32Ptr &msg);
-    void FH_current_Callback(const std_msgs::Float32Ptr &msg);
+    void motor1_speed_Callback(const std_msgs::Float32Ptr &msg);
+    void motor2_speed_Callback(const std_msgs::Float32Ptr &msg);
+    void motor3_speed_Callback(const std_msgs::Float32Ptr &msg);
+    void motor4_speed_Callback(const std_msgs::Float32Ptr &msg);
+    void current1_Callback(const std_msgs::Float32Ptr &msg);
+    void current2_Callback(const std_msgs::Float32Ptr &msg);
+    void current3_Callback(const std_msgs::Float32Ptr &msg);
+    void current4_Callback(const std_msgs::Float32Ptr &msg);
     void is_obstacle_Callback(const std_msgs::BoolPtr &msg);
     void reap_height1_Callback(const std_msgs::Int64Ptr &msg);
     void reap_height2_Callback(const std_msgs::Int64Ptr &msg);

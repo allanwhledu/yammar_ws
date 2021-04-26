@@ -1663,7 +1663,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>REEL speed:</string>
+         <string>motor1 speed:</string>
         </property>
        </widget>
        <widget class="QLineEdit" name="lineEdit_50">
@@ -1758,7 +1758,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>CB     speed:</string>
+         <string>motor2  speed:</string>
         </property>
        </widget>
        <widget class="QLineEdit" name="lineEdit_54">
@@ -1807,7 +1807,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>PF     speed:</string>
+         <string>motor3 speed:</string>
         </property>
        </widget>
        <widget class="QLineEdit" name="lineEdit_55">
@@ -2063,7 +2063,7 @@
          </rect>
         </property>
         <property name="text">
-         <string>FH     speed:</string>
+         <string>motor4 speed:</string>
         </property>
        </widget>
        <widget class="QLineEdit" name="lineEdit_56">
@@ -2119,27 +2119,27 @@
        <widget class="QLabel" name="label_63">
         <property name="geometry">
          <rect>
-          <x>730</x>
+          <x>710</x>
           <y>80</y>
-          <width>121</width>
+          <width>141</width>
           <height>48</height>
          </rect>
         </property>
         <property name="text">
-         <string>Current of REEL:</string>
+         <string>Current of motor1:</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_64">
         <property name="geometry">
          <rect>
-          <x>730</x>
+          <x>710</x>
           <y>140</y>
-          <width>111</width>
+          <width>131</width>
           <height>31</height>
          </rect>
         </property>
         <property name="text">
-         <string>Current of CB:</string>
+         <string>Current of motor2:</string>
         </property>
        </widget>
        <widget class="QLabel" name="label_65">
@@ -2158,14 +2158,14 @@
        <widget class="QLabel" name="label_66">
         <property name="geometry">
          <rect>
-          <x>730</x>
+          <x>710</x>
           <y>170</y>
-          <width>111</width>
+          <width>131</width>
           <height>51</height>
          </rect>
         </property>
         <property name="text">
-         <string>Current of PF:</string>
+         <string>Current of motor3:</string>
         </property>
        </widget>
       </widget>

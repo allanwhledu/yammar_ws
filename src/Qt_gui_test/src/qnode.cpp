@@ -84,14 +84,14 @@ bool QNode::init()
   // Add your ros communications here.
   text_subscriber = n.subscribe("/height_border_param", 100, &QNode::height_border_Callback, this);
   chart_subscriber = n.subscribe("/chart",1,&QNode::ChartCallback,this);
-  REEL_subscriber = n.subscribe("/REEL_speed", 1, &QNode::REEL_speed_Callback, this);
-  CB_subscriber = n.subscribe("/CB_speed", 1, &QNode::CB_speed_Callback, this);
-  PF_subscriber = n.subscribe("/PF_speed", 1, &QNode::PF_speed_Callback, this);
-  FH_subscriber = n.subscribe("/FH_speed", 1, &QNode::FH_speed_Callback, this);
-  REEL_current_subscriber = n.subscribe("/REEL_current", 1, &QNode::REEL_current_Callback, this);
-  CB_current_subscriber = n.subscribe("/CB_current", 1, &QNode::CB_current_Callback, this);
-  PF_current_subscriber = n.subscribe("/PF_current", 1, &QNode::PF_current_Callback, this);
-  FH_current_subscriber = n.subscribe("/current_cm7290", 1, &QNode::FH_current_Callback, this);
+  REEL_subscriber = n.subscribe("/motor_1_speed", 1, &QNode::motor1_speed_Callback, this);
+  CB_subscriber = n.subscribe("/motor_2_speed", 1, &QNode::motor2_speed_Callback, this);
+  PF_subscriber = n.subscribe("/motor_3_speed", 1, &QNode::motor3_speed_Callback, this);
+  FH_subscriber = n.subscribe("/motor_4_speed", 1, &QNode::motor4_speed_Callback, this);
+  REEL_current_subscriber = n.subscribe("/current1_rms", 1, &QNode::current1_Callback, this);
+  CB_current_subscriber = n.subscribe("/current2_rms", 1, &QNode::current2_Callback, this);
+  PF_current_subscriber = n.subscribe("/current3_rms", 1, &QNode::current3_Callback, this);
+  FH_current_subscriber = n.subscribe("/current_cm7290", 1, &QNode::current4_Callback, this);
   obstacle_subscriber = n.subscribe("/is_obstacle",1,&QNode::is_obstacle_Callback,this);
   reap_height1_subscriber = n.subscribe("/reap_angle1",1,&QNode::reap_height1_Callback,this);
   reap_height2_subscriber = n.subscribe("/reap_angle2",1,&QNode::reap_height2_Callback,this);
@@ -147,56 +147,56 @@ void QNode::ChartCallback(const std_msgs::Float32Ptr &msg)
   Q_EMIT loggingChart();
 }
 
-void QNode::REEL_speed_Callback(const std_msgs::Float32Ptr &msg)
+void QNode::motor1_speed_Callback(const std_msgs::Float32Ptr &msg)
 {
     REEL_speed = msg->data;
   ROS_INFO_STREAM("REEL_speed receive: " << REEL_speed);
   Q_EMIT logging_REEL_speed();
 }
 
-void QNode::CB_speed_Callback(const std_msgs::Float32Ptr &msg)
+void QNode::motor2_speed_Callback(const std_msgs::Float32Ptr &msg)
 {
     CB_speed = msg->data;
   ROS_INFO_STREAM("REEL_speed receive: " << CB_speed);
   Q_EMIT logging_CB_speed();
 }
 
-void QNode::PF_speed_Callback(const std_msgs::Float32Ptr &msg)
+void QNode::motor3_speed_Callback(const std_msgs::Float32Ptr &msg)
 {
     PF_speed = msg->data;
   ROS_INFO_STREAM("REEL_speed receive: " << PF_speed);
   Q_EMIT logging_PF_speed();
 }
 
-void QNode::FH_speed_Callback(const std_msgs::Float32Ptr &msg)
+void QNode::motor4_speed_Callback(const std_msgs::Float32Ptr &msg)
 {
     FH_speed = msg->data;
   ROS_INFO_STREAM("FH_speed receive: " << FH_speed);
   Q_EMIT logging_FH_speed();
 }
 
-void QNode::REEL_current_Callback(const std_msgs::Float32Ptr &msg)
+void QNode::current1_Callback(const std_msgs::Float32Ptr &msg)
 {
     REEL_current = msg->data;
   ROS_INFO_STREAM("REEL_current receive: " << REEL_current);
   Q_EMIT logging_REEL_current();
 }
 
-void QNode::CB_current_Callback(const std_msgs::Float32Ptr &msg)
+void QNode::current2_Callback(const std_msgs::Float32Ptr &msg)
 {
     CB_current = msg->data;
   ROS_INFO_STREAM("CB_current receive: " << CB_current);
   Q_EMIT logging_CB_current();
 }
 
-void QNode::PF_current_Callback(const std_msgs::Float32Ptr &msg)
+void QNode::current3_Callback(const std_msgs::Float32Ptr &msg)
 {
     PF_current = msg->data;
   ROS_INFO_STREAM("PF_current receive: " << PF_current);
   Q_EMIT logging_PF_current();
 }
 
-void QNode::FH_current_Callback(const std_msgs::Float32Ptr &msg)
+void QNode::current4_Callback(const std_msgs::Float32Ptr &msg)
 {
     FH_current = msg->data;
   ROS_INFO_STREAM("FH_current receive: " << FH_current);

@@ -24,44 +24,54 @@ int main(int argc, char **argv) {
     ros::NodeHandle n;
 
     // 采集信号后发布到制定topic
-    ros::Publisher chatter_pub1 = n.advertise<std_msgs::Int64>("reap_angle1", 1000);
-    ros::Publisher chatter_pub2 = n.advertise<std_msgs::Int64>("reap_angle2", 1000);
-    ros::Publisher chatter_pub3 = n.advertise<std_msgs::Float32>("car_speed", 1000);
-    ros::Publisher chatter_pub4 = n.advertise<std_msgs::Float32>("torque", 1000);
-    ros::Publisher chatter_pub5 = n.advertise<std_msgs::Float32>("current_rms", 1000);
-    ros::Publisher chatter_pub_raw_current = n.advertise<std_msgs::Float32>("current_raw", 1000);
-    ros::Publisher chatter_pub_cm7290_current = n.advertise<std_msgs::Float32>("current_cm7290", 1000);
-    ros::Publisher chatter_pub6 = n.advertise<std_msgs::Float32>("angle_turn", 1000);
-    ros::Publisher chatter_pub7 = n.advertise<std_msgs::Float32>("angle_speed", 1000);
-    can_1.pub_c1 = &chatter_pub1;
-    can_1.pub_c2 = &chatter_pub2;
-    can_1.pub_c3 = &chatter_pub3;
-    can_1.pub_c4 = &chatter_pub4;
-    can_1.pub_c5 = &chatter_pub5;
-    can_1.pub_c5_raw = &chatter_pub_raw_current;
-    can_1.pub_c5_cm7290 = &chatter_pub_cm7290_current;
-    can_1.pub_turn_c6 = &chatter_pub6;
-    can_1.pub_speed_c7 = &chatter_pub7;
+    ros::Publisher reap_angle1_pub = n.advertise<std_msgs::Int64>("reap_angle1", 1000);
+    ros::Publisher reap_angle2_pub = n.advertise<std_msgs::Int64>("reap_angle2", 1000);
+    ros::Publisher car_speed_pub = n.advertise<std_msgs::Float32>("car_speed", 1000);
+    ros::Publisher torque_pub = n.advertise<std_msgs::Float32>("torque", 1000);
+//    ros::Publisher chatter_pub5 = n.advertise<std_msgs::Float32>("current_rms", 1000);
+//    ros::Publisher chatter_pub_raw_current = n.advertise<std_msgs::Float32>("current_raw", 1000);
+    ros::Publisher cm7290_current_pub = n.advertise<std_msgs::Float32>("current_cm7290", 1000);
+    ros::Publisher angle_turn_pub = n.advertise<std_msgs::Float32>("angle_turn", 1000);
+    ros::Publisher angle_speed_pub = n.advertise<std_msgs::Float32>("angle_speed", 1000);
+    can_1.reap_angle1_pub = &reap_angle1_pub;
+    can_1.reap_angle2_pub = &reap_angle2_pub;
+    can_1.car_speed_pub = &car_speed_pub;
+    can_1.torque_pub = &torque_pub;
+//    can_1.pub_c5 = &chatter_pub5;
+//    can_1.pub_c5_raw = &chatter_pub_raw_current;
+    can_1.cm7290_current_pub = &cm7290_current_pub;
+    can_1.angle_turn_pub = &angle_turn_pub;
+    can_1.angle_speed_pub = &angle_speed_pub;
+
+    ros::Publisher chatter_pub_motor1 = n.advertise<std_msgs::Float32>("current1_rms", 1000);
+    ros::Publisher chatter_pub_raw_current_motor1 = n.advertise<std_msgs::Float32>("current1_raw", 1000);
+    can_1.pub_c_motor1 = &chatter_pub_motor1;
+    can_1.pub_c_motor1_raw = &chatter_pub_raw_current_motor1;
+
+    ros::Publisher chatter_pub_motor2 = n.advertise<std_msgs::Float32>("current2_rms", 1000);
+    ros::Publisher chatter_pub_raw_current_motor2 = n.advertise<std_msgs::Float32>("current1_raw", 1000);
+    can_1.pub_c_motor2 = &chatter_pub_motor2;
+    can_1.pub_c_motor2_raw = &chatter_pub_raw_current_motor2;
+
+    ros::Publisher chatter_pub_motor3 = n.advertise<std_msgs::Float32>("current3_rms", 1000);
+    ros::Publisher chatter_pub_raw_current_motor3 = n.advertise<std_msgs::Float32>("current3_raw", 1000);
+    can_1.pub_c_motor3 = &chatter_pub_motor3;
+    can_1.pub_c_motor3_raw = &chatter_pub_raw_current_motor3;
 
     ros::Publisher chatter_pub_motor4 = n.advertise<std_msgs::Float32>("current4_rms", 1000);
     ros::Publisher chatter_pub_raw_current_motor4 = n.advertise<std_msgs::Float32>("current4_raw", 1000);
     can_1.pub_c_motor4 = &chatter_pub_motor4;
     can_1.pub_c_motor4_raw = &chatter_pub_raw_current_motor4;
 
-    ros::Publisher chatter_pub_motor5 = n.advertise<std_msgs::Float32>("REEL_current", 1000);
+    ros::Publisher chatter_pub_motor5 = n.advertise<std_msgs::Float32>("current5_rms", 1000);
     ros::Publisher chatter_pub_raw_current_motor5 = n.advertise<std_msgs::Float32>("current5_raw", 1000);
     can_1.pub_c_motor5 = &chatter_pub_motor5;
     can_1.pub_c_motor5_raw = &chatter_pub_raw_current_motor5;
 
-    ros::Publisher chatter_pub_motor6 = n.advertise<std_msgs::Float32>("CB_current", 1000);
+    ros::Publisher chatter_pub_motor6 = n.advertise<std_msgs::Float32>("current6_rms", 1000);
     ros::Publisher chatter_pub_raw_current_motor6 = n.advertise<std_msgs::Float32>("current6_raw", 1000);
-    can_1.pub_c_motor6 = &chatter_pub_motor6;
-    can_1.pub_c_motor6_raw = &chatter_pub_raw_current_motor6;
-
-    ros::Publisher chatter_pub_motor7 = n.advertise<std_msgs::Float32>("PF_current", 1000);
-    ros::Publisher chatter_pub_raw_current_motor7 = n.advertise<std_msgs::Float32>("current7_raw", 1000);
-    can_1.pub_c_motor7 = &chatter_pub_motor7;
-    can_1.pub_c_motor7_raw = &chatter_pub_raw_current_motor7;
+    can_1.pub_c_motor5 = &chatter_pub_motor6;
+    can_1.pub_c_motor5_raw = &chatter_pub_raw_current_motor6;
 
     // 接受topic指令后发送can信号
     ros::Subscriber sub = n.subscribe("height_control_mode", 1, height_control_mode_callback);
