@@ -11,8 +11,8 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
-        actionlib
-        actionlib_msgs
+  actionlib
+  actionlib_msgs
 )
 
 ## System dependencies are found with CMake's conventions
@@ -142,6 +142,7 @@ include_directories(
 ## With catkin_make all packages are built within a single CMake context
 ## The recommended prefix ensures that target names across packages don't collide
  add_executable(${PROJECT_NAME}_node src/control485_node.cpp)
+add_executable(${PROJECT_NAME}_node_2 src/control485_node_2.cpp)
  add_executable(${PROJECT_NAME}_simple_test src/change_485_simple_test.cpp)
 add_executable(${PROJECT_NAME}_fake_speed src/send_fake_speed.cpp)
 
@@ -154,6 +155,7 @@ add_executable(${PROJECT_NAME}_fake_speed src/send_fake_speed.cpp)
 ## Add cmake target dependencies of the executable
 ## same as for the library above
  add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
+add_dependencies(${PROJECT_NAME}_node_2 ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
  add_dependencies(${PROJECT_NAME}_simple_test ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 add_dependencies(${PROJECT_NAME}_fake_speed ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
@@ -162,6 +164,12 @@ add_dependencies(${PROJECT_NAME}_fake_speed ${${PROJECT_NAME}_EXPORTED_TARGETS} 
          ${catkin_LIBRARIES}
          /usr/local/lib/libmodbus.so
  )
+
+target_link_libraries(${PROJECT_NAME}_node_2
+        ${catkin_LIBRARIES}
+        /usr/local/lib/libmodbus.so
+        )
+
 target_link_libraries(${PROJECT_NAME}_simple_test
         ${catkin_LIBRARIES}
         /usr/local/lib/libmodbus.so

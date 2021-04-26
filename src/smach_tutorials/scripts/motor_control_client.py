@@ -19,12 +19,6 @@ reelCof = 1.6
 pfCof = 4.44
 fhCof = 3.94
 
-# 减速比
-reelRatio = 64
-cbRatio = 5
-pfRatio = 15
-fhRatio = 10
-
 # 电机序号
 m_1 = 1
 m_2 = 2
@@ -102,7 +96,7 @@ def monitor_cb(self, msg):
         'M11': 2235.8 / 1,
     }
 
-    # reel_ta = reelRatio * min(50.0, min(21.23 * reelCof * msg.data + 12.3, 21.23 * 1.0 * msg.data + 21.23))
+    # m_1_target = 64 * min(50.0, min(21.23 * reelCof * msg.data + 12.3, 21.23 * 1.0 * msg.data + 21.23))
     # cb_ta = 0.5 * cbRatio * min(467.0, min(398.09 * cbCof * msg.data + 131.37, 398.09 * 1.0 * msg.data + 238.85))
     # pf_ta = pfRatio * min(187.0, min(39.16 * pfCof * msg.data + 52.47, 39.16 * 3.0 * msg.data + 90.07))
     # fh_ta = fhRatio * min(187.0, min(39.16 * fhCof * msg.data + 52.47, 39.16 * 3.0 * msg.data + 90.07))
@@ -288,7 +282,7 @@ def main():
                                             'preempted': 'MOTOR3',
                                             'aborted': 'MOTOR3'})
         smach.StateMachine.add('MOTOR4',
-                               SimpleActionState('control485',
+                               SimpleActionState('control485_2',
                                                  DriveMotorAction,
                                                  goal=motor_goal[3].action_goal.goal),
                                transitions={'succeeded': 'MOTOR5',
@@ -296,7 +290,7 @@ def main():
                                             'aborted': 'MOTOR4'})
 
         smach.StateMachine.add('MOTOR5',
-                               SimpleActionState('control485',
+                               SimpleActionState('control485_2',
                                                  DriveMotorAction,
                                                  goal=motor_goal[4].action_goal.goal),
                                transitions={'succeeded': 'MOTOR6',
@@ -304,7 +298,7 @@ def main():
                                             'aborted': 'MOTOR5'})
 
         smach.StateMachine.add('MOTOR6',
-                               SimpleActionState('control485',
+                               SimpleActionState('control485_2',
                                                  DriveMotorAction,
                                                  goal=motor_goal[5].action_goal.goal),
                                transitions={'succeeded': 'END',
