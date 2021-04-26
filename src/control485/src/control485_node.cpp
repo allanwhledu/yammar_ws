@@ -217,7 +217,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
     while (count < 1000) {
         usleep(20000);
         actual_speed = motorReadSpeed(goal->motor_id);
-        ROS_INFO_STREAM("reed speed onground");
+        ROS_INFO_STREAM("reed speed onground"<<actual_speed);
 
         // 记录速度
         string actual_speed_str = to_string(actual_speed);

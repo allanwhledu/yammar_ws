@@ -302,7 +302,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     if(current6>2000)
                         current6 = 0;
                     ROS_INFO_STREAM("current6: "<<current6);
-                    float rms6 = 0.01442504 * pCAN_DEVICE->calculate_rms4(current6) - 1.69037332+0.75;
+                    float rms6 = 0.01442504 * pCAN_DEVICE->calculate_rms6(current6) - 1.69037332+0.75;
                     std_msgs::Float32 data_current_raw6;
                     data_current_raw6.data = current6;
                     pCAN_DEVICE->pub_c_motor6_raw->publish(data_current_raw6);
