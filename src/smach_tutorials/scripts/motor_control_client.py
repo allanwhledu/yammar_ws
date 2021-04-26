@@ -20,8 +20,8 @@ pfCof = 4.44
 fhCof = 3.94
 
 # 减速比
-cbRatio = 5
 reelRatio = 64
+cbRatio = 5
 pfRatio = 15
 fhRatio = 10
 
@@ -86,17 +86,18 @@ def monitor_cb(self, msg):
     motor target speed describtion
     '''
     motor_speed_dict = {
-        'M1': None,
-        'M2': None,
-        'M3': None,
-        'M4': None,
-        'M5': 1324 * 1,
-        'M6': None,
-        'M7': 487 * (1/5),
-        'M8': 933 * (1/3),
-        'M9': 1193 * 1,
-        'M10': 408 * (1/7),
-        'M11': 2235.8 * 1,
+        'M3': 44 / (1/64),  # reel
+        'M4': 467 / (1/5),  # cb
+        'M2': 187 / (1/15),  # pf
+        'M1': 324 / (1/10),  # fh
+
+        'M5': 1324 / 1,
+        'M6': None,  # big motor
+        'M7': 487 / (1/5),
+        'M8': 933 / (1/3),
+        'M9': 1193 / 1,
+        'M10': 408 / (1/7),
+        'M11': 2235.8 / 1,
     }
 
     # reel_ta = reelRatio * min(50.0, min(21.23 * reelCof * msg.data + 12.3, 21.23 * 1.0 * msg.data + 21.23))
