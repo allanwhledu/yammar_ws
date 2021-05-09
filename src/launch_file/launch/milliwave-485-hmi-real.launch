@@ -9,12 +9,12 @@
 
 #### control motors vis RS485 bus ####################################################
 
-  <node pkg="control485" type="control485_node" name="control485" output="screen"/>
-  <node pkg="control485" type="control485_node_2" name="control485_2" output="screen"/>
+  <node pkg="control485" type="control485_node" name="control485"/>
+  <node pkg="control485" type="control485_node_2" name="control485_2"/>
 
 #### read signals from CAN bus ####################################################
 
-  <node pkg="read_CAN" type="read_CAN_node" name="read_CAN"/>
+  <node pkg="read_CAN" type="read_CAN_node" name="read_CAN" output="screen"/>
 
 #### for line detect ####################################################
 

@@ -70,8 +70,8 @@ int main(int argc, char **argv) {
 
     ros::Publisher chatter_pub_motor6 = n.advertise<std_msgs::Float32>("current6_rms", 1000);
     ros::Publisher chatter_pub_raw_current_motor6 = n.advertise<std_msgs::Float32>("current6_raw", 1000);
-    can_1.pub_c_motor5 = &chatter_pub_motor6;
-    can_1.pub_c_motor5_raw = &chatter_pub_raw_current_motor6;
+    can_1.pub_c_motor6 = &chatter_pub_motor6;
+    can_1.pub_c_motor6_raw = &chatter_pub_raw_current_motor6;
 
     // 接受topic指令后发送can信号
     ros::Subscriber sub = n.subscribe("height_control_mode", 1, height_control_mode_callback);

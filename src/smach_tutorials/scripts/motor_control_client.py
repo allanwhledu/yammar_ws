@@ -61,9 +61,9 @@ class end(smach.State):
         smach.State.__init__(self, outcomes=['end_succeeded'])
 
     def execute(self, userdata):
-        msg = Int32()
-        msg.data = 1
-        pub_result.publish(msg)
+        # msg = Int32()
+        # msg.data = 1
+        # pub_result.publish(msg)
         return 'end_succeeded'
 
 
@@ -92,7 +92,7 @@ def monitor_cb(self, msg):
         'M2': None,
         'M3': None,
         'M4': None,
-        'M5': 1324 * 1,
+        'M5': 1324 / 1.4,
         'M6': None,
         'M7': 487 / 0.25,
         'M8': 933 / 0.33,
@@ -105,7 +105,7 @@ def monitor_cb(self, msg):
     # cb_ta = 0.5 * cbRatio * min(467.0, min(398.09 * cbCof * msg.data + 131.37, 398.09 * 1.0 * msg.data + 238.85))
     # pf_ta = pfRatio * min(187.0, min(39.16 * pfCof * msg.data + 52.47, 39.16 * 3.0 * msg.data + 90.07))
     # fh_ta = fhRatio * min(187.0, min(39.16 * fhCof * msg.data + 52.47, 39.16 * 3.0 * msg.data + 90.07))
-    reel_ta = motor_speed_dict['M5']
+    reel_ta = 1000
     cb_ta = motor_speed_dict['M7']
     pf_ta = motor_speed_dict['M8']
     fh_ta = motor_speed_dict['M11']
@@ -114,18 +114,18 @@ def monitor_cb(self, msg):
     m5_ta = motor_speed_dict['M10']
 
 
-    if reel_ta > 1000:
-        reel_ta = 1000
-    if cb_ta > 1000:
-        cb_ta = 1000
-    if pf_ta > 1000:
-        pf_ta = 1000
+    if reel_ta > 3000:
+        reel_ta = 3000
+    if cb_ta > 3000:
+        cb_ta = 3000
+    if pf_ta > 3000:
+        pf_ta = 3000
     if fh_ta > 200:
         fh_ta = 200
-    if m4_ta > 1000:
-        m4_ta = 1000
-    if m5_ta > 1000:
-        m5_ta = 1000
+    if m4_ta > 3000:
+        m4_ta = 3000
+    if m5_ta > 3000:
+        m5_ta = 3000
 
     if abs(msg.data - last_target) < 0.025:  # 恒定
         mode = 'steady'
@@ -198,17 +198,19 @@ def monitor_cb(self, msg):
 
     elif last_target < msg.data and msg.data - last_target >= 0.025:  # 加速
         mode = 'speedup'
-        motor_goal[0].action_goal.goal.motor_id = reel # 加速这个地方比较特殊，只有reel变化
-        motor_goal[1].action_goal.goal.motor_id = cb
-        motor_goal[2].action_goal.goal.motor_id = pf
-        # motor_goal[3].action_goal.goal.motor_id = reel
-        # motor_goal[0].action_goal.goal.motor_id = cb
-        # motor_goal[1].action_goal.goal.motor_id = cb
-        # motor_goal[2].action_goal.goal.motor_id = cb
+        motor_goal[0].action_goal.goal.motor_id = reel
+        motor_goal[1].action_goal.goal.motor_id = m4
+        motor_goal[2].action_goal.goal.motor_id = fh
+        motor_goal[3].action_goal.goal.motor_id = pf
+        motor_goal[4].action_goal.goal.motor_id = cb
+        motor_goal[5].action_goal.goal.motor_id = reel
+
         motor_goal[0].action_goal.goal.target_speed = reel_ta
-        motor_goal[1].action_goal.goal.target_speed = cb_ta
-        motor_goal[2].action_goal.goal.target_speed = pf_ta
-        # motor_goal[3].action_goal.goal.target_speed = reel_ta
+        motor_goal[1].action_goal.goal.target_speed = m4_ta
+        motor_goal[2].action_goal.goal.target_speed = fh_ta
+        motor_goal[3].action_goal.goal.target_speed = pf_ta
+        motor_goal[4].action_goal.goal.target_speed = cb_ta
+        motor_goal[5].action_goal.goal.target_speed = reel_ta
 
         for motor in motor_goal:
             print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed

@@ -205,6 +205,9 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     //电流检测（电流环1）
                     int current_int1 = (high2 << 8 | low2);
                     float current1 = current_int1;
+                    if(current1>2000)
+                        current1 = 0;
+                    ROS_INFO_STREAM("current4: "<<current1);
                     float rms1 = 0.01442504 * pCAN_DEVICE->calculate_rms1(current1) - 1.69037332;
                     std_msgs::Float32 data_current_raw1;
                     data_current_raw1.data = current1;
@@ -216,6 +219,9 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     //电流检测（电流环2）
                     int current_int2 = (high3 << 8 | low3);
                     float current2 = current_int2;
+                    if(current2>2000)
+                        current2 = 0;
+                    ROS_INFO_STREAM("current2: "<<current2);
                     float rms2 = 0.01442504 * pCAN_DEVICE->calculate_rms2(current2) - 1.69037332;
                     std_msgs::Float32 data_current_raw2;
                     data_current_raw2.data = current2;
@@ -235,11 +241,11 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
 //                    data_current3.data = rms3;
 //                    pCAN_DEVICE->pub_c_motor3->publish(data_current3);
 
-                    ROS_INFO(
-                            "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle1:%05d angle2:%05d",
-                            pCAN_DEVICE->channel+1, pCAN_DEVICE->count, rec[j].ID,
-                            rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
-                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1, pCAN_DEVICE->angle2);
+//                    ROS_INFO(
+//                            "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle1:%05d angle2:%05d",
+//                            pCAN_DEVICE->channel+1, pCAN_DEVICE->count, rec[j].ID,
+//                            rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
+//                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1, pCAN_DEVICE->angle2);
                 }
 
                 else if (rec[j].ID == 0x0282) // 4-7接口的数据
@@ -260,6 +266,9 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     //电流检测（电流环3）
                     int current_int3 = (high4 << 8 | low4);
                     float current3 = current_int3;
+                    if(current3>2000)
+                        current3 = 0;
+                    ROS_INFO_STREAM("current3: "<<current3);
                     float rms3 = 0.01442504 * pCAN_DEVICE->calculate_rms3(current3) - 1.69037332;
                     std_msgs::Float32 data_current_raw3;
                     data_current_raw3.data = current3;
@@ -311,11 +320,11 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     pCAN_DEVICE->pub_c_motor6->publish(data_current6);
 
 
-                    ROS_INFO(
-                            "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle1:%05d angle2:%05d",
-                            pCAN_DEVICE->channel+1, pCAN_DEVICE->count, rec[j].ID,
-                            rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
-                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1, pCAN_DEVICE->angle2);
+//                    ROS_INFO(
+//                            "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle1:%05d angle2:%05d",
+//                            pCAN_DEVICE->channel+1, pCAN_DEVICE->count, rec[j].ID,
+//                            rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
+//                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1, pCAN_DEVICE->angle2);
                 }
 
                 //// 车速数据
