@@ -58,7 +58,8 @@ pub_result = rospy.Publisher('smach_fback', Int32, queue_size=1)
 car_speed_now = 0
 car_speed_last = 0
 
-class Interpreter:
+
+class Topic_monitor:
     def __init__(self):
         self.car_speed = 0
 
@@ -86,180 +87,6 @@ class end(smach.State):
         # msg.data = 1
         # pub_result.publish(msg)
         return 'end_succeeded'
-
-
-class Mode_classification(smach.State):
-    def __init__(self):
-        smach.State.__init__(self, outcomes=['start_or_stop', 'operating'])
-
-    def execute(self, userdata):
-        global mode
-        if mode == 'start' or mode == 'stop':
-            rospy.loginfo('Start or Stop')
-            return 'start_or_stop'
-        else:
-            return 'operating'
-
-
-def monitor_cb(self, msg):
-    global last_target
-    global mode
-
-    '''
-    motor target speed describtion
-    '''
-    motor_speed_dict = {
-        'M1': None,
-        'M2': None,
-        'M3': None,
-        'M4': None,
-        'M5': 1324 / 1.4,
-        'M6': None,
-        'M7': 487 / 0.25,
-        'M8': 933 / 0.33,
-        'M9': 1193 / 1,
-        'M10': 408 / 0.14,
-        'M11': 2235.8 / 1,
-    }
-
-    # reel_ta = reelRatio * min(50.0, min(21.23 * reelCof * msg.data + 12.3, 21.23 * 1.0 * msg.data + 21.23))
-    # cb_ta = 0.5 * cbRatio * min(467.0, min(398.09 * cbCof * msg.data + 131.37, 398.09 * 1.0 * msg.data + 238.85))
-    # pf_ta = pfRatio * min(187.0, min(39.16 * pfCof * msg.data + 52.47, 39.16 * 3.0 * msg.data + 90.07))
-    # fh_ta = fhRatio * min(187.0, min(39.16 * fhCof * msg.data + 52.47, 39.16 * 3.0 * msg.data + 90.07))
-    reel_ta = 1000
-    cb_ta = motor_speed_dict['M7']
-    pf_ta = motor_speed_dict['M8']
-    fh_ta = motor_speed_dict['M11']
-
-    m4_ta = motor_speed_dict['M9']
-    m5_ta = motor_speed_dict['M10']
-
-
-    if reel_ta > 3000:
-        reel_ta = 3000
-    if cb_ta > 3000:
-        cb_ta = 3000
-    if pf_ta > 3000:
-        pf_ta = 3000
-    if fh_ta > 200:
-        fh_ta = 200
-    if m4_ta > 3000:
-        m4_ta = 3000
-    if m5_ta > 3000:
-        m5_ta = 3000
-
-    if abs(msg.data - last_target) < 0.025:  # 恒定
-        mode = 'steady'
-        motor_goal[0].action_goal.goal.motor_id = m3
-        motor_goal[1].action_goal.goal.motor_id = m2
-        motor_goal[2].action_goal.goal.motor_id = m1
-        # motor_goal[3].action_goal.goal.motor_id = fh
-
-        # motor_goal[0].action_goal.goal.motor_id = cb
-        # motor_goal[1].action_goal.goal.motor_id = cb
-        # motor_goal[2].action_goal.goal.motor_id = cb
-        motor_goal[0].action_goal.goal.target_speed = pf_ta
-        motor_goal[1].action_goal.goal.target_speed = cb_ta
-        motor_goal[2].action_goal.goal.target_speed = reel_ta
-        # motor_goal[3].action_goal.goal.target_speed = reel_ta
-
-        for motor in motor_goal:
-            print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
-
-        # last_target = msg.data
-        return False
-
-    elif msg.data <= 0:  # 停机
-        mode = 'stop'
-        motor_goal[0].action_goal.goal.motor_id = m1
-        motor_goal[1].action_goal.goal.motor_id = m2
-        motor_goal[2].action_goal.goal.motor_id = m3
-        motor_goal[3].action_goal.goal.motor_id = m4
-        motor_goal[4].action_goal.goal.motor_id = m5
-        motor_goal[5].action_goal.goal.motor_id = m6
-
-        # motor_goal[0].action_goal.goal.motor_id = cb
-        # motor_goal[1].action_goal.goal.motor_id = cb
-        # motor_goal[2].action_goal.goal.motor_id = cb
-        motor_goal[0].action_goal.goal.target_speed = 0
-        motor_goal[1].action_goal.goal.target_speed = 0
-        motor_goal[2].action_goal.goal.target_speed = 0
-        motor_goal[3].action_goal.goal.target_speed = 0
-        motor_goal[4].action_goal.goal.target_speed = 0
-        motor_goal[5].action_goal.goal.target_speed = 0
-
-        for motor in motor_goal:
-            print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
-
-        last_target = msg.data
-        return False
-
-    elif mode == 'stop' and msg.data - last_target >= 0.025:  # 启动
-        mode = 'start'
-        motor_goal[0].action_goal.goal.motor_id = m6
-        motor_goal[1].action_goal.goal.motor_id = m5
-        motor_goal[2].action_goal.goal.motor_id = m4
-        motor_goal[3].action_goal.goal.motor_id = m3
-        motor_goal[4].action_goal.goal.motor_id = m2
-        motor_goal[5].action_goal.goal.motor_id = m1
-
-        motor_goal[0].action_goal.goal.target_speed = m5_ta
-        motor_goal[1].action_goal.goal.target_speed = m4_ta
-        motor_goal[2].action_goal.goal.target_speed = fh_ta
-        motor_goal[3].action_goal.goal.target_speed = pf_ta
-        motor_goal[4].action_goal.goal.target_speed = cb_ta
-        motor_goal[5].action_goal.goal.target_speed = reel_ta
-        # motor_goal[3].action_goal.goal.target_speed = reel_ta
-
-        for motor in motor_goal:
-            print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
-
-        last_target = msg.data
-        return False
-
-    elif last_target < msg.data and msg.data - last_target >= 0.025:  # 加速
-        mode = 'speedup'
-        motor_goal[0].action_goal.goal.motor_id = m1
-        motor_goal[1].action_goal.goal.motor_id = m5
-        motor_goal[2].action_goal.goal.motor_id = m4
-        motor_goal[3].action_goal.goal.motor_id = m3
-        motor_goal[4].action_goal.goal.motor_id = m2
-        motor_goal[5].action_goal.goal.motor_id = m1
-
-        motor_goal[0].action_goal.goal.target_speed = reel_ta
-        motor_goal[1].action_goal.goal.target_speed = m4_ta
-        motor_goal[2].action_goal.goal.target_speed = fh_ta
-        motor_goal[3].action_goal.goal.target_speed = pf_ta
-        motor_goal[4].action_goal.goal.target_speed = cb_ta
-        motor_goal[5].action_goal.goal.target_speed = reel_ta
-
-        for motor in motor_goal:
-            print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
-
-        last_target = msg.data
-        return False
-
-    elif last_target > msg.data and last_target - msg.data >= 0.025:  # 减速
-        mode = 'speeddown'
-        motor_goal[0].action_goal.goal.motor_id = m1 # 减速也特殊
-        motor_goal[1].action_goal.goal.motor_id = m2
-        motor_goal[2].action_goal.goal.motor_id = m3
-        # motor_goal[3].action_goal.goal.motor_id = fh
-        # motor_goal[0].action_goal.goal.motor_id = cb
-        # motor_goal[1].action_goal.goal.motor_id = cb
-        # motor_goal[2].action_goal.goal.motor_id = cb
-        motor_goal[0].action_goal.goal.target_speed = reel_ta
-        motor_goal[1].action_goal.goal.target_speed = cb_ta
-        motor_goal[2].action_goal.goal.target_speed = pf_ta
-        # motor_goal[3].action_goal.goal.target_speed = fh_ta
-        for motor in motor_goal:
-            print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
-
-        last_target = msg.data
-        return False
-
-    else:
-        return True
 
 # define state Foo
 class Car_speed_monitor(smach.State):
@@ -343,12 +170,57 @@ class Car_speed_monitor(smach.State):
         car_speed_last = car_speed_now
         return result
 
+class failed(smach.State):
+    def __init__(self):
+        smach.State.__init__(self, outcomes=['speed_control_failed'])
+
+    def execute(self, userdata):
+        global car_speed_now
+        global car_speed_last
+        result = None
+        global last_target
+        global mode
+
+        # m1_ta = reelRatio * min(50.0, min(21.23 * reelCof * msg.data + 12.3, 21.23 * 1.0 * msg.data + 21.23))
+        # m2_ta = 0.5 * cbRatio * min(467.0, min(398.09 * cbCof * msg.data + 131.37, 398.09 * 1.0 * msg.data + 238.85))
+        # m3_ta = pfRatio * min(187.0, min(39.16 * pfCof * msg.data + 52.47, 39.16 * 3.0 * msg.data + 90.07))
+        # m4_ta = fhRatio * min(187.0, min(39.16 * fhCof * msg.data + 52.47, 39.16 * 3.0 * msg.data + 90.07))
+        m1_ta = 0
+        m2_ta = 0
+        m3_ta = 0
+        m4_ta = 0
+        m5_ta = 0
+        m6_ta = 0
+
+        motor_goal[0].action_goal.goal.motor_id = m1
+        motor_goal[1].action_goal.goal.motor_id = m2
+        motor_goal[2].action_goal.goal.motor_id = m3
+        motor_goal[3].action_goal.goal.motor_id = m4
+        motor_goal[4].action_goal.goal.motor_id = m5
+        motor_goal[5].action_goal.goal.motor_id = m6
+
+        motor_goal[0].action_goal.goal.target_speed = m1_ta
+        motor_goal[1].action_goal.goal.target_speed = m2_ta
+        motor_goal[2].action_goal.goal.target_speed = m2_ta
+        motor_goal[3].action_goal.goal.target_speed = m4_ta
+        motor_goal[4].action_goal.goal.target_speed = m5_ta
+        motor_goal[5].action_goal.goal.target_speed = m6_ta
+
+        # for motor in motor_goal:
+        #     print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
+
+        # rospy.loginfo('Monitor car speed ...')
+        result = 'speed_control_failed'
+
+        car_speed_last = car_speed_now
+        return result
+
 def main():
     global motor_client
 
     rospy.init_node("preemption_example")
 
-    topic_monitor = Interpreter()
+    topic_monitor = Topic_monitor()
 
     # # 配置第1个并行容器
     # foo_concurrence = smach.Concurrence(outcomes=['foo_reset', 'foo_done'],
@@ -471,21 +343,11 @@ def main():
                                             'preempted': 'R_MOTOR6',
                                             'aborted': 'R_MOTOR6'})
 
+        smach.StateMachine.add('FAILED',
+                               failed(), transitions={'speed_control_failed': 'R_MOTOR1'})
 
         smach.StateMachine.add('END',
                                end(), transitions={'end_succeeded': 'WAIT'})
-
-        # # 第一个节点为普通节点，调用init节点函数，若节点函数返回值为init_done则转移到下一个节点FH
-        # smach.StateMachine.add('TRY_SPEEDUP_FH', init(), transitions={'init_done': 'FH'})
-        # # 第二个节点为并行节点，调用foo_concurrence节点函数，同样定义状态转移规则
-        # smach.StateMachine.add('FH', foo_concurrence,
-        #                        transitions={'foo_reset': 'TRY_AGAIN_FH', 'foo_done': 'TRY_SPEEDUP_PF'})
-        # smach.StateMachine.add('TRY_AGAIN_FH', foo(),
-        #                        transitions={'foo_succeeded': 'FH', 'preempted': 'TRY_SPEEDUP_FH'})
-        # smach.StateMachine.add('TRY_SPEEDUP_PF', init(), transitions={'init_done': 'PF'})
-        # smach.StateMachine.add('PF', foo_concurrence2, transitions={'foo_reset': 'TRY_AGAIN_PF', 'foo_done': 'DONE'})
-        # smach.StateMachine.add('TRY_AGAIN_PF', foo(),
-        #                        transitions={'foo_succeeded': 'PF', 'preempted': 'TRY_SPEEDUP_PF'})
 
     # 插入内部状态监控器
     sis = smach_ros.IntrospectionServer('smach_server', sm, '/INPUT_COMMAND')

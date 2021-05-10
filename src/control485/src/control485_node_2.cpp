@@ -321,7 +321,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
     } else
     {
         ROS_WARN_STREAM("motor control FAILED!");
-        as->setSucceeded();
+        as->setAborted();
         rs485_busy = false;
     }
 
