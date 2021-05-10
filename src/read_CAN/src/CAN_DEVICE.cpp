@@ -23,6 +23,10 @@ CAN_DEVICE::CAN_DEVICE(int channel_idx) {
         current_buffer4.push_back(0);
         current_buffer5.push_back(0);
         current_buffer6.push_back(0);
+        current_buffer7.push_back(0);
+        current_buffer8.push_back(0);
+        current_buffer9.push_back(0);
+        current_buffer10.push_back(0);
     }  // 本来应该是初始化直接有定义的，但是没有成功，所以这样替代做
 }
 
@@ -231,17 +235,6 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     data_current2.data = rms2;
                     pCAN_DEVICE->pub_c_motor2->publish(data_current2);
 
-//                    //电流检测（电流环3）
-//                    int current_int3 = (high4 << 8 | low4);
-//                    float current3 = current_int3;
-//                    float rms3 = pCAN_DEVICE->calculate_rms3(current3);
-//                    std_msgs::Float32 data_current_raw3;
-//                    data_current_raw3.data = current3;
-//                    pCAN_DEVICE->pub_c_motor3_raw->publish(data_current_raw3);
-//                    std_msgs::Float32 data_current3;
-//                    data_current3.data = rms3;
-//                    pCAN_DEVICE->pub_c_motor3->publish(data_current3);
-
 //                    ROS_INFO(
 //                            "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle1:%05d angle2:%05d",
 //                            pCAN_DEVICE->channel+1, pCAN_DEVICE->count, rec[j].ID,
@@ -284,7 +277,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     if(current4>2000)
                         current4 = 0;
                     ROS_INFO_STREAM("current4: "<<current4);
-                    float rms4 = pCAN_DEVICE->calculate_rms4(current4)-0.35;
+                    float rms4 = pCAN_DEVICE->calculate_rms4(current4);
                     std_msgs::Float32 data_current_raw4;
                     data_current_raw4.data = current4;
                     pCAN_DEVICE->pub_c_motor4_raw->publish(data_current_raw4);
@@ -292,22 +285,94 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     data_current4.data = rms4;
                     pCAN_DEVICE->pub_c_motor4->publish(data_current4);
                     
+//                    //电流检测（电流环5）
+//                    int current_int5 = (high6 << 8 | low6);
+//                    float current5 = current_int5;
+//                    if(current5>2000)
+//                        current5 = 0;
+//                    ROS_INFO_STREAM("current5: "<<current5);
+//                    float rms5 = pCAN_DEVICE->calculate_rms5(current5)+1;
+//                    std_msgs::Float32 data_current_raw5;
+//                    data_current_raw5.data = current5;
+//                    pCAN_DEVICE->pub_c_motor5_raw->publish(data_current_raw5);
+//                    std_msgs::Float32 data_current5;
+//                    data_current5.data = rms5;
+//                    pCAN_DEVICE->pub_c_motor5->publish(data_current5);
+//
+//                    //电流检测（电流环6）
+//                    int current_int6 = (high7 << 8 | low7);
+//                    float current6 = current_int6;
+//                    if(current6>2000)
+//                        current6 = 0;
+//                    ROS_INFO_STREAM("current6: "<<current6);
+//                    float rms6 = pCAN_DEVICE->calculate_rms6(current6);
+//                    std_msgs::Float32 data_current_raw6;
+//                    data_current_raw6.data = current6;
+//                    pCAN_DEVICE->pub_c_motor6_raw->publish(data_current_raw6);
+//                    std_msgs::Float32 data_current6;
+//                    data_current6.data = rms6;
+//                    pCAN_DEVICE->pub_c_motor6->publish(data_current6);
+
+
+//                    ROS_INFO(
+//                            "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle1:%05d angle2:%05d",
+//                            pCAN_DEVICE->channel+1, pCAN_DEVICE->count, rec[j].ID,
+//                            rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
+//                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1, pCAN_DEVICE->angle2);
+                }
+                
+                //// 采集卡3：
+                else if (rec[j].ID == 0x0183) // 0-3接口的数据
+                {
+                    unsigned char high0, low0;
+                    high0 = rec[j].Data[1];
+                    low0 = rec[j].Data[0];
+                    unsigned char high1, low1;
+                    high1 = rec[j].Data[3];
+                    low1 = rec[j].Data[2];
+                    unsigned char high2, low2;
+                    high2 = rec[j].Data[5];
+                    low2 = rec[j].Data[4];
+                    unsigned char high3, low3;
+                    high3 = rec[j].Data[7];
+                    low3 = rec[j].Data[6];
+
+//                    // 力矩传感器
+                    // 0号接口暂时还没有使用
+//                    float torque = (high0 << 8 | low0);
+//                    pCAN_DEVICE->torque = torque/10000*100;
+//                    if(pCAN_DEVICE->torque < 0.05) // 太小的时候过滤一下
+//                    {
+//                        pCAN_DEVICE->torque = 0;
+//                    }
+//                    std_msgs::Float32 data_receive4;
+//                    data_receive4.data = pCAN_DEVICE->torque;
+//                    pCAN_DEVICE->torque_pub->publish(data_receive4);
+
+                    //电流检测（钳流表）
+                    int current_cm7290_int = (high1 << 8 | low1);
+                    float current_cm7290 = current_cm7290_int;
+                    current_cm7290 = current_cm7290/100;
+                    std_msgs::Float32 data_current_cm7290;
+                    data_current_cm7290.data = current_cm7290;
+                    pCAN_DEVICE->cm7290_current_pub->publish(data_current_cm7290);
+
                     //电流检测（电流环5）
-                    int current_int5 = (high6 << 8 | low6);
+                    int current_int5 = (high2 << 8 | low2);
                     float current5 = current_int5;
                     if(current5>2000)
                         current5 = 0;
                     ROS_INFO_STREAM("current5: "<<current5);
-                    float rms5 = pCAN_DEVICE->calculate_rms5(current5)+1;
+                    float rms5 = pCAN_DEVICE->calculate_rms5(current5);
                     std_msgs::Float32 data_current_raw5;
                     data_current_raw5.data = current5;
                     pCAN_DEVICE->pub_c_motor5_raw->publish(data_current_raw5);
                     std_msgs::Float32 data_current5;
                     data_current5.data = rms5;
                     pCAN_DEVICE->pub_c_motor5->publish(data_current5);
-                    
+
                     //电流检测（电流环6）
-                    int current_int6 = (high7 << 8 | low7);
+                    int current_int6 = (high3 << 8 | low3);
                     float current6 = current_int6;
                     if(current6>2000)
                         current6 = 0;
@@ -320,6 +385,16 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     data_current6.data = rms6;
                     pCAN_DEVICE->pub_c_motor6->publish(data_current6);
 
+//                    //电流检测（电流环3）
+//                    int current_int3 = (high4 << 8 | low4);
+//                    float current3 = current_int3;
+//                    float rms3 = pCAN_DEVICE->calculate_rms3(current3);
+//                    std_msgs::Float32 data_current_raw3;
+//                    data_current_raw3.data = current3;
+//                    pCAN_DEVICE->pub_c_motor3_raw->publish(data_current_raw3);
+//                    std_msgs::Float32 data_current3;
+//                    data_current3.data = rms3;
+//                    pCAN_DEVICE->pub_c_motor3->publish(data_current3);
 
 //                    ROS_INFO(
 //                            "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle1:%05d angle2:%05d",
@@ -328,6 +403,85 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
 //                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1, pCAN_DEVICE->angle2);
                 }
 
+                else if (rec[j].ID == 0x0283) // 4-7接口的数据
+                {
+                    unsigned char high4, low4;
+                    high4 = rec[j].Data[1];
+                    low4 = rec[j].Data[0];
+                    unsigned char high5, low5;
+                    high5 = rec[j].Data[3];
+                    low5 = rec[j].Data[2];
+                    unsigned char high6, low6;
+                    high6 = rec[j].Data[5];
+                    low6 = rec[j].Data[4];
+                    unsigned char high7, low7;
+                    high7 = rec[j].Data[7];
+                    low7 = rec[j].Data[6];
+
+                    //电流检测（电流环7）
+                    int current_int7 = (high4 << 8 | low4);
+                    float current7 = current_int7;
+                    if(current7>2000)
+                        current7 = 0;
+                    ROS_INFO_STREAM("current7: "<<current7);
+                    float rms7 = pCAN_DEVICE->calculate_rms7(current7);
+                    std_msgs::Float32 data_current_raw7;
+                    data_current_raw7.data = current7;
+                    pCAN_DEVICE->pub_c_motor7_raw->publish(data_current_raw7);
+                    std_msgs::Float32 data_current7;
+                    data_current7.data = rms7;
+                    pCAN_DEVICE->pub_c_motor7->publish(data_current7);
+
+                    //电流检测（电流环8）
+                    int current_int8 = (high5 << 8 | low5);
+                    float current8 = current_int8;
+                    if(current8>2000)
+                        current8 = 0;
+                    ROS_INFO_STREAM("current8: "<<current8);
+                    float rms8 = pCAN_DEVICE->calculate_rms8(current8);
+                    std_msgs::Float32 data_current_raw8;
+                    data_current_raw8.data = current8;
+                    pCAN_DEVICE->pub_c_motor8_raw->publish(data_current_raw8);
+                    std_msgs::Float32 data_current8;
+                    data_current8.data = rms8;
+                    pCAN_DEVICE->pub_c_motor8->publish(data_current8);
+
+                    //电流检测（电流环9）
+                    int current_int9 = (high6 << 8 | low6);
+                    float current9 = current_int9;
+                    if(current9>2000)
+                        current9 = 0;
+                    ROS_INFO_STREAM("current9: "<<current9);
+                    float rms9 = pCAN_DEVICE->calculate_rms9(current9);
+                    std_msgs::Float32 data_current_raw9;
+                    data_current_raw9.data = current9;
+                    pCAN_DEVICE->pub_c_motor9_raw->publish(data_current_raw9);
+                    std_msgs::Float32 data_current9;
+                    data_current9.data = rms9;
+                    pCAN_DEVICE->pub_c_motor9->publish(data_current9);
+
+                    //电流检测（电流环10）
+                    int current_int10 = (high7 << 8 | low7);
+                    float current10 = current_int10;
+                    if(current10>2000)
+                        current10 = 0;
+                    ROS_INFO_STREAM("current10: "<<current10);
+                    float rms10 = pCAN_DEVICE->calculate_rms10(current10);
+                    std_msgs::Float32 data_current_raw10;
+                    data_current_raw10.data = current10;
+                    pCAN_DEVICE->pub_c_motor10_raw->publish(data_current_raw10);
+                    std_msgs::Float32 data_current10;
+                    data_current10.data = rms10;
+                    pCAN_DEVICE->pub_c_motor10->publish(data_current10);
+
+
+//                    ROS_INFO(
+//                            "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle1:%05d angle2:%05d",
+//                            pCAN_DEVICE->channel+1, pCAN_DEVICE->count, rec[j].ID,
+//                            rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
+//                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1, pCAN_DEVICE->angle2);
+                }
+                
                 //// 车速数据
                 else if (rec[j].ID == 0xCFF5188)
                 {
@@ -456,6 +610,66 @@ float CAN_DEVICE::calculate_rms6(float current_now)
 
     float power2sum = 0;
     for(float & iter : current_buffer6)
+    {
+        power2sum = power2sum + iter*iter;
+    }
+    float rms = sqrt(power2sum/buffer_length);
+//    ROS_INFO_STREAM("rms :"<<rms);
+    return rms;
+}
+
+float CAN_DEVICE::calculate_rms7(float current_now)
+{
+    current_buffer7.insert(current_buffer7.begin(),current_now);
+    current_buffer7.pop_back();
+
+    float power2sum = 0;
+    for(float & iter : current_buffer7)
+    {
+        power2sum = power2sum + iter*iter;
+    }
+    float rms = sqrt(power2sum/buffer_length);
+//    ROS_INFO_STREAM("rms :"<<rms);
+    return rms;
+}
+
+float CAN_DEVICE::calculate_rms8(float current_now)
+{
+    current_buffer8.insert(current_buffer8.begin(),current_now);
+    current_buffer8.pop_back();
+
+    float power2sum = 0;
+    for(float & iter : current_buffer8)
+    {
+        power2sum = power2sum + iter*iter;
+    }
+    float rms = sqrt(power2sum/buffer_length);
+//    ROS_INFO_STREAM("rms :"<<rms);
+    return rms;
+}
+
+float CAN_DEVICE::calculate_rms9(float current_now)
+{
+    current_buffer9.insert(current_buffer9.begin(),current_now);
+    current_buffer9.pop_back();
+
+    float power2sum = 0;
+    for(float & iter : current_buffer9)
+    {
+        power2sum = power2sum + iter*iter;
+    }
+    float rms = sqrt(power2sum/buffer_length);
+//    ROS_INFO_STREAM("rms :"<<rms);
+    return rms;
+}
+
+float CAN_DEVICE::calculate_rms10(float current_now)
+{
+    current_buffer10.insert(current_buffer10.begin(),current_now);
+    current_buffer10.pop_back();
+
+    float power2sum = 0;
+    for(float & iter : current_buffer10)
     {
         power2sum = power2sum + iter*iter;
     }

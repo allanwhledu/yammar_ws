@@ -84,10 +84,10 @@ bool QNode::init()
   // Add your ros communications here.
   text_subscriber = n.subscribe("/height_border_param", 100, &QNode::height_border_Callback, this);
   chart_subscriber = n.subscribe("/chart",1,&QNode::ChartCallback,this);
-  REEL_subscriber = n.subscribe("/motor_1_speed", 1, &QNode::motor1_speed_Callback, this);
-  CB_subscriber = n.subscribe("/motor_2_speed", 1, &QNode::motor2_speed_Callback, this);
-  PF_subscriber = n.subscribe("/motor_3_speed", 1, &QNode::motor3_speed_Callback, this);
-  FH_subscriber = n.subscribe("/motor_4_speed", 1, &QNode::motor4_speed_Callback, this);
+  REEL_subscriber = n.subscribe("/motor_3_speed", 1, &QNode::motor1_speed_Callback, this);
+  CB_subscriber = n.subscribe("/motor_4_speed", 1, &QNode::motor2_speed_Callback, this);
+  PF_subscriber = n.subscribe("/motor_2_speed", 1, &QNode::motor3_speed_Callback, this);
+  FH_subscriber = n.subscribe("/motor_1_speed", 1, &QNode::motor4_speed_Callback, this);
   REEL_current_subscriber = n.subscribe("/current1_rms", 1, &QNode::current1_Callback, this);
   CB_current_subscriber = n.subscribe("/current2_rms", 1, &QNode::current2_Callback, this);
   PF_current_subscriber = n.subscribe("/current3_rms", 1, &QNode::current3_Callback, this);

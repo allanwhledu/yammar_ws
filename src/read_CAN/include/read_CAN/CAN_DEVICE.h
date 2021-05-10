@@ -40,6 +40,10 @@ public:
     std::vector<float> current_buffer4;
     std::vector<float> current_buffer5;
     std::vector<float> current_buffer6;
+    std::vector<float> current_buffer7;
+    std::vector<float> current_buffer8;
+    std::vector<float> current_buffer9;
+    std::vector<float> current_buffer10;
     int buffer_length = 100;
 
     int channel;
@@ -75,6 +79,14 @@ public:
     ros::Publisher* pub_c_motor5_raw;
     ros::Publisher* pub_c_motor6;
     ros::Publisher* pub_c_motor6_raw;
+    ros::Publisher* pub_c_motor7;
+    ros::Publisher* pub_c_motor7_raw;
+    ros::Publisher* pub_c_motor8;
+    ros::Publisher* pub_c_motor8_raw;
+    ros::Publisher* pub_c_motor9;
+    ros::Publisher* pub_c_motor9_raw;
+    ros::Publisher* pub_c_motor10;
+    ros::Publisher* pub_c_motor10_raw;
 
     CAN_DEVICE(int channel_idx);
 
@@ -87,6 +99,10 @@ public:
     float calculate_rms4(float current_now);
     float calculate_rms5(float current_now);
     float calculate_rms6(float current_now);
+    float calculate_rms7(float current_now);
+    float calculate_rms8(float current_now);
+    float calculate_rms9(float current_now);
+    float calculate_rms10(float current_now);
     void transmit_msg(VCI_CAN_OBJ *send, char *com);
     void control_height(int mode); //驱动第num_motor号电机，速度为speed.
 

@@ -32,7 +32,8 @@ uint16_t motorCurrentFeedbackAddr=0xC6; //说明书中找到而补充的电流�
 double cbCof=1.2,reelCof=1.6,pfCof=4.44,fhCof=3.94; //同调率
 int cbRatio=5,reelRatio=64,pfRatio=15,fhRatio=10; //减速比
 const int reelMotor=1,cbMotor=2,pfMotor=3,fhMotor=4;
-string port="/dev/ttyUSB0";
+//string port="/dev/rs485-hub1";
+string port="/dev/ttyUSB2";
 
 
 // 初始化变量
@@ -150,44 +151,43 @@ void* carSpeedFollowMode(void*)
 }
 
 void *read_motor_speed_background(void *) {
-    int motor_id_reel = 3;
-    int motor_id_cb = 4;
-    int motor_id_pf = 2;
-    int motor_id_fh = 1;
-    int realSpeed_reel = 0;
-    int realSpeed_cb = 0;
-    int realSpeed_pf = 0;
-    int realSpeed_fh = 0;
+    int motor_id_1 = 11;
+    int motor_id_2 = 9;
+    int motor_id_3 = 10;
+//    int motor_id_4 = 4;
+    // todo 这个要改掉
 
+    int realSpeed_1 = 0;
+    int realSpeed_2 = 0;
+    int realSpeed_3 = 0;
+//    int realSpeed_4 = 0;
 
     while (!endFlag) {
         if (!rs485_busy)
         {
-//            ROS_WARN_STREAM("background speed moni");
             // Read and pub motor speed;
-            realSpeed_reel = motorReadSpeed(motor_id_reel);
-            std_msgs::Float32 reel_speed;
-            reel_speed.data = realSpeed_reel;
-            pub_motor1_speed->publish(reel_speed);
+            realSpeed_1 = motorReadSpeed(motor_id_1);
+            std_msgs::Float32 realspeed_1;
+            realspeed_1.data = realSpeed_1;
+            pub_motor1_speed->publish(realspeed_1);
 
             usleep(40000);
-            realSpeed_cb = motorReadSpeed(motor_id_cb);
-            std_msgs::Float32 cb_speed;
-            cb_speed.data = realSpeed_cb;
-            pub_motor2_speed->publish(cb_speed);
+            realSpeed_2 = motorReadSpeed(motor_id_2);
+            std_msgs::Float32 realspeed_2;
+            realspeed_2.data = realSpeed_2;
+            pub_motor2_speed->publish(realspeed_2);
 
             usleep(40000);
-            realSpeed_pf = motorReadSpeed(motor_id_pf);
-            std_msgs::Float32 pf_speed;
-            pf_speed.data = realSpeed_pf;
-            pub_motor3_speed->publish(pf_speed);
+            realSpeed_3 = motorReadSpeed(motor_id_3);
+            std_msgs::Float32 realspeed_3;
+            realspeed_3.data = realSpeed_3;
+            pub_motor3_speed->publish(realspeed_3);
 
-//            ROS_WARN_STREAM("debbbbuggg");
-            usleep(40000);
-            realSpeed_fh = motorReadSpeed(motor_id_fh);
-            std_msgs::Float32 fh_speed;
-            fh_speed.data = realSpeed_fh;
-            pub_motor4_speed->publish(fh_speed);
+//            usleep(40000);
+//            realSpeed_4 = motorReadSpeed(motor_id_4);
+//            std_msgs::Float32 realspeed_4;
+//            realspeed_4.data = realSpeed_4;
+//            pub_motor4_speed->publish(realspeed_4);
 
             usleep(100000); // 250ms ==> 4hz, 每个电机每秒1次
 //            ROS_INFO_STREAM("back ground speed.");
@@ -200,7 +200,7 @@ void *read_motor_speed_background(void *) {
 // 测试action
 typedef actionlib::SimpleActionServer<control485::DriveMotorAction> Server;
 void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
-    ROS_WARN_STREAM("Start Motor :"<<goal->motor_id);
+    ROS_INFO("Start Motor %d.", goal->motor_id);
     rs485_busy = true;
     int target_speed = 0;
     int actual_speed = -1000;
@@ -209,15 +209,15 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
     target_speed = goal->target_speed;
     actual_speed = motorReadSpeed(goal->motor_id);
 
-    ROS_WARN_STREAM("the current speed is: "<<actual_speed);
-    ROS_WARN_STREAM("the target speed is: "<<target_speed);
+    ROS_INFO_STREAM("the current speed is: "<<actual_speed);
+    ROS_INFO_STREAM("the target speed is: "<<target_speed);
     ROS_INFO_STREAM("the difference of speed still: "<<abs(target_speed - actual_speed));
 
     motorSetSpeed(goal->motor_id, target_speed);
 
     int count = 0;
     bool speed_ok = false;
-    while (count < 1000) {
+    while (count < 500) {
         usleep(20000);
         actual_speed = motorReadSpeed(goal->motor_id);
         ROS_INFO_STREAM("reed speed onground");
@@ -235,38 +235,39 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
         {
             ROS_WARN_STREAM("Speed is ok.");
             switch (goal->motor_id) {
-                case 3:
+                // todo 这里要改掉
+                case 11:
                 {
                     ROS_INFO_STREAM("pub reel speed.");
-                    std_msgs::Float32 reel_speed;
-                    reel_speed.data = actual_speed;
-                    pub_motor1_speed->publish(reel_speed);
+                    std_msgs::Float32 motor_1_speed;
+                    motor_1_speed.data = actual_speed;
+                    pub_motor1_speed->publish(motor_1_speed);
                     break;
                 }
-                case 4:
+                case 9:
                 {
                     ROS_INFO_STREAM("pub cb speed.");
-                    std_msgs::Float32 cb_speed;
-                    cb_speed.data = actual_speed;
-                    pub_motor2_speed->publish(cb_speed);
+                    std_msgs::Float32 motor2_speed;
+                    motor2_speed.data = actual_speed;
+                    pub_motor2_speed->publish(motor2_speed);
                     break;
                 }
-                case 2:
+                case 10:
                 {
                     ROS_INFO_STREAM("pub pf speed.");
-                    std_msgs::Float32 pf_speed;
-                    pf_speed.data = actual_speed;
-                    pub_motor3_speed->publish(pf_speed);
+                    std_msgs::Float32 motor3_speed;
+                    motor3_speed.data = actual_speed;
+                    pub_motor3_speed->publish(motor3_speed);
                     break;
                 }
-                case 1:
-                {
-                    ROS_INFO_STREAM("pub fh speed.");
-                    std_msgs::Float32 fh_speed;
-                    fh_speed.data = actual_speed;
-                    pub_motor4_speed->publish(fh_speed);
-                    break;
-                }
+//                case 4:
+//                {
+//                    ROS_INFO_STREAM("pub fh speed.");
+//                    std_msgs::Float32 fh_speed;
+//                    fh_speed.data = actual_speed;
+//                    pub_motor4_speed->publish(fh_speed);
+//                    break;
+//                }
             }
             speed_ok = true;
             break;
@@ -276,7 +277,8 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
             // 发布速度（未达要求的）
             ROS_WARN_STREAM("Speed is BAD.");
             switch (goal->motor_id) {
-                case 3:
+                // todo 这里要改掉
+                case 11:
                 {
                     ROS_INFO_STREAM("pub reel speed.");
                     std_msgs::Float32 reel_speed;
@@ -284,7 +286,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
                     pub_motor1_speed->publish(reel_speed);
                     break;
                 }
-                case 4:
+                case 9:
                 {
                     ROS_INFO_STREAM("pub cb speed.");
                     std_msgs::Float32 cb_speed;
@@ -292,7 +294,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
                     pub_motor2_speed->publish(cb_speed);
                     break;
                 }
-                case 2:
+                case 10:
                 {
                     ROS_INFO_STREAM("pub pf speed.");
                     std_msgs::Float32 pf_speed;
@@ -300,14 +302,14 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
                     pub_motor3_speed->publish(pf_speed);
                     break;
                 }
-                case 1:
-                {
-                    ROS_INFO_STREAM("pub fh speed.");
-                    std_msgs::Float32 fh_speed;
-                    fh_speed.data = actual_speed;
-                    pub_motor4_speed->publish(fh_speed);
-                    break;
-                }
+//                case 4:
+//                {
+//                    ROS_INFO_STREAM("pub fh speed.");
+//                    std_msgs::Float32 fh_speed;
+//                    fh_speed.data = actual_speed;
+//                    pub_motor4_speed->publish(fh_speed);
+//                    break;
+//                }
             }
 
             usleep(20000);
@@ -349,7 +351,7 @@ bool openSerial(const char* port)
     if(modbus_connect(com)==-1)
     {
         cout<<"Cannot connect modbus at port:"<<port<<endl;
-        ROS_WARN_STREAM("rs485 1 errro...");
+        ROS_WARN_STREAM("rs485 2 errro...");
         return false;
     } else
         cout<<"Connected modbus at port:"<<port<<endl;
@@ -410,7 +412,6 @@ void motorSetSpeed(int motor,int speed)
     }
 
     modbus_set_slave(com,motor);
-    ROS_WARN_STREAM("set slave success");
 //    ROS_WARN_STREAM("set speed result: "<<modbus_write_register(com,motorSpeedAddr,speed));
     usleep(20000);
     while (!modbus_write_register(com,motorSpeedAddr,speed))
@@ -444,7 +445,7 @@ int motorReadSpeed(int motor)
 
 int main (int argc, char **argv)
 {
-    ros::init(argc, argv, "rs485_hub_1") ;
+    ros::init(argc, argv, "rs485_hub_3") ;
     ROS_INFO_STREAM("Hello, ROS!") ;
     ros::NodeHandle n_;
 
@@ -455,7 +456,7 @@ int main (int argc, char **argv)
 
     ofstream ofs;
     string filename = "/home/sjtu_wanghaili/yammar_ws/speed_result/";
-    filename = filename + current_time + "_speed.txt";
+    filename = filename + current_time + "_speed_3.txt";
     ofs.open(filename, ios::out);
     if(!ofs)
     {
@@ -477,17 +478,17 @@ int main (int argc, char **argv)
     pub_ = n_.advertise<std_msgs::Float32>("modified_car_speed", 1);
     pub_modified_car_speed = &pub_;
 
-    pub1_ = n_.advertise<std_msgs::Float32>("motor_3_speed", 1);
+    pub1_ = n_.advertise<std_msgs::Float32>("motor_11_speed", 1);
     pub_motor1_speed = &pub1_;
 
-    pub2_ = n_.advertise<std_msgs::Float32>("motor_4_speed", 1);
+    pub2_ = n_.advertise<std_msgs::Float32>("motor_9_speed", 1);
     pub_motor2_speed = &pub2_;
 
-    pub3_ = n_.advertise<std_msgs::Float32>("motor_2_speed", 1);
+    pub3_ = n_.advertise<std_msgs::Float32>("motor_10_speed", 1);
     pub_motor3_speed = &pub3_;
 
-    pub4_ = n_.advertise<std_msgs::Float32>("motor_1_speed", 1);
-    pub_motor4_speed = &pub4_;
+//    pub4_ = n_.advertise<std_msgs::Float32>("motor_10_speed", 1);
+//    pub_motor4_speed = &pub4_;
 
     //Topic you want to subscribe
     sub2_ = n_.subscribe("is_obstacle", 1, &obstacle_callback);
@@ -496,7 +497,6 @@ int main (int argc, char **argv)
 
     cout<<"usage sudo ./motor"<<endl;
     //modbus_set_debug(com,true);//调试模式 可以显示串口总线的调试信息
-//    ROS_WARN_STREAM("starting rs485 - 1");
     openSerial(port.c_str());
     motorInit();
 
@@ -511,11 +511,9 @@ int main (int argc, char **argv)
     ROS_INFO_STREAM("speed read in background spread make.");
 
     // 定义一个服务器，control485就是topic
-//    ROS_WARN_STREAM("starting rs485 - 1 - action");
-    Server server(n_, "control485", boost::bind(&execute, _1, &server), false);
+    Server server(n_, "control485_3", boost::bind(&execute, _1, &server), false);
     // 服务器开始运行
     server.start();
-//    ROS_WARN_STREAM("success rs485 - 1 - action");
     ros::spin();
 
     ROS_INFO_STREAM("wait spread close.");
@@ -525,18 +523,14 @@ int main (int argc, char **argv)
     pthread_kill(speed_read_background, 0);
     ros::Duration(10);
 
-//    ROS_WARN_STREAM("debug info");
-    // todo 这里的所有id要改
-    motorSetSpeed(3, 0);
+    // todo id要改
+    motorSetSpeed(11, 0);
     usleep(100000);
-    motorSetSpeed(4, 0);
+    motorSetSpeed(9, 0);
     usleep(100000);
-    motorSetSpeed(2, 0);
-    usleep(100000);
-    motorSetSpeed(1, 0);
+    motorSetSpeed(10, 0);
     usleep(100000);
     ofs.close();
-//    ROS_WARN_STREAM("debug info1");
     return 0;
 }
 
@@ -560,9 +554,9 @@ void carspeed_callback(const std_msgs::Float32ConstPtr &msg) {
         modified_car_speed.data = carSpeed.linear;
     }
 
-    if(modified_car_speed.data != last_modified_car_speed){
-        ROS_WARN_STREAM("modified speed will be change.");
-    }
-    pub_modified_car_speed->publish(modified_car_speed);
-    last_modified_car_speed = modified_car_speed.data;
+//    if(modified_car_speed.data != last_modified_car_speed){
+//        ROS_WARN_STREAM("modified speed will be change.");
+//    }
+////    pub_modified_car_speed->publish(modified_car_speed);  // 因为是第二个rs485 node，所以不需要发布修改后的速度
+//    last_modified_car_speed = modified_car_speed.data;
 }

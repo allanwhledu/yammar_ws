@@ -27,12 +27,16 @@ pfRatio = 15
 fhRatio = 10
 
 # 电机序号
-m1 = 5
-m2 = 7
-m3 = 8
-m4 = 11
-m5 = 9
-m6 = 10
+m1 = 3
+m2 = 4
+m3 = 2
+m4 = 1
+m5 = 5
+m6 = 7
+m7 = 8
+m8 = 11
+m9 = 9
+m10 = 10
 
 # 模式
 mode = 'stop'
@@ -40,8 +44,8 @@ mode = 'stop'
 # 设定电机序号
 # motors = [cb, reel]
 # motors = [pf, cb, reel]
-motors = [m1, m2, m3, m4, m5, m6]
-motor_target_speed = [0, 0, 0, 0, 0, 0]
+motors = [m1, m2, m3, m4, m5, m6, m7, m8, m9, m10]
+motor_target_speed = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 # motors = [reel, cb]
 motor_goal = list()
 
@@ -100,7 +104,7 @@ class end(smach.State):
 # define state Foo
 class Car_speed_monitor(smach.State):
     def __init__(self):
-        smach.State.__init__(self, outcomes=['speedup', 'speeddown', 'steady', 'stop'])
+        smach.State.__init__(self, outcomes=['speedup', 'speeddown', 'steady', 'stop', 'start'])
         self.counter = 0
 
     def execute(self, userdata):
@@ -120,10 +124,11 @@ class Car_speed_monitor(smach.State):
         motor target speed describtion
         '''
         motor_speed_dict = {
-            'M1': None,
-            'M2': None,
-            'M3': None,
-            'M4': None,
+            # todo 增加1-4的减速比（3 4 2 1）
+            'M1': 44 / 1,
+            'M2': 467 / 1,
+            'M3': 187 / 1,
+            'M4': 324 / 1,
             'M5': 1324 / 1.4,
             'M6': None,
             'M7': 487 / 0.25,
@@ -137,16 +142,32 @@ class Car_speed_monitor(smach.State):
         # m2_ta = 0.5 * cbRatio * min(467.0, min(398.09 * cbCof * msg.data + 131.37, 398.09 * 1.0 * msg.data + 238.85))
         # m3_ta = pfRatio * min(187.0, min(39.16 * pfCof * msg.data + 52.47, 39.16 * 3.0 * msg.data + 90.07))
         # m4_ta = fhRatio * min(187.0, min(39.16 * fhCof * msg.data + 52.47, 39.16 * 3.0 * msg.data + 90.07))
-        motor_target_speed[0] = 1000
-        motor_target_speed[1] = motor_speed_dict['M7']
-        motor_target_speed[2] = motor_speed_dict['M8']
-        motor_target_speed[3] = motor_speed_dict['M11']
-        motor_target_speed[4] = motor_speed_dict['M9']
-        motor_target_speed[5] = motor_speed_dict['M10']
 
-        for ta in motor_target_speed:
-            if ta > 3000:
-                ta = 3000
+        # motor_target_speed[0] = 1000  # motor_speed_dict['M3']
+        # motor_target_speed[1] = motor_speed_dict['M3']
+        # motor_target_speed[2] = motor_speed_dict['M2']
+        # motor_target_speed[3] = motor_speed_dict['M1']
+        # motor_target_speed[4] = motor_speed_dict['M5']
+        # motor_target_speed[5] = motor_speed_dict['M7']
+        # motor_target_speed[6] = motor_speed_dict['M8']
+        # motor_target_speed[7] = motor_speed_dict['M11']
+        # motor_target_speed[8] = motor_speed_dict['M9']
+        # motor_target_speed[9] = motor_speed_dict['M10']
+
+        motor_target_speed[0] = 1500 + 1000 * car_speed_now  # motor_speed_dict['M3']
+        motor_target_speed[1] = 500
+        motor_target_speed[2] = 500
+        motor_target_speed[3] = 800
+        motor_target_speed[4] = 500
+        motor_target_speed[5] = 300
+        motor_target_speed[6] = 500
+        motor_target_speed[7] = 400
+        motor_target_speed[8] = 500
+        motor_target_speed[9] = 500
+
+        for index in range(len(motor_target_speed)):
+            if motor_target_speed[index] > 3000:
+                motor_target_speed[index] = 3000
 
         for index in range(len(motor_goal)):
             motor_goal[index].action_goal.goal.motor_id = motors[index]
@@ -164,7 +185,9 @@ class Car_speed_monitor(smach.State):
             result = 'stop'
         elif is_stop == 0 and is_stop_last == 1:
             is_stop_last = is_stop
-            result = 'speedup'
+            result = 'start'
+        elif car_speed_now > car_speed_last and car_speed_last == 0:
+            result = 'start'
         elif car_speed_now > car_speed_last:
             result = 'speedup'
         elif car_speed_now < car_speed_last:
@@ -234,106 +257,179 @@ def main():
         # smach.StateMachine.add('WAIT', smach_ros.MonitorState("/modified_car_speed", Float32, monitor_cb),
         #                        transitions={'invalid': 'MOTOR1', 'valid': 'WAIT', 'preempted': 'WAIT'})
         smach.StateMachine.add('WAIT', Car_speed_monitor(),
-                               transitions={'speedup': 'MOTOR6',
-                                            'speeddown': 'R_MOTOR1',
+                               transitions={'start': 'START_MOTOR10',
+                                            'speeddown': 'SPEEDUP_MOTOR1',
                                             'steady': 'WAIT',
-                                            'stop': 'R_MOTOR1'})
-        smach.StateMachine.add('MOTOR1',
+                                            'stop': 'SPEEDDOWN_MOTOR1',
+                                            'speedup': 'SPEEDUP_MOTOR1'})
+        smach.StateMachine.add('SPEEDUP_MOTOR1',
                                SimpleActionState('control485',
                                                  DriveMotorAction,
                                                  goal=motor_goal[0].action_goal.goal),
                                transitions={'succeeded': 'END',
-                                            'preempted': 'MOTOR1',
+                                            'preempted': 'SPEEDUP_MOTOR1',
                                             'aborted': 'FAILED'})
 
-        smach.StateMachine.add('MOTOR2',
-                               SimpleActionState('control485',
-                                                 DriveMotorAction,
-                                                 goal=motor_goal[1].action_goal.goal),
-                               transitions={'succeeded': 'MOTOR1',
-                                            'preempted': 'MOTOR2',
-                                            'aborted': 'FAILED'})
-
-        smach.StateMachine.add('MOTOR3',
-                               SimpleActionState('control485',
-                                                 DriveMotorAction,
-                                                 goal=motor_goal[2].action_goal.goal),
-                               transitions={'succeeded': 'MOTOR2',
-                                            'preempted': 'MOTOR3',
-                                            'aborted': 'FAILED'})
-        smach.StateMachine.add('MOTOR4',
-                               SimpleActionState('control485_2',
-                                                 DriveMotorAction,
-                                                 goal=motor_goal[3].action_goal.goal),
-                               transitions={'succeeded': 'MOTOR3',
-                                            'preempted': 'MOTOR4',
-                                            'aborted': 'FAILED'})
-
-        smach.StateMachine.add('MOTOR5',
-                               SimpleActionState('control485_2',
-                                                 DriveMotorAction,
-                                                 goal=motor_goal[4].action_goal.goal),
-                               transitions={'succeeded': 'MOTOR4',
-                                            'preempted': 'MOTOR5',
-                                            'aborted': 'FAILED'})
-
-        smach.StateMachine.add('MOTOR6',
-                               SimpleActionState('control485_2',
-                                                 DriveMotorAction,
-                                                 goal=motor_goal[5].action_goal.goal),
-                               transitions={'succeeded': 'MOTOR5',
-                                            'preempted': 'MOTOR6',
-                                            'aborted': 'FAILED'})
-
-        smach.StateMachine.add('R_MOTOR1',
+        smach.StateMachine.add('START_MOTOR1',
                                SimpleActionState('control485',
                                                  DriveMotorAction,
                                                  goal=motor_goal[0].action_goal.goal),
-                               transitions={'succeeded': 'R_MOTOR2',
-                                            'preempted': 'R_MOTOR1',
+                               transitions={'succeeded': 'END',
+                                            'preempted': 'START_MOTOR1',
                                             'aborted': 'FAILED'})
 
-        smach.StateMachine.add('R_MOTOR2',
+        smach.StateMachine.add('START_MOTOR2',
                                SimpleActionState('control485',
                                                  DriveMotorAction,
                                                  goal=motor_goal[1].action_goal.goal),
-                               transitions={'succeeded': 'R_MOTOR3',
-                                            'preempted': 'R_MOTOR2',
+                               transitions={'succeeded': 'START_MOTOR1',
+                                            'preempted': 'START_MOTOR2',
                                             'aborted': 'FAILED'})
 
-        smach.StateMachine.add('R_MOTOR3',
+        smach.StateMachine.add('START_MOTOR3',
                                SimpleActionState('control485',
                                                  DriveMotorAction,
                                                  goal=motor_goal[2].action_goal.goal),
-                               transitions={'succeeded': 'R_MOTOR4',
-                                            'preempted': 'R_MOTOR3',
+                               transitions={'succeeded': 'START_MOTOR2',
+                                            'preempted': 'START_MOTOR3',
                                             'aborted': 'FAILED'})
-        smach.StateMachine.add('R_MOTOR4',
-                               SimpleActionState('control485_2',
+        smach.StateMachine.add('START_MOTOR4',
+                               SimpleActionState('control485',
                                                  DriveMotorAction,
                                                  goal=motor_goal[3].action_goal.goal),
-                               transitions={'succeeded': 'R_MOTOR5',
-                                            'preempted': 'R_MOTOR4',
+                               transitions={'succeeded': 'START_MOTOR3',
+                                            'preempted': 'START_MOTOR4',
                                             'aborted': 'FAILED'})
 
-        smach.StateMachine.add('R_MOTOR5',
+        smach.StateMachine.add('START_MOTOR5',
                                SimpleActionState('control485_2',
                                                  DriveMotorAction,
                                                  goal=motor_goal[4].action_goal.goal),
-                               transitions={'succeeded': 'R_MOTOR6',
-                                            'preempted': 'R_MOTOR5',
+                               transitions={'succeeded': 'START_MOTOR4',
+                                            'preempted': 'START_MOTOR5',
                                             'aborted': 'FAILED'})
 
-        smach.StateMachine.add('R_MOTOR6',
+        smach.StateMachine.add('START_MOTOR6',
                                SimpleActionState('control485_2',
                                                  DriveMotorAction,
                                                  goal=motor_goal[5].action_goal.goal),
+                               transitions={'succeeded': 'START_MOTOR5',
+                                            'preempted': 'START_MOTOR6',
+                                            'aborted': 'FAILED'})
+
+        smach.StateMachine.add('START_MOTOR7',
+                               SimpleActionState('control485_2',
+                                                 DriveMotorAction,
+                                                 goal=motor_goal[6].action_goal.goal),
+                               transitions={'succeeded': 'START_MOTOR6',
+                                            'preempted': 'START_MOTOR7',
+                                            'aborted': 'FAILED'})
+
+        smach.StateMachine.add('START_MOTOR8',
+                               SimpleActionState('control485_3',
+                                                 DriveMotorAction,
+                                                 goal=motor_goal[7].action_goal.goal),
+                               transitions={'succeeded': 'START_MOTOR7',
+                                            'preempted': 'START_MOTOR8',
+                                            'aborted': 'FAILED'})
+
+        smach.StateMachine.add('START_MOTOR9',
+                               SimpleActionState('control485_3',
+                                                 DriveMotorAction,
+                                                 goal=motor_goal[8].action_goal.goal),
+                               transitions={'succeeded': 'START_MOTOR8',
+                                            'preempted': 'START_MOTOR9',
+                                            'aborted': 'FAILED'})
+
+        smach.StateMachine.add('START_MOTOR10',
+                               SimpleActionState('control485_3',
+                                                 DriveMotorAction,
+                                                 goal=motor_goal[9].action_goal.goal),
+                               transitions={'succeeded': 'START_MOTOR9',
+                                            'preempted': 'START_MOTOR10',
+                                            'aborted': 'FAILED'})
+
+        smach.StateMachine.add('SPEEDDOWN_MOTOR1',
+                               SimpleActionState('control485',
+                                                 DriveMotorAction,
+                                                 goal=motor_goal[0].action_goal.goal),
+                               transitions={'succeeded': 'SPEEDDOWN_MOTOR2',
+                                            'preempted': 'SPEEDDOWN_MOTOR1',
+                                            'aborted': 'FAILED'})
+
+        smach.StateMachine.add('SPEEDDOWN_MOTOR2',
+                               SimpleActionState('control485',
+                                                 DriveMotorAction,
+                                                 goal=motor_goal[1].action_goal.goal),
+                               transitions={'succeeded': 'SPEEDDOWN_MOTOR3',
+                                            'preempted': 'SPEEDDOWN_MOTOR2',
+                                            'aborted': 'FAILED'})
+
+        smach.StateMachine.add('SPEEDDOWN_MOTOR3',
+                               SimpleActionState('control485',
+                                                 DriveMotorAction,
+                                                 goal=motor_goal[2].action_goal.goal),
+                               transitions={'succeeded': 'SPEEDDOWN_MOTOR4',
+                                            'preempted': 'SPEEDDOWN_MOTOR3',
+                                            'aborted': 'FAILED'})
+        smach.StateMachine.add('SPEEDDOWN_MOTOR4',
+                               SimpleActionState('control485',
+                                                 DriveMotorAction,
+                                                 goal=motor_goal[3].action_goal.goal),
+                               transitions={'succeeded': 'SPEEDDOWN_MOTOR5',
+                                            'preempted': 'SPEEDDOWN_MOTOR4',
+                                            'aborted': 'FAILED'})
+
+        smach.StateMachine.add('SPEEDDOWN_MOTOR5',
+                               SimpleActionState('control485_2',
+                                                 DriveMotorAction,
+                                                 goal=motor_goal[4].action_goal.goal),
+                               transitions={'succeeded': 'SPEEDDOWN_MOTOR6',
+                                            'preempted': 'SPEEDDOWN_MOTOR5',
+                                            'aborted': 'FAILED'})
+
+        smach.StateMachine.add('SPEEDDOWN_MOTOR6',
+                               SimpleActionState('control485_2',
+                                                 DriveMotorAction,
+                                                 goal=motor_goal[5].action_goal.goal),
+                               transitions={'succeeded': 'SPEEDDOWN_MOTOR7',
+                                            'preempted': 'SPEEDDOWN_MOTOR6',
+                                            'aborted': 'FAILED'})
+
+        smach.StateMachine.add('SPEEDDOWN_MOTOR7',
+                               SimpleActionState('control485_2',
+                                                 DriveMotorAction,
+                                                 goal=motor_goal[6].action_goal.goal),
+                               transitions={'succeeded': 'SPEEDDOWN_MOTOR8',
+                                            'preempted': 'SPEEDDOWN_MOTOR7',
+                                            'aborted': 'FAILED'})
+
+        smach.StateMachine.add('SPEEDDOWN_MOTOR8',
+                               SimpleActionState('control485_3',
+                                                 DriveMotorAction,
+                                                 goal=motor_goal[7].action_goal.goal),
+                               transitions={'succeeded': 'SPEEDDOWN_MOTOR9',
+                                            'preempted': 'SPEEDDOWN_MOTOR8',
+                                            'aborted': 'FAILED'})
+
+        smach.StateMachine.add('SPEEDDOWN_MOTOR9',
+                               SimpleActionState('control485_3',
+                                                 DriveMotorAction,
+                                                 goal=motor_goal[8].action_goal.goal),
+                               transitions={'succeeded': 'SPEEDDOWN_MOTOR10',
+                                            'preempted': 'SPEEDDOWN_MOTOR9',
+                                            'aborted': 'FAILED'})
+
+        smach.StateMachine.add('SPEEDDOWN_MOTOR10',
+                               SimpleActionState('control485_3',
+                                                 DriveMotorAction,
+                                                 goal=motor_goal[9].action_goal.goal),
                                transitions={'succeeded': 'END',
-                                            'preempted': 'R_MOTOR6',
+                                            'preempted': 'SPEEDDOWN_MOTOR10',
                                             'aborted': 'FAILED'})
 
         smach.StateMachine.add('FAILED',
-                               failed(), transitions={'speed_control_failed': 'R_MOTOR1'})
+                               failed(), transitions={'speed_control_failed': 'SPEEDDOWN_MOTOR1'})
 
         smach.StateMachine.add('END',
                                end(), transitions={'end_succeeded': 'WAIT'})

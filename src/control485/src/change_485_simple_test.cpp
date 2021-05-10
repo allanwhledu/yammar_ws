@@ -201,7 +201,7 @@ int main (int argc, char **argv)
     motorSetModbus(motor_id);
     motorSetSpeedmode(motor_id);
 //    motorSetTorqueMode(motor_id);
-    motorSetSpeed(motor_id, 500);
+    motorSetSpeed(motor_id, 1500);
 
     float sec_count = 0.0, sec_duration = 360.0;
     while (ros::ok() && sec_count <= sec_duration)

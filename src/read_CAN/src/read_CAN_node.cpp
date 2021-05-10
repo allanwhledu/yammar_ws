@@ -73,6 +73,26 @@ int main(int argc, char **argv) {
     can_1.pub_c_motor6 = &chatter_pub_motor6;
     can_1.pub_c_motor6_raw = &chatter_pub_raw_current_motor6;
 
+    ros::Publisher chatter_pub_motor7 = n.advertise<std_msgs::Float32>("current7_rms", 1000);
+    ros::Publisher chatter_pub_raw_current_motor7 = n.advertise<std_msgs::Float32>("current7_raw", 1000);
+    can_1.pub_c_motor7 = &chatter_pub_motor7;
+    can_1.pub_c_motor7_raw = &chatter_pub_raw_current_motor7;
+
+    ros::Publisher chatter_pub_motor8 = n.advertise<std_msgs::Float32>("current8_rms", 1000);
+    ros::Publisher chatter_pub_raw_current_motor8 = n.advertise<std_msgs::Float32>("current8_raw", 1000);
+    can_1.pub_c_motor8 = &chatter_pub_motor8;
+    can_1.pub_c_motor8_raw = &chatter_pub_raw_current_motor8;
+
+    ros::Publisher chatter_pub_motor9 = n.advertise<std_msgs::Float32>("current9_rms", 1000);
+    ros::Publisher chatter_pub_raw_current_motor9 = n.advertise<std_msgs::Float32>("current9_raw", 1000);
+    can_1.pub_c_motor9 = &chatter_pub_motor9;
+    can_1.pub_c_motor9_raw = &chatter_pub_raw_current_motor9;
+
+    ros::Publisher chatter_pub_motor10 = n.advertise<std_msgs::Float32>("current10_rms", 1000);
+    ros::Publisher chatter_pub_raw_current_motor10 = n.advertise<std_msgs::Float32>("current10_raw", 1000);
+    can_1.pub_c_motor10 = &chatter_pub_motor10;
+    can_1.pub_c_motor10_raw = &chatter_pub_raw_current_motor10;
+
     // 接受topic指令后发送can信号
     ros::Subscriber sub = n.subscribe("height_control_mode", 1, height_control_mode_callback);
 
@@ -82,7 +102,9 @@ int main(int argc, char **argv) {
 //    pthread_join(can_1.receive_thread, NULL);//等待线程关闭
 //    ROS_INFO_STREAM("receive_thread_close.");
     can_1.init_CAN();
+    // 输入ICAN设置的编号
     can_1.init_ICAN(2);
+    can_1.init_ICAN(3);
 
     ROS_INFO_STREAM("can1 receive thread starting...");
     can_1.open_receive();
