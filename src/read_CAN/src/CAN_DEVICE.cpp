@@ -833,8 +833,12 @@ void CAN_DEVICE::init_ICAN(int id) {
 
     if(id == 1){
         msg[0].Data[1] = 0x01;
-    } else if(id == 2){
+    }
+    else if(id == 2){
         msg[0].Data[1] = 0x02;
+    }
+    else if(id == 3){
+        msg[0].Data[1] = 0x03;
     }
 
     transmit_msg(msg, "init ICAN");

@@ -32,7 +32,7 @@ uint16_t motorRS485Adress=0x43;
 uint16_t motorCurrentFeedbackAddr=0xC6; //说明书中找到而补充的电流读取，但是应该暂时不用（因为不精确吧）
 double cbCof=1.2,reelCof=1.6,pfCof=4.44,fhCof=3.94; //同调率
 int cbRatio=5,reelRatio=64,pfRatio=15,fhRatio=10; //减速比
-const int reelMotor=1,cbMotor=2,pfMotor=3,fhMotor=4;
+const int reelMotor=3,cbMotor=4,pfMotor=2,fhMotor=1;
 string port="/dev/ttyUSB0";
 
 
@@ -122,10 +122,10 @@ typedef actionlib::SimpleActionServer<control485::DriveMotorAction> Server;
 void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
     ROS_WARN_STREAM("Start Motor :"<<goal->motor_id);
 
-    // 发布正在控制的电机编号
-    std_msgs::Int16 motor_controlled;
-    motor_controlled.data = goal->motor_id;
-    pub_motor_controlled->publish(motor_controlled);
+//    // 发布正在控制的电机编号
+//    std_msgs::Int16 motor_controlled;
+//    motor_controlled.data = goal->motor_id;
+//    pub_motor_controlled->publish(motor_controlled);
 
     while(rs485_busy)
     {
@@ -148,9 +148,9 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
 
     int count = 0;
     bool speed_ok = false;
-    while (count < 1000) {
+    while (count < 10) {
         actual_speed = motorReadSpeed(goal->motor_id);
-        ROS_INFO_STREAM("reed speed onground");
+        ROS_INFO_STREAM("reed speed onground:");
         ROS_INFO_STREAM(actual_speed);
 
         if (abs(actual_speed - target_speed) < 100)
@@ -233,6 +233,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
             }
             usleep(500000);  // 若速度未达标，则等待500ms后再次测量
             motorSetSpeed(goal->motor_id, target_speed);
+            ROS_INFO_STREAM("set speed again: "<<target_speed);
         }
         count++;
     }
@@ -273,7 +274,7 @@ bool openSerial(const char* port)
         return false;
     } else
         cout<<"Connected modbus-1 at port:"<<port<<endl;
-    modbus_set_debug(com,true);//调试模式 可以显示串口总线的调试信息
+    modbus_set_debug(com,false);//调试模式 可以显示串口总线的调试信息
     return true;
 }
 

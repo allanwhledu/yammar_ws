@@ -435,7 +435,7 @@ class Car_speed_monitor(smach.State):
         motor_target_speed[4] = 500
         motor_target_speed[5] = 300
         motor_target_speed[6] = 500
-        motor_target_speed[7] = 400
+        motor_target_speed[7] = 200
         motor_target_speed[8] = 500
         motor_target_speed[9] = 500
 
@@ -464,64 +464,16 @@ class Car_speed_monitor(smach.State):
             result = 'start'
         elif car_speed_now > car_speed_last:
             result = 'speedup'
-        elif car_speed_now < car_speed_last:
+        elif car_speed_now < car_speed_last and car_speed_last != 0:
             result = 'speeddown'
+        elif car_speed_now < car_speed_last and car_speed_last == 0:
+            result = 'stop'
         elif car_speed_now == car_speed_last:
             result = 'steady'
 
         car_speed_last = car_speed_now
         return result
 
-class failed(smach.State):
-    def __init__(self):
-        smach.State.__init__(self, outcomes=['failed_1',
-                                             'failed_2',
-                                             'failed_3',
-                                             'failed_4',
-                                             'failed_5',
-                                             'failed_6',
-                                             'failed_7',
-                                             'failed_8',
-                                             'failed_9',
-                                             'failed_10'])
-
-    def execute(self, userdata):
-        global car_speed_now
-        global car_speed_last
-        global is_stop
-        result = None
-        global last_target
-        global mode
-
-        global motors
-        global motor_target_speed
-        global motor_goal
-
-        for index in range(len(motor_goal)):
-            motor_goal[index].action_goal.goal.motor_id = motors[index]
-            motor_goal[index].action_goal.goal.target_speed = 0
-
-        # for motor in motor_goal:
-        #     print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
-
-        # rospy.loginfo('Monitor car speed ...')
-        motor_ids = [3, 4, 2, 1, 5, 7, 8, 11, 9, 10]
-        results = ['failed_1',
-                   'failed_2',
-                   'failed_3',
-                   'failed_4',
-                   'failed_5',
-                   'failed_6',
-                   'failed_7',
-                   'failed_8',
-                   'failed_9',
-                   'failed_10']
-        for index in range(len(motor_ids)):
-            if motor_controlled_id == motor_ids[index]:
-                result = results[index]
-
-        car_speed_last = car_speed_now
-        return result
 
 def main():
     global motor_client
@@ -640,7 +592,7 @@ def main():
                                transitions={'SUCCEEDED': 'SPEEDDOWN_MOTOR10',
                                             'ABORTED': 'SPEEDDOWN_MOTOR9'})
 
-        smach.StateMachine.add('SPEEDDOWN_MOTOR10', client_motor_9(),
+        smach.StateMachine.add('SPEEDDOWN_MOTOR10', client_motor_10(),
                                transitions={'SUCCEEDED': 'END',
                                             'ABORTED': 'SPEEDDOWN_MOTOR10'})
 
