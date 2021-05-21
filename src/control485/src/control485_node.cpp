@@ -16,6 +16,7 @@
 #include <std_msgs/Bool.h>
 #include "std_msgs/Float32.h"
 #include <actionlib/server/simple_action_server.h>
+#include "std_msgs/Int16.h"
 #include "control485/DriveMotorAction.h"
 
 using namespace std;
@@ -56,6 +57,7 @@ ros::Publisher* pub_motor1_speed;
 ros::Publisher* pub_motor2_speed;
 ros::Publisher* pub_motor3_speed;
 ros::Publisher* pub_motor4_speed;
+ros::Publisher* pub_motor_controlled;
 
 
 // 函数申明
@@ -119,6 +121,11 @@ void *read_motor_speed_background(void *) {
 typedef actionlib::SimpleActionServer<control485::DriveMotorAction> Server;
 void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
     ROS_WARN_STREAM("Start Motor :"<<goal->motor_id);
+
+    // 发布正在控制的电机编号
+    std_msgs::Int16 motor_controlled;
+    motor_controlled.data = goal->motor_id;
+    pub_motor_controlled->publish(motor_controlled);
 
     while(rs485_busy)
     {
@@ -375,6 +382,7 @@ int main (int argc, char **argv)
     ros::Publisher pub2_;
     ros::Publisher pub3_;
     ros::Publisher pub4_;
+    ros::Publisher pub5_;
 
     pub_ = n_.advertise<std_msgs::Float32>("modified_car_speed", 1);
     pub_modified_car_speed = &pub_;
@@ -390,6 +398,9 @@ int main (int argc, char **argv)
 
     pub4_ = n_.advertise<std_msgs::Float32>("motor_1_speed", 1);
     pub_motor4_speed = &pub4_;
+
+    pub5_ = n_.advertise<std_msgs::Int16>("motor_controlled", 1);
+    pub_motor_controlled = &pub5_;
 
     //Topic you want to subscribe
     sub2_ = n_.subscribe("is_obstacle", 1, &obstacle_callback);

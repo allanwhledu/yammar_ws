@@ -65,6 +65,7 @@ car_speed_now = 0
 car_speed_last = 0
 is_stop = 0
 is_stop_last = 0
+motor_controlled_id = 0
 
 
 class Topic_monitor:
@@ -73,6 +74,7 @@ class Topic_monitor:
 
         rospy.Subscriber('/modified_car_speed', Float32, self.callback_car_speed)
         rospy.Subscriber('/stop', Int16, self.callback_stop_msg)
+        rospy.Subscriber('/motor_controlled', Int16, self.callback_motor_id)
 
         self.callback_thread = threading.Thread(target=self.call_back_jobs)
         self.callback_thread.start()
@@ -86,6 +88,10 @@ class Topic_monitor:
     def callback_stop_msg(self, data):
         global is_stop
         is_stop = data.data
+
+    def callback_motor_id(self, data):
+        global motor_controlled_id
+        motor_controlled_id = data.data
 
     ## thread functions ##
     def call_back_jobs(self):
@@ -200,7 +206,16 @@ class Car_speed_monitor(smach.State):
 
 class failed(smach.State):
     def __init__(self):
-        smach.State.__init__(self, outcomes=['speed_control_failed'])
+        smach.State.__init__(self, outcomes=['failed_1',
+                                             'failed_2',
+                                             'failed_3',
+                                             'failed_4',
+                                             'failed_5',
+                                             'failed_6',
+                                             'failed_7',
+                                             'failed_8',
+                                             'failed_9',
+                                             'failed_10'])
 
     def execute(self, userdata):
         global car_speed_now
@@ -222,7 +237,21 @@ class failed(smach.State):
         #     print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
 
         # rospy.loginfo('Monitor car speed ...')
-        result = 'speed_control_failed'
+        motor_ids = [3, 4, 2, 1, 5, 7, 8, 11, 9, 10]
+        results = ['failed_1',
+                   'failed_2',
+                   'failed_3',
+                   'failed_4',
+                   'failed_5',
+                   'failed_6',
+                   'failed_7',
+                   'failed_8',
+                   'failed_9',
+                   'failed_10']
+        for index in range(len(motor_ids)):
+            if motor_controlled_id == motor_ids[index]:
+                result = results[index]
+
         car_speed_last = car_speed_now
         return result
 
@@ -258,16 +287,16 @@ def main():
         #                        transitions={'invalid': 'MOTOR1', 'valid': 'WAIT', 'preempted': 'WAIT'})
         smach.StateMachine.add('WAIT', Car_speed_monitor(),
                                transitions={'start': 'START_MOTOR10',
-                                            'speeddown': 'SPEEDUP_MOTOR1',
+                                            'speeddown': 'SPEEDCHANGE_MOTOR1',
                                             'steady': 'WAIT',
                                             'stop': 'SPEEDDOWN_MOTOR1',
-                                            'speedup': 'SPEEDUP_MOTOR1'})
-        smach.StateMachine.add('SPEEDUP_MOTOR1',
+                                            'speedup': 'SPEEDCHANGE_MOTOR1'})
+        smach.StateMachine.add('SPEEDCHANGE_MOTOR1',
                                SimpleActionState('control485',
                                                  DriveMotorAction,
                                                  goal=motor_goal[0].action_goal.goal),
                                transitions={'succeeded': 'END',
-                                            'preempted': 'SPEEDUP_MOTOR1',
+                                            'preempted': 'SPEEDCHANGE_MOTOR1',
                                             'aborted': 'FAILED'})
 
         smach.StateMachine.add('START_MOTOR1',
@@ -429,7 +458,16 @@ def main():
                                             'aborted': 'FAILED'})
 
         smach.StateMachine.add('FAILED',
-                               failed(), transitions={'speed_control_failed': 'SPEEDDOWN_MOTOR1'})
+                               failed(), transitions={'failed_1': 'SPEEDDOWN_MOTOR1',
+                                                      'failed_2': 'SPEEDDOWN_MOTOR2',
+                                                      'failed_3': 'SPEEDDOWN_MOTOR3',
+                                                      'failed_4': 'SPEEDDOWN_MOTOR4',
+                                                      'failed_5': 'SPEEDDOWN_MOTOR5',
+                                                      'failed_6': 'SPEEDDOWN_MOTOR6',
+                                                      'failed_7': 'SPEEDDOWN_MOTOR7',
+                                                      'failed_8': 'SPEEDDOWN_MOTOR8',
+                                                      'failed_9': 'SPEEDDOWN_MOTOR9',
+                                                      'failed_10': 'SPEEDDOWN_MOTOR10'})
 
         smach.StateMachine.add('END',
                                end(), transitions={'end_succeeded': 'WAIT'})
