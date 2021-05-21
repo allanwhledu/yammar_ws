@@ -25,20 +25,6 @@ def remove_end_part(sample_data, how_long=100):
 
 
 if __name__ == '__main__':
-    car_speed = np.load("mall_car_speed.npy", allow_pickle=True)
-    m1_speed = np.load("mall_m1_speed.npy", allow_pickle=True)
-    m2_speed = np.load("mall_m2_speed.npy", allow_pickle=True)
-    m3_speed = np.load("mall_m3_speed.npy", allow_pickle=True)
-    m4_speed = np.load("mall_m4_speed.npy", allow_pickle=True)
-    m5_speed = np.load("mall_m5_speed.npy", allow_pickle=True)
-    m6_speed = np.load("mall_m6_speed.npy", allow_pickle=True)
-    m1_current = np.load("mall_m1_current.npy", allow_pickle=True)
-    m2_current = np.load("mall_m2_current.npy", allow_pickle=True)
-    m3_current = np.load("mall_m3_current.npy", allow_pickle=True)
-    m4_current = np.load("mall_m4_current.npy", allow_pickle=True)
-    m5_current = np.load("mall_m5_current.npy", allow_pickle=True)
-    m6_current = np.load("mall_m6_current.npy", allow_pickle=True)
-    cm7290_current = np.load("mall_cm7290_current.npy", allow_pickle=True)
 
     # x1 = [1.2,3.2,5.5,7.3,9.5]
     # y1 = [10,10,10,10,10]
@@ -56,6 +42,19 @@ if __name__ == '__main__':
 
     draw_what = 'speed'  # speed or current
     if draw_what == 'speed':
+
+        car_speed = np.load("mall_car_speed.npy", allow_pickle=True)
+        m1_speed = np.load("mall_m1_speed.npy", allow_pickle=True)
+        m2_speed = np.load("mall_m2_speed.npy", allow_pickle=True)
+        m3_speed = np.load("mall_m3_speed.npy", allow_pickle=True)
+        m4_speed = np.load("mall_m4_speed.npy", allow_pickle=True)
+        m5_speed = np.load("mall_m5_speed.npy", allow_pickle=True)
+        m11_speed = np.load("mall_m11_speed.npy", allow_pickle=True)
+        m7_speed = np.load("mall_m7_speed.npy", allow_pickle=True)
+        m8_speed = np.load("mall_m8_speed.npy", allow_pickle=True)
+        m9_speed = np.load("mall_m9_speed.npy", allow_pickle=True)
+        m10_speed = np.load("mall_m10_speed.npy", allow_pickle=True)
+
         fig1 = plt.figure(1)
         ax1 = plt.subplot(211)
         plt.plot(m1_speed[..., 0], m1_speed[..., 1], 'g', label='m1_speed')
@@ -63,7 +62,11 @@ if __name__ == '__main__':
         plt.plot(m3_speed[..., 0], m3_speed[..., 1], 'r', label='m3_speed')
         plt.plot(m4_speed[..., 0], m4_speed[..., 1], 'y', label='m4_speed')
         plt.plot(m5_speed[..., 0], m5_speed[..., 1], 'b', label='m5_speed')
-        plt.plot(m6_speed[..., 0], m6_speed[..., 1], 'k', label='m6_speed')
+        plt.plot(m11_speed[..., 0], m11_speed[..., 1], 'k', label='m11_speed')
+        plt.plot(m7_speed[..., 0], m7_speed[..., 1], 'k', label='m7_speed')
+        plt.plot(m8_speed[..., 0], m8_speed[..., 1], 'k', label='m8_speed')
+        plt.plot(m9_speed[..., 0], m9_speed[..., 1], 'k', label='m9_speed')
+        plt.plot(m10_speed[..., 0], m10_speed[..., 1], 'k', label='m10_speed')
         plt.title('Control motors based on car speed.\npriority and tracking', fontsize=30)
         # 设置坐标刻度大小
         plt.xticks(fontsize=20)
@@ -117,19 +120,32 @@ if __name__ == '__main__':
         # ax3.legend(fontsize=20)
         # # plt.show()
 
+        car_speed = np.load("mall_car_speed.npy", allow_pickle=True)
+        m1_current = np.load("mall_m1_current.npy", allow_pickle=True)
+        m2_current = np.load("mall_m2_current.npy", allow_pickle=True)
+        m3_current = np.load("mall_m3_current.npy", allow_pickle=True)
+        m4_current = np.load("mall_m4_current.npy", allow_pickle=True)
+        m5_current = np.load("mall_m5_current.npy", allow_pickle=True)
+        m11_current = np.load("mall_m11_current.npy", allow_pickle=True)
+        m7_current = np.load("mall_m7_current.npy", allow_pickle=True)
+        m8_current = np.load("mall_m8_current.npy", allow_pickle=True)
+        m9_current = np.load("mall_m9_current.npy", allow_pickle=True)
+        m10_current = np.load("mall_m10_current.npy", allow_pickle=True)
+        cm7290_current = np.load("mall_cm7290_current.npy", allow_pickle=True)
+
         m1_current = down_sample(m1_current, scale=50)
         m2_current = down_sample(m2_current, scale=50)
         m3_current = down_sample(m3_current, scale=50)
         m4_current = down_sample(m4_current, scale=50)
         m5_current = down_sample(m5_current, scale=50)
-        m6_current = down_sample(m6_current, scale=50)
+        m11_current = down_sample(m11_current, scale=50)
 
         m1_current = remove_end_part(m1_current, how_long=200)
         m2_current = remove_end_part(m2_current, how_long=200)
         m3_current = remove_end_part(m3_current, how_long=200)
         m4_current = remove_end_part(m4_current, how_long=200)
         m5_current = remove_end_part(m5_current, how_long=200)
-        m6_current = remove_end_part(m6_current, how_long=200)
+        m11_current = remove_end_part(m11_current, how_long=200)
 
 
         fig3 = plt.figure(2)
@@ -185,7 +201,7 @@ if __name__ == '__main__':
         ax8.legend(fontsize=20, loc='upper right')
 
         ax9 = plt.subplot(816)
-        plt.plot(m6_current[..., 0], m6_current[..., 1]*1.4, 'b', label='m5_current')
+        plt.plot(m11_current[..., 0], m11_current[..., 1]*1.4, 'b', label='m5_current')
         plt.xticks(fontsize=20)
         plt.yticks(fontsize=20)
         # 设置坐标标签字体大小

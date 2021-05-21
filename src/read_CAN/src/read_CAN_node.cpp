@@ -49,7 +49,7 @@ int main(int argc, char **argv) {
     can_1.pub_c_motor1_raw = &chatter_pub_raw_current_motor1;
 
     ros::Publisher chatter_pub_motor2 = n.advertise<std_msgs::Float32>("current2_rms", 1000);
-    ros::Publisher chatter_pub_raw_current_motor2 = n.advertise<std_msgs::Float32>("current1_raw", 1000);
+    ros::Publisher chatter_pub_raw_current_motor2 = n.advertise<std_msgs::Float32>("current2_raw", 1000);
     can_1.pub_c_motor2 = &chatter_pub_motor2;
     can_1.pub_c_motor2_raw = &chatter_pub_raw_current_motor2;
 
