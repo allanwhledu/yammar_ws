@@ -694,6 +694,7 @@ void CAN_DEVICE::transmit_msg(VCI_CAN_OBJ send[1], char com[10]) //发送函数
 void CAN_DEVICE::control_height(int mode) //驱动拨禾轮和割台的高度调节
 {
     // 设置电机为CAN控制，速度模式
+    ROS_INFO_STREAM("CAN: control height.");
     VCI_CAN_OBJ msg[1];
 
     if (mode == 100) {
