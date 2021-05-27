@@ -33,6 +33,7 @@ using namespace std;
 using namespace cv;
 
 int Estimated_height=0;  //估计的高度平均值
+int distance_ema = 0;
 
 void boud_depth(Mat& rgb,Mat& depth);
 void drawArrow(cv::Mat& img, cv::Point pStart, cv::Point pEnd, int len, int alpha,
@@ -439,9 +440,11 @@ void boud_points_process(Mat& rgb,vector<Point2i>& pointdepthimg,vector<Point3f>
 //        else angle = to_string(int_angle) + '.' + to_string(dec_angle);
         angle = to_string(int_angle) + '.' + to_string(dec_angle);
 
+	distance_ema = distance_ema == 0 ? distance : 0.8 * distance_ema + 0.2 * distance;
+
         height_borderMsg.angle_3d = angle;
 
-        height_borderMsg.dis_3d = to_string(distance);
+        height_borderMsg.dis_3d = to_string(distance_ema);
 
 
         //仿射变换
@@ -469,8 +472,8 @@ void boud_points_process(Mat& rgb,vector<Point2i>& pointdepthimg,vector<Point3f>
 //                    "Ang: " + std::to_string(int(value_inangle)) + '.' + std::to_string(abs(xs_value_inangle));
             cv::putText(rgb, angle, Point2i(400, 50), cv::FONT_HERSHEY_SIMPLEX, 1, CV_RGB(255, 0, 0), 4);
 
-            int zs_distance = distance;
-            string dis_3d = "Dis 3d: " + std::to_string(zs_distance);
+//           int zs_distance = distance;
+            string dis_3d = "Dis 3d: " + std::to_string(distance_ema);
             cv::putText(rgb, dis_3d, Point2i(400, 100), cv::FONT_HERSHEY_SIMPLEX, 1, CV_RGB(255, 0, 0), 5);
 
             string dis_2d = "Dis 2d: " + height_borderMsg.dis_2d;
