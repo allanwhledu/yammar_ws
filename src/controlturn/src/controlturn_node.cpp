@@ -37,7 +37,7 @@ uint16_t readpose=0x07D0; //读取位置消息
 // std_msgs::Float32 angle_speed1;
 
 /////////////////******************定义函数**********************//
-string port="/dev/ttyUSB1";
+string port="/dev/rs485-04";
 bool openSerial(const char* port);
 //string getTime(void);//获取当前系统时间
 void SetModbus(int motor1);
