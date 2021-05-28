@@ -29,7 +29,7 @@ uint16_t motorRS485Adress=0x43;
 uint16_t motorCurrentFeedbackAddr=0xC6; //说明书中找到而补充的电流读取，但是应该暂时不用（因为不精确吧）
 // 以上，就是现在用到的寄存器地址
 
-string port="/dev/ttyUSB0";
+string port="/dev/rs485-01";
 
 string current_time = "";
 ofstream* open_file;
