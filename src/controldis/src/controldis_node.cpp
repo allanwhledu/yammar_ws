@@ -114,7 +114,7 @@ int main(int argc, char **argv)
   usleep(1000000);
   //read the txt
   ifstream readFile;
-  readFile.open("/home/sunh/yammar_ws/src/controldis/data9.txt", ios::in);
+  readFile.open("/home/sunh/yammar_ws/src/controldis/data.txt", ios::in);
   if (!readFile.is_open())
   {
         cout << "打开文件失败" << endl;
