@@ -103,6 +103,7 @@ int main(int argc, char **argv) {
 //    ROS_INFO_STREAM("receive_thread_close.");
     can_1.init_CAN();
     // 输入ICAN设置的编号
+    can_1.init_ICAN(1);
     can_1.init_ICAN(2);
     can_1.init_ICAN(3);
 
