@@ -1,8 +1,0 @@
-prefix=/usr/local
-
-Name: border_height_detect
-Description: Description of border_height_detect
-Version: 0.0.0
-Cflags: 
-Libs: -L${prefix}/lib 
-Requires: border_msgs curve_point_z_msgs height_msgs height_border_msgs
