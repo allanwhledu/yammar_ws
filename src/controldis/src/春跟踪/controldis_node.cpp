@@ -15,6 +15,8 @@ std_msgs::Float64 gps_x_go;
 std_msgs::Float64 gps_y_go;
 std_msgs::Float64 gps_head_dir;
 double tmpDis = 0;
+double first_closeDis = 0;
+
 
 
 //go
@@ -31,21 +33,6 @@ double tmpDis = 0;
       gps_head_dir.data = msg->data;
  }
 
-// // input:
-// void find_goal_point(vector<double>&vec, double x, double y, int index2){
-//     int i = index2;
-//     double tmpDis = 0;
-//     while (vec[i] < x){
-//         i = i + 2;
-//     }
-
-//     while(tmpDis < 1){
-//         tmpDis = sqrt( (vec[i]-x)*(vec[i]-x)+ (vec[i+1]-y)*(vec[i+1] -y) );
-//         i +=2;        
-//     }
-//     index1 = i;
-//     // return i;
-// }
 
 int find_goal_point(vector<double>&vec, double x, double y, int prevInd){
     int i = prevInd;
@@ -64,6 +51,22 @@ int find_goal_point(vector<double>&vec, double x, double y, int prevInd){
     cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<:"<<x1<<"  "<<y1<<endl;
     cout<<"<<<<<<<<<<<<<<DIS:"<<tmpDis<<endl;
     cout<<"<<<<<   curr    <<<<<<<<:"<<i<<endl;
+    return i;
+}
+
+int find_closest_point(vector<double>&vec, double x, double y, int prevInd){
+    int i = prevInd;
+     first_closeDis = sqrt( (vec[i]-x)*(vec[i]-x)+ (vec[i+1]-y)*(vec[i+1] -y) );
+    //前视距离
+   while(i >0)
+    {
+        i -= 2;
+        double tmpcloseDis = sqrt((vec[i] - x) * (vec[i] - x) + (vec[i + 1] - y) * (vec[i + 1] - y));
+        if (tmpcloseDis <= first_closeDis)
+             first_closeDis = tmpcloseDis;
+        else
+            break;
+        }
     return i;
 }
 
@@ -114,7 +117,7 @@ int main(int argc, char **argv)
   usleep(1000000);
   //read the txt
   ifstream readFile;
-  readFile.open("/home/sunh/yammar_ws/src/controldis/data9.txt", ios::in);
+  readFile.open("/home/sunh/yammar_ws/src/controldis/data.txt", ios::in);
   if (!readFile.is_open())
   {
         cout << "打开文件失败" << endl;
@@ -139,26 +142,31 @@ int main(int argc, char **argv)
   ROS_INFO_STREAM("set speed:0.5m/s");
   msg_speed.data = 11000;
   speed_pub.publish(msg_speed);
-    usleep(500000);
+  usleep(2000000);
 
    double alpha = 0;
    int prevInd = 0;
+   int currInd_close = 0;
+   double theta_goal = 0;
    //ack
    while (ros::ok())
     {    
         ros::spinOnce();
         int currInd = find_goal_point(V,gps_x_go.data,gps_y_go.data,prevInd);
-        double theta_goal =atan((gps_y_go.data-V[currInd+1])/(gps_x_go.data-V[currInd]));
-        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<theta_goal:"<<theta_goal<<endl;
-        // alpha = theta_goal - 3.1415926*(270-gps_head_dir.data)/180.0;////////very important
-        alpha = theta_goal - 3.1415926*( 90-gps_head_dir.data)/180.0;////////very important
-        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<gps_head_dir:"<< 3.1415926*(gps_head_dir.data)/180.0<<endl;
-        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<alpha:"<<alpha<<endl;
+        currInd_close = find_closest_point(V,gps_x_go.data,gps_y_go.data,prevInd);
         double ld = sqrt((gps_y_go.data-V[currInd+1])*(gps_y_go.data-V[currInd+1]) + (gps_x_go.data-V[currInd])*(gps_x_go.data-V[currInd]));
-        double w =sin(alpha)/ld;        
+        if(V[currInd_close+1]<gps_y_go.data)
+             theta_goal = asin(first_closeDis/ld);
+        else
+            theta_goal = -asin(first_closeDis/ld);
+        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<theta_goal:"<<theta_goal<<endl;
+        // double theta_goal =atan((gps_y_go.data-V[currInd+1])/(gps_x_go.data-V[currInd]));
+        alpha = theta_goal + 3.1415926*(gps_head_dir.data-222)/180.0;////////very important ------change the 50
+        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<alpha:"<<alpha<<endl;
+        double w =sin(alpha)/ld;
         cout<<"<<<<<<<<<<<<<<currInd"<<currInd<<endl;
         cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<w:"<<w<<endl;
-        // cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<gps_head_dir.data:"<<gps_head_dir.data<<endl;
+        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<gps_head_dir.data:"<<gps_head_dir.data<<endl;
         tmpDis = sqrt((V[currInd] - gps_x_go.data) * (V[currInd] - gps_x_go.data) + (V[currInd + 1] - gps_y_go.data) * (V[currInd + 1] - gps_y_go.data));
         // if(w>0.5)
         // {
@@ -168,10 +176,13 @@ int main(int argc, char **argv)
         // {
         //     w = -0.5;
         // }
-        int pls = w2pls(1.2*w);
+        // fout<<gps_x_go.data<<" "<<gps_y_go.data<<" "<<gps_head_dir.data<<endl;
+     
+
+        int pls = w2pls(w);
         //  fout<<gps_x_go.data<<" "<<gps_y_go.data<<" "<<w<<" "<<pls<<" "<<tmpDis<<endl;
-        // fout<<gps_x_go.data<<" "<<gps_y_go.data<<endl;
-        // fout<<"\r\n"<<endl;
+        fout<<gps_x_go.data<<" "<<gps_y_go.data<<endl;
+        fout<<"\r\n"<<endl;
         if(pls>7000)
         {
             pls = 7000;
@@ -180,8 +191,9 @@ int main(int argc, char **argv)
         {
             pls = -7000;
         }
+        usleep(500000);
 
-        msg_turn.data = 1.4*pls;
+        msg_turn.data = pls;
   
         cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<pls:"<<pls<<endl;
 

@@ -114,7 +114,7 @@ int main(int argc, char **argv)
   usleep(1000000);
   //read the txt
   ifstream readFile;
-  readFile.open("/home/sunh/yammar_ws/src/controldis/data9.txt", ios::in);
+  readFile.open("/home/sunh/yammar_ws/src/controldis/data3.txt", ios::in);
   if (!readFile.is_open())
   {
         cout << "打开文件失败" << endl;
@@ -150,9 +150,8 @@ int main(int argc, char **argv)
         int currInd = find_goal_point(V,gps_x_go.data,gps_y_go.data,prevInd);
         double theta_goal =atan((gps_y_go.data-V[currInd+1])/(gps_x_go.data-V[currInd]));
         cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<theta_goal:"<<theta_goal<<endl;
-        // alpha = theta_goal - 3.1415926*(270-gps_head_dir.data)/180.0;////////very important
-        alpha = theta_goal - 3.1415926*( 90-gps_head_dir.data)/180.0;////////very important
-        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<gps_head_dir:"<< 3.1415926*(gps_head_dir.data)/180.0<<endl;
+        alpha = theta_goal - 3.1415926*(270-gps_head_dir.data)/180.0;////////very important
+        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<gps_head_dir:"<< 3.1415926*(270-gps_head_dir.data)/180.0<<endl;
         cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<alpha:"<<alpha<<endl;
         double ld = sqrt((gps_y_go.data-V[currInd+1])*(gps_y_go.data-V[currInd+1]) + (gps_x_go.data-V[currInd])*(gps_x_go.data-V[currInd]));
         double w =sin(alpha)/ld;        
@@ -168,7 +167,7 @@ int main(int argc, char **argv)
         // {
         //     w = -0.5;
         // }
-        int pls = w2pls(1.2*w);
+        int pls = w2pls(1.1*w);
         //  fout<<gps_x_go.data<<" "<<gps_y_go.data<<" "<<w<<" "<<pls<<" "<<tmpDis<<endl;
         // fout<<gps_x_go.data<<" "<<gps_y_go.data<<endl;
         // fout<<"\r\n"<<endl;
@@ -181,7 +180,7 @@ int main(int argc, char **argv)
             pls = -7000;
         }
 
-        msg_turn.data = 1.4*pls;
+        msg_turn.data = 1.37*pls;
   
         cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<pls:"<<pls<<endl;
 

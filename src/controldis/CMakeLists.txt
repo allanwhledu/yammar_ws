@@ -11,11 +11,10 @@ find_package(catkin REQUIRED COMPONENTS
   roscpp
   rospy
   std_msgs
-  sensor_msgs
-height_border_msgs
+		geometry_msgs
+		tf2_geometry_msgs
 )
 
-catkin_package(CATKIN_DEPENDS height_border_msgs)
 
 ## System dependencies are found with CMake's conventions
 # find_package(Boost REQUIRED COMPONENTS system)
@@ -159,7 +158,6 @@ target_include_directories(${PROJECT_NAME}_node
 )
 target_link_libraries(${PROJECT_NAME}_node
     PRIVATE 
-        ${PROJECT_SOURCE_DIR}/shared_lib/libcontrolcan.so
 	${catkin_LIBRARIES}
 	pthread
 )
