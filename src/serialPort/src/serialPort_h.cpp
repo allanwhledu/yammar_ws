@@ -194,7 +194,7 @@ std::string string_get( string& str)
 
           try {
               //设置串口属性，并打开串口
-              ser.setPort("/dev/ttyUSB0");
+              ser.setPort("/dev/ttyUSB4");
               ser.setBaudrate(115200);
               serial::Timeout to = serial::Timeout::simpleTimeout(1000);
               ser.setTimeout(to);
