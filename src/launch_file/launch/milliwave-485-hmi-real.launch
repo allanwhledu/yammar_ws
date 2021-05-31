@@ -1,7 +1,7 @@
 <launch>
 
 #### rosbag #################################################
-  <node pkg="rosbag" type="record" name="bag_record" args="-a -o test_M234"/>
+  <node pkg="rosbag" type="record" name="bag_record" args="-a -o test_MALL"/>
 
 #### HMI ####################################################
 
@@ -11,17 +11,23 @@
 
   <node pkg="control485" type="control485_node" name="control485"/>
   <node pkg="control485" type="control485_node_2" name="control485_2"/>
-  <node pkg="control485" type="control485_node_3" name="control485_3" output="screen"/>
+  <node pkg="control485" type="control485_node_3" name="control485_3"/>
 
 #### read signals from CAN bus ####################################################
 
-  <node pkg="read_CAN" type="read_CAN_node" name="read_CAN"/>
+  <node pkg="read_CAN" type="read_CAN_node" name="read_CAN" output="screen"/>
 
 #### for line detect ####################################################
 
-  <!--node pkg="boud_rgbd" type="boud_rgbd" name="line_detect" />
+  <node pkg="border_lingang" type="border_lingang_node" name="line_detect" />
+  <node pkg="serialPort" type="serialPort_node" name="serialPort" />
   <node pkg="realsense2_driver" type="realsense2_driver" name="realsense2_driver" />
-  <node pkg="mmw_capture" type="mmw_capture_node" name="obstacle_detect" /-->
+  <node pkg="mmw_capture" type="mmw_capture_node" name="obstacle_detect" />
+
+#### for path tracking ####################################################
+
+  <node pkg="controlturn" type="controlturn_node" name="controlturn" />
+  <node pkg="controldis" type="controldis_node" name="controldis" />
 
 #### for logic control flow ####################################################
 
@@ -34,6 +40,6 @@
 
   <node pkg="rqt_graph" type="rqt_graph" name="rqt_graph"/>
 
-  <node pkg="smach_viewer" type="smach_viewer.py" name="smach_viewer"/>
+  <!--node pkg="smach_viewer" type="smach_viewer.py" name="smach_viewer_py"/-->
 
 </launch>
