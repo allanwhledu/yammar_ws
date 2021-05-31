@@ -88,7 +88,6 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                 //// 采集卡1：
                 if (rec[j].ID == 0x0181) // 0-3接口的数据
                 {
-                    ROSINFOSTREAM("ICAN 1 GOT msg");
                     unsigned char high0, low0;
                     high0 = rec[j].Data[1];
                     low0 = rec[j].Data[0];

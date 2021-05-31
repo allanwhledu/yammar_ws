@@ -65,3 +65,5 @@ src/control485/speed_result/.idea/
 speed_result/
 
 *.npy
+
+src/CMakeLists.txt
