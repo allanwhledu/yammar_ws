@@ -48,16 +48,32 @@ double tmpDis = 0;
 // }
 
 int find_goal_point(vector<double>&vec, double x, double y, int prevInd){
+    int len = vec.size();
     int i = prevInd;
     cout<<"<<<<<   prev    <<<<<<<<:"<<i<<endl;
     tmpDis = sqrt( (vec[i]-x)*(vec[i]-x)+ (vec[i+1]-y)*(vec[i+1] -y) );
     //前视距离
+    while(tmpDis > 4)
+    {
+        cout<<"tmpDis>1!!"<<endl;
+        for(int n = 0;n<len;n=n+2){
+            
+            double  tmpDis_last = sqrt((vec[n] - x) * (vec[n] - x) + (vec[n + 1] - y) * (vec[n + 1] - y));
+            double  tmpDis_curr = sqrt((vec[n+2] - x) * (vec[n+2] - x) + (vec[n + 3] - y) * (vec[n + 3] - y));
+            cout<<"find the fuck point!!"<<endl;
+            if (tmpDis_curr>tmpDis_last)
+            {
+               i = n;
+               break;
+            }
+        } 
+    }
+
    while(tmpDis < 4)
     {
         tmpDis = sqrt((vec[i] - x) * (vec[i] - x) + (vec[i + 1] - y) * (vec[i + 1] - y));
         i += 2;
         }
-
     double x1 = x - 21395701.434035331; 
     double y1 = y - 3417762.714564383;
     cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<:"<<vec[i]- 21395701.434035331<<"  "<<vec[i+1]- 3417762.714564383<<endl;
@@ -73,18 +89,6 @@ int find_goal_point(vector<double>&vec, double x, double y, int prevInd){
 int w2pls(double W)
 {
     int pls;
-    // if ( W< -0.03)
-    //     pls = 1000*(-0.06788*W*W*W*W+0.1948*W*W*W+0.4595*W*W+2.759*W+7.209);
-    // else if(0.03<W)
-    //     pls = -1000*(-0.06788*W*W*W*W+0.1948*W*W*W+0.4595*W*W+2.759*W+7.209);
-    // else
-    //     pls = 0;
-
-    // if (W<0)
-    // pls = -(42.37*W-0.8415)*91.4;  
-    // else
-    // pls = (42.37*W-0.8415)*91.4;  //W大于0左传
-
     if ( W< -0.03)
         pls = -(1805*(-W)*(-W)*(-W)-778.4*(-W)*(-W)+273.5*(-W)+10.34)*91.4;
     else if(0.03<W)
