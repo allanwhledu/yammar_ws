@@ -46,7 +46,7 @@ if __name__ == '__main__':
     # cb_speed = np.delete(cb_speed, (1666, 1915, 2154), 0)
     # cb_speed = np.delete(cb_speed, 656, 0)
 
-    draw_what = 'speed'  # speed or current
+    draw_what = 'current'  # speed or current
     if draw_what == 'speed':
         car_speed = np.load("mall_car_speed.npy", allow_pickle=True)
         m1_speed = np.load("mall_m1_speed.npy", allow_pickle=True)
