@@ -192,7 +192,7 @@ int main (int argc, char **argv)
     //string filename = "/home/yangzt/yammar_ws/src/control485/speed_result/";
     //filename = filename + current_time + "m10_500.txt";
 
-    int motor_id = 3;
+    int motor_id = 2;
     int realSpeed = 0;
 
     ROS_INFO_STREAM(">>Open Serial!") ;
@@ -201,7 +201,7 @@ int main (int argc, char **argv)
     motorSetModbus(motor_id);
     motorSetSpeedmode(motor_id);
 //    motorSetTorqueMode(motor_id);
-    motorSetSpeed(motor_id, 2500);
+    motorSetSpeed(motor_id, 500);
 
     float sec_count = 0.0, sec_duration = 360.0;
     while (ros::ok() && sec_count <= sec_duration)
