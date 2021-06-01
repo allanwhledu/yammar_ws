@@ -121,7 +121,7 @@ void motorSetSpeed(int motor_id, int speed)
 {
     modbus_set_slave(com, motor_id);
     usleep(5000);
-    ROS_INFO_STREAM("set direction: "<<modbus_write_register(com, motorDirectionAddr, 1));
+    ROS_INFO_STREAM("set direction: "<<modbus_write_register(com, motorDirectionAddr, 2));
     usleep(5000);
     ROS_INFO_STREAM("set speed: "<<modbus_write_register(com, motorSpeedAddr, speed));
     usleep(5000);
@@ -188,11 +188,11 @@ int main (int argc, char **argv)
     pthread_create(&time_sync, nullptr, getTime, nullptr);
     ROS_INFO_STREAM("time sync spread make.");
 
-    ofstream ofs;
-    string filename = "/home/yangzt/yammar_ws/src/control485/speed_result/";
-    filename = filename + current_time + "m10_500.txt";
+    //ofstream ofs;
+    //string filename = "/home/yangzt/yammar_ws/src/control485/speed_result/";
+    //filename = filename + current_time + "m10_500.txt";
 
-    int motor_id = 3;
+    int motor_id = 2;
     int realSpeed = 0;
 
     ROS_INFO_STREAM(">>Open Serial!") ;
@@ -201,7 +201,7 @@ int main (int argc, char **argv)
     motorSetModbus(motor_id);
     motorSetSpeedmode(motor_id);
 //    motorSetTorqueMode(motor_id);
-    motorSetSpeed(motor_id, 1500);
+    motorSetSpeed(motor_id, 500);
 
     float sec_count = 0.0, sec_duration = 360.0;
     while (ros::ok() && sec_count <= sec_duration)
@@ -212,13 +212,13 @@ int main (int argc, char **argv)
         pub_motor_speed.publish(motorTestSpeed);
         // Update current
         ros::spinOnce();
-        ofs.open(filename, ios_base::app);
-        if(!ofs)
-            cerr<<"Open File Fail."<<endl;
-//            exit(1);
-        ofs<<"Time: "<<current_time<<" MotorRev currentRaw currentRms currentCM7290 "<<realSpeed<<" "<<motorCurrentRaw<<" "
-        <<motorCurrentRms<<" "<<motorCurrentCM7290<<endl;
-        ofs.close();
+        //ofs.open(filename, ios_base::app);
+        //if(!ofs)
+        //    cerr<<"Open File Fail."<<endl;
+//      //      exit(1);
+        //ofs<<"Time: "<<current_time<<" MotorRev currentRaw currentRms currentCM7290 "<<realSpeed<<" "<<motorCurrentRaw<<" "
+        //<<motorCurrentRms<<" "<<motorCurrentCM7290<<endl;
+        //ofs.close();
 
         cout<<"MotorRev currentRaw currentRms currentCM7290 "<<realSpeed<<" "<<motorCurrentRaw<<" "
             <<motorCurrentRms<<" "<<motorCurrentCM7290<<endl;

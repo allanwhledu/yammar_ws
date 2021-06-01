@@ -15,27 +15,27 @@
 
 #### read signals from CAN bus ####################################################
 
-  <node pkg="read_CAN" type="read_CAN_node" name="CAN_bus_server" output="screen"/>
+  <node pkg="read_CAN" type="read_CAN_node" name="CAN_bus_server"/>
 
 #### for line detect ####################################################
 
-  <!--node pkg="border_lingang" type="border_lingang_node" name="line_detect" /-->
+  <!--node pkg="border_lingang" type="border_lingang_node" name="line_detect" />
   <node pkg="serialPort" type="serialPort_node" name="serialPort" />
   <node pkg="realsense2_driver" type="realsense2_driver" name="realsense2_driver" />
-  <node pkg="mmw_capture" type="mmw_capture_node" name="obstacle_detect" />
+  <node pkg="mmw_capture" type="mmw_capture_node" name="obstacle_detect" /-->
 
 #### for path tracking ####################################################
 
-  <!--node pkg="controlturn" type="controlturn_node" name="controlturn" /-->
-  <node pkg="controldis" type="controldis_node" name="controldis" />
+  <!--node pkg="controlturn" type="controlturn_node" name="controlturn" />
+  <node pkg="controldis" type="controldis_node" name="controldis" /-->
 
 #### for reap unit height control ####################################################
 
-  <node pkg="height_controller" type="height_controller_node" name="height_controller" output="screen"/>
+  <!--node pkg="height_controller" type="height_controller_node" name="height_controller" output="screen"/-->
 
 #### for logic control flow ####################################################
 
-  <node pkg="smach_tutorials" type="motor_control_client.py" name="motor_control_client"/>
+  <node pkg="smach_tutorials" type="motor_control_client.py" name="motor_control_client" output="screen"/>
 
 #### for upload data to cloud ################################################
 
@@ -48,6 +48,6 @@
 
   <node pkg="rqt_graph" type="rqt_graph" name="rqt_graph"/>
 
-  <!--node pkg="smach_viewer" type="smach_viewer.py" name="smach_viewer_py"/-->
+  <node pkg="smach_viewer" type="smach_viewer.py" name="smach_viewer_py"/>
 
 </launch>

@@ -105,11 +105,11 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                         continue;
                     // 1号角度传感器-割台
                     int vol1 = (high0 << 8 | low0);
-                    ROS_INFO_STREAM(vol1);
+                    //ROS_INFO_STREAM(vol1);
                     float vol1_norm = float(vol1)/1000;
-                    ROS_INFO_STREAM(vol1_norm);
+                    //ROS_INFO_STREAM(vol1_norm);
                     float angle1 = 31.56 - vol1_norm * 31.56/(4.06 - 1);
-                    ROS_INFO_STREAM(angle1);
+                    //ROS_INFO_STREAM(angle1);
                     pCAN_DEVICE->angle1 = angle1;
                     // pCAN_DEVICE->angle1 = vol1/2*105/4000+5-18; //因为输入电压是10v，所以除以2;-18是修正零漂
                     std_msgs::Int64 data_receive1;
@@ -126,11 +126,11 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     data_receive2.data = pCAN_DEVICE->angle2;
                     pCAN_DEVICE->reap_angle2_pub->publish(data_receive2);
 
-                    ROS_INFO(
-                            "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle1:%05d angle2:%05d",
-                            pCAN_DEVICE->channel+1, pCAN_DEVICE->count, rec[j].ID,
-                            rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
-                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1, pCAN_DEVICE->angle2);
+                    //ROS_INFO(
+                            //"Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X angle1:%05d angle2:%05d",
+                            //pCAN_DEVICE->channel+1, pCAN_DEVICE->count, rec[j].ID,
+                            //rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
+                            //rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1, pCAN_DEVICE->angle2);
                 }
                 else if (rec[j].ID == 0x0281) { //4-7接口的数据
                     unsigned char high4, low4;
@@ -150,7 +150,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     if ((high4 << 8 | low4) > 60000 || (high5 << 8 | low5) > 60000)
                         continue;
                     int vol5 = (high4 << 8 | low4);
-                    ROS_INFO_STREAM(vol5);
+                    //ROS_INFO_STREAM(vol5);
                     pCAN_DEVICE->angle_turn = vol5;
                     std_msgs::Float32 data_receive_turn;
                     data_receive_turn.data = vol5;
@@ -158,17 +158,17 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
 
                     // speed号角度传感器
                     int vol6 = (high5 << 8 | low5);
-                    ROS_INFO_STREAM(vol6);
+                    //ROS_INFO_STREAM(vol6);
                     pCAN_DEVICE->angle_turn = vol6;
                     std_msgs::Float32 data_receive_speed;
                     data_receive_speed.data = vol6;
                     pCAN_DEVICE->angle_speed_pub->publish(data_receive_speed);
 
-                    ROS_INFO(
-                            "Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X turn:%04f",
-                            pCAN_DEVICE->channel+1, pCAN_DEVICE->count, rec[j].ID,
-                            rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
-                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], vol5/1000);
+                    //ROS_INFO(
+                            //"Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X turn:%04f",
+                            //pCAN_DEVICE->channel+1, pCAN_DEVICE->count, rec[j].ID,
+                            //rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
+                            //rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], vol5/1000);
                 }
 
                 //// 采集卡2：
@@ -212,7 +212,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     float current1 = current_int1;
                     if(current1>2000)
                         current1 = 0;
-                    ROS_INFO_STREAM("current1: "<<current1);
+                    //ROS_INFO_STREAM("current1: "<<current1);
                     float rms1 = pCAN_DEVICE->calculate_rms1(current1);
                     std_msgs::Float32 data_current_raw1;
                     data_current_raw1.data = current1;
@@ -226,7 +226,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     float current2 = current_int2;
                     if(current2>2000)
                         current2 = 0;
-                    ROS_INFO_STREAM("current2: "<<current2);
+                    //ROS_INFO_STREAM("current2: "<<current2);
                     float rms2 = pCAN_DEVICE->calculate_rms2(current2);
                     std_msgs::Float32 data_current_raw2;
                     data_current_raw2.data = current2;
@@ -261,7 +261,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     float current3 = current_int3;
                     if(current3>2000)
                         current3 = 0;
-                    ROS_INFO_STREAM("current3: "<<current3);
+                    //ROS_INFO_STREAM("current3: "<<current3);
                     float rms3 = pCAN_DEVICE->calculate_rms3(current3);
                     std_msgs::Float32 data_current_raw3;
                     data_current_raw3.data = current3;
@@ -275,7 +275,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     float current4 = current_int4;
                     if(current4>2000)
                         current4 = 0;
-                    ROS_INFO_STREAM("current4: "<<current4);
+                    //ROS_INFO_STREAM("current4: "<<current4);
                     float rms4 = pCAN_DEVICE->calculate_rms4(current4);
                     std_msgs::Float32 data_current_raw4;
                     data_current_raw4.data = current4;
@@ -361,7 +361,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     float current5 = current_int5;
                     if(current5>2000)
                         current5 = 0;
-                    ROS_INFO_STREAM("current5: "<<current5);
+                    //ROS_INFO_STREAM("current5: "<<current5);
                     float rms5 = pCAN_DEVICE->calculate_rms5(current5);
                     std_msgs::Float32 data_current_raw5;
                     data_current_raw5.data = current5;
@@ -375,7 +375,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     float current6 = current_int6;
                     if(current6>2000)
                         current6 = 0;
-                    ROS_INFO_STREAM("current6: "<<current6);
+                    //ROS_INFO_STREAM("current6: "<<current6);
                     float rms6 = pCAN_DEVICE->calculate_rms6(current6);
                     std_msgs::Float32 data_current_raw6;
                     data_current_raw6.data = current6;
@@ -421,7 +421,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     float current7 = current_int7;
                     if(current7>2000)
                         current7 = 0;
-                    ROS_INFO_STREAM("current7: "<<current7);
+                    //ROS_INFO_STREAM("current7: "<<current7);
                     float rms7 = pCAN_DEVICE->calculate_rms7(current7);
                     std_msgs::Float32 data_current_raw7;
                     data_current_raw7.data = current7;
@@ -435,7 +435,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     float current8 = current_int8;
                     if(current8>2000)
                         current8 = 0;
-                    ROS_INFO_STREAM("current8: "<<current8);
+                    //ROS_INFO_STREAM("current8: "<<current8);
                     float rms8 = pCAN_DEVICE->calculate_rms8(current8);
                     std_msgs::Float32 data_current_raw8;
                     data_current_raw8.data = current8;
@@ -449,7 +449,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     float current9 = current_int9;
                     if(current9>2000)
                         current9 = 0;
-                    ROS_INFO_STREAM("current9: "<<current9);
+                    //ROS_INFO_STREAM("current9: "<<current9);
                     float rms9 = pCAN_DEVICE->calculate_rms9(current9);
                     std_msgs::Float32 data_current_raw9;
                     data_current_raw9.data = current9;
@@ -463,7 +463,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     float current10 = current_int10;
                     if(current10>2000)
                         current10 = 0;
-                    ROS_INFO_STREAM("current10: "<<current10);
+                    //ROS_INFO_STREAM("current10: "<<current10);
                     float rms10 = pCAN_DEVICE->calculate_rms10(current10);
                     std_msgs::Float32 data_current_raw10;
                     data_current_raw10.data = current10;
@@ -499,12 +499,12 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     pCAN_DEVICE->car_speed_pub->publish(pCAN_DEVICE->car_speed);
                 }
                 else {
-                    ROS_INFO("Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X",
-                            pCAN_DEVICE->channel+1,
-                            pCAN_DEVICE->count,
-                             rec[j].ID,
-                             rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
-                             rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7]);
+                    //ROS_INFO("Channel %02d Receive msg:%04d ID:%02X Data:0x %02X %02X %02X %02X %02X %02X %02X %02X",
+                            //pCAN_DEVICE->channel+1,
+                            //pCAN_DEVICE->count,
+                             //rec[j].ID,
+                             //rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
+                             //rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7]);
 
                 }
                 pCAN_DEVICE->count++;//序号递增
