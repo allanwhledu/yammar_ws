@@ -11,7 +11,6 @@ from std_msgs.msg import Float32
 from std_msgs.msg import Int32
 from std_msgs.msg import Int16
 
-from smach_ros import SimpleActionState
 from control485.msg import DriveMotorAction
 import actionlib
 
