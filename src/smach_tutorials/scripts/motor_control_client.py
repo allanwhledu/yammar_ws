@@ -11,6 +11,7 @@ from std_msgs.msg import Float32
 from std_msgs.msg import Int32
 from std_msgs.msg import Int16
 
+from smach_ros import SimpleActionState
 from control485.msg import DriveMotorAction
 import actionlib
 
@@ -65,13 +66,18 @@ target_speed.data = 0
 last_target = -1000
 
 # for publish result
-pub_result = rospy.Publisher('smach_fback', Int32, queue_size=1)
+pub_result = rospy.Publisher('smach_fback', Int16, queue_size=1)
 
 car_speed_now = 0
 car_speed_last = 0
 is_stop = 0
 is_stop_last = 0
-motor_controlled_id = 0
+submodules_status = 0
+module_visual = 0
+module_hmi = 0
+module_can = 0
+module_rs485 = 0
+module_mmw = 0
 
 
 class Topic_monitor:
@@ -80,7 +86,7 @@ class Topic_monitor:
 
         rospy.Subscriber('/modified_car_speed', Float32, self.callback_car_speed)
         rospy.Subscriber('/stop', Int16, self.callback_stop_msg)
-        # rospy.Subscriber('/motor_controlled', Int16, self.callback_motor_id)
+        rospy.Subscriber('/submodules_status', Int16, self.callback_status)
 
         self.callback_thread = threading.Thread(target=self.call_back_jobs)
         self.callback_thread.start()
@@ -95,13 +101,62 @@ class Topic_monitor:
         global is_stop
         is_stop = data.data
 
-    # def callback_motor_id(self, data):
-    #     global motor_controlled_id
-    #     motor_controlled_id = data.data
+    def callback_status(self, data):
+        global module_visual
+        global module_hmi
+        global module_can
+        global module_rs485
+        global module_mmw
+        global submodules_status
+
+        if data.data == 1:
+            module_visual = 1
+            print 'module visual started.'
+        elif data.data == 2:
+            module_rs485 = 1
+            print 'module rs485 started.'
+        elif data.data == 3:
+            module_can = 1
+            print 'module can started.'
+        elif data.data == 4:
+            module_mmw = 1
+            print 'module mmw started.'
+        elif data.data == 5:
+            module_hmi = 1
+            print 'module hmi started.'
+
+        if module_visual == 1 and module_rs485 == 1 and module_can == 1 and module_mmw == 1 and module_hmi == 1:
+            submodules_status = 1
+        else:
+            print 'system is waiting for all submodules...'
 
     ## thread functions ##
     def call_back_jobs(self):
         rospy.spin()
+
+class self_check(smach.State):
+    def __init__(self):
+        smach.State.__init__(self, outcomes=['SYS_STARTING', 'SYS_STARTED'])
+
+    def execute(self, userdata):
+        global submodules_status
+
+        if submodules_status == 0:
+            result = "SYS_STARTING"
+            msg = Int16()
+            msg.data = 0
+            pub_result.publish(msg)
+        elif submodules_status == 1:
+            result = 'SYS_STARTED'
+            msg = Int16()
+            msg.data = 1
+            pub_result.publish(msg)
+            pub_result.publish(msg)
+            pub_result.publish(msg)
+            pub_result.publish(msg)
+            pub_result.publish(msg)
+
+        return result
 
 class client_motor_1(smach.State):
     def __init__(self):
@@ -504,6 +559,10 @@ def main():
     with sm:
         # smach.StateMachine.add('WAIT', smach_ros.MonitorState("/modified_car_speed", Float32, monitor_cb),
         #                        transitions={'invalid': 'MOTOR1', 'valid': 'WAIT', 'preempted': 'WAIT'})
+        smach.StateMachine.add('SYS_START', self_check(),
+                               transitions={'SYS_STARTING': 'SYS_START',
+                                            'SYS_STARTED': 'WAIT'})
+
         smach.StateMachine.add('WAIT', Car_speed_monitor(),
                                transitions={'start': 'START_MOTOR10',
                                             'speeddown': 'SPEEDCHANGE_MOTOR1',
