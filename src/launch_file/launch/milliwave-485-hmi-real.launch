@@ -1,7 +1,7 @@
 <launch>
 
 #### rosbag #################################################
-  <node pkg="rosbag" type="record" name="bag_record" args="-a -o test_MALL"/>
+  <node pkg="rosbag" type="record" name="bag_record" args="-a -o test_"/>
 
 #### HMI ####################################################
 
@@ -15,7 +15,7 @@
 
 #### read signals from CAN bus ####################################################
 
-  <node pkg="read_CAN" type="read_CAN_node" name="read_CAN" output="screen"/>
+  <node pkg="read_CAN" type="read_CAN_node" name="CAN_bus_server" output="screen"/>
 
 #### for line detect ####################################################
 
@@ -28,6 +28,10 @@
 
   <!--node pkg="controlturn" type="controlturn_node" name="controlturn" /-->
   <node pkg="controldis" type="controldis_node" name="controldis" />
+
+#### for reap unit height control ####################################################
+
+  <node pkg="height_controller" type="height_controller_node" name="height_controller" output="screen"/>
 
 #### for logic control flow ####################################################
 

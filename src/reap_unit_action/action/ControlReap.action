@@ -1,8 +1,0 @@
-# Define the goal
-uint32 control_mode # 控制割台高度的模式，0静止，1割台升高，2割台降低，3轮升高，4轮降低
----
-# Define the result
-uint32 result # 成功与否
----
-# Define a feedback message
-uint32 process # 过程（直接不使用）
