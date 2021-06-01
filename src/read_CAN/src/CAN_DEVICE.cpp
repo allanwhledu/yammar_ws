@@ -88,7 +88,6 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                 //// 采集卡1：
                 if (rec[j].ID == 0x0181) // 0-3接口的数据
                 {
-                   // ROSINFOSTREAM("ICAN 1 GOT msg");
                     unsigned char high0, low0;
                     high0 = rec[j].Data[1];
                     low0 = rec[j].Data[0];
@@ -242,7 +241,6 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
 //                            rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
 //                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1, pCAN_DEVICE->angle2);
                 }
-
                 else if (rec[j].ID == 0x0282) // 4-7接口的数据
                 {
                     unsigned char high4, low4;
@@ -403,7 +401,6 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
 //                            rec[j].Data[0], rec[j].Data[1], rec[j].Data[2], rec[j].Data[3],
 //                            rec[j].Data[4], rec[j].Data[5], rec[j].Data[6], rec[j].Data[7], pCAN_DEVICE->angle1, pCAN_DEVICE->angle2);
                 }
-
                 else if (rec[j].ID == 0x0283) // 4-7接口的数据
                 {
                     unsigned char high4, low4;

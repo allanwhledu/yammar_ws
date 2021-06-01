@@ -65,3 +65,9 @@ src/control485/speed_result/.idea/
 speed_result/
 
 *.npy
+
+src/CMakeLists.txt
+
+src/multicamera/cmake-build-debug/
+
+src/multicamera/cmake-build-release/

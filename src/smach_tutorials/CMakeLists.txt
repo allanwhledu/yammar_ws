@@ -12,7 +12,7 @@ find_package(catkin REQUIRED COMPONENTS
   smach
   smach_ros
   actionlib_msgs
-  reap_unit_action
+  control485
 )
 
 ## Generate actions in the 'action' folder

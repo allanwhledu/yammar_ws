@@ -1,7 +1,7 @@
 <launch>
 
 #### rosbag #################################################
-  <node pkg="rosbag" type="record" name="bag_record" args="-a -o test_MALL"/>
+  <node pkg="rosbag" type="record" name="bag_record" args="-a -o test_"/>
 
 #### HMI ####################################################
 
@@ -15,19 +15,23 @@
 
 #### read signals from CAN bus ####################################################
 
-  <node pkg="read_CAN" type="read_CAN_node" name="read_CAN" output="screen"/>
+  <node pkg="read_CAN" type="read_CAN_node" name="CAN_bus_server" output="screen"/>
 
 #### for line detect ####################################################
 
-  <node pkg="border_lingang" type="border_lingang_node" name="line_detect" />
+  <!--node pkg="border_lingang" type="border_lingang_node" name="line_detect" /-->
   <node pkg="serialPort" type="serialPort_node" name="serialPort" />
   <node pkg="realsense2_driver" type="realsense2_driver" name="realsense2_driver" />
   <node pkg="mmw_capture" type="mmw_capture_node" name="obstacle_detect" />
 
 #### for path tracking ####################################################
 
-  <node pkg="controlturn" type="controlturn_node" name="controlturn" />
+  <!--node pkg="controlturn" type="controlturn_node" name="controlturn" /-->
   <node pkg="controldis" type="controldis_node" name="controldis" />
+
+#### for reap unit height control ####################################################
+
+  <node pkg="height_controller" type="height_controller_node" name="height_controller" output="screen"/>
 
 #### for logic control flow ####################################################
 
