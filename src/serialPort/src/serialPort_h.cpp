@@ -176,7 +176,6 @@ std::string string_get( string& str)
 }
 
 
-<<<<<<< HEAD
 int main (int argc, char** argv)
 {
     clock_t start1,end,end2;
@@ -208,33 +207,6 @@ int main (int argc, char** argv)
         ser.setTimeout(to);
         ser.open();
     }
-=======
-    int main (int argc, char** argv) 
-    {
-        clock_t start1,end,end2;        
-          //初始化节点
-          ros::init(argc, argv, "serial_example_node");
-          //声明节点句柄
-          ros::NodeHandle nh;
-          std_msgs::Float64 gps_x;
-          std_msgs::Float64 gps_y;
-          std_msgs::Float64 gps_dir;
-
-          //发布主题
-          ros::Publisher gps_first_x = nh.advertise<std_msgs::Float64>("gps_x_go", 1000);
-          ros::Publisher gps_first_y = nh.advertise<std_msgs::Float64>("gps_y_go", 1000);
-          ros::Publisher gps_head_dir = nh.advertise<std_msgs::Float64>("gps_head_dir", 1000);
-
-          try {
-              //设置串口属性，并打开串口
-              ser.setPort("/dev/ttyUSB4");
-              ser.setBaudrate(115200);
-              serial::Timeout to = serial::Timeout::simpleTimeout(1000);
-              ser.setTimeout(to);
-              ser.open();
-        
-          }
->>>>>>> master
 
     catch (serial::IOException &e) {
       ROS_ERROR_STREAM("Unable to open port ");
