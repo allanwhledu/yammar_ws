@@ -67,3 +67,7 @@ speed_result/
 *.npy
 
 src/CMakeLists.txt
+
+src/multicamera/cmake-build-debug/
+
+src/multicamera/cmake-build-release/

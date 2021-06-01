@@ -2,6 +2,7 @@
 #include "ros/ros.h"
 #include "std_msgs/Int16.h"
 #include "std_msgs/Float64.h"
+#include <geometry_msgs/Pose2D.h>
 #include <termio.h>
 #include <stdio.h>
 #include <iostream>
@@ -14,6 +15,8 @@ using namespace std;
 std_msgs::Float64 gps_x_go;
 std_msgs::Float64 gps_y_go;
 std_msgs::Float64 gps_head_dir;
+
+geometry_msgs::Pose2D curr_pos;
 double tmpDis = 0;
 
 
@@ -29,6 +32,23 @@ double tmpDis = 0;
    void headgocallback(const std_msgs::Float64::ConstPtr &msg)
   {
       gps_head_dir.data = msg->data;
+ }
+
+ // Update the current pose
+ void curr_pos_cb(const geometry_msgs::Pose2D::ConstPtr &msg){
+     curr_pos.x = msg->x;
+     curr_pos.y = msg->y;
+     curr_pos.theta = msg->theta;
+ }
+
+ int find_space(const string& str){
+     if(str.empty()) return 0;
+     int len = str.length();
+     int i = 0;
+     for(; i < len; ++i){
+         if(str[i] == ' ') break;
+     }
+     return i;
  }
 
 // // input:
@@ -83,9 +103,6 @@ int find_goal_point(vector<double>&vec, double x, double y, int prevInd){
     return i;
 }
 
-
-
-
 int w2pls(double W)
 {
     int pls;
@@ -110,19 +127,38 @@ int main(int argc, char **argv)
   ros::Subscriber y_go = n.subscribe("/gps_y_go", 100, ygocallback);
   ros::Subscriber head_go = n.subscribe("/gps_head_dir", 100, headgocallback);
 
+  // Sub the current pos
+  ros::Subscriber curr_pos_sub = n.subscribe("", 10, curr_pos_cb);
+
   //create txt to record the path
   string filename="data_go.txt";
   ofstream fout;
   fout.open(filename.c_str());
   // wait for the state
   usleep(1000000);
-  //read the txt
+  //read the reference line txt
   ifstream readFile;
-  readFile.open("/home/sunh/yammar_ws/src/controldis/data.txt", ios::in);
-  if (!readFile.is_open())
-  {
+  readFile.open("/home/yangzt/yammar_ws/src/controldis/data.txt", ios::in);
+  if (!readFile.is_open()){
         cout << "打开文件失败" << endl;
   }
+  //
+  vector<geometry_msgs::Pose2D> ref_pos_line;
+  string ref_position;
+  while(getline(readFile, ref_position)){
+      if(ref_position.empty()) continue;
+      // split the curr_position with " "
+      int index_split = find_space(ref_position);
+      double x_temp = stod(ref_position.substr(0,index_split));
+      double y_temp = stod(ref_position.substr(index_split + 1, ref_position.length() - index_split - 1));
+
+      geometry_msgs::Pose2D temp_position;
+      temp_position.x = x_temp;
+      temp_position.y = y_temp;
+      temp_position.theta = 0.0;
+      ref_pos_line.push_back(temp_position);
+  }
+    cout<<"ref pos line"<<ref_pos_line.size()<<endl;
 
   vector<double> V;
   vector<double>::iterator it;
