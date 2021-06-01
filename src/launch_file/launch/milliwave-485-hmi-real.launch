@@ -37,6 +37,10 @@
 
   <node pkg="smach_tutorials" type="motor_control_client.py" name="motor_control_client"/>
 
+#### for upload data to cloud ################################################
+
+  <node pkg="cloud_convertor" type="cloud_convertor_node.py" name="cloud_convertor"/>
+
 #### visulization ################################################
 
   <!--node pkg="rviz" type="rviz" name="rviz"

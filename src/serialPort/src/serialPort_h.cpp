@@ -1,107 +1,107 @@
-      #include <ros/ros.h>
-      #include <serial/serial.h>  //ROS已经内置了的串口包
-      #include <std_msgs/String.h>
-      #include <std_msgs/Empty.h>
-      #include <string>
-      #include <queue>
-      #include <vector>
-      #include <assert.h>
-      #include <stdio.h>
-      #include "std_msgs/Int16.h"
-      #include "std_msgs/Float64.h"
-      #include <fstream>
-      #include <time.h>
+#include <ros/ros.h>
+#include <serial/serial.h>  //ROS已经内置了的串口包
+#include <std_msgs/String.h>
+#include <std_msgs/Empty.h>
+#include <string>
+#include <queue>
+#include <vector>
+#include <assert.h>
+#include <stdio.h>
+#include "std_msgs/Int16.h"
+#include "std_msgs/Float64.h"
+#include <geometry_msgs/Pose2D.h>
+#include <fstream>
+#include <time.h>
 
-      serial::Serial ser; //声明串口对象
+serial::Serial ser; //声明串口对象
 
-      using namespace std;
-      //回调函数
-      void write_callback(const std_msgs::String::ConstPtr& msg)
+using namespace std;
+//回调函数
+void write_callback(const std_msgs::String::ConstPtr& msg){
+    ROS_INFO_STREAM("Writing to serial port" <<msg->data);
+    ser.write(msg->data);   //发送串口数据
+}
+
+double str2double(string str)
+{
+  int size=str.size();
+  if(size==0)
+  {
+    return 0;
+  }
+      int pos=0;
+      double res=0.0;
+      for(int i=0;i<size;i++)
       {
-      ROS_INFO_STREAM("Writing to serial port" <<msg->data);
-      ser.write(msg->data);   //发送串口数据
-      }
-
-      double str2double(string str)
-      {
-          int size=str.size();
-          if(size==0)
+          if(str[i]=='.')
           {
-            return 0;
-          }
-              int pos=0;
-              double res=0.0;
-              for(int i=0;i<size;i++)
-              {
-                  if(str[i]=='.')
-                  {
-                      pos=i;
-                      break;
-                  }
-              }
-              for(int i=0;i<size;i++)
-              {
-                  if(i<pos)
-                  {
-                      res+=(str[i]-'0')*pow(10,pos-i-1);
-                  }
-                  if(i>pos)
-                  {
-                      res+=(str[i]-'0')*pow(10,pos-i);
-                  }
-               }
-            return res;
-      }
-    
-      void RecePro(std::string s , double& lat , double& lon)
-      {
-          //分割有效数据，存入vector中
-          std::vector<std::string> v;
-          std::string::size_type pos1, pos2;
-          pos2 = s.find(",");
-          pos1 = 0;
-          while ( std::string::npos !=pos2 )
-          {
-              v.push_back( s.substr( pos1, pos2-pos1 ) );
-              pos1 = pos2 + 1;
-              pos2 = s.find(",",pos1);
-          }
-
-          if ( pos1 != s.length() )
-              v.push_back( s.substr( pos1 ));
-          //解析出经纬度
-          if (v.max_size() >= 6 && (v[6] == "1" || v[6] == "2" || v[6] == "3" || v[6] == "4" || v[6] == "5" || v[6] == "6" || v[6] == "8" || v[6] == "9"))
-          {
-              //纬度
-              if (v[3] != "") lat = std::atof(v[2].c_str()) / 100;
-              int ilat = (int)floor(lat) % 100;
-              lat = ilat + (lat - ilat) * 100 / 60;
-              //经度
-              if (v[5] != "") lon = std::atof(v[4].c_str()) / 100;
-              int ilon = (int)floor(lon) % 1000;
-              lon = ilon + (lon - ilon) * 100 / 60;
+              pos=i;
+              break;
           }
       }
-
-  void RecePro_head(std::string s , double& head)
+      for(int i=0;i<size;i++)
       {
-         std::vector<std::string> v;
-          //分割有效数据，存入vector中        
-         std::string::size_type pos1, pos2;
-          pos2 = s.find(",");
-          pos1 = 0;
-          while ( std::string::npos !=pos2 )
+          if(i<pos)
           {
-              v.push_back( s.substr( pos1, pos2-pos1 ) );
-              pos1 = pos2 + 1;
-              pos2 = s.find(",",pos1);
+              res+=(str[i]-'0')*pow(10,pos-i-1);
           }
+          if(i>pos)
+          {
+              res+=(str[i]-'0')*pow(10,pos-i);
+          }
+       }
+    return res;
+}
 
-          if ( pos1 != s.length() )
-              v.push_back( s.substr( pos1 ));
-  
-          if (v[2] != "") head = std::atof(v[1].c_str());
-    }
+void RecePro(std::string s , double& lat , double& lon)
+{
+  //分割有效数据，存入vector中
+  std::vector<std::string> v;
+  std::string::size_type pos1, pos2;
+  pos2 = s.find(",");
+  pos1 = 0;
+  while ( std::string::npos !=pos2 )
+  {
+      v.push_back( s.substr( pos1, pos2-pos1 ) );
+      pos1 = pos2 + 1;
+      pos2 = s.find(",",pos1);
+  }
+
+  if ( pos1 != s.length() )
+      v.push_back( s.substr( pos1 ));
+  //解析出经纬度
+  if (v.max_size() >= 6 && (v[6] == "1" || v[6] == "2" || v[6] == "3" || v[6] == "4" || v[6] == "5" || v[6] == "6" || v[6] == "8" || v[6] == "9"))
+  {
+      //纬度
+      if (v[3] != "") lat = std::atof(v[2].c_str()) / 100;
+      int ilat = (int)floor(lat) % 100;
+      lat = ilat + (lat - ilat) * 100 / 60;
+      //经度
+      if (v[5] != "") lon = std::atof(v[4].c_str()) / 100;
+      int ilon = (int)floor(lon) % 1000;
+      lon = ilon + (lon - ilon) * 100 / 60;
+  }
+}
+
+void RecePro_head(std::string s , double& head)
+  {
+     std::vector<std::string> v;
+      //分割有效数据，存入vector中
+     std::string::size_type pos1, pos2;
+      pos2 = s.find(",");
+      pos1 = 0;
+      while ( std::string::npos !=pos2 )
+      {
+          v.push_back( s.substr( pos1, pos2-pos1 ) );
+          pos1 = pos2 + 1;
+          pos2 = s.find(",",pos1);
+      }
+
+      if ( pos1 != s.length() )
+          v.push_back( s.substr( pos1 ));
+
+      if (v[2] != "") head = std::atof(v[1].c_str());
+}
 
   std::vector<string> split(const string& str, const string& delim)
  {
@@ -176,170 +176,181 @@ std::string string_get( string& str)
 }
 
 
-    int main (int argc, char** argv) 
-    {
-        clock_t start1,end,end2;        
-          //初始化节点
-          ros::init(argc, argv, "serial_example_node");
-          //声明节点句柄
-          ros::NodeHandle nh;
-          std_msgs::Float64 gps_x;
-          std_msgs::Float64 gps_y;
-          std_msgs::Float64 gps_dir;
+int main (int argc, char** argv)
+{
+    clock_t start1,end,end2;
+    //初始化节点
+    ros::init(argc, argv, "serial_example_node");
+    //声明节点句柄
+    ros::NodeHandle nh;
+    std_msgs::Float64 gps_x;
+    std_msgs::Float64 gps_y;
+    std_msgs::Float64 gps_dir;
+    geometry_msgs::Pose2D curr_pos_msg;
+    // Init
+    curr_pos_msg.x = 0.0;
+    curr_pos_msg.y = 0.0;
+    curr_pos_msg.theta = 0.0;
 
-          //发布主题
-          ros::Publisher gps_first_x = nh.advertise<std_msgs::Float64>("gps_x_go", 1000);
-          ros::Publisher gps_first_y = nh.advertise<std_msgs::Float64>("gps_y_go", 1000);
-          ros::Publisher gps_head_dir = nh.advertise<std_msgs::Float64>("gps_head_dir", 1000);
+    //发布主题
+    ros::Publisher gps_first_x = nh.advertise<std_msgs::Float64>("gps_x_go", 1000);
+    ros::Publisher gps_first_y = nh.advertise<std_msgs::Float64>("gps_y_go", 1000);
+    ros::Publisher gps_head_dir = nh.advertise<std_msgs::Float64>("gps_head_dir", 1000);
 
-          try {
-              //设置串口属性，并打开串口
-              ser.setPort("/dev/ttyUSB0");
-              ser.setBaudrate(115200);
-              serial::Timeout to = serial::Timeout::simpleTimeout(1000);
-              ser.setTimeout(to);
-              ser.open();
-        
-          }
+    ros::Publisher curr_pos_pub = nh.advertise<geometry_msgs::Pose2D>("curr_pose_gps", 1000);
 
-          catch (serial::IOException &e) {
-              ROS_ERROR_STREAM("Unable to open port ");
-              return -1;
-          }
-          //检测串口是否已经打开，并给出提示信息
-          if (ser.isOpen()) {
-              ROS_INFO_STREAM("Serial Port initialized");
-          } else {
-              return -1;
-          }
-          //指定循环的频率
-          ros::Rate loop_rate(50);
-
-          time_t currentTime=time(NULL);
-          char chCurrentTime[256];
-          strftime(chCurrentTime,sizeof(chCurrentTime),"%Y%m%d %H%M%S",localtime(&currentTime));
-          string stCurrentTime=chCurrentTime;
-          string filename="data"+stCurrentTime+".txt";
-          string filename_head="head_dir"+stCurrentTime+".txt";
-          ofstream fout;
-          ofstream fout_head;
-          fout.open(filename.c_str());
-          fout_head.open(filename_head.c_str());
-
-          std::string strRece;
-          std::string strRece_h;
-          std::string temp;
-        while (ros::ok())
-          {
-            if (ser.available()) 
-           {
-                temp = ser.read(ser.available());
-                strRece_h +=  temp;
-                strRece += temp;
-                  //2.截取数据、解析数据：  GPS起始标志
-                  std::string gstart = "$GPGGA";
-                  //GPS终止标志
-                  std::string gend = "\r\n";
-                  int i = 0, start = -1, end = -1;
-                  while (i < strRece.length())
-                   {
-                       //找起始标志
-                      start = strRece.find(gstart);
-                      //cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<start_h:"<<start<<endl;
-                       //如果没找到，丢弃这部分数据，但要留下最后2位,避免遗漏掉起始标志
-                      if (start == -1) {
-                          //cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<:::"<<"NOTHING"<<endl;
-                          if (strRece.length() > 2)
-                              strRece = strRece.substr(strRece.length() - 3);
-                          break;
-                      }
-                      //如果找到了起始标志，开始找终止标志
-                      else {
-                          //找终止标志
-                          end = strRece.find(gend);
-                        // cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<end_h:"<<end<<endl;
-                          //如果没找到，把起始标志开始的数据留下，前面的数据丢弃，然后跳出循环
-                          if (end == -1 || end < start) {
-                              if (end != 0)
-                                  strRece = strRece.substr(start);
-                              break;
-                          }
-                          //如果找到了终止标志，把这段有效的数据剪切给解析的函数，剩下的继续开始寻找
-                          else {
-                              i = end;
-                              //把有效的数据给解析的函数以获取经纬度
-                              double lat, lon;
-                              double x,y;
-                              RecePro(strRece.substr(start, end + 2 - start), lat, lon);
-                              gaussBLtoXY(lon, lat, x, y);
-                                 cout<<"X::"<<x<<endl;
-                                 cout<<"Y::"<<y<<endl;
-                                fout<<std::setiosflags(std::ios::fixed)  << std::setprecision(9)<<x<<" "<<y<<endl;
-                                fout<<"\r\n"<<endl;
-                                gps_x.data = x ;
-                                gps_y.data = y ;
-                                gps_first_x.publish(gps_x);
-                                gps_first_y.publish(gps_y);
-                              //如果剩下的字符大于等于4，则继续循环寻找有效数据,如果所剩字符小于等于3则跳出循环
-                              if (i + 5 < strRece.length())
-                                  strRece = strRece.substr(end + 2);
-                              else {
-                                  strRece = strRece.substr(end + 2);
-                                  break;
-                                }
-                            }
-                        }
-                      }
-
-                   std::string gstart_head ="DT";
-                   std::string gend_head = "T*";
-                   int ii = 0, start_h = -1, end_h = -1;
-                   while (ii < strRece_h.length()) {
-//                       cout<<strRece_h<<endl;
-                       start_h = strRece_h.find(gstart_head);
-//                       cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<start_h:"<<start_h<<endl;
-                       if (start_h == -1) {
-//                           cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<:::"<<"NOTHING"<<endl;
-                           if (strRece_h.length() > 2)
-                               strRece_h = strRece_h.substr(strRece_h.length() - 3);
-                           break;
-                       }
-                       else {
-                           end_h = strRece_h.find(gend_head);
-//                           cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<end_h:"<<end_h<<endl;
-                           if (end_h == -1 || end_h < start_h) {
-                               if (end_h != 0)
-                                   strRece_h = strRece_h.substr(start_h);
-                               break;
-                           }
-                           else {
-                               ii = end_h;
-                               double dir;
-                                RecePro_head(strRece_h.substr(start_h, end_h + 2 - start_h),dir);
-                                 // string gh = strRece_h.substr(start_h, end_h + 2 - start_h);
-                                  cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Head::"<<dir<<endl;
-//                                fout_head<<dir<<endl;
-//                                fout_head<<"\n"<<endl;
-                               gps_dir.data = dir;
-                               gps_head_dir.publish(gps_dir);
-                                if (ii + 6 < strRece_h.length())
-                                    strRece_h = strRece_h.substr(end_h+1);
-                                else {
-                                    strRece_h = strRece_h.substr(strRece_h.length());
-                                    break;
-                                    }
-                           }
-                         }
-                     }
-
-
-                  //处理ROS的信息，比如订阅消息,并调用回调函数
-                  ros::spinOnce();
-                  loop_rate.sleep();
-            }
-        }
-      
+    try {
+        //设置串口属性，并打开串口
+        ser.setPort("/dev/ttyUSB0");
+        ser.setBaudrate(115200);
+        serial::Timeout to = serial::Timeout::simpleTimeout(1000);
+        ser.setTimeout(to);
+        ser.open();
     }
+
+    catch (serial::IOException &e) {
+      ROS_ERROR_STREAM("Unable to open port ");
+      return -1;
+    }
+    //检测串口是否已经打开，并给出提示信息
+    if (ser.isOpen()) {
+      ROS_INFO_STREAM("Serial Port initialized");
+    } else {
+      return -1;
+    }
+    //指定循环的频率
+    ros::Rate loop_rate(50);
+
+    time_t currentTime=time(NULL);
+    char chCurrentTime[256];
+    strftime(chCurrentTime,sizeof(chCurrentTime),"%Y%m%d %H%M%S",localtime(&currentTime));
+    string stCurrentTime=chCurrentTime;
+    string filename="data"+stCurrentTime+".txt";
+    string filename_head="head_dir"+stCurrentTime+".txt";
+    ofstream fout;
+    ofstream fout_head;
+    fout.open(filename.c_str());
+    fout_head.open(filename_head.c_str());
+
+    std::string strRece;
+    std::string strRece_h;
+    std::string temp;
+    while (ros::ok()){
+        if (ser.available()){
+            temp = ser.read(ser.available());
+            strRece_h +=  temp;
+            strRece += temp;
+            //2.截取数据、解析数据：  GPS起始标志
+            std::string gstart = "$GPGGA";
+            //GPS终止标志
+            std::string gend = "\r\n";
+            int i = 0, start = -1, end = -1;
+            while (i < strRece.length()){
+                //找起始标志
+                start = strRece.find(gstart);
+                //cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<start_h:"<<start<<endl;
+                //如果没找到，丢弃这部分数据，但要留下最后2位,避免遗漏掉起始标志
+                if (start == -1) {
+                  //cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<:::"<<"NOTHING"<<endl;
+                  if (strRece.length() > 2)
+                      strRece = strRece.substr(strRece.length() - 3);
+                  break;
+                }
+                //如果找到了起始标志，开始找终止标志
+                else {
+                    //找终止标志
+                    end = strRece.find(gend);
+                    // cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<end_h:"<<end<<endl;
+                    //如果没找到，把起始标志开始的数据留下，前面的数据丢弃，然后跳出循环
+                    if (end == -1 || end < start) {
+                        if (end != 0)
+                          strRece = strRece.substr(start);
+                        break;
+                    }
+                    //如果找到了终止标志，把这段有效的数据剪切给解析的函数，剩下的继续开始寻找
+                    else {
+                        i = end;
+                        //把有效的数据给解析的函数以获取经纬度
+                        double lat, lon;
+                        double x,y;
+                        RecePro(strRece.substr(start, end + 2 - start), lat, lon);
+                        gaussBLtoXY(lon, lat, x, y);
+                        cout<<"X::"<<x<<endl;
+                        cout<<"Y::"<<y<<endl;
+                        fout<<std::setiosflags(std::ios::fixed)  << std::setprecision(9)<<x<<" "<<y<<endl;
+                        fout<<"\r\n"<<endl;
+                        gps_x.data = x ;
+                        gps_y.data = y ;
+                        gps_first_x.publish(gps_x);
+                        gps_first_y.publish(gps_y);
+                        // Added by yangzt
+                        curr_pos_msg.x = x;
+                        curr_pos_msg.y = y;
+                        //如果剩下的字符大于等于4，则继续循环寻找有效数据,如果所剩字符小于等于3则跳出循环
+                        if (i + 5 < strRece.length()){
+                            strRece = strRece.substr(end + 2);
+                        }
+                        else {
+                          strRece = strRece.substr(end + 2);
+                          break;
+                        }
+                    }
+                }
+            }
+
+            std::string gstart_head ="DT";
+            std::string gend_head = "T*";
+            int ii = 0, start_h = -1, end_h = -1;
+            while (ii < strRece_h.length()) {
+                //                       cout<<strRece_h<<endl;
+                start_h = strRece_h.find(gstart_head);
+                //                       cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<start_h:"<<start_h<<endl;
+                if (start_h == -1) {
+                //                           cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<:::"<<"NOTHING"<<endl;
+                   if (strRece_h.length() > 2)
+                       strRece_h = strRece_h.substr(strRece_h.length() - 3);
+                   break;
+                }
+                else {
+                   end_h = strRece_h.find(gend_head);
+                //                           cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<end_h:"<<end_h<<endl;
+                   if (end_h == -1 || end_h < start_h) {
+                       if (end_h != 0)
+                           strRece_h = strRece_h.substr(start_h);
+                       break;
+                   }
+                   else {
+                       ii = end_h;
+                       double dir;
+                        RecePro_head(strRece_h.substr(start_h, end_h + 2 - start_h),dir);
+                         // string gh = strRece_h.substr(start_h, end_h + 2 - start_h);
+                          cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<<Head::"<<dir<<endl;
+                //                                fout_head<<dir<<endl;
+                //                                fout_head<<"\n"<<endl;
+                       gps_dir.data = dir;
+                       gps_head_dir.publish(gps_dir);
+
+                       // Added by yangzt
+                       curr_pos_msg.theta = dir;
+                        if (ii + 6 < strRece_h.length())
+                            strRece_h = strRece_h.substr(end_h+1);
+                        else {
+                            strRece_h = strRece_h.substr(strRece_h.length());
+                            break;
+                        }
+                   }
+                }
+            }
+            curr_pos_pub.publish(curr_pos_msg);
+
+            //处理ROS的信息，比如订阅消息,并调用回调函数
+            ros::spinOnce();
+            loop_rate.sleep();
+        }
+    }
+    return 0;
+
+}
 
 
 

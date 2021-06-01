@@ -128,7 +128,7 @@ int main(int argc, char **argv)
   ros::Subscriber head_go = n.subscribe("/gps_head_dir", 100, headgocallback);
 
   // Sub the current pos
-  ros::Subscriber curr_pos_sub = n.subscribe("", 10, curr_pos_cb);
+  ros::Subscriber curr_pos_sub = n.subscribe("/curr_pose_gps", 10, curr_pos_cb);
 
   //create txt to record the path
   string filename="data_go.txt";
