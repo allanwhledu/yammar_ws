@@ -150,7 +150,7 @@ include_directories(
 ## Specify libraries to link a library or executable target against
  target_link_libraries(${PROJECT_NAME}_node
          ${catkin_LIBRARIES}
-         /usr/lib/x86_64-linux-gnu/libmodbus.so
+	 /usr/local/lib/libmodbus.so
  )
 
 #############
