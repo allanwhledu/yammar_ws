@@ -15,7 +15,7 @@
 
 #### read signals from CAN bus ####################################################
 
-  <node pkg="read_CAN" type="read_CAN_node" name="CAN_bus_server"/>
+  <node pkg="read_CAN" type="read_CAN_node" name="CAN_bus_server" output="screen"/>
 
 #### for line detect ####################################################
 
@@ -35,7 +35,7 @@
 
 #### for logic control flow ####################################################
 
-  <node pkg="smach_tutorials" type="motor_control_client.py" name="motor_control_client" output="screen"/>
+  <node pkg="smach_tutorials" type="motor_control_client.py" name="motor_control_client"/>
 
 #### for upload data to cloud ################################################
 

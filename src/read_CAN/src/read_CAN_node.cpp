@@ -16,7 +16,7 @@ CAN_DEVICE can_2(2);
 
 void height_control_mode_callback(const std_msgs::UInt16::ConstPtr &msg) {
     ROS_INFO("got control mode: ", msg->data);
-    can_2.control_height(msg->data);
+    can_1.control_height(msg->data);
 }
 
 int main(int argc, char **argv) {
