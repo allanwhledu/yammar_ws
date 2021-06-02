@@ -101,8 +101,8 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     high3 = rec[j].Data[7];
                     low3 = rec[j].Data[6];
 
-                    if ((high0 << 8 | low0) > 60000 || (high1 << 8 | low1) > 60000 || (high2 << 8 | low2) > 60000)
-                        continue;
+                    //if ((high0 << 8 | low0) > 60000 || (high1 << 8 | low1) > 60000 || (high2 << 8 | low2) > 60000)
+                    //    continue;
                     // 1号角度传感器-割台
                     int vol1 = (high0 << 8 | low0);
                     //ROS_INFO_STREAM(vol1);
