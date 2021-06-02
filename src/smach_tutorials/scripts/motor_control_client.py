@@ -493,6 +493,9 @@ class Car_speed_monitor(smach.State):
         motor_target_speed[8] = 500
         motor_target_speed[9] = 500
 
+        #for index in range(len(motor_target_speed)):
+        #    motor_target_speed[index] += 200
+
         for index in range(len(motor_target_speed)):
             if motor_target_speed[index] > 3000:
                 motor_target_speed[index] = 3000

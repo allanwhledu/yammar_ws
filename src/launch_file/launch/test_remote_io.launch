@@ -7,8 +7,8 @@
   <node pkg="trail" type="app_node" name="HMI"/>
 
 #### rosbag #################################################
-  <!--node pkg="rosbag" type="record" name="bag_record" args="-a -o test_height_control"/>
+  <!--node pkg="rosbag" type="record" name="bag_record" args="-a -o test_height_control"/-->
 
-  <node pkg="height_controller" type="height_controller_node" name="height_controller" output="screen"/-->
+  <node pkg="height_controller" type="height_controller_node" name="height_controller" output="screen"/>
 
 </launch>

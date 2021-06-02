@@ -106,9 +106,10 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     // 1号角度传感器-割台
                     int vol1 = (high0 << 8 | low0);
                     //ROS_INFO_STREAM(vol1);
-                    float vol1_norm = float(vol1)/1000;
+                    float vol1_norm = float(vol1);
                     //ROS_INFO_STREAM(vol1_norm);
-                    float angle1 = 31.56 - vol1_norm * 31.56/(4.06 - 1);
+                    //float angle1 = 31.56 - vol1_norm * 31.56/(4.06 - 1);
+		    float angle1 = vol1_norm;
                     //ROS_INFO_STREAM(angle1);
                     pCAN_DEVICE->angle1 = angle1;
                     // pCAN_DEVICE->angle1 = vol1/2*105/4000+5-18; //因为输入电压是10v，所以除以2;-18是修正零漂
@@ -118,8 +119,10 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
 
                     // 2号角度传感器-拨禾论
                     int vol2 = (high1 << 8 | low1);
-                    float vol2_norm = float(vol2)/1000;
-                    float angle2 = 0 + vol2_norm * 39.13/(3.92 - 0.72);
+		    //ROS_INFO_STREAM(vol2);
+                    float vol2_norm = float(vol2);
+                    //float angle2 = 0 + vol2_norm * 39.13/(3.92 - 0.72);
+                    float angle2 = vol2_norm;
                     pCAN_DEVICE->angle2 = angle2;
                     // pCAN_DEVICE->angle2 = vol2/2*105/4000+5-18;
                     std_msgs::Int64 data_receive2;
