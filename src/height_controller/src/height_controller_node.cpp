@@ -17,8 +17,8 @@ public:
         pub_ = n_.advertise<std_msgs::UInt16>("height_control_mode", 1);
 
         //Topic you want to subscribe
-        reap_height_sub_ = n_.subscribe("/height_border_param1", 100, &SubscribeAndPublish::reap_height_Callback, this);
-        height_sub_ = n_.subscribe("/height_border_param", 100, &SubscribeAndPublish::reel_height_Callback, this);
+        reap_height_sub_ = n_.subscribe("/reap_height_target", 100, &SubscribeAndPublish::reap_height_Callback, this);
+        height_sub_ = n_.subscribe("/height_border", 100, &SubscribeAndPublish::reel_height_Callback, this);
         angle1_sub_ = n_.subscribe("/reap_angle1", 1, &SubscribeAndPublish::angle1_Callback, this);
         angle2_sub_ = n_.subscribe("/reap_angle2", 1, &SubscribeAndPublish::angle2_Callback, this);
     }
@@ -26,12 +26,12 @@ public:
     void reap_height_Callback(const std_msgs::Int16::ConstPtr &msg) {
         //做一些计算，以确定下一步的控制信号
         //.... do something with the input and generate the output...
-        reap_height_visual = msg->data - 40; // reap高度在谷物高度以下40厘米
+        reap_height_target = msg->data; // reap高度由自动驾驶的状态决定
     }
     void reel_height_Callback(const height_border_msgs::height_borderConstPtr &msg) {
         //做一些计算，以确定下一步的控制信号
         //.... do something with the input and generate the output...
-        reel_height_visual = msg->height - 20; // reel高度在谷物高度以下20厘米
+        real_height_target = msg->height - 20; // reel高度在谷物高度以下20厘米
     }
 
     void angle1_Callback(const std_msgs::Int64::ConstPtr &msg) {
@@ -42,27 +42,33 @@ public:
 
     void angle2_Callback(const std_msgs::Int64::ConstPtr &msg) {
         //做一些计算，以确定下一步的控制信号
+        ROS_INFO_STREAM("get angle2");
         angle2 = msg->data;
     }
 
     void control_reap_height() {
+
+        float a1 = 0;
+        float a2 = -0.0179;
+        float a3 = 92.1;
+        float true_height = a1 * angle1 * angle1 + a2 * angle1 + a3;
+        ROS_INFO_STREAM("angle1 is:"<<angle1);
+        ROS_INFO_STREAM("true reap unit height:"<<true_height);
+
         std_msgs::UInt16 output;
-        if(reap_height_visual > 20){
-            float a1 = 0;
-            float a2 = -0.0179;
-            float a3 = 92.1;
-            float true_height = a1 * angle1 * angle1 + a2 * angle1 + a3;
-            ROS_INFO_STREAM("angle1 is:"<<angle1);
-            ROS_INFO_STREAM("true height:"<<true_height);
-            if(true_height - reap_height_visual > 20){
+        if(reap_height_target > 20){
+            if(true_height - reap_height_target > 20){
+                control_block = true;
                 output.data = 110;
                 pub_.publish(output); // 发送控制模式
                 ROS_INFO_STREAM("set down");
-            } else if (true_height - reap_height_visual < -20){
+            } else if (true_height - reap_height_target < -20){
+                control_block = true;
                 output.data = 120;
                 pub_.publish(output);
                 ROS_INFO_STREAM("set up");
             } else{
+                control_block = false;
                 output.data = 100;
                 pub_.publish(output);
             }
@@ -70,19 +76,31 @@ public:
     }
 
     void control_reel_height() {
+
+        float a1 = 0;
+        float a2 = 0.00427;
+        float a3 = 77.68;
+        float true_height = a1 * angle2 * angle2 + a2 * angle2 + a3;
+        ROS_INFO_STREAM("angle2 is:"<<angle2);
+        ROS_INFO_STREAM("true reel height:"<<true_height);
+
+        // 若reap unit在进行控制，则reel不动作
+        if(control_block){
+            ROS_WARN_STREAM("reap unit block reel height control");
+            return;
+        }
+        // 若reap unit在高位（收起），则reel也不进行调整
+        if(real_height_target==100){
+            return;
+        }
+
         std_msgs::UInt16 output;
-        if(reel_height_visual > 20){
-            float a1 = 0;
-            float a2 = 0.00427;
-            float a3 = 77.68;
-            float true_height = a1 * angle2 * angle2 + a2 * angle2 + a3;
-            ROS_INFO_STREAM("angle2 is:"<<angle2);
-            ROS_INFO_STREAM("reel true height:"<<true_height);
-            if(true_height - reel_height_visual > 20){
+        if(real_height_target > 20){
+            if(true_height - real_height_target > 20){
                 output.data = 101;
                 pub_.publish(output); // 发送控制模式
                 ROS_INFO_STREAM("set reel down");
-            } else if (true_height - reel_height_visual < -20){
+            } else if (true_height - real_height_target < -20){
                 output.data = 102;
                 pub_.publish(output);
                 ROS_INFO_STREAM("set reel up");
@@ -103,8 +121,10 @@ private:
 
     float angle1;
     float angle2;
-    float reap_height_visual;
-    float reel_height_visual;
+    float reap_height_target;
+    float real_height_target;
+
+    bool control_block = false;
 
 };//End of class SubscribeAndPublish
 
