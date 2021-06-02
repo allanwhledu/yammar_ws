@@ -278,7 +278,6 @@ int main (int argc, char** argv)
                         cout<<"X::"<<x<<endl;
                         cout<<"Y::"<<y<<endl;
                         fout<<std::setiosflags(std::ios::fixed)  << std::setprecision(9)<<x<<" "<<y<<endl;
-                        fout<<"\r\n"<<endl;
                         gps_x.data = x ;
                         gps_y.data = y ;
                         gps_first_x.publish(gps_x);

@@ -72,7 +72,8 @@ int find_space(const string& str){
 //     index1 = i;
 //     // return i;
 // }
-int find_goal_point(const vector<geometry_msgs::Pose2D>& ref_pose_line, const geometry_msgs::Pose2D curr_pose);
+void find_nearest_point(const vector<geometry_msgs::Pose2D>& ref_pose_line, const geometry_msgs::Pose2D curr_pose,int& ind_nearest_point);
+int find_goal_point(const vector<geometry_msgs::Pose2D>& ref_pose_line, const geometry_msgs::Pose2D curr_pose, const int ind_nearest_point);
 
 int find_goal_point(vector<double>&vec, double x, double y, int prevInd){
     int len = vec.size();
@@ -189,11 +190,13 @@ int main(int argc, char **argv){
     double alpha = 0;
     int prevInd = 0;
     //ack
+    int curr_nearest_point = 0;
     while (ros::ok())
     {
         ros::spinOnce();
         // Update the current pose and goal-point
-        int goal_point_ind = find_goal_point(ref_pos_line, curr_pos);
+        find_nearest_point(ref_pos_line, curr_pos, curr_nearest_point);
+        int goal_point_ind = find_goal_point(ref_pos_line, curr_pos, curr_nearest_point);
         cv::circle(img, Point(int(curr_pos.x - 21395701.434035331), int(curr_pos.y - 21395701.434035331)), 2, Scalar(0,255,0), -1);
         cv::circle(img, Point(int(ref_pos_line[goal_point_ind].x - 21395701.434035331), int(ref_pos_line[goal_point_ind].y - 21395701.434035331)), 2, Scalar(0,0,255), -1);
 
@@ -228,7 +231,7 @@ int main(int argc, char **argv){
         //     w = -0.5;
         // }
         int pls = w2pls(1.2*w);
-        //  fout<<gps_x_go.data<<" "<<gps_y_go.data<<" "<<w<<" "<<pls<<" "<<tmpDis<<endl;
+        //  fout<<gps_x_go.data<<" "<<gps_y_gco.data<<" "<<w<<" "<<pls<<" "<<tmpDis<<endl;
         // fout<<gps_x_go.data<<" "<<gps_y_go.data<<endl;
         // fout<<"\r\n"<<endl;
         if(pls>7000)
@@ -249,30 +252,30 @@ int main(int argc, char **argv){
     }
     return 0;
 }
-int find_goal_point(const vector<geometry_msgs::Pose2D>& ref_pose_line, const geometry_msgs::Pose2D curr_pose){
+void find_nearest_point(const vector<geometry_msgs::Pose2D>& ref_pose_line, const geometry_msgs::Pose2D curr_pose,int& ind_nearest_point){
+    if(ind_nearest_point < 0 || ind_nearest_point >= ref_pose_line.size()) return;
     // search the nearest point;
-    int nearest_ind = 0;
-    for(int i = 0; i < ref_pose_line.size() - 1; ++i){
+    for(int i = ind_nearest_point; i < ref_pose_line.size() - 1; ++i){
         double curr_dis = sqrt(pow(curr_pose.x - ref_pose_line[i].x, 2) + pow(curr_pose.x - ref_pose_line[i].x, 2));
         double next_dis = sqrt(pow(curr_pose.x - ref_pose_line[i + 1].x, 2) + pow(curr_pose.x - ref_pose_line[i + 1].x, 2));
         if(curr_dis < next_dis){
-            nearest_ind = i;
-            break;
+            ind_nearest_point = i;
+            return;
         }
     }
-
+}
+int find_goal_point(const vector<geometry_msgs::Pose2D>& ref_pose_line, const geometry_msgs::Pose2D curr_pose, const int ind_nearest_point){
     // search the goal point
-    int goal_point_ind = nearest_ind;
-    for (int i = nearest_ind; i < ref_pose_line.size(); ++i) {
+    int goal_point_ind = ind_nearest_point;
+    for (int i = ind_nearest_point; i < ref_pose_line.size(); ++i) {
         double curr_dis = sqrt(pow(curr_pose.x - ref_pose_line[i].x, 2) + pow(curr_pose.x - ref_pose_line[i].x, 2));
         if(curr_dis > front_view_dist){
             goal_point_ind = i;
             break;
         }
     }
-
     return goal_point_ind;
-};
+}
 
 
 
