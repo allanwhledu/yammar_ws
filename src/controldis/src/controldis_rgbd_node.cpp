@@ -10,7 +10,7 @@
 using namespace std;
 
 double alpha = 0;
-double d = 3;//孙汉的视觉距离
+double d = 4.2;//孙汉的视觉距离
 double theta = 0;
 bool need_turn = false;
 int record = 0;
@@ -61,9 +61,9 @@ public:
 void sub_pub::Callback(const height_border_msgs::height_border& height_borderMsg)
 {
 	string be_angle=height_borderMsg.angle_3d;
-    double angle = atof(be_angle.c_str())-3.2;
+    double angle = atof(be_angle.c_str())-4.0;
 	string be_dis=height_borderMsg.dis_3d;
-	double dis = atof(be_dis.c_str())+95;
+	double dis = atof(be_dis.c_str())-40;
 	need_turn = height_borderMsg.is_corner;
 
 	std_msgs::Int16 speed;
@@ -127,7 +127,7 @@ void sub_pub::Callback(const height_border_msgs::height_border& height_borderMsg
     cout<<"<<<<<<<<<<<<theta "<<theta<<endl;
     cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<angle:"<<(angle/180)*3.1415926<<endl;
     cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<alpha"<<alpha<<endl;
-    int pls = -w2pls(0.6*w);
+    int pls = -w2pls(0.5*w);
     cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<w"<<w<<endl;
 
     if(pls>5000)

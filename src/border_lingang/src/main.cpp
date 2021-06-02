@@ -68,7 +68,7 @@ int main(int argc,char** argv)
     message_filters::Synchronizer<sync_pol> sync(sync_pol(10), rgb_sub,depth_sub);
     sync.registerCallback(boost::bind(&boud_RGBD,_1,_2));
     pointcloud_pub = nh.advertise<sensor_msgs::PointCloud2>("height_depth", 1000);
-    height_border_param=nh.advertise<height_border_msgs::height_border>("/height_border_new", 1000);
+    height_border_param=nh.advertise<height_border_msgs::height_border>("/height_border", 1000);
     ros::spin();
     return 0;
 }
