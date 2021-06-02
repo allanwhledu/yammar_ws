@@ -48,9 +48,9 @@ public:
 
     void control_reap_height() {
 
-        float a1 = -0.000127;
-        float a2 = 0.73296;
-        float a3 = -1000;
+        float a1 = -1.374e-05;
+        float a2 = -1.893e-03;
+        float a3 = 7.415e+01;
         float true_height = a1 * angle1 * angle1 + a2 * angle1 + a3;
         ROS_INFO_STREAM("angle1 is:"<<angle1);
         ROS_INFO_STREAM("true reap unit height:"<<true_height);
