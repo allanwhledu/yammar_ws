@@ -281,7 +281,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     float current4 = current_int4;
                     if(current4>2000)
                         current4 = 0;
-                    current4 = -0.018 * current4 + 12.30;
+                    current4 = -0.018 * current4 + 12.30 + 0.8;
                     //ROS_INFO_STREAM("current4: "<<current4);
                     float rms4 = pCAN_DEVICE->calculate_rms4(current4);
                     std_msgs::Float32 data_current_raw4;
@@ -368,7 +368,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     float current5 = current_int5;
                     if(current5>2000)
                         current5 = 0;
-                    current5 = 0.0017 * current5 + 0.0388;
+                    current5 = 0.0017 * current5 + 0.0388 -0.1;
                     //ROS_INFO_STREAM("current5: "<<current5);
                     float rms5 = pCAN_DEVICE->calculate_rms5(current5);
                     std_msgs::Float32 data_current_raw5;
@@ -383,7 +383,7 @@ void *receive_func(void *param)  //接收线程,若接受到的信号为目标�
                     float current6 = current_int6;
                     if(current6>2000)
                         current6 = 0;
-                    current6 = 0.0078 * current6 - 0.641;
+                    current6 = 0.0078 * current6 - 0.641 - 0.2;
                     //ROS_INFO_STREAM("current6: "<<current6);
                     float rms6 = pCAN_DEVICE->calculate_rms6(current6);
                     std_msgs::Float32 data_current_raw6;
