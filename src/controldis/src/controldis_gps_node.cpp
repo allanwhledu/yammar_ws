@@ -123,12 +123,43 @@ int w2pls(double W)
     return pls;
 }
 
+//速度1.2m/s
+//int w2pls(double W)
+//{
+//    int pls;
+//    if (W < -0.03)
+//        pls = -(88.48 * (-W) * (-W) * (-W) - 106.5 * (-W) * (-W) + 115.4 * (-W) + 9.043) * 91.4;
+//    else if (0.03 < W)
+//        pls = (88.48 * W * W * W - 106.5 * W * W + 115.4 * W + 9.043) * 91.4;
+//    else
+//        pls = 0;
+//    return pls;
+//}
+
+
+//速度1m/s
+//int w2pls(double W)
+//{
+//    int pls;
+//    if (W < -0.03)
+//        pls = -(158.8 * (-W) * (-W) * (-W) - 152.6 * (-W) * (-W) + 135.8 * (-W) + 9.302) * 91.4;
+//    else if (0.03 < W)
+//        pls = (158.8 * W * W * W - 152.6 * W * W + 135.8 * W + 9.302) * 91.4;
+//    else
+//        pls = 0;
+//    return pls;
+//
+//    //158.8 * x * x * x - 152.6 * x * x + 135.8 * x + 9.302
+//}
+
 int main(int argc, char **argv){
     ros::init(argc, argv, "control");
     ros::NodeHandle n;
 
     ros::Publisher speed_pub = n.advertise<std_msgs::Int16>("speed", 1000);
     ros::Publisher turn_pub = n.advertise<std_msgs::Int16>("turn", 1000);
+    ros::Publisher start_pub = n.advertise<std_msgs::Int16>("start", 1000);
+    ros::Publisher stop_pub = n.advertise<std_msgs::Int16>("stop", 1000);
     //go
     ros::Subscriber x_go = n.subscribe("/gps_x_go", 100, xgocallback);
     ros::Subscriber y_go = n.subscribe("/gps_y_go", 100, ygocallback);
@@ -180,7 +211,12 @@ int main(int argc, char **argv){
 
     std_msgs::Int16 msg_speed;
     std_msgs::Int16 msg_turn;
+    std_msgs::Int16 msg_start;
+    std_msgs::Int16 msg_stop;
+    msg_start.data = 25;
+    start_pub.publish(msg_start);
 
+    usleep(2000000);
     //v = 0.5 m/s
     ROS_INFO_STREAM("set speed:0.5m/s");
     msg_speed.data = 11000;
@@ -196,12 +232,32 @@ int main(int argc, char **argv){
         ros::spinOnce();
         // Update the current pose and goal-point
         find_nearest_point(ref_pos_line, curr_pos, curr_nearest_point);
+<<<<<<< Updated upstream
         int goal_point_ind = find_goal_point(ref_pos_line, curr_pos, curr_nearest_point);
         cv::circle(img, Point(int(curr_pos.x - 21395701.434035331)+200, int(curr_pos.y - 21395701.434035331)+300), 5, Scalar(0,255,0), -1);
         cv::circle(img, Point(int(ref_pos_line[goal_point_ind].x - 21395701.434035331)+200, int(ref_pos_line[goal_point_ind].y - 21395701.434035331)+300), 5, Scalar(0,0,255), -1);
         cv::imshow("GPS TRACK",img);
         cv::waitKey(1);
+=======
+        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<curr_nearest_point:"<<curr_nearest_point<<endl;
+        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<< ref_pose_line.size:"<< ref_pos_line.size()<<endl;
+>>>>>>> Stashed changes
 
+
+        int goal_point_ind = find_goal_point(ref_pos_line, curr_pos, curr_nearest_point);
+<<<<<<< HEAD
+        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<goal_point_ind:"<<goal_point_ind<<endl;
+=======
+        cv::circle(img, Point(int(curr_pos.x - 21395701.434035331)+200, int(curr_pos.y - 21395701.434035331)+300), 5, Scalar(0,255,0), -1);
+        cv::circle(img, Point(int(ref_pos_line[goal_point_ind].x - 21395701.434035331)+200, int(ref_pos_line[goal_point_ind].y - 21395701.434035331)+300), 5, Scalar(0,0,255), -1);
+        cv::imshow("GPS TRACK",img);
+        cv::waitKey(1);
+>>>>>>> master
+
+        cv::circle(img, Point(int(curr_pos.x - 21395654.928438500)+10, int(curr_pos.y - 3417716.812632216)+10), 5, Scalar(0,255,0), -1);
+        cv::circle(img, Point(int(ref_pos_line[goal_point_ind].x - 21395654.928438500)+10, int(ref_pos_line[goal_point_ind].y - 3417716.812632216)+10), 5, Scalar(0,0,255), -1);
+        cv::imshow("image",img);
+        cv::waitKey(1);
         // Calculate the command w
         double theta_goal = atan((curr_pos.y - ref_pos_line[goal_point_ind].y) / (curr_pos.x - ref_pos_line[goal_point_ind].x));
         double alpha = theta_goal - pi * (90.0 - curr_pos.theta) / 180.0;
@@ -222,7 +278,7 @@ int main(int argc, char **argv){
 //        double w =sin(alpha)/ld;
 //        cout<<"<<<<<<<<<<<<<<currInd"<<currInd<<endl;
 //        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<w:"<<w<<endl;
-//        // cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<gps_head_dir.data:"<<gps_head_dir.data<<endl;
+        // cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<gps_head_dir.data:"<<gps_head_dir.data<<endl;
 //        tmpDis = sqrt((V[currInd] - gps_x_go.data) * (V[currInd] - gps_x_go.data) + (V[currInd + 1] - gps_y_go.data) * (V[currInd + 1] - gps_y_go.data));
         // if(w>0.5)
         // {
