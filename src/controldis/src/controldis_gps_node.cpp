@@ -23,7 +23,7 @@ geometry_msgs::Pose2D curr_pos;
 double tmpDis = 0;
 
 // et front view distance
-double front_view_dist = 1.5;
+double front_view_dist = 3;
 
 
 //go
@@ -145,7 +145,7 @@ int main(int argc, char **argv){
     usleep(1000000);
     //read the reference line txt
     ifstream readFile;
-    readFile.open("/home/yangzt/yammar_ws/src/controldis/data.txt", ios::in);
+    readFile.open("/home/agv/yammar_ws/src/controldis/data.txt", ios::in);
     if (!readFile.is_open()){
         cout << "打开文件失败" << endl;
     }
@@ -197,8 +197,10 @@ int main(int argc, char **argv){
         // Update the current pose and goal-point
         find_nearest_point(ref_pos_line, curr_pos, curr_nearest_point);
         int goal_point_ind = find_goal_point(ref_pos_line, curr_pos, curr_nearest_point);
-        cv::circle(img, Point(int(curr_pos.x - 21395701.434035331), int(curr_pos.y - 21395701.434035331)), 2, Scalar(0,255,0), -1);
-        cv::circle(img, Point(int(ref_pos_line[goal_point_ind].x - 21395701.434035331), int(ref_pos_line[goal_point_ind].y - 21395701.434035331)), 2, Scalar(0,0,255), -1);
+        cv::circle(img, Point(int(curr_pos.x - 21395701.434035331)+200, int(curr_pos.y - 21395701.434035331)+300), 5, Scalar(0,255,0), -1);
+        cv::circle(img, Point(int(ref_pos_line[goal_point_ind].x - 21395701.434035331)+200, int(ref_pos_line[goal_point_ind].y - 21395701.434035331)+300), 5, Scalar(0,0,255), -1);
+        cv::imshow("GPS TRACK",img);
+        cv::waitKey(1);
 
         // Calculate the command w
         double theta_goal = atan((curr_pos.y - ref_pos_line[goal_point_ind].y) / (curr_pos.x - ref_pos_line[goal_point_ind].x));
@@ -206,7 +208,7 @@ int main(int argc, char **argv){
 
         double dist_goal_curr = sqrt(pow(curr_pos.x - ref_pos_line[goal_point_ind].x,2) + pow(curr_pos.y - ref_pos_line[goal_point_ind].y, 2));
         double w = sin(alpha / dist_goal_curr);
-
+ 
 
 
 //        int currInd = find_goal_point(V,gps_x_go.data,gps_y_go.data,prevInd);
