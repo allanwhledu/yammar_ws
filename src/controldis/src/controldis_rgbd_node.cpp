@@ -54,9 +54,9 @@ void Callback_start(const std_msgs::Int16::ConstPtr &msg)
 void Callback(const height_border_msgs::height_border& height_borderMsg)
 {
     string be_angle=height_borderMsg.angle_3d;
-    before_angle = stod(be_angle.c_str());//修改************************************************
+    before_angle = atof(be_angle.c_str());//修改************************************************
     string be_dis=height_borderMsg.dis_3d;
-    before_dis = stod(be_dis.c_str());//修改************************************************
+    before_dis = atof(be_dis.c_str());//修改************************************************
     need_turn = height_borderMsg.is_corner;
 
 }
@@ -93,6 +93,7 @@ int main(int argc, char **argv)
         usleep(10000);
     }
     // wait for msg to go
+    int count  = 0;
     while (ros::ok()) {
 
         ros::spinOnce();
@@ -166,12 +167,9 @@ int main(int argc, char **argv)
         alpha = theta + (angle/180)*3.1415926;
 //     double w = sin(alpha)/sqrt( (error+0.6)*(error*0.6)+d*d);
         double w = sin(alpha);
-        cout<<"error: "<<error<<endl;
-        cout<<"<<<<<<<<<<<<theta "<<theta<<endl;
-        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<angle:"<<(angle/180)*3.1415926<<endl;
-        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<alpha"<<alpha<<endl;
+
         int pls = -w2pls(pid_p*w);//修改************************************************
-        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<w"<<w<<endl;
+
 
         if(pls>4000)
         {
@@ -182,8 +180,17 @@ int main(int argc, char **argv)
             pls = -4000;
         }
         msg_turn.data = pls;
-        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<pls:"<<pls<<endl;
         pub_turn.publish(msg_turn);
+        if(count%10000==0){
+            cout<<"error: "<<error<<endl;
+            cout<<"<<<<<<<<<<<<theta "<<theta<<endl;
+            cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<angle:"<<(angle/180)*3.1415926<<endl;
+            cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<alpha"<<alpha<<endl;
+            cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<w"<<w<<endl;
+            cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<pls:"<<pls<<endl;
+        }
+        count++;
+        if(count>100000) count=0;
 
     }
 
