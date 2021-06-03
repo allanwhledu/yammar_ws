@@ -15,8 +15,8 @@ double theta = 0;
 bool need_turn = false;
 int record = 0;
 int gogo=0;
-double angle;
-double dis;
+double before_angle;
+double before_dis;
 
 int w2pls(double W)
 {
@@ -54,9 +54,9 @@ void Callback_start(const std_msgs::Int16::ConstPtr &msg)
 void Callback(const height_border_msgs::height_border& height_borderMsg)
 {
     string be_angle=height_borderMsg.angle_3d;
-    angle = stod(be_angle.c_str())-3.2;//修改************************************************
+    before_angle = stod(be_angle.c_str());//修改************************************************
     string be_dis=height_borderMsg.dis_3d;
-    dis = stod(be_dis.c_str())+95;//修改************************************************
+    before_dis = stod(be_dis.c_str());//修改************************************************
     need_turn = height_borderMsg.is_corner;
 
 }
@@ -79,9 +79,13 @@ int main(int argc, char **argv)
     std_msgs::Int16 speed;
     std_msgs::Int16 msg_turn;
     double pid_p = 0.6;
+    double offset_ange = 0;
+    double offset_dis = 0;
 
     nh.getParam("frontview_dis",d);
     nh.getParam("p",pid_p);
+    nh.getParam("offset_ange",offset_ange);
+    nh.getParam("offset_dis",offset_dis);
     // i am ok
     ready.data=2;
     for(int f = 0; f<10;f++){
@@ -92,6 +96,10 @@ int main(int argc, char **argv)
     while (ros::ok()) {
 
         ros::spinOnce();
+
+        double angle = before_angle + offset_ange;
+        double dis = before_dis + offset_dis;
+
         if (gogo == 0){
             usleep(100000);
             speed.data = 0;
