@@ -14,6 +14,9 @@ double d = 3;//孙汉的视觉距离
 double theta = 0;
 bool need_turn = false;
 int record = 0;
+int gogo=0;
+double angle;
+double dis;
 
 int w2pls(double W)
 {
@@ -27,72 +30,104 @@ int w2pls(double W)
     return pls;
 }
 
+//速度1m/s
+//int w2pls(double W)
+//{
+//    int pls;
+//    if (W < -0.03)
+//        pls = -(158.8 * (-W) * (-W) * (-W) - 152.6 * (-W) * (-W) + 135.8 * (-W) + 9.302) * 91.4;
+//    else if (0.03 < W)
+//        pls = (158.8 * W * W * W - 152.6 * W * W + 135.8 * W + 9.302) * 91.4;
+//    else
+//        pls = 0;
+//    return pls;
+//
+//    //158.8 * x * x * x - 152.6 * x * x + 135.8 * x + 9.302
+//}
 
-class sub_pub
+
+void Callback_start(const std_msgs::Int16::ConstPtr &msg)
 {
-private:
-	ros::NodeHandle nh;
-	// ros::Subscriber sub1;
-	// ros::Subscriber sub2;
-	// ros::Subscriber sub3;
-	// ros::Subscriber sub4;
-	ros::Subscriber sub_w;
-	ros::Publisher pub_turn;
-	ros::Publisher pub_speed;
-	ros::Publisher pub_stop;
+    gogo = msg->data;
+}
 
-
-public:
-	sub_pub()
-	{
-		// sub1 = nh.subscribe("/travel_angle", 1000, &sub_pub::Callback, this);
-		// sub2 = nh.subscribe("/turn_angle", 1000, &sub_pub::Callback, this);
-		// sub3 = nh.subscribe("/mainlever_angle", 1000, &sub_pub::Callback, this);
-		// sub4 = nh.subscribe("/natural_angle", 1000, &sub_pub::Callback, this);
-		///////
-		sub_w = nh.subscribe("/height_border",100,&sub_pub::Callback, this);
-		pub_turn = nh.advertise<std_msgs::Int16>("/turn",1000);
-		pub_speed = nh.advertise<std_msgs::Int16>("/speed",1000);
-	    pub_stop = nh.advertise<std_msgs::Int16>("/stop",1000);
-	}
-	void Callback(const height_border_msgs::height_border& height_borderMsg);           
-};
-
-void sub_pub::Callback(const height_border_msgs::height_border& height_borderMsg)
+void Callback(const height_border_msgs::height_border& height_borderMsg)
 {
-	string be_angle=height_borderMsg.angle_3d;
-    double angle = atof(be_angle.c_str())-3.2;//修改************************************************
-	string be_dis=height_borderMsg.dis_3d;
-	double dis = atof(be_dis.c_str())+95;//修改************************************************
-	need_turn = height_borderMsg.is_corner;
+    string be_angle=height_borderMsg.angle_3d;
+    angle = stod(be_angle.c_str())-3.2;//修改************************************************
+    string be_dis=height_borderMsg.dis_3d;
+    dis = stod(be_dis.c_str())+95;//修改************************************************
+    need_turn = height_borderMsg.is_corner;
 
-	std_msgs::Int16 speed;
-	speed.data = 11000;
-	pub_speed.publish(speed);
+}
+
+
+int main(int argc, char **argv)
+{
+
+    ros::init(argc, argv, "sub_pub1");
+    ros::NodeHandle nh;
+
+    ros::Subscriber sub_start = nh.subscribe("/smach_fback", 1000, &Callback_start);
+    ros::Publisher pub_start = nh.advertise<std_msgs::Int16>("/submodules_status",1000);
+
+    ros::Subscriber sub_w = nh.subscribe("/height_border",100,&Callback);
+    ros::Publisher pub_turn = nh.advertise<std_msgs::Int16>("/turn",1000);
+    ros::Publisher pub_speed = nh.advertise<std_msgs::Int16>("/speed",1000);
+    ros::Publisher pub_stop = nh.advertise<std_msgs::Int16>("/stop",1000);
+    std_msgs::Int16 ready;
+    std_msgs::Int16 speed;
     std_msgs::Int16 msg_turn;
-    // first turn without eyes
-    if (need_turn)
-    {
-        record += 1;
+    double pid_p = 0.6;
 
-        if (record == 20)
-        {
-            cout<<"///////////////////////*****************************START GO!!!!!!!!************************************////////////////////////"<<endl;
-            msg_turn.data = 0;
-            pub_turn.publish(msg_turn);
-            usleep(15000000);
-            cout<<"///////////////////////*****************************  TURN  ***********************************////////////////////////"<<endl;
-            msg_turn.data = -7000;
-            pub_turn.publish(msg_turn);
-            usleep(6500000);
-            msg_turn.data = 0;
-            pub_turn.publish(msg_turn);
-            cout<<"///////////////////////*****************************  GO AGAIN  ***********************************////////////////////////"<<endl;
-            usleep(700000);
-            record = 0;
-        }
+    nh.getParam("frontview_dis",d);
+    nh.getParam("p",pid_p);
+    // i am ok
+    ready.data=2;
+    for(int f = 0; f<10;f++){
+        pub_start.publish(ready);
+        usleep(10000);
     }
-    // second turn complex
+    // wait for msg to go
+    while (ros::ok()) {
+
+        ros::spinOnce();
+        if (gogo == 0){
+            usleep(100000);
+            speed.data = 0;
+            pub_speed.publish(speed);
+//          speed.data = 15000;// speed = 1m/s
+            continue;
+        }
+
+        speed.data = 11000;// speed = 0.5m/s
+        pub_speed.publish(speed);
+        // *********************************** first turn without eyes ******************************//
+//        if (need_turn)
+//        {
+//            record += 1;
+//
+//            if (record == 20)
+//            {
+//                cout<<"///////////////////////*****************************START GO!!!!!!!!************************************////////////////////////"<<endl;
+//                msg_turn.data = 0;
+//                pub_turn.publish(msg_turn);
+//                usleep(15000000);
+//                cout<<"///////////////////////*****************************  TURN  ***********************************////////////////////////"<<endl;
+//                msg_turn.data = -7000;
+//                pub_turn.publish(msg_turn);
+//                usleep(6500000);
+//                msg_turn.data = 0;
+//                pub_turn.publish(msg_turn);
+//                cout<<"///////////////////////*****************************  GO AGAIN  ***********************************////////////////////////"<<endl;
+//                usleep(700000);
+//                record = 0;
+//            }
+//        }
+        // *********************************** first turn without eyes ******************************//
+
+
+        // *********************************** second turn complex ******************************//
 //    if (need_turn)
 //    {
 //        record += 1;
@@ -118,45 +153,32 @@ void sub_pub::Callback(const height_border_msgs::height_border& height_borderMsg
 //        }
 //    }
 
-    double error = dis*0.01;
-    theta = atan(error/d);
-    alpha = theta + (angle/180)*3.1415926;
-//  double w = sin(alpha)/sqrt( (error+0.6)*(error*0.6)+d*d);
-    double w = sin(alpha);
-    cout<<"error: "<<error<<endl;
-    cout<<"<<<<<<<<<<<<theta "<<theta<<endl;
-    cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<angle:"<<(angle/180)*3.1415926<<endl;
-    cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<alpha"<<alpha<<endl;
-    int pls = -w2pls(0.6*w);//修改************************************************
-    cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<w"<<w<<endl;
+        double error = dis*0.01;
+        theta = atan(error/d);
+        alpha = theta + (angle/180)*3.1415926;
+//     double w = sin(alpha)/sqrt( (error+0.6)*(error*0.6)+d*d);
+        double w = sin(alpha);
+        cout<<"error: "<<error<<endl;
+        cout<<"<<<<<<<<<<<<theta "<<theta<<endl;
+        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<angle:"<<(angle/180)*3.1415926<<endl;
+        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<alpha"<<alpha<<endl;
+        int pls = -w2pls(pid_p*w);//修改************************************************
+        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<w"<<w<<endl;
 
-    if(pls>5000)
+        if(pls>4000)
         {
-            pls = 5000;
+            pls = 4000;
         }
         else if(pls<-4000)
         {
             pls = -4000;
         }
-    msg_turn.data = pls;
-    cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<pls:"<<pls<<endl;
-    pub_turn.publish(msg_turn);
-}
-double dis_3d;
-void cb(const height_border_msgs::height_border& height_borderMsg){
-    string str_dis_3d = height_borderMsg.dis_3d;
-    dis_3d = stod(str_dis_3d);
-    cout<<"Dis 3d "<<dis_3d<<endl;
-}
+        msg_turn.data = pls;
+        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<pls:"<<pls<<endl;
+        pub_turn.publish(msg_turn);
 
-int main(int argc, char **argv)
-{
+    }
 
-    ros::init(argc, argv, "sub_pub1");
-    sub_pub sub_puber;
-//    ros::NodeHandle nh;
-//    ros::Subscriber sub = nh.subscribe("/height_border",1,cb);
-    ros::spin();
     return 0;
 }
 

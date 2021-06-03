@@ -1,0 +1,8 @@
+<launch>
+
+  <node pkg="border_height_detect" type="border_height_detect_node" name="border_height_detect_node" />
+  <node pkg="serialPort" type="serialPort_node" name="serialPort" />
+  <node pkg="realsense2_driver" type="realsense2_driver" name="realsense2_driver" />
+  <node pkg="controldis" type="controldis_node" name="controldis_node" />
+
+</launch>

@@ -1,0 +1,18 @@
+<launch>
+
+#### rosbag #################################################
+<!--   <node pkg="rosbag" type="record" name="bag_record" args="-a -o test_"/> -->
+
+#### for line detect ####################################################
+
+<!--   <node pkg="border_height_detect" type="border_height_detect_node" name="border_height_detect_node" /> -->
+<!--   <node pkg="serialPort" type="serialPort_node" name="serialPort" /> -->
+<!--   <node pkg="realsense2_driver" type="realsense2_driver" name="realsense2_driver" /> -->
+
+<!--   <node pkg="controlturn" type="controlturn_node" name="controlturn_node" /> -->
+
+  <node pkg="controldis" type="controldis_rgbd_node" name="controldis_rgbd_node" output = "screen"/>
+
+  <param name="frontview_dis" type="double" value="100"/>
+  <param name="p" type="double" value="0.5"/>
+</launch>
