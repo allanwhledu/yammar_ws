@@ -6,6 +6,7 @@
 #include <sensor_msgs/PointCloud2.h>
 #include <std_msgs/Bool.h>
 #include <std_msgs/String.h>
+#include <std_msgs/Int16.h>
 #include "ICANCmd.h"
 
 using namespace std;
@@ -19,6 +20,7 @@ int main(int argc, char **argv)
     ros::NodeHandle nh;
     ros::Publisher pub = nh.advertise<sensor_msgs::PointCloud2>("millimeter_wave", 2);
     ros::Publisher pub_2 = nh.advertise<std_msgs::Bool>("is_obstacle",1);
+    ros::Publisher mmw_status_pub = nh.advertise<std_msgs::Int16>("/submodules_status",1000);
     bool objDetected = FALSE;
     bool pre_status = false;
     int objDetCount = 0;
@@ -61,6 +63,14 @@ int main(int argc, char **argv)
         return 0;
     }
     */
+
+    // publish the mmw status is normal
+    std_msgs::Int16 mmw_status_msg;
+    mmw_status_msg.data = 4;
+    for(int i = 0; i < 10; ++i){
+        mmw_status_pub.publish(mmw_status_msg);
+        usleep(10000);
+    }
 
     int reclen = 0;
     CAN_DataFrame rec[3000]; //buffer
