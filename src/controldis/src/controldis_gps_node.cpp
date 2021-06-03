@@ -232,14 +232,29 @@ int main(int argc, char **argv){
         ros::spinOnce();
         // Update the current pose and goal-point
         find_nearest_point(ref_pos_line, curr_pos, curr_nearest_point);
-<<<<<<< HEAD
 <<<<<<< Updated upstream
 <<<<<<< Updated upstream
-=======
->>>>>>> master
         int goal_point_ind = find_goal_point(ref_pos_line, curr_pos, curr_nearest_point);
+        cv::circle(img, Point(int(curr_pos.x - 21395701.434035331)+200, int(curr_pos.y - 21395701.434035331)+300), 5, Scalar(0,255,0), -1);
+        cv::circle(img, Point(int(ref_pos_line[goal_point_ind].x - 21395701.434035331)+200, int(ref_pos_line[goal_point_ind].y - 21395701.434035331)+300), 5, Scalar(0,0,255), -1);
+        cv::imshow("GPS TRACK",img);
+        cv::waitKey(1);
+=======
+        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<curr_nearest_point:"<<curr_nearest_point<<endl;
+        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<< ref_pose_line.size:"<< ref_pos_line.size()<<endl;
+>>>>>>> Stashed changes
 
+
+        int goal_point_ind = find_goal_point(ref_pos_line, curr_pos, curr_nearest_point);
 <<<<<<< HEAD
+        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<goal_point_ind:"<<goal_point_ind<<endl;
+=======
+        cv::circle(img, Point(int(curr_pos.x - 21395701.434035331)+200, int(curr_pos.y - 21395701.434035331)+300), 5, Scalar(0,255,0), -1);
+        cv::circle(img, Point(int(ref_pos_line[goal_point_ind].x - 21395701.434035331)+200, int(ref_pos_line[goal_point_ind].y - 21395701.434035331)+300), 5, Scalar(0,0,255), -1);
+        cv::imshow("GPS TRACK",img);
+        cv::waitKey(1);
+>>>>>>> master
+
 =======
         cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<curr_nearest_point:"<<curr_nearest_point<<endl;
         cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<< ref_pose_line.size:"<< ref_pos_line.size()<<endl;
@@ -252,10 +267,6 @@ int main(int argc, char **argv){
 >>>>>>> Stashed changes
         cv::circle(img, Point(int(curr_pos.x - 21395654.928438500)+10, int(curr_pos.y - 3417716.812632216)+10), 5, Scalar(0,255,0), -1);
         cv::circle(img, Point(int(ref_pos_line[goal_point_ind].x - 21395654.928438500)+10, int(ref_pos_line[goal_point_ind].y - 3417716.812632216)+10), 5, Scalar(0,0,255), -1);
-=======
-        cv::circle(img, Point(5*int(curr_pos.x - 21395654.928438500)+300,5* int(curr_pos.y - 3417716.812632216)+200), 5, Scalar(0,255,0), -1);
-        cv::circle(img, Point(5*int(ref_pos_line[goal_point_ind].x - 21395654.928438500)+300,5* int(ref_pos_line[goal_point_ind].y - 3417716.812632216)+200), 5, Scalar(0,0,255), -1);
->>>>>>> master
         cv::imshow("image",img);
         cv::waitKey(1);
         // Calculate the command w
@@ -269,7 +280,7 @@ int main(int argc, char **argv){
 
 //        int currInd = find_goal_point(V,gps_x_go.data,gps_y_go.data,prevInd);
 //        double theta_goal =atan((gps_y_go.data-V[currInd+1])/(gps_x_go.data-V[currInd]));
-    //    cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<theta_goal:"<<theta_goal<<endl;
+//        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<theta_goal:"<<theta_goal<<endl;
 //        // alpha = theta_goal - 3.1415926*(270-gps_head_dir.data)/180.0;////////very important
 //        alpha = theta_goal - 3.1415926*( 90-gps_head_dir.data)/180.0;////////very important
 //        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<gps_head_dir:"<< 3.1415926*(gps_head_dir.data)/180.0<<endl;
