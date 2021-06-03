@@ -5,6 +5,7 @@
 #include <sensor_msgs/PointCloud2.h>
 #include <sensor_msgs/PointCloud.h>
 #include <sensor_msgs/PointField.h>
+#include <std_msgs/Int16.h>
 #include <pcl/io/pcd_io.h>
 #include <pcl_ros/point_cloud.h>
 #include <pcl/filters/voxel_grid.h>
@@ -39,9 +40,12 @@ const bool isTrueHarvest = true;
 vector<float> coeff_uncut_height_mean(4,0);
 int Estimated_height=0;  //估计的高度平均值
 int distance_ema = 0; // use ema filter to smooth the distance
+const float border_height_low = 0.39;
+const float border_height_high = 0.42;
 
 
 ros::Publisher height_border_pub;       // publish the height and border
+ros::Publisher visual_status_pub;       // publish the status of visual
 ros::Publisher pointcloud_pub;   //发布点云
 ros::Publisher border_param;     //发布分界线
 ros::Publisher curve_point_pub;  //发布转晚点
@@ -126,6 +130,15 @@ int main(int argc,char** argv)
     border_param=nh.advertise<border_msgs::border>("/border_param", 1000);
     curve_point_pub=nh.advertise<curve_point_z_msgs::curve_point_z>("/curve_point_z", 1000);
     height_pub = nh.advertise<height_msgs::height>("/height", 1000);
+
+    // pub the normal status of visual
+    visual_status_pub = nh.advertise<std_msgs::Int16>("/submodules_status", 1000);
+    std_msgs::Int16 visual_status_msg;
+    visual_status_msg.data = 1;
+    for(int i = 0; i < 10; ++i){
+        visual_status_pub.publish(visual_status_msg);
+        usleep(10000);
+    }
     ros::spin();
     return 0;
 }
@@ -798,7 +811,7 @@ Eigen::VectorXf borderpoints_clusterd(Mat& rgb, Mat& depth,pcl::PointCloud<pcl::
                 float x = (col - 323.844) * z / 615.372;
 
                 float distance=abs(A*x+B*y+C*z+D);
-                if(distance<0.42 && distance>0.39) //距离阈值判断
+                if(distance<border_height_high && distance>border_height_low) //距离阈值判断
                 {
                     pointdepth.x=col;
                     pointdepth.y=row;
@@ -832,7 +845,7 @@ Eigen::VectorXf borderpoints_clusterd(Mat& rgb, Mat& depth,pcl::PointCloud<pcl::
                 float x = (col - 323.844) * z / 615.372;
 
                 float distance=abs(A*x+B*y+C*z+D);
-                if(distance<0.42 && distance>0.39) //距离阈值判断
+                if(distance<border_height_high && distance>border_height_low) //距离阈值判断
                 {
                     pointdepth.x=col;
                     pointdepth.y=row;
