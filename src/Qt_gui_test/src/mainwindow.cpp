@@ -78,18 +78,56 @@ MainWindow::MainWindow(int argc, char **argv, QWidget *parent) :
     ui->progressBar1_7->setMaximum(3000);
     ui->progressBar1_7->setValue(0);
 
+    ui->progressBar1_8->setMinimum(0);
+    ui->progressBar1_8->setMaximum(3000);
+    ui->progressBar1_8->setValue(0);
+
+    ui->progressBar1_9->setMinimum(0);
+    ui->progressBar1_9->setMaximum(3000);
+    ui->progressBar1_9->setValue(0);
+
+    ui->progressBar1_10->setMinimum(0);
+    ui->progressBar1_10->setMaximum(3000);
+    ui->progressBar1_10->setValue(0);
+
+    ui->progressBar1_11->setMinimum(0);
+    ui->progressBar1_11->setMaximum(3000);
+    ui->progressBar1_11->setValue(0);
+
+    ui->progressBar1_12->setMinimum(0);
+    ui->progressBar1_12->setMaximum(3000);
+    ui->progressBar1_12->setValue(0);
+
+    ui->progressBar1_13->setMinimum(0);
+    ui->progressBar1_13->setMaximum(3000);
+    ui->progressBar1_13->setValue(0);
+
     QObject::connect(&qnode, SIGNAL(rosShutdown()), this, SLOT(close()));
     QObject::connect(&qnode, SIGNAL(loggingCamera()), this, SLOT(updateLogcamera()));
     QObject::connect(&qnode, SIGNAL(logging_leader_line_error()), this, SLOT(updateText()));
     QObject::connect(&qnode, SIGNAL(loggingChart()), this, SLOT(displayChart()));
-    QObject::connect(&qnode, SIGNAL(logging_REEL_speed()), this, SLOT(updateREEL()));
-    QObject::connect(&qnode, SIGNAL(logging_CB_speed()), this, SLOT(updateCB()));
-    QObject::connect(&qnode, SIGNAL(logging_PF_speed()), this, SLOT(updatePF()));
-    QObject::connect(&qnode, SIGNAL(logging_FH_speed()), this, SLOT(updateFH()));
-    QObject::connect(&qnode, SIGNAL(logging_REEL_current()), this, SLOT(updateREEL_current()));
-    QObject::connect(&qnode, SIGNAL(logging_CB_current()), this, SLOT(updateCB_current()));
-    QObject::connect(&qnode, SIGNAL(logging_PF_current()), this, SLOT(updatePF_current()));
-    QObject::connect(&qnode, SIGNAL(logging_FH_current()), this, SLOT(updateFH_current()));
+    QObject::connect(&qnode, SIGNAL(logging_speed_3()), this, SLOT(update_s3()));
+    QObject::connect(&qnode, SIGNAL(logging_speed_4()), this, SLOT(update_s4()));
+    QObject::connect(&qnode, SIGNAL(logging_speed_2()), this, SLOT(update_s2()));
+    QObject::connect(&qnode, SIGNAL(logging_speed_1()), this, SLOT(update_s1()));
+    QObject::connect(&qnode, SIGNAL(logging_speed_5()), this, SLOT(update_s5()));
+    QObject::connect(&qnode, SIGNAL(logging_speed_7()), this, SLOT(update_s7()));
+    QObject::connect(&qnode, SIGNAL(logging_speed_8()), this, SLOT(update_s8()));
+    QObject::connect(&qnode, SIGNAL(logging_speed_11()), this, SLOT(update_s11()));
+    QObject::connect(&qnode, SIGNAL(logging_speed_9()), this, SLOT(update_s9()));
+    QObject::connect(&qnode, SIGNAL(logging_speed_10()), this, SLOT(update_s10()));
+
+    QObject::connect(&qnode, SIGNAL(logging_current_3()), this, SLOT(update_c3()));
+    QObject::connect(&qnode, SIGNAL(logging_current_4()), this, SLOT(update_c4()));
+    QObject::connect(&qnode, SIGNAL(logging_current_2()), this, SLOT(update_c2()));
+    QObject::connect(&qnode, SIGNAL(logging_current_1()), this, SLOT(update_c1()));
+    QObject::connect(&qnode, SIGNAL(logging_current_5()), this, SLOT(update_c5()));
+    QObject::connect(&qnode, SIGNAL(logging_current_7()), this, SLOT(update_c7()));
+    QObject::connect(&qnode, SIGNAL(logging_current_8()), this, SLOT(update_c8()));
+    QObject::connect(&qnode, SIGNAL(logging_current_11()), this, SLOT(update_c11()));
+    QObject::connect(&qnode, SIGNAL(logging_current_9()), this, SLOT(update_c9()));
+    QObject::connect(&qnode, SIGNAL(logging_current_10()), this, SLOT(update_c10()));
+    
     QObject::connect(&qnode, SIGNAL(logging_is_obstacle()), this, SLOT(update_is_obstacle()));
     QObject::connect(&qnode, SIGNAL(logging_no_obstacle()), this, SLOT(update_no_obstacle()));
     QObject::connect(&qnode, SIGNAL(logging_reap_height1()), this, SLOT(update_reap_height1()));
@@ -147,78 +185,133 @@ void MainWindow::displayChart() {
     ui->widget->c = qnode.chart;
 }
 
-void MainWindow::updateREEL() {
+void MainWindow::update_s3() {
     QString qstr;
-    qstr = QString::number(qnode.REEL_speed);
+    qstr = QString::number(qnode.speed3);
     ui->lineEdit_50->setText(qstr);
-    ui->progressBar1_4->setValue(qnode.REEL_speed);
-
-    // for(int i=1;i<qnode.REEL_speed;i++)
-    // {
-    //         ui->progressBar1_4->setValue(i);
-    // }
+    ui->progressBar1_4->setValue(qnode.speed3);
 }
 
-void MainWindow::updateCB() {
+void MainWindow::update_s4() {
     QString qstr;
-    qstr = QString::number(qnode.CB_speed);
+    qstr = QString::number(qnode.speed4);
     ui->lineEdit_54->setText(qstr);
-    ui->progressBar1_5->setValue(qnode.CB_speed);
-
-    // for(int i=1;i<qnode.REEL_speed;i++)
-    // {
-    //         ui->progressBar1_4->setValue(i);
-    // }
+    ui->progressBar1_5->setValue(qnode.speed4);
 }
 
-void MainWindow::updatePF() {
+void MainWindow::update_s2() {
     QString qstr;
-    qstr = QString::number(qnode.PF_speed);
+    qstr = QString::number(qnode.speed2);
     ui->lineEdit_55->setText(qstr);
-    ui->progressBar1_6->setValue(qnode.PF_speed);
-
-    // for(int i=1;i<qnode.REEL_speed;i++)
-    // {
-    //         ui->progressBar1_4->setValue(i);
-    // }
+    ui->progressBar1_6->setValue(qnode.speed2);
 }
 
-void MainWindow::updateFH() {
+void MainWindow::update_s1() {
     QString qstr;
-    qstr = QString::number(qnode.FH_speed);
+    qstr = QString::number(qnode.speed1);
     ui->lineEdit_56->setText(qstr);
-    ui->progressBar1_7->setValue(qnode.FH_speed);
+    ui->progressBar1_7->setValue(qnode.speed1);
+}
 
-    // for(int i=1;i<qnode.REEL_speed;i++)
-    // {
-    //         ui->progressBar1_4->setValue(i);
-    // }
+void MainWindow::update_s5() {
+    QString qstr;
+    qstr = QString::number(qnode.speed5);
+    ui->lineEdit_57->setText(qstr);
+    ui->progressBar1_8->setValue(qnode.speed5);
+}
+void MainWindow::update_s7() {
+    QString qstr;
+    qstr = QString::number(qnode.speed7);
+    ui->lineEdit_58->setText(qstr);
+    ui->progressBar1_9->setValue(qnode.speed7);
+}
+void MainWindow::update_s8() {
+    QString qstr;
+    qstr = QString::number(qnode.speed8);
+    ui->lineEdit_59->setText(qstr);
+    ui->progressBar1_10->setValue(qnode.speed8);
+}
+void MainWindow::update_s11() {
+    QString qstr;
+    qstr = QString::number(qnode.speed11);
+    ui->lineEdit_60->setText(qstr);
+    ui->progressBar1_11->setValue(qnode.speed11);
+}
+void MainWindow::update_s9() {
+    QString qstr;
+    qstr = QString::number(qnode.speed9);
+    ui->lineEdit_61->setText(qstr);
+    ui->progressBar1_12->setValue(qnode.speed9);
+}
+void MainWindow::update_s10() {
+    QString qstr;
+    qstr = QString::number(qnode.speed10);
+    ui->lineEdit_62->setText(qstr);
+    ui->progressBar1_13->setValue(qnode.speed10);
 }
 
 //// update current
-void MainWindow::updateREEL_current() {
+void MainWindow::update_c3() {
     QString qstr;
-    qstr = QString::number(qnode.REEL_current);
+    qstr = QString::number(qnode.current3);
     ui->lineEdit_9->setText(qstr);
 }
 
-void MainWindow::updateCB_current() {
+void MainWindow::update_c4() {
     QString qstr;
-    qstr = QString::number(qnode.CB_current);
+    qstr = QString::number(qnode.current4);
     ui->lineEdit_10->setText(qstr);
 }
 
-void MainWindow::updatePF_current() {
+void MainWindow::update_c2() {
     QString qstr;
-    qstr = QString::number(qnode.PF_current);
+    qstr = QString::number(qnode.current2);
     ui->lineEdit_11->setText(qstr);
 }
 
-void MainWindow::updateFH_current() {
+void MainWindow::update_c1() {
     QString qstr;
-    qstr = QString::number(qnode.FH_current);
+    qstr = QString::number(qnode.current1);
     ui->lineEdit_12->setText(qstr);
 }
+
+void MainWindow::update_c5() {
+    QString qstr;
+    qstr = QString::number(qnode.current5);
+    ui->lineEdit_20->setText(qstr);
+}
+
+void MainWindow::update_c7() {
+    QString qstr;
+    qstr = QString::number(qnode.current7);
+    ui->lineEdit_21->setText(qstr);
+}
+
+void MainWindow::update_c8() {
+    QString qstr;
+    qstr = QString::number(qnode.current8);
+    ui->lineEdit_22->setText(qstr);
+}
+
+void MainWindow::update_c11() {
+    QString qstr;
+    qstr = QString::number(qnode.current11);
+    ui->lineEdit_23->setText(qstr);
+}
+
+void MainWindow::update_c9() {
+    QString qstr;
+    qstr = QString::number(qnode.current9);
+    ui->lineEdit_24->setText(qstr);
+}
+
+void MainWindow::update_c10() {
+    QString qstr;
+    qstr = QString::number(qnode.current10);
+    ui->lineEdit_39->setText(qstr);
+}
+
+
 //// update current
 
 void MainWindow::update_is_obstacle() {
@@ -284,7 +377,7 @@ void MainWindow::on_horizontalSlider_sliderMoved(int position) {
 }
 
 void MainWindow::on_pushButton_5_clicked() {
-    carspeed = carspeed - 0.25;
+    carspeed = carspeed - 1000;
     float speed = this->ui->lineEdit_13->text().toDouble();
     speed = carspeed;
     QString qspeed = QString::number(speed);
@@ -293,7 +386,7 @@ void MainWindow::on_pushButton_5_clicked() {
 }
 
 void MainWindow::on_pushButton_13_clicked() {
-    carspeed = carspeed + 0.25;
+    carspeed = carspeed + 1000;
     float speed = this->ui->lineEdit_13->text().toDouble();
     speed = carspeed;
     QString qspeed = QString::number(speed);
@@ -364,4 +457,9 @@ void MainWindow::on_down_button_2_clicked()
 void MainWindow::on_pushButton_8_clicked()
 {
     qnode.pub_height_control_mode(100);
+}
+
+void MainWindow::on_height_button_3_clicked()
+{
+    qnode.pub_hmi_ready(5);
 }

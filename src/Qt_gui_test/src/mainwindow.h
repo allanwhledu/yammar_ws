@@ -36,19 +36,27 @@ private slots:
 
     void displayChart();
 
-    void updateREEL();
+    void update_s3();
+    void update_s4();
+    void update_s2();
+    void update_s1();
+    void update_s5();
+    void update_s7();
+    void update_s8();
+    void update_s11();
+    void update_s9();
+    void update_s10();
 
-    void updateCB();
-
-    void updatePF();
-    void updateFH();
-
-    void updateREEL_current();
-
-    void updateCB_current();
-
-    void updatePF_current();
-    void updateFH_current();
+    void update_c3();
+    void update_c4();
+    void update_c2();
+    void update_c1();
+    void update_c5();
+    void update_c7();
+    void update_c8();
+    void update_c11();
+    void update_c9();
+    void update_c10();
 
     void update_is_obstacle();
 
@@ -91,6 +99,8 @@ private slots:
     void on_down_button_2_clicked();
 
     void on_pushButton_8_clicked();
+
+    void on_height_button_3_clicked();
 
 private:
     Ui::MainWindow *ui;

@@ -63,6 +63,9 @@ public:
     ros::Publisher car_turn_pub;
     void  pub_car_turn(int msg);
 
+    ros::Publisher hmi_ready_pub;
+    void  pub_hmi_ready(int msg);
+
     ros::Publisher height_control_mode_pub;
     void pub_height_control_mode(float msg);
 
@@ -75,14 +78,28 @@ public:
     float height_value;
 
     float chart;
-    float REEL_speed = 0;
-    float CB_speed = 0;
-    float PF_speed = 0;
-    float FH_speed = 0;
-    float REEL_current = 0;
-    float CB_current = 0;
-    float PF_current = 0;
-    float FH_current = 0;
+    float speed3 = 0;
+    float speed4 = 0;
+    float speed2 = 0;
+    float speed1 = 0;
+    float speed5 = 0;
+    float speed7 = 0;
+    float speed8 = 0;
+    float speed11 = 0;
+    float speed9 = 0;
+    float speed10 = 0;
+
+    float current3 = 0;
+    float current4 = 0;
+    float current2 = 0;
+    float current1 = 0;
+    float current5 = 0;
+    float current7 = 0;
+    float current8 = 0;
+    float current11 = 0;
+    float current9 = 0;
+    float current10 = 0;
+
     double reap_height1;
     double reap_height2;
     double torque;
@@ -104,14 +121,28 @@ public:
     void log( const LogLevel &level, const std::string &msg);
 
     void ChartCallback(const std_msgs::Float32Ptr &msg);
-    void motor1_speed_Callback(const std_msgs::Float32Ptr &msg);
-    void motor2_speed_Callback(const std_msgs::Float32Ptr &msg);
-    void motor3_speed_Callback(const std_msgs::Float32Ptr &msg);
-    void motor4_speed_Callback(const std_msgs::Float32Ptr &msg);
-    void current1_Callback(const std_msgs::Float32Ptr &msg);
-    void current2_Callback(const std_msgs::Float32Ptr &msg);
-    void current3_Callback(const std_msgs::Float32Ptr &msg);
-    void current4_Callback(const std_msgs::Float32Ptr &msg);
+    void s3_Callback(const std_msgs::Float32Ptr &msg);
+    void s4_Callback(const std_msgs::Float32Ptr &msg);
+    void s2_Callback(const std_msgs::Float32Ptr &msg);
+    void s1_Callback(const std_msgs::Float32Ptr &msg);
+    void s5_Callback(const std_msgs::Float32Ptr &msg);
+    void s7_Callback(const std_msgs::Float32Ptr &msg);
+    void s8_Callback(const std_msgs::Float32Ptr &msg);
+    void s11_Callback(const std_msgs::Float32Ptr &msg);
+    void s9_Callback(const std_msgs::Float32Ptr &msg);
+    void s10_Callback(const std_msgs::Float32Ptr &msg);
+
+    void c3_Callback(const std_msgs::Float32Ptr &msg);
+    void c4_Callback(const std_msgs::Float32Ptr &msg);
+    void c2_Callback(const std_msgs::Float32Ptr &msg);
+    void c1_Callback(const std_msgs::Float32Ptr &msg);
+    void c5_Callback(const std_msgs::Float32Ptr &msg);
+    void c7_Callback(const std_msgs::Float32Ptr &msg);
+    void c8_Callback(const std_msgs::Float32Ptr &msg);
+    void c11_Callback(const std_msgs::Float32Ptr &msg);
+    void c9_Callback(const std_msgs::Float32Ptr &msg);
+    void c10_Callback(const std_msgs::Float32Ptr &msg);
+
     void is_obstacle_Callback(const std_msgs::BoolPtr &msg);
     void reap_height1_Callback(const std_msgs::Int64Ptr &msg);
     void reap_height2_Callback(const std_msgs::Int64Ptr &msg);
@@ -129,14 +160,32 @@ Q_SIGNALS:
     void loggingCamera();
     void logging_leader_line_error();
     void loggingChart();
-    void logging_REEL_speed();
-    void logging_CB_speed();
-    void logging_PF_speed();
-    void logging_FH_speed();
-    void logging_REEL_current();
-    void logging_CB_current();
-    void logging_PF_current();
-    void logging_FH_current();
+    void logging_speed_3();
+    void logging_speed_4();
+    void logging_speed_2();
+    void logging_speed_1();
+    void logging_speed_5();
+    void logging_speed_7();
+    void logging_speed_8();
+    void logging_speed_11();
+    void logging_speed_9();
+    void logging_speed_10();
+
+    void logging_current_3();
+    void logging_current_4();
+    void logging_current_2();
+    void logging_current_1();
+    void logging_current_5();
+    void logging_current_7();
+    void logging_current_8();
+    void logging_current_11();
+    void logging_current_9();
+    void logging_current_10();
+
+//    void logging_REEL_current();
+//    void logging_CB_current();
+//    void logging_PF_current();
+//    void logging_FH_current();
 
     void logging_is_obstacle();
     void logging_no_obstacle();
@@ -150,15 +199,27 @@ private:
     ros::Subscriber chatter_subscriber;
     ros::Subscriber text_subscriber;
     ros::Subscriber chart_subscriber;
-    ros::Subscriber FH_subscriber;
-    ros::Subscriber CB_subscriber;
-    ros::Subscriber REEL_subscriber;
-    ros::Subscriber PF_subscriber;
+    ros::Subscriber s3_subscriber;
+    ros::Subscriber s4_subscriber;
+    ros::Subscriber s2_subscriber;
+    ros::Subscriber s1_subscriber;
+    ros::Subscriber s5_subscriber;
+    ros::Subscriber s7_subscriber;
+    ros::Subscriber s8_subscriber;
+    ros::Subscriber s11_subscriber;
+    ros::Subscriber s9_subscriber;
+    ros::Subscriber s10_subscriber;
 
-    ros::Subscriber FH_current_subscriber;
-    ros::Subscriber CB_current_subscriber;
-    ros::Subscriber PF_current_subscriber;
-    ros::Subscriber REEL_current_subscriber;
+    ros::Subscriber c3_subscriber;
+    ros::Subscriber c4_subscriber;
+    ros::Subscriber c2_subscriber;
+    ros::Subscriber c1_subscriber;
+    ros::Subscriber c5_subscriber;
+    ros::Subscriber c7_subscriber;
+    ros::Subscriber c8_subscriber;
+    ros::Subscriber c11_subscriber;
+    ros::Subscriber c9_subscriber;
+    ros::Subscriber c10_subscriber;
 
     ros::Subscriber obstacle_subscriber;
     ros::Subscriber reap_height1_subscriber;

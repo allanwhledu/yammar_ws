@@ -68,16 +68,17 @@ last_target = -1000
 # for publish result
 pub_result = rospy.Publisher('smach_fback', Int16, queue_size=1)
 
-car_speed_now = 0
-car_speed_last = 0
+car_speed_now = -1000
+car_speed_last = -1000
+
 is_stop = 0
 is_stop_last = 0
-submodules_status = 1
-module_visual = 0
+submodules_status = 0
+module_visual = 1
+module_can = 1
+module_rs485 = 1
+module_mmw = 1
 module_hmi = 0
-module_can = 0
-module_rs485 = 0
-module_mmw = 0
 
 
 class Topic_monitor:
@@ -517,14 +518,19 @@ class Car_speed_monitor(smach.State):
         elif is_stop == 0 and is_stop_last == 1:
             is_stop_last = is_stop
             result = 'start'
-        elif car_speed_now > car_speed_last and car_speed_last == 0:
+        elif car_speed_now != -1000 and car_speed_last == -1000:
             result = 'start'
         elif car_speed_now > car_speed_last:
             result = 'speedup'
-        elif car_speed_now < car_speed_last and car_speed_last != 0:
+        elif car_speed_now < car_speed_last:
             result = 'speeddown'
-        elif car_speed_now < car_speed_last and car_speed_last == 0:
-            result = 'stop'
+
+        # elif car_speed_now < car_speed_last and car_speed_last != 0:
+        #     result = 'speeddown'
+        # elif car_speed_now < car_speed_last and car_speed_last == 0:
+        #     result = 'stop'
+        # 以上是做了什么逻辑？
+
         elif car_speed_now == car_speed_last:
             result = 'steady'
 

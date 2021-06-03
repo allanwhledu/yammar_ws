@@ -8,7 +8,7 @@ int main(int argc, char **argv)
 {
 	ros::init(argc, argv, "fake_msgs_gen");
 	ros::NodeHandle n;
-	ros::Publisher chatter_pub = n.advertise<std_msgs::Float32>("FH_speed", 1000);
+	ros::Publisher chatter_pub = n.advertise<std_msgs::Float32>("speed1", 1000);
 	ros::Publisher chatter_pub2 = n.advertise<std_msgs::Float32>("/chart",1000);
 	ros::Rate loop_rate(10);
 
