@@ -74,9 +74,9 @@ car_speed_last = -1000
 is_stop = 0
 is_stop_last = 0
 submodules_status = 0
-module_visual = 1
+module_visual = 0
+module_rs485 = 0
 module_can = 1
-module_rs485 = 1
 module_mmw = 1
 module_hmi = 0
 
@@ -425,9 +425,9 @@ class end(smach.State):
         smach.State.__init__(self, outcomes=['end_succeeded'])
 
     def execute(self, userdata):
-        # msg = Int32()
-        # msg.data = 1
-        # pub_result.publish(msg)
+        msg = Int16()
+        msg.data = 1
+        pub_result.publish(msg)
         return 'end_succeeded'
 
 # define state Foo
@@ -580,7 +580,7 @@ def main():
                                             'speedup': 'SPEEDCHANGE_MOTOR1'})
 
         smach.StateMachine.add('SPEEDCHANGE_MOTOR1', client_motor_1(),
-                               transitions={'SUCCEEDED': 'END',
+                               transitions={'SUCCEEDED': 'WAIT',
                                             'ABORTED': 'SPEEDDOWN_MOTOR1'})
 
         smach.StateMachine.add('START_MOTOR1', client_motor_1(),
@@ -660,7 +660,7 @@ def main():
                                             'ABORTED': 'SPEEDDOWN_MOTOR9'})
 
         smach.StateMachine.add('SPEEDDOWN_MOTOR10', client_motor_10(),
-                               transitions={'SUCCEEDED': 'END',
+                               transitions={'SUCCEEDED': 'WAIT',
                                             'ABORTED': 'SPEEDDOWN_MOTOR10'})
 
         smach.StateMachine.add('END',
