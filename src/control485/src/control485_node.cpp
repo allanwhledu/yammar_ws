@@ -110,51 +110,75 @@ void *read_motor_speed_background(void *) {
 
             // Read and pub motor speed;
             realSpeed_m3 = motorReadSpeed(motor_id_3);
-            std_msgs::Float32 m3_speed;
-            m3_speed.data = realSpeed_m3;
-            pub_m3_speed->publish(m3_speed);
+	    if(realSpeed_m3 >= 0){
+		std_msgs::Float32 m3_speed;
+            	m3_speed.data = realSpeed_m3;
+            	pub_m3_speed->publish(m3_speed);
+	    }
+
 
             realSpeed_m4 = motorReadSpeed(motor_id_4);
-            std_msgs::Float32 m4_speed;
-            m4_speed.data = realSpeed_m4;
-            pub_m4_speed->publish(m4_speed);
+	    if(realSpeed_m4 >= 0){
+		std_msgs::Float32 m4_speed;
+            	m4_speed.data = realSpeed_m4;
+            	pub_m4_speed->publish(m4_speed);
+	    }
 
             realSpeed_m2 = motorReadSpeed(motor_id_2);
-            std_msgs::Float32 m2_speed;
-            m2_speed.data = realSpeed_m2;
-            pub_m2_speed->publish(m2_speed);
+	    if(realSpeed_m2 >= 0){
+		std_msgs::Float32 m2_speed;
+            	m2_speed.data = realSpeed_m2;
+            	pub_m2_speed->publish(m2_speed);
+	    }
 
             realSpeed_m1 = motorReadSpeed(motor_id_1);
-            std_msgs::Float32 m1_speed;
-            m1_speed.data = realSpeed_m1;
-            pub_m1_speed->publish(m1_speed);
+	    if(realSpeed_m1 >= 0){
+		std_msgs::Float32 m1_speed;
+            	m1_speed.data = realSpeed_m1;
+            	pub_m1_speed->publish(m1_speed);
+	    }
 
             realSpeed_m5 = motorReadSpeed(motor_id_5);
-            std_msgs::Float32 m5_speed;
-            m5_speed.data = realSpeed_m5;
-            pub_m5_speed->publish(m5_speed);
+	    if(realSpeed_m5 >= 0){
+		std_msgs::Float32 m5_speed;
+            	m5_speed.data = realSpeed_m5;
+            	pub_m5_speed->publish(m5_speed);
+	    }
 
             realSpeed_m7 = motorReadSpeed(motor_id_7);
-            std_msgs::Float32 m7_speed;
-            m7_speed.data = realSpeed_m7;
-            pub_m7_speed->publish(m7_speed);
+	    if(realSpeed_m7 >= 0){
+		std_msgs::Float32 m7_speed;
+            	m7_speed.data = realSpeed_m7;
+            	pub_m7_speed->publish(m7_speed);
+	    }
 
             realSpeed_m8 = motorReadSpeed(motor_id_8);
-            std_msgs::Float32 m8_speed;
-            m8_speed.data = realSpeed_m8;
-            pub_m8_speed->publish(m8_speed);
+	    if(realSpeed_m8 >= 0){
+		std_msgs::Float32 m8_speed;
+            	m8_speed.data = realSpeed_m8;
+            	pub_m8_speed->publish(m8_speed);
+	    }
 
             realSpeed_m11 = motorReadSpeed(motor_id_11);
-            std_msgs::Float32 m11_speed;
-            m11_speed.data = realSpeed_m11;
-            pub_m11_speed->publish(m11_speed);
+	    if(realSpeed_m11 >= 0){
+		std_msgs::Float32 m11_speed;
+            	m11_speed.data = realSpeed_m11;
+            	pub_m11_speed->publish(m11_speed);
+	    }
 
             realSpeed_m9 = motorReadSpeed(motor_id_9);
-            std_msgs::Float32 m9_speed;
-            m9_speed.data = realSpeed_m9;
-            pub_m9_speed->publish(m9_speed);
+	    if(realSpeed_m9 >= 0){
+		std_msgs::Float32 m9_speed;
+            	m9_speed.data = realSpeed_m9;
+            	pub_m9_speed->publish(m9_speed);
+	    }
 
             realSpeed_m10 = motorReadSpeed(motor_id_10);
+	    if(realSpeed_m10 >= 0){
+		std_msgs::Float32 m10_speed;
+            	m10_speed.data = realSpeed_m10;
+            	pub_m10_speed->publish(m10_speed);
+	    }
             std_msgs::Float32 m10_speed;
             m10_speed.data = realSpeed_m10;
             pub_m10_speed->publish(m10_speed);
@@ -214,71 +238,98 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
                 case 3:
                 {
                     std_msgs::Float32 m3_speed;
-                    m3_speed.data = actual_speed;
-                    pub_m3_speed->publish(m3_speed);
+		    if(actual_speed >= 0){
+		        m3_speed.data = actual_speed;
+                        pub_m3_speed->publish(m3_speed);
+		    }
                     break;
                 }
                 case 4:
                 {
                     std_msgs::Float32 m4_speed;
-                    m4_speed.data = actual_speed;
-                    pub_m4_speed->publish(m4_speed);
+		    if(actual_speed >= 0){
+		        m4_speed.data = actual_speed;
+                        pub_m4_speed->publish(m4_speed);
+		    }
                     break;
                 }
                 case 2:
                 {
                     std_msgs::Float32 m2_speed;
+		    if(actual_speed >= 0){
                     m2_speed.data = actual_speed;
                     pub_m2_speed->publish(m2_speed);
+		    }
+
                     break;
                 }
                 case 1:
                 {
                     std_msgs::Float32 m1_speed;
+		    if(actual_speed >= 0){
                     m1_speed.data = actual_speed;
                     pub_m1_speed->publish(m1_speed);
+		    }
+
                     break;
                 }
                 case 5:
                 {
                     std_msgs::Float32 m5_speed;
+		    if(actual_speed >= 0){
                     m5_speed.data = actual_speed;
                     pub_m5_speed->publish(m5_speed);
+		    }
+
                     break;
                 }
                 case 7:
                 {
                     std_msgs::Float32 m7_speed;
+		    if(actual_speed >= 0){
                     m7_speed.data = actual_speed;
                     pub_m7_speed->publish(m7_speed);
+		    }
+
                     break;
                 }
                 case 8:
                 {
                     std_msgs::Float32 m8_speed;
+		    if(actual_speed >= 0){
                     m8_speed.data = actual_speed;
                     pub_m8_speed->publish(m8_speed);
+		    }
+
                     break;
                 }
                 case 11:
                 {
                     std_msgs::Float32 m11_speed;
+		    if(actual_speed >= 0){
                     m11_speed.data = actual_speed;
                     pub_m11_speed->publish(m11_speed);
+		    }
+
                     break;
                 }
                 case 9:
                 {
                     std_msgs::Float32 m9_speed;
+		    if(actual_speed >= 0){
                     m9_speed.data = actual_speed;
                     pub_m9_speed->publish(m9_speed);
+		    }
+
                     break;
                 }
                 case 10:
                 {
                     std_msgs::Float32 m10_speed;
+		    if(actual_speed >= 0){
                     m10_speed.data = actual_speed;
                     pub_m10_speed->publish(m10_speed);
+		    }
                     break;
                 }
             }
@@ -293,71 +344,98 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
                 case 3:
                 {
                     std_msgs::Float32 m3_speed;
-                    m3_speed.data = actual_speed;
-                    pub_m3_speed->publish(m3_speed);
+		    if(actual_speed >= 0){
+		        m3_speed.data = actual_speed;
+                        pub_m3_speed->publish(m3_speed);
+		    }
                     break;
                 }
                 case 4:
                 {
                     std_msgs::Float32 m4_speed;
-                    m4_speed.data = actual_speed;
-                    pub_m4_speed->publish(m4_speed);
+		    if(actual_speed >= 0){
+		        m4_speed.data = actual_speed;
+                        pub_m4_speed->publish(m4_speed);
+		    }
                     break;
                 }
                 case 2:
                 {
                     std_msgs::Float32 m2_speed;
+		    if(actual_speed >= 0){
                     m2_speed.data = actual_speed;
                     pub_m2_speed->publish(m2_speed);
+		    }
+
                     break;
                 }
                 case 1:
                 {
                     std_msgs::Float32 m1_speed;
+		    if(actual_speed >= 0){
                     m1_speed.data = actual_speed;
                     pub_m1_speed->publish(m1_speed);
+		    }
+
                     break;
                 }
                 case 5:
                 {
                     std_msgs::Float32 m5_speed;
+		    if(actual_speed >= 0){
                     m5_speed.data = actual_speed;
                     pub_m5_speed->publish(m5_speed);
+		    }
+
                     break;
                 }
                 case 7:
                 {
                     std_msgs::Float32 m7_speed;
+		    if(actual_speed >= 0){
                     m7_speed.data = actual_speed;
                     pub_m7_speed->publish(m7_speed);
+		    }
+
                     break;
                 }
                 case 8:
                 {
                     std_msgs::Float32 m8_speed;
+		    if(actual_speed >= 0){
                     m8_speed.data = actual_speed;
                     pub_m8_speed->publish(m8_speed);
+		    }
+
                     break;
                 }
                 case 11:
                 {
                     std_msgs::Float32 m11_speed;
+		    if(actual_speed >= 0){
                     m11_speed.data = actual_speed;
                     pub_m11_speed->publish(m11_speed);
+		    }
+
                     break;
                 }
                 case 9:
                 {
                     std_msgs::Float32 m9_speed;
+		    if(actual_speed >= 0){
                     m9_speed.data = actual_speed;
                     pub_m9_speed->publish(m9_speed);
+		    }
+
                     break;
                 }
                 case 10:
                 {
                     std_msgs::Float32 m10_speed;
+		    if(actual_speed >= 0){
                     m10_speed.data = actual_speed;
                     pub_m10_speed->publish(m10_speed);
+		    }
                     break;
                 }
             }
@@ -514,14 +592,14 @@ void motorSetSpeed(int motor,int speed)
 int motorReadSpeed(int motor)
 {
 //    ROS_INFO_STREAM("Will read which motor speed: "<<motor);
-    uint16_t temp=0;
+    uint16_t temp=-2000;
     modbus_set_slave(com,motor);
     while(!modbus_read_registers(com, motorSpeedFeedbackAddr, 1, &temp))
     {
         ROS_WARN_STREAM(motor<<" read speed failed， try again.");
         usleep(500000);
     }
-    if(temp > 5000)
+    if(temp > 3000)
     {
         ROS_WARN_STREAM(motor<<" read speed strange! speed >> 5000r/m.");
         temp = -2000;
