@@ -1,7 +1,7 @@
 <launch>
 
 #### rosbag #################################################
-  <node pkg="rosbag" type="record" name="bag_record" args="-a -o test_"/>
+  <node pkg="rosbag" type="record" name="bag_record" args="-a -o /media/agv/Samsung_T51/test_eh"/>
 
 #### HMI ####################################################
 
