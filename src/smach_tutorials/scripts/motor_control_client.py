@@ -50,8 +50,8 @@ motor_target_speed = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 # motors = [reel, cb]
 
 client_1 = actionlib.SimpleActionClient('control485', DriveMotorAction)
-client_2 = actionlib.SimpleActionClient('control485_2', DriveMotorAction)
-client_3 = actionlib.SimpleActionClient('control485_3', DriveMotorAction)
+# client_2 = actionlib.SimpleActionClient('control485_2', DriveMotorAction)
+# client_3 = actionlib.SimpleActionClient('control485_3', DriveMotorAction)
 motor_now = 0
 
 motor_goal = list()
@@ -268,15 +268,15 @@ class client_motor_5(smach.State):
         smach.State.__init__(self, outcomes=['SUCCEEDED', 'ABORTED'])
 
     def execute(self, userdata):
-        global client_2
+        global client_1
         global motor_goal
         # msg = Int32()
         # msg.data = 1
         # pub_result.publish(msg)
         goal = motor_goal[4].action_goal.goal
-        action_result = client_2.send_goal_and_wait(goal)
-        # client_2.wait_for_result()
-        # action_result = client_2
+        action_result = client_1.send_goal_and_wait(goal)
+        # client_1.wait_for_result()
+        # action_result = client_1
         # print 'motor10 goal state:'
         # print action_result
         if action_result == 3:
@@ -294,15 +294,15 @@ class client_motor_6(smach.State):
         smach.State.__init__(self, outcomes=['SUCCEEDED', 'ABORTED'])
 
     def execute(self, userdata):
-        global client_2
+        global client_1
         global motor_goal
         # msg = Int32()
         # msg.data = 1
         # pub_result.publish(msg)
         goal = motor_goal[5].action_goal.goal
-        action_result = client_2.send_goal_and_wait(goal)
-        # client_2.wait_for_result()
-        # action_result = client_2
+        action_result = client_1.send_goal_and_wait(goal)
+        # client_1.wait_for_result()
+        # action_result = client_1
         # print 'motor10 goal state:'
         # print action_result
         if action_result == 3:
@@ -320,15 +320,15 @@ class client_motor_7(smach.State):
         smach.State.__init__(self, outcomes=['SUCCEEDED', 'ABORTED'])
 
     def execute(self, userdata):
-        global client_2
+        global client_1
         global motor_goal
         # msg = Int32()
         # msg.data = 1
         # pub_result.publish(msg)
         goal = motor_goal[6].action_goal.goal
-        action_result = client_2.send_goal_and_wait(goal)
-        # client_2.wait_for_result()
-        # action_result = client_2
+        action_result = client_1.send_goal_and_wait(goal)
+        # client_1.wait_for_result()
+        # action_result = client_1
         # print 'motor10 goal state:'
         # print action_result
         if action_result == 3:
@@ -346,15 +346,15 @@ class client_motor_8(smach.State):
         smach.State.__init__(self, outcomes=['SUCCEEDED', 'ABORTED'])
 
     def execute(self, userdata):
-        global client_3
+        global client_1
         global motor_goal
         # msg = Int32()
         # msg.data = 1
         # pub_result.publish(msg)
         goal = motor_goal[7].action_goal.goal
-        action_result = client_3.send_goal_and_wait(goal)
-        # client_3.wait_for_result()
-        # action_result = client_3
+        action_result = client_1.send_goal_and_wait(goal)
+        # client_1.wait_for_result()
+        # action_result = client_1
         # print 'motor10 goal state:'
         # print action_result
         if action_result == 3:
@@ -372,15 +372,15 @@ class client_motor_9(smach.State):
         smach.State.__init__(self, outcomes=['SUCCEEDED', 'ABORTED'])
 
     def execute(self, userdata):
-        global client_3
+        global client_1
         global motor_goal
         # msg = Int32()
         # msg.data = 1
         # pub_result.publish(msg)
         goal = motor_goal[8].action_goal.goal
-        action_result = client_3.send_goal_and_wait(goal)
-        # client_3.wait_for_result()
-        # action_result = client_3
+        action_result = client_1.send_goal_and_wait(goal)
+        # client_1.wait_for_result()
+        # action_result = client_1
         # print 'motor10 goal state:'
         # print action_result
         if action_result == 3:
@@ -398,15 +398,15 @@ class client_motor_10(smach.State):
         smach.State.__init__(self, outcomes=['SUCCEEDED', 'ABORTED'])
 
     def execute(self, userdata):
-        global client_3
+        global client_1
         global motor_goal
         # msg = Int32()
         # msg.data = 1
         # pub_result.publish(msg)
         goal = motor_goal[9].action_goal.goal
-        action_result = client_3.send_goal_and_wait(goal)
-        # client_3.wait_for_result()
-        # action_result = client_3
+        action_result = client_1.send_goal_and_wait(goal)
+        # client_1.wait_for_result()
+        # action_result = client_1
         # print 'motor10 goal state:'
         # print action_result
         if action_result == 3:

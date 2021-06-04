@@ -53,10 +53,17 @@ bool rs485_busy = false;
 
 // 初始化publisher
 ros::Publisher* pub_modified_car_speed;
-ros::Publisher* pub_motor1_speed;
-ros::Publisher* pub_motor2_speed;
-ros::Publisher* pub_motor3_speed;
-ros::Publisher* pub_motor4_speed;
+ros::Publisher* pub_m3_speed;
+ros::Publisher* pub_m4_speed;
+ros::Publisher* pub_m2_speed;
+ros::Publisher* pub_m1_speed;
+ros::Publisher* pub_m5_speed;
+ros::Publisher* pub_m7_speed;
+ros::Publisher* pub_m8_speed;
+ros::Publisher* pub_m11_speed;
+ros::Publisher* pub_m9_speed;
+ros::Publisher* pub_m10_speed;
+
 ros::Publisher* pub_motor_controlled;
 
 
@@ -73,14 +80,27 @@ void manual_stop_callback(const std_msgs::BoolConstPtr &msg);
 void test(void);
 
 void *read_motor_speed_background(void *) {
-    int motor_id_reel = 3;
-    int motor_id_cb = 4;
-    int motor_id_pf = 2;
-    int motor_id_fh = 1;
-    int realSpeed_reel = 0;
-    int realSpeed_cb = 0;
-    int realSpeed_pf = 0;
-    int realSpeed_fh = 0;
+    int motor_id_3 = 3;
+    int motor_id_4 = 4;
+    int motor_id_2 = 2;
+    int motor_id_1 = 1;
+    int motor_id_5 = 5;
+    int motor_id_7 = 7;
+    int motor_id_8 = 8;
+    int motor_id_11 = 11;
+    int motor_id_9 = 9;
+    int motor_id_10 = 10;
+    
+    int realSpeed_m3 = 0;
+    int realSpeed_m4 = 0;
+    int realSpeed_m2 = 0;
+    int realSpeed_m1 = 0;
+    int realSpeed_m5 = 0;
+    int realSpeed_m7 = 0;
+    int realSpeed_m8 = 0;
+    int realSpeed_m11 = 0;
+    int realSpeed_m9 = 0;
+    int realSpeed_m10 = 0;
 
 
     while (!endFlag) {
@@ -89,25 +109,55 @@ void *read_motor_speed_background(void *) {
             rs485_busy = true;  // rs485占用
 
             // Read and pub motor speed;
-            realSpeed_reel = motorReadSpeed(motor_id_reel);
-            std_msgs::Float32 reel_speed;
-            reel_speed.data = realSpeed_reel;
-            pub_motor1_speed->publish(reel_speed);
+            realSpeed_m3 = motorReadSpeed(motor_id_3);
+            std_msgs::Float32 m3_speed;
+            m3_speed.data = realSpeed_m3;
+            pub_m3_speed->publish(m3_speed);
 
-            realSpeed_cb = motorReadSpeed(motor_id_cb);
-            std_msgs::Float32 cb_speed;
-            cb_speed.data = realSpeed_cb;
-            pub_motor2_speed->publish(cb_speed);
+            realSpeed_m4 = motorReadSpeed(motor_id_4);
+            std_msgs::Float32 m4_speed;
+            m4_speed.data = realSpeed_m4;
+            pub_m4_speed->publish(m4_speed);
 
-            realSpeed_pf = motorReadSpeed(motor_id_pf);
-            std_msgs::Float32 pf_speed;
-            pf_speed.data = realSpeed_pf;
-            pub_motor3_speed->publish(pf_speed);
+            realSpeed_m2 = motorReadSpeed(motor_id_2);
+            std_msgs::Float32 m2_speed;
+            m2_speed.data = realSpeed_m2;
+            pub_m2_speed->publish(m2_speed);
 
-            realSpeed_fh = motorReadSpeed(motor_id_fh);
-            std_msgs::Float32 fh_speed;
-            fh_speed.data = realSpeed_fh;
-            pub_motor4_speed->publish(fh_speed);
+            realSpeed_m1 = motorReadSpeed(motor_id_1);
+            std_msgs::Float32 m1_speed;
+            m1_speed.data = realSpeed_m1;
+            pub_m1_speed->publish(m1_speed);
+
+            realSpeed_m5 = motorReadSpeed(motor_id_5);
+            std_msgs::Float32 m5_speed;
+            m5_speed.data = realSpeed_m5;
+            pub_m5_speed->publish(m5_speed);
+
+            realSpeed_m7 = motorReadSpeed(motor_id_7);
+            std_msgs::Float32 m7_speed;
+            m7_speed.data = realSpeed_m7;
+            pub_m7_speed->publish(m7_speed);
+
+            realSpeed_m8 = motorReadSpeed(motor_id_8);
+            std_msgs::Float32 m8_speed;
+            m8_speed.data = realSpeed_m8;
+            pub_m8_speed->publish(m8_speed);
+
+            realSpeed_m11 = motorReadSpeed(motor_id_11);
+            std_msgs::Float32 m11_speed;
+            m11_speed.data = realSpeed_m11;
+            pub_m11_speed->publish(m11_speed);
+
+            realSpeed_m9 = motorReadSpeed(motor_id_9);
+            std_msgs::Float32 m9_speed;
+            m9_speed.data = realSpeed_m9;
+            pub_m9_speed->publish(m9_speed);
+
+            realSpeed_m10 = motorReadSpeed(motor_id_10);
+            std_msgs::Float32 m10_speed;
+            m10_speed.data = realSpeed_m10;
+            pub_m10_speed->publish(m10_speed);
 
             rs485_busy = false;
             usleep(100000);  // 下一次轮训间隔100ms
@@ -159,34 +209,72 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
             switch (goal->motor_id) {
                 case 3:
                 {
-                    ROS_INFO_STREAM("pub reel speed.");
-                    std_msgs::Float32 reel_speed;
-                    reel_speed.data = actual_speed;
-                    pub_motor1_speed->publish(reel_speed);
+                    std_msgs::Float32 m3_speed;
+                    m3_speed.data = actual_speed;
+                    pub_m3_speed->publish(m3_speed);
                     break;
                 }
                 case 4:
                 {
-                    ROS_INFO_STREAM("pub cb speed.");
-                    std_msgs::Float32 cb_speed;
-                    cb_speed.data = actual_speed;
-                    pub_motor2_speed->publish(cb_speed);
+                    std_msgs::Float32 m4_speed;
+                    m4_speed.data = actual_speed;
+                    pub_m4_speed->publish(m4_speed);
                     break;
                 }
                 case 2:
                 {
-                    ROS_INFO_STREAM("pub pf speed.");
-                    std_msgs::Float32 pf_speed;
-                    pf_speed.data = actual_speed;
-                    pub_motor3_speed->publish(pf_speed);
+                    std_msgs::Float32 m2_speed;
+                    m2_speed.data = actual_speed;
+                    pub_m2_speed->publish(m2_speed);
                     break;
                 }
                 case 1:
                 {
-                    ROS_INFO_STREAM("pub fh speed.");
-                    std_msgs::Float32 fh_speed;
-                    fh_speed.data = actual_speed;
-                    pub_motor4_speed->publish(fh_speed);
+                    std_msgs::Float32 m1_speed;
+                    m1_speed.data = actual_speed;
+                    pub_m1_speed->publish(m1_speed);
+                    break;
+                }
+                case 5:
+                {
+                    std_msgs::Float32 m5_speed;
+                    m5_speed.data = actual_speed;
+                    pub_m5_speed->publish(m5_speed);
+                    break;
+                }
+                case 7:
+                {
+                    std_msgs::Float32 m7_speed;
+                    m7_speed.data = actual_speed;
+                    pub_m7_speed->publish(m7_speed);
+                    break;
+                }
+                case 8:
+                {
+                    std_msgs::Float32 m8_speed;
+                    m8_speed.data = actual_speed;
+                    pub_m8_speed->publish(m8_speed);
+                    break;
+                }
+                case 11:
+                {
+                    std_msgs::Float32 m11_speed;
+                    m11_speed.data = actual_speed;
+                    pub_m11_speed->publish(m11_speed);
+                    break;
+                }
+                case 9:
+                {
+                    std_msgs::Float32 m9_speed;
+                    m9_speed.data = actual_speed;
+                    pub_m9_speed->publish(m9_speed);
+                    break;
+                }
+                case 10:
+                {
+                    std_msgs::Float32 m10_speed;
+                    m10_speed.data = actual_speed;
+                    pub_m10_speed->publish(m10_speed);
                     break;
                 }
             }
@@ -200,34 +288,72 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
             switch (goal->motor_id) {
                 case 3:
                 {
-                    ROS_INFO_STREAM("pub reel speed.");
-                    std_msgs::Float32 reel_speed;
-                    reel_speed.data = actual_speed;
-                    pub_motor1_speed->publish(reel_speed);
+                    std_msgs::Float32 m3_speed;
+                    m3_speed.data = actual_speed;
+                    pub_m3_speed->publish(m3_speed);
                     break;
                 }
                 case 4:
                 {
-                    ROS_INFO_STREAM("pub cb speed.");
-                    std_msgs::Float32 cb_speed;
-                    cb_speed.data = actual_speed;
-                    pub_motor2_speed->publish(cb_speed);
+                    std_msgs::Float32 m4_speed;
+                    m4_speed.data = actual_speed;
+                    pub_m4_speed->publish(m4_speed);
                     break;
                 }
                 case 2:
                 {
-                    ROS_INFO_STREAM("pub pf speed.");
-                    std_msgs::Float32 pf_speed;
-                    pf_speed.data = actual_speed;
-                    pub_motor3_speed->publish(pf_speed);
+                    std_msgs::Float32 m2_speed;
+                    m2_speed.data = actual_speed;
+                    pub_m2_speed->publish(m2_speed);
                     break;
                 }
                 case 1:
                 {
-                    ROS_INFO_STREAM("pub fh speed.");
-                    std_msgs::Float32 fh_speed;
-                    fh_speed.data = actual_speed;
-                    pub_motor4_speed->publish(fh_speed);
+                    std_msgs::Float32 m1_speed;
+                    m1_speed.data = actual_speed;
+                    pub_m1_speed->publish(m1_speed);
+                    break;
+                }
+                case 5:
+                {
+                    std_msgs::Float32 m5_speed;
+                    m5_speed.data = actual_speed;
+                    pub_m5_speed->publish(m5_speed);
+                    break;
+                }
+                case 7:
+                {
+                    std_msgs::Float32 m7_speed;
+                    m7_speed.data = actual_speed;
+                    pub_m7_speed->publish(m7_speed);
+                    break;
+                }
+                case 8:
+                {
+                    std_msgs::Float32 m8_speed;
+                    m8_speed.data = actual_speed;
+                    pub_m8_speed->publish(m8_speed);
+                    break;
+                }
+                case 11:
+                {
+                    std_msgs::Float32 m11_speed;
+                    m11_speed.data = actual_speed;
+                    pub_m11_speed->publish(m11_speed);
+                    break;
+                }
+                case 9:
+                {
+                    std_msgs::Float32 m9_speed;
+                    m9_speed.data = actual_speed;
+                    pub_m9_speed->publish(m9_speed);
+                    break;
+                }
+                case 10:
+                {
+                    std_msgs::Float32 m10_speed;
+                    m10_speed.data = actual_speed;
+                    pub_m10_speed->publish(m10_speed);
                     break;
                 }
             }
@@ -288,25 +414,49 @@ bool closeSerial()
 void motorInit(void)
 {
     // 只有这里才打开了电机，这里首先仅仅开启了reel电机
-    ROS_WARN_STREAM("init reelmotor...");
-    motorSetModbus(reelMotor,1);
-    motorSetDirection(reelMotor,1);//正转
+    ROS_WARN_STREAM("init motor-3...");
+    motorSetModbus(3,1);
+    motorSetDirection(3,2);//正转
 //    motorSetSpeed(reelMotor,0);
 
-    ROS_WARN_STREAM("init cbmotor...");
-    motorSetModbus(cbMotor,1);
-    motorSetDirection(cbMotor,1);//正转
+    ROS_WARN_STREAM("init motor-4...");
+    motorSetModbus(4,1);
+    motorSetDirection(4,2);//正转
 //    motorSetSpeed(cbMotor,0);
 
-    ROS_WARN_STREAM("init pfmotor...");
-    motorSetModbus(pfMotor,1);
-    motorSetDirection(pfMotor,1);//正转
+    ROS_WARN_STREAM("init motor-2...");
+    motorSetModbus(2,1);
+    motorSetDirection(2,2);//正转
 //    motorSetSpeed(pfMotor,0);
 
-    ROS_WARN_STREAM("init fhmotor...");
-    motorSetModbus(fhMotor,1);
-    motorSetDirection(fhMotor,1);//正转
-//    motorSetSpeed(fhMotor,0);
+    ROS_WARN_STREAM("init motor-1...");
+    motorSetModbus(1,1);
+    motorSetDirection(1,2);//正转
+
+    ROS_WARN_STREAM("init motor-5...");
+    motorSetModbus(5,1);
+    motorSetDirection(5,2);//正转
+
+    ROS_WARN_STREAM("init motor-7...");
+    motorSetModbus(7,1);
+    motorSetDirection(7,2);//正转
+
+    ROS_WARN_STREAM("init motor-8...");
+    motorSetModbus(8,1);
+    motorSetDirection(8,2);//正转
+
+    ROS_WARN_STREAM("init motor-11...");
+    motorSetModbus(11,1);
+    motorSetDirection(11,1);//正转
+
+    ROS_WARN_STREAM("init motor-9...");
+    motorSetModbus(9,1);
+    motorSetDirection(9,2);//正转
+
+    ROS_WARN_STREAM("init motor-10...");
+    motorSetModbus(10,1);
+    motorSetDirection(10,2);//正转
+
 }
 void motorSetModbus(int motor,int enable)
 {
@@ -379,26 +529,51 @@ int main (int argc, char **argv)
     ros::Subscriber sub_;
 
     ros::Publisher pub_;
-    ros::Publisher pub1_;
-    ros::Publisher pub2_;
-    ros::Publisher pub3_;
-    ros::Publisher pub4_;
+    ros::Publisher s_pub_3;
+    ros::Publisher s_pub_4;
+    ros::Publisher s_pub_2;
+    ros::Publisher s_pub_1;
+    ros::Publisher s_pub_5;
+    ros::Publisher s_pub_7;
+    ros::Publisher s_pub_8;
+    ros::Publisher s_pub_11;
+    ros::Publisher s_pub_9;
+    ros::Publisher s_pub_10;
+
     ros::Publisher pub5_;
 
     pub_ = n_.advertise<std_msgs::Float32>("modified_car_speed", 1);
     pub_modified_car_speed = &pub_;
 
-    pub1_ = n_.advertise<std_msgs::Float32>("motor_3_speed", 1);
-    pub_motor1_speed = &pub1_;
+    s_pub_3 = n_.advertise<std_msgs::Float32>("motor_3_speed", 1);
+    pub_m3_speed = &s_pub_3;
 
-    pub2_ = n_.advertise<std_msgs::Float32>("motor_4_speed", 1);
-    pub_motor2_speed = &pub2_;
+    s_pub_4 = n_.advertise<std_msgs::Float32>("motor_4_speed", 1);
+    pub_m4_speed = &s_pub_4;
 
-    pub3_ = n_.advertise<std_msgs::Float32>("motor_2_speed", 1);
-    pub_motor3_speed = &pub3_;
+    s_pub_2 = n_.advertise<std_msgs::Float32>("motor_2_speed", 1);
+    pub_m2_speed = &s_pub_2;
 
-    pub4_ = n_.advertise<std_msgs::Float32>("motor_1_speed", 1);
-    pub_motor4_speed = &pub4_;
+    s_pub_1 = n_.advertise<std_msgs::Float32>("motor_1_speed", 1);
+    pub_m1_speed = &s_pub_1;
+
+    s_pub_5 = n_.advertise<std_msgs::Float32>("motor_5_speed", 1);
+    pub_m5_speed = &s_pub_5;
+
+    s_pub_7 = n_.advertise<std_msgs::Float32>("motor_7_speed", 1);
+    pub_m7_speed = &s_pub_7;
+
+    s_pub_8 = n_.advertise<std_msgs::Float32>("motor_8_speed", 1);
+    pub_m8_speed = &s_pub_8;
+
+    s_pub_11 = n_.advertise<std_msgs::Float32>("motor_11_speed", 1);
+    pub_m11_speed = &s_pub_11;
+
+    s_pub_9 = n_.advertise<std_msgs::Float32>("motor_9_speed", 1);
+    pub_m9_speed = &s_pub_9;
+
+    s_pub_10 = n_.advertise<std_msgs::Float32>("motor_10_speed", 1);
+    pub_m10_speed = &s_pub_10;
 
     pub5_ = n_.advertise<std_msgs::Int16>("motor_controlled", 1);
     pub_motor_controlled = &pub5_;
@@ -433,12 +608,15 @@ int main (int argc, char **argv)
 //    ROS_WARN_STREAM("debug info");
     // todo 这里的所有id要改
     motorSetSpeed(3, 0);
-
     motorSetSpeed(4, 0);
-
     motorSetSpeed(2, 0);
-
     motorSetSpeed(1, 0);
+    motorSetSpeed(5, 0);
+    motorSetSpeed(7, 0);
+    motorSetSpeed(8, 0);
+    motorSetSpeed(11, 0);
+    motorSetSpeed(9, 0);
+    motorSetSpeed(10, 0);
 
 //    ROS_WARN_STREAM("debug info1");
     closeSerial();

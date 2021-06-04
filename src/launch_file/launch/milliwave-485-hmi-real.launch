@@ -10,8 +10,8 @@
 #### control motors vis RS485 bus ####################################################
 
   <node pkg="control485" type="control485_node" name="control485"/>
-  <node pkg="control485" type="control485_node_2" name="control485_2"/>
-  <node pkg="control485" type="control485_node_3" name="control485_3"/>
+  <!--node pkg="control485" type="control485_node_2" name="control485_2"/>
+  <node pkg="control485" type="control485_node_3" name="control485_3"/-->
 
 #### read signals from CAN bus ####################################################
 
