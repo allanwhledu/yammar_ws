@@ -289,17 +289,17 @@ void motorInit(void)
     // 只有这里才打开了电机，这里首先仅仅开启了reel电机
     ROS_WARN_STREAM("init reelmotor...");
     motorSetModbus(reelMotor,1);
-    motorSetDirection(reelMotor,1);//正转
+    motorSetDirection(reelMotor,2);//正转
 //    motorSetSpeed(reelMotor,0);
 
     ROS_WARN_STREAM("init cbmotor...");
     motorSetModbus(cbMotor,1);
-    motorSetDirection(cbMotor,1);//正转
+    motorSetDirection(cbMotor,2);//正转
 //    motorSetSpeed(cbMotor,0);
 
     ROS_WARN_STREAM("init pfmotor...");
     motorSetModbus(pfMotor,1);
-    motorSetDirection(pfMotor,1);//正转
+    motorSetDirection(pfMotor,2);//正转
 //    motorSetSpeed(pfMotor,0);
 
 //    ROS_WARN_STREAM("init fhmotor...");
