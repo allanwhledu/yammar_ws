@@ -194,7 +194,11 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
     ROS_WARN_STREAM("the target speed is: "<<target_speed);
     ROS_INFO_STREAM("the difference of speed still: "<<abs(target_speed - actual_speed));
 
-    motorSetSpeed(goal->motor_id, target_speed);
+    if(target_speed==0){
+        motorSetDirection(goal->motor_id, 3);
+    } else{
+        motorSetSpeed(goal->motor_id, target_speed);
+    }
 
     int count = 0;
     bool speed_ok = false;
@@ -358,7 +362,12 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
                 }
             }
             usleep(500000);  // 若速度未达标，则等待500ms后再次测量
-            motorSetSpeed(goal->motor_id, target_speed);
+//            motorSetSpeed(goal->motor_id, target_speed);
+            if(target_speed==0){
+                motorSetDirection(goal->motor_id, 3);
+            } else{
+                motorSetSpeed(goal->motor_id, target_speed);
+            }
             ROS_INFO_STREAM("set speed again: "<<target_speed);
         }
         count++;
@@ -374,6 +383,9 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
         as->setAborted();
     }
 
+    if(target_speed==0){
+        motorSetDirection(goal->motor_id, 4);
+    }
     rs485_busy = false;  // 释放rs485占用
 
     ROS_INFO_STREAM("motor control complete. Wait for next invoke.\n");
