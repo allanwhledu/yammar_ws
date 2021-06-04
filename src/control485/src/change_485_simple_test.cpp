@@ -29,7 +29,7 @@ uint16_t motorRS485Adress=0x43;
 uint16_t motorCurrentFeedbackAddr=0xC6; //说明书中找到而补充的电流读取，但是应该暂时不用（因为不精确吧）
 // 以上，就是现在用到的寄存器地址
 
-string port="/dev/rs485-01";
+string port="/dev/rs485-02";
 
 string current_time = "";
 ofstream* open_file;
@@ -192,7 +192,7 @@ int main (int argc, char **argv)
     //string filename = "/home/yangzt/yammar_ws/src/control485/speed_result/";
     //filename = filename + current_time + "m10_500.txt";
 
-    int motor_id = 2;
+    int motor_id = 8;
     int realSpeed = 0;
 
     ROS_INFO_STREAM(">>Open Serial!") ;
