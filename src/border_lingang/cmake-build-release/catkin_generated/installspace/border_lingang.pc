@@ -1,0 +1,8 @@
+prefix=/usr/local
+
+Name: border_lingang
+Description: Description of border_lingang
+Version: 0.0.0
+Cflags: 
+Libs: -L${prefix}/lib 
+Requires: height_border_msgs

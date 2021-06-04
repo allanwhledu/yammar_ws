@@ -5,9 +5,9 @@
   <node pkg="realsense2_driver" type="realsense2_driver" name="realsense2_driver" />
   <node pkg="controldis" type="controldis_node" name="controldis_node" />
 
-    <param name="frontview_dis" type="double" value="100"/>
-    <param name="p" type="double" value="0.5"/>
-    <param name="offset_ange" type="double" value="0"/>
-    <param name="offset_dis" type="double" value="0"/>
+  <param name="frontview_dis" type="double" value="4"/>
+  <param name="p" type="double" value="0.5"/>
+  <param name="offset_ange" type="double" value="0"/>
+  <param name="offset_dis" type="double" value="95"/>
 
 </launch>
