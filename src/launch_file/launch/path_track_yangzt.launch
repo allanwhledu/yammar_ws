@@ -1,0 +1,12 @@
+<launch>
+
+#### rosbag #################################################
+   <node pkg="rosbag" type="record" name="bag_record" args="-a -o /media/agv/Samsung_T51/test_"/> 
+
+#### for line detect ####################################################
+
+   <node pkg="border_height_detect" type="border_height_detect_node" name="border_height_detect_node" />
+
+   <node pkg="realsense2_driver" type="realsense2_driver" name="realsense2_driver" /> 
+
+</launch>
