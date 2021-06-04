@@ -91,16 +91,16 @@ void *read_motor_speed_background(void *) {
     int motor_id_9 = 9;
     int motor_id_10 = 10;
     
-    int realSpeed_m3 = 0;
-    int realSpeed_m4 = 0;
-    int realSpeed_m2 = 0;
-    int realSpeed_m1 = 0;
-    int realSpeed_m5 = 0;
-    int realSpeed_m7 = 0;
-    int realSpeed_m8 = 0;
-    int realSpeed_m11 = 0;
-    int realSpeed_m9 = 0;
-    int realSpeed_m10 = 0;
+    int realSpeed_m3 = -1000;
+    int realSpeed_m4 = -1000;
+    int realSpeed_m2 = -1000;
+    int realSpeed_m1 = -1000;
+    int realSpeed_m5 = -1000;
+    int realSpeed_m7 = -1000;
+    int realSpeed_m8 = -1000;
+    int realSpeed_m11 = -1000;
+    int realSpeed_m9 = -1000;
+    int realSpeed_m10 = -1000;
 
 
     while (!endFlag) {
@@ -524,7 +524,7 @@ int motorReadSpeed(int motor)
     if(temp > 5000)
     {
         ROS_WARN_STREAM(motor<<" read speed strange! speed >> 5000r/m.");
-        temp = 0;
+        temp = -2000;
     }
     return temp;
 }
