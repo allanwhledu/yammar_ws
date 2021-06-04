@@ -295,12 +295,12 @@ void motorInit(void)
 
     ROS_WARN_STREAM("init cbmotor...");
     motorSetModbus(cbMotor,1);
-    motorSetDirection(cbMotor,1);//正转
+    motorSetDirection(cbMotor,2);//正转
 //    motorSetSpeed(cbMotor,0);
 
     ROS_WARN_STREAM("init pfmotor...");
     motorSetModbus(pfMotor,1);
-    motorSetDirection(pfMotor,1);//正转
+    motorSetDirection(pfMotor,2);//正转
 //    motorSetSpeed(pfMotor,0);
 
 //    ROS_WARN_STREAM("init fhmotor...");

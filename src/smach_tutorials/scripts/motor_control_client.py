@@ -74,8 +74,8 @@ car_speed_last = -1000
 is_stop = 0
 is_stop_last = 0
 submodules_status = 0
-module_visual = 0
-module_rs485 = 0
+module_visual = 1 
+module_rs485 = 1
 module_can = 1
 module_mmw = 1
 module_hmi = 0
@@ -472,6 +472,7 @@ class Car_speed_monitor(smach.State):
         # m3_ta = pfRatio * min(187.0, min(39.16 * pfCof * msg.data + 52.47, 39.16 * 3.0 * msg.data + 90.07))
         # m4_ta = fhRatio * min(187.0, min(39.16 * fhCof * msg.data + 52.47, 39.16 * 3.0 * msg.data + 90.07))
 
+        # 以下为额定转速
         # motor_target_speed[0] = 1000  # motor_speed_dict['M3']
         # motor_target_speed[1] = motor_speed_dict['M3']
         # motor_target_speed[2] = motor_speed_dict['M2']
