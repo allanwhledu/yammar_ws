@@ -1,4 +1,5 @@
 #include <iostream>
+#include <fstream>
 #include <string.h>
 #include <pcl/point_types.h>
 #include <ros/ros.h>
@@ -40,8 +41,9 @@ const bool isTrueHarvest = true;
 vector<float> coeff_uncut_height_mean(4,0);
 int Estimated_height=0;  //估计的高度平均值
 int distance_ema = 0; // use ema filter to smooth the distance
-const float border_height_low = 0.39;
-const float border_height_high = 0.42;
+int angle_int_ema = 0;
+const float border_height_low = 0.4;
+const float border_height_high = 0.5;
 
 
 ros::Publisher height_border_pub;       // publish the height and border
@@ -116,6 +118,8 @@ int main(int argc,char** argv)
     ros::NodeHandle nh;
     image_transport::ImageTransport transport(nh);
     image_pub= transport.advertise("/border", 1);
+
+
 
     //同步接收rgb,depth
     message_filters::Subscriber<sensor_msgs::Image> rgb_sub(nh, "/realsense_sr300/ylx/rgb", 1);
@@ -575,7 +579,8 @@ void border_depth(Mat& rgb, Mat& depth,vector<Point2i>& inliners_depth_2D,vector
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr plane_uncut(new pcl::PointCloud<pcl::PointXYZRGB>);
     uncutRegion_search(cloudin,plane_uncut);  //查找未收割区域
 
-    if(ifPlane_uncut_valid(rgb,plane_uncut))
+//    if(ifPlane_uncut_valid(rgb,plane_uncut))
+    if(true)
     {
         vector<Point3f> pointimg_3d;
         vector<Point2i> pointimg;
@@ -606,7 +611,7 @@ void border_depth(Mat& rgb, Mat& depth,vector<Point2i>& inliners_depth_2D,vector
         }
         cloudin->width = cloudin->points.size();
         pcl::toROSMsg(*cloudin + *plane_uncut, cloud_boud);
-//        pointcloud_pub.publish(cloud_boud);
+        pointcloud_pub.publish(cloud_boud);
     }
 
 //    imshow("Border_depth", rgb);
@@ -621,13 +626,15 @@ void transform_to_pointcloud(Mat& rgb,Mat& depth,pcl::PointCloud<pcl::PointXYZRG
     // Choose left half or right half
     if(isTrueHarvest){
         for(int row=0;row<rgb.rows;row+=2)  //row,col这里做了稀疏化,就不用滤波稀疏了
-            for(int col=0;col<rgb.cols / 2 + 50;col+=2)  //这里只取了深度图像的左边一半的点云,减少计算量,
+            for(int col=0;col< 400;col+=2)  //这里只取了深度图像的左边一半的点云,减少计算量,
+//            for(int col=0;col<rgb.cols;col+=2)
             {
                 float z = float(depth.at<ushort>(row,col))/1000;
                 float y = (row - 232.171) * z / 615.312;
                 float x = (col - 323.844) * z / 615.372;
 
 //            if(y>0 && z<10)  //根据相机坐标系,只选择向下的点云,z方向十米以内的点云;
+//                if(y > 0 && z < 15)
                 if(y > 0 && z < 10)
                 {
                     Point.x=x;
@@ -665,7 +672,8 @@ void transform_to_pointcloud(Mat& rgb,Mat& depth,pcl::PointCloud<pcl::PointXYZRG
 
     }
 
-    pointcloud_pub.publish(cloudin);
+    // Raw cloud
+//    pointcloud_pub.publish(cloudin);
 }
 
 //考虑检测未收割平面,点云分割
@@ -712,7 +720,7 @@ void uncutRegion_search(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloudin,pcl::Poi
 //    extract.filter (*cloud_filtered);
 
     cloud_filtered->header.frame_id="/frame";
-    pointcloud_pub.publish(cloud_filtered);
+//    pointcloud_pub.publish(cloud_filtered);
 
     plane_uncut=cloud_filtered;
 }
@@ -721,7 +729,6 @@ void uncutRegion_search(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloudin,pcl::Poi
 bool ifPlane_uncut_valid(Mat& rgb,pcl::PointCloud<pcl::PointXYZRGB>::Ptr& plane_uncut)
 {
     Mat project_plane( rgb.size(), CV_8UC1, Scalar(0));
-
 
     // True harvest, need not change
     if(isTrueHarvest){
@@ -798,13 +805,20 @@ Eigen::VectorXf borderpoints_clusterd(Mat& rgb, Mat& depth,pcl::PointCloud<pcl::
     Point3f  pointdepth_3d; //分界线点的三维坐标
     Point2i  pointdepth;    //分界线点的二维坐标
 
-    float A=coeff_uncut[0],B=coeff_uncut[1],C=coeff_uncut[2],D=coeff_uncut[3];  //基准面系数
+//    float A=coeff_uncut[0],B=coeff_uncut[1],C=coeff_uncut[2],D=coeff_uncut[3];  //基准面系数
+
+    // change to ground;
+    const float  A =-0.00292031, B=-0.997347945,	C=-0.035490671,D=2.620329934;    //20210605,地面为基准面
+
 
     pcl::PointXYZRGB Point;
 
+    // draw the rectangle
+    cv::rectangle(rgb, cv::Point(200, 250), cv::Point(420, rgb.rows - 1), Scalar(0,0,255),1,1,0);
+
     if(isTrueHarvest){
-        for(int row=250;row<=rgb.rows;row+=4)  //ROI遍历范围
-            for(int col=50;col<350;col++ )
+        for(int row=200;row< rgb.rows;row+=2)  //ROI遍历范围
+            for(int col=200;col<420;col++ )
             {
                 float z = float(depth.at<ushort>(row,col))/1000;
                 float y = (row - 232.171) * z / 615.312;
@@ -1299,28 +1313,36 @@ void border_offset(Mat& rgb,vector<Point2i>& pointimg,vector<Point3f>& pointimg_
 
         Scalar lineColor(0, 255, 0);
         drawArrow(rgb, pStart, pEnd, 10, 45, lineColor);
-        int zs = arc_cosvalue_inangle*180/3.1415926;
-        int xs = abs(int((arc_cosvalue_inangle*180/3.1415926 - zs) * 10));//保留一位小数
-        string angle = to_string(zs) + '.' + to_string(xs);
-        borderMsg.angle = angle;
+        int angle_int = arc_cosvalue_inangle*180/3.1415926;
+        int angle_dec = abs(int((arc_cosvalue_inangle*180/3.1415926 - angle_int) * 10));//保留一位小数
+
+        // Add ema filter
+        angle_int_ema = angle_int_ema == 0 ?angle_int:0.8 * angle_int_ema + 0.2 * angle_int;
+        // add offset for gaoyou experiment
+//        angle_int_ema = angle_int_ema ;
+
+        string angle_str = to_string(angle_int_ema) + '.' + to_string(angle_dec);
+        borderMsg.angle = angle_str;
         borderMsg.dis = to_string(distance);
 
         //
         distance_ema = distance_ema == 0 ?distance : 0.8 * distance_ema + 0.2 * distance;
-        heightBorderMsg.angle_3d = angle;
+        // add offset for gaoyou experiment
+//        distance_ema = distance_ema - 550;
+        heightBorderMsg.angle_3d = angle_str;
         heightBorderMsg.dis_3d = to_string(distance_ema);
+
+        // Add offset for path track, angle = msg.angle - 7; dis_3d = dis_3d + 180
 
 //        if(arc_cosvalue_inangle<40 && arc_cosvalue_inangle>-40 && distance<70 && distance>-70)
         if(arc_cosvalue_inangle<40 && arc_cosvalue_inangle>-40)
         {
-            float value_inangle = arc_cosvalue_inangle * 180 / 3.1415926;
-            int xs_value_inangle = (value_inangle - int(value_inangle)) * 10;//保留一位小数
-            string angle =
-                    "Ang: " + std::to_string(int(value_inangle)) + '.' + std::to_string(abs(xs_value_inangle))+"deg";
-            cv::putText(rgb, angle, Point2i(400, 50), cv::FONT_HERSHEY_SIMPLEX, 1, CV_RGB(255, 0, 0), 4);
 
-            string dist_ema_str = "Dis: " + std::to_string(distance_ema)+"cm";
-            cv::putText(rgb, dist_ema_str, Point2i(400, 100), cv::FONT_HERSHEY_SIMPLEX, 1, CV_RGB(255, 0, 0), 5);
+            string angle_str_img = "Ang: " + heightBorderMsg.angle_3d+"deg";
+            cv::putText(rgb, angle_str_img, Point2i(400, 50), cv::FONT_HERSHEY_SIMPLEX, 1, CV_RGB(255, 0, 0), 4);
+
+            string dist_ema_str_img = "Dis: " + heightBorderMsg.dis_3d+"cm";
+            cv::putText(rgb, dist_ema_str_img, Point2i(400, 100), cv::FONT_HERSHEY_SIMPLEX, 1, CV_RGB(255, 0, 0), 5);
 
             // 2d dist
 //            string dis_2d_str = "Dis 2d: " + to_string(dist_2d);
