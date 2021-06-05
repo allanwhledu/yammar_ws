@@ -102,9 +102,9 @@ int find_goal_point(vector<double>&vec, double x, double y, int prevInd){
         tmpDis = sqrt((vec[i] - x) * (vec[i] - x) + (vec[i + 1] - y) * (vec[i + 1] - y));
         i += 2;
     }
-    double x1 = x - 21395701.434035331;
-    double y1 = y - 3417762.714564383;
-    cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<:"<<vec[i]- 21395701.434035331<<"  "<<vec[i+1]- 3417762.714564383<<endl;
+    double x1 = x - 20727639.100297771;
+    double y1 = y - 3656080.994595551;
+    cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<:"<<vec[i]- 20727639.100297771<<"  "<<vec[i+1]- 3656080.994595551<<endl;
     cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<:"<<x1<<"  "<<y1<<endl;
     cout<<"<<<<<<<<<<<<<<DIS:"<<tmpDis<<endl;
     cout<<"<<<<<   curr    <<<<<<<<:"<<i<<endl;
@@ -176,7 +176,7 @@ int main(int argc, char **argv){
     usleep(1000000);
     //read the reference line txt
     ifstream readFile;
-    readFile.open("/home/agv/yammar_ws/src/controldis/data.txt", ios::in);
+    readFile.open("/home/agv/yammar_ws/src/controldis/data1.txt", ios::in);
     if (!readFile.is_open()){
         cout << "打开文件失败" << endl;
     }
@@ -234,14 +234,13 @@ int main(int argc, char **argv){
         find_nearest_point(ref_pos_line, curr_pos, curr_nearest_point);
 
         cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<curr_nearest_point:"<<curr_nearest_point<<endl;
-        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<< ref_pose_line.size:"<< ref_pos_line.size()<<endl;
         int goal_point_ind = find_goal_point(ref_pos_line, curr_pos, curr_nearest_point);
         cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<goal_point_ind:"<<goal_point_ind<<endl;
  
-        cv::circle(img, Point(int(curr_pos.x - 21395654.928438500)+10, int(curr_pos.y - 3417716.812632216)+10), 5, Scalar(0,255,0), -1);
-        cv::circle(img, Point(int(ref_pos_line[goal_point_ind].x - 21395654.928438500)+10, int(ref_pos_line[goal_point_ind].y - 3417716.812632216)+10), 5, Scalar(0,0,255), -1);
-        cv::imshow("image",img);
-        cv::waitKey(1);
+        // cv::circle(img, Point(int(curr_pos.x - 21395654.928438500)+10, int(curr_pos.y - 3417716.812632216)+10), 5, Scalar(0,255,0), -1);
+        // cv::circle(img, Point(int(ref_pos_line[goal_point_ind].x - 21395654.928438500)+10, int(ref_pos_line[goal_point_ind].y - 3417716.812632216)+10), 5, Scalar(0,0,255), -1);
+        // cv::imshow("image",img);
+        // cv::waitKey(1);
         // Calculate the command w
         double theta_goal = atan((curr_pos.y - ref_pos_line[goal_point_ind].y) / (curr_pos.x - ref_pos_line[goal_point_ind].x));
         double alpha = theta_goal - pi * (90.0 - curr_pos.theta) / 180.0;

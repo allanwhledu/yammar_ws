@@ -63,6 +63,8 @@
   <exec_depend>sensor_msgs</exec_depend>
 <build_depend>height_border_msgs</build_depend>
 <exec_depend>height_border_msgs</exec_depend>
+  <build_depend>curve_point_z_msgs</build_depend>
+  <exec_depend>curve_point_z_msgs</exec_depend>
 
 
   <!-- The export tag contains other, unspecified, tags -->
