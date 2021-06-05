@@ -243,7 +243,7 @@ int main(int argc, char **argv){
         // cv::waitKey(1);
         // Calculate the command w
         double theta_goal = atan((curr_pos.y - ref_pos_line[goal_point_ind].y) / (curr_pos.x - ref_pos_line[goal_point_ind].x));
-        double alpha = theta_goal - pi * (90.0 - curr_pos.theta) / 180.0;
+        double alpha = theta_goal - pi * (180.0 - curr_pos.theta) / 180.0;
 
         double dist_goal_curr = sqrt(pow(curr_pos.x - ref_pos_line[goal_point_ind].x,2) + pow(curr_pos.y - ref_pos_line[goal_point_ind].y, 2));
         double w = sin(alpha / dist_goal_curr);
@@ -271,7 +271,7 @@ int main(int argc, char **argv){
         // {
         //     w = -0.5;
         // }
-        int pls = w2pls(1.2*w);
+        int pls = w2pls(1.4*w);
         //  fout<<gps_x_go.data<<" "<<gps_y_gco.data<<" "<<w<<" "<<pls<<" "<<tmpDis<<endl;
         // fout<<gps_x_go.data<<" "<<gps_y_go.data<<endl;
         // fout<<"\r\n"<<endl;
