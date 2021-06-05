@@ -34,7 +34,6 @@
 
 /*
  * Set option for virtual test
- *
  * * */
 const bool isTrueHarvest = true;
 
@@ -42,8 +41,11 @@ vector<float> coeff_uncut_height_mean(4,0);
 int Estimated_height=0;  //估计的高度平均值
 int distance_ema = 0; // use ema filter to smooth the distance
 int angle_int_ema = 0;
-const float border_height_low = 0.4;
-const float border_height_high = 0.5;
+const float border_height_low = 0.40;
+const float border_height_high = 0.50;
+
+const int roi_left_index = 240;
+const int roi_right_index = 420;
 
 
 ros::Publisher height_border_pub;       // publish the height and border
@@ -55,6 +57,12 @@ ros::Publisher height_pub;       //发布作物高度
 image_transport::Publisher image_pub;
 using namespace std;
 using namespace cv;
+
+// record the plane
+//string uncut_plane_file_name = "/home/yangzt/yammar_ws/src/border_height_detect/uncut_plane.txt";
+//ofstream uncut_plane_file;
+//string standard_line_file_name = "/home/yangzt/yammar_ws/src/border_height_detect/standard_line_file.txt";
+//ofstream standard_line_file;
 
 //按y值升序
 struct cmp{
@@ -119,6 +127,8 @@ int main(int argc,char** argv)
     image_transport::ImageTransport transport(nh);
     image_pub= transport.advertise("/border", 1);
 
+//    uncut_plane_file.open(uncut_plane_file_name.c_str());
+//    standard_line_file.open(standard_line_file_name.c_str());
 
 
     //同步接收rgb,depth
@@ -141,9 +151,15 @@ int main(int argc,char** argv)
     visual_status_msg.data = 1;
     for(int i = 0; i < 10; ++i){
         visual_status_pub.publish(visual_status_msg);
-        usleep(10000);
+        usleep(100);
     }
-    ros::spin();
+    while(ros::ok()){
+        ros::spin();
+    }
+
+//    uncut_plane_file.close();
+//    standard_line_file.close();
+
     return 0;
 }
 
@@ -162,6 +178,9 @@ void border_RGBD(const sensor_msgs::ImageConstPtr& rgbimg,const sensor_msgs::Ima
     // Message for path track
     std_msgs::Header height_borderHeader;
     height_border_msgs::height_border heightBorderMsg;
+    heightBorderMsg.header = height_borderHeader;
+    heightBorderMsg.dis_3d = to_string(0);
+    heightBorderMsg.angle_3d = to_string(0);
 
     Mat depth(depth_raw.size(),CV_16UC1);
     for(int row=0;row<rgb.rows;row++)
@@ -173,6 +192,7 @@ void border_RGBD(const sensor_msgs::ImageConstPtr& rgbimg,const sensor_msgs::Ima
             rgb.at<Vec3b>(row, col)[0] = temp[2];
             rgb.at<Vec3b>(row, col)[2] = temp[0];
         }
+
 
     vector<Point2i> inliners_rgb;       //基于颜色获取的导航路径点,二维
     border_rgb(rgb,inliners_rgb);       //基于颜色获取导航路径点方法,主函数入口
@@ -234,14 +254,14 @@ void border_rgb(Mat& rgb, vector<Point2i>& inliners_rgb) {
 
     Binarization = 2 * red - green - blue;//2R-G-B超红模型特征
     int treshod = calHist(Binarization); //计算&绘制 灰度值直方图
-   // imshow("2R_G_B", Binarization);
+    // imshow("2R_G_B", Binarization);
 
     Binarization = Binarization > treshod;//二值化图片,根据灰度值直方图,最后一个波峰附近为合适的阈值(自适应选择阈值)
-   // imshow("Binarization", Binarization);
+    // imshow("Binarization", Binarization);
 
     Mat kernel_close = getStructuringElement(MORPH_ELLIPSE, Size(9, 9));
     morphologyEx(Binarization, close, MORPH_CLOSE, kernel_close);//闭运算,去除小型黑洞，先膨胀，再腐蚀
-   // imshow("Binarization_close", close);
+    // imshow("Binarization_close", close);
 
     //消除左下角黑洞
     removeHole(close);
@@ -273,7 +293,7 @@ void border_rgb(Mat& rgb, vector<Point2i>& inliners_rgb) {
         bool regionValid = ifRegionValid(ROIimg,200,400,colsROI-100,colsROI+50);
 
         remove_contour(ROIimg,200,400,colsROI-100,colsROI+50);
-     //   imshow("removeVerandHori", ROIimg);
+        //   imshow("removeVerandHori", ROIimg);
 
 
         vector<Point2i> linepoints;
@@ -304,8 +324,8 @@ void border_rgb(Mat& rgb, vector<Point2i>& inliners_rgb) {
         }
         else inliners_rgb.clear();
     }
-  //  imshow("result", rgb_clone);
-  //  waitKey(1);
+    //  imshow("result", rgb_clone);
+    //  waitKey(1);
 }
 
 //计算直方图，统计各灰度级像素个数
@@ -473,7 +493,7 @@ int chooseCenterROI(Mat& close)
         for (int j = 0; j < close.rows; j++)
         {
             if (int(close.at<uchar>(j, i))==0)
-            count++;
+                count++;
         }
         if (count>= 450) //根据安装位置可进行调整
         {
@@ -576,11 +596,12 @@ void border_depth(Mat& rgb, Mat& depth,vector<Point2i>& inliners_depth_2D,vector
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloudin (new pcl::PointCloud<pcl::PointXYZRGB>);
     transform_to_pointcloud(rgb,depth,cloudin);   //恢复三维结构
 
+
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr plane_uncut(new pcl::PointCloud<pcl::PointXYZRGB>);
     uncutRegion_search(cloudin,plane_uncut);  //查找未收割区域
 
-//    if(ifPlane_uncut_valid(rgb,plane_uncut))
-    if(true)
+    if(ifPlane_uncut_valid(rgb,plane_uncut))
+//    if(true)
     {
         vector<Point3f> pointimg_3d;
         vector<Point2i> pointimg;
@@ -626,7 +647,7 @@ void transform_to_pointcloud(Mat& rgb,Mat& depth,pcl::PointCloud<pcl::PointXYZRG
     // Choose left half or right half
     if(isTrueHarvest){
         for(int row=0;row<rgb.rows;row+=2)  //row,col这里做了稀疏化,就不用滤波稀疏了
-            for(int col=0;col< 400;col+=2)  //这里只取了深度图像的左边一半的点云,减少计算量,
+            for(int col=0;col< roi_right_index;col+=2)  //这里只取了深度图像的左边一半的点云,减少计算量,
 //            for(int col=0;col<rgb.cols;col+=2)
             {
                 float z = float(depth.at<ushort>(row,col))/1000;
@@ -690,6 +711,8 @@ void uncutRegion_search(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloudin,pcl::Poi
 //            plane_uncut->push_back(cloudin->points[index]);//未收割作物平面
 //        }
 //    }
+    // confirm the error
+    if(cloudin->size() <= 0) return;
 
 //局域平面分割模型分割未收割平面
     pcl::PointCloud<pcl::PointXYZRGB>::Ptr cloud(new pcl::PointCloud<pcl::PointXYZRGB>);
@@ -728,6 +751,8 @@ void uncutRegion_search(pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloudin,pcl::Poi
 //判断未收割区域是否正确,如果正确一定靠左边,可视化project_plane调整相应参数
 bool ifPlane_uncut_valid(Mat& rgb,pcl::PointCloud<pcl::PointXYZRGB>::Ptr& plane_uncut)
 {
+//    ROS_INFO_STREAM("this 01");
+
     Mat project_plane( rgb.size(), CV_8UC1, Scalar(0));
 
     // True harvest, need not change
@@ -740,15 +765,16 @@ bool ifPlane_uncut_valid(Mat& rgb,pcl::PointCloud<pcl::PointXYZRGB>::Ptr& plane_
         {
             row = 615.312 * plane_uncut->points[i].y  / plane_uncut->points[i].z  + 232.171;
             col = 615.372 * plane_uncut->points[i].x  / plane_uncut->points[i].z  + 323.844;
-            if(rgb.cols/2+50 - col < 5) count_right_roi_1++;
-            if(rgb.cols/2+50 - col < 30) count_right_roi_2++;
-            if(col < 50) count_left_roi++;
+            if(roi_right_index - col < 5) count_right_roi_1++;
+            if(roi_right_index - col < 30) count_right_roi_2++;
+            if(20 <= col && col < 200) count_left_roi++;
             project_plane.at<uchar>(row,col) = 255;
         }
 //    imshow("project",project_plane);
 //    cout<<plane_uncut->points.size() <<" "<<count_left_roi<<" "<<count_right_roi_1<<" "<<count_right_roi_2<<endl;
 //    阈值参数细调,是否可以自适应调整
 //    &&  count_right_roi_2 > 150 识别边界
+//        cout<<count_left_roi<<" "<<count_right_roi_1<<" "<<count_right_roi_2<<" "<<plane_uncut->points.size()<<endl;
         if(count_right_roi_1 > 10 || count_right_roi_2 > 150 || plane_uncut->points.size()  < 4000) return false;
         else if(count_left_roi  > 500) return true;
         else return false;
@@ -775,8 +801,10 @@ bool ifPlane_uncut_valid(Mat& rgb,pcl::PointCloud<pcl::PointXYZRGB>::Ptr& plane_
 
 //二维三维分界线点初步聚类
 Eigen::VectorXf borderpoints_clusterd(Mat& rgb, Mat& depth,pcl::PointCloud<pcl::PointXYZRGB>::Ptr& cloudin,
-                                     pcl::PointCloud<pcl::PointXYZRGB>::Ptr& plane_uncut,vector<Point2i>& pointimg,vector<Point3f>& pointimg_3d)
+                                      pcl::PointCloud<pcl::PointXYZRGB>::Ptr& plane_uncut,vector<Point2i>& pointimg,vector<Point3f>& pointimg_3d)
 {
+    Eigen::VectorXf coeff_uncut;
+    if(plane_uncut->size() <= 0) return coeff_uncut;
     //基准面平面拟合,(基准面可以选择未收割平面实时估计,也可以安装好相机后以地面为基准面,在程序中写定参数)
     vector<int> inliers_uncut;
     pcl::SampleConsensusModelPlane<pcl::PointXYZRGB>::Ptr model_uncut(new pcl::SampleConsensusModelPlane<pcl::PointXYZRGB>(plane_uncut));
@@ -784,7 +812,7 @@ Eigen::VectorXf borderpoints_clusterd(Mat& rgb, Mat& depth,pcl::PointCloud<pcl::
     ransac_uncut.setDistanceThreshold(0.01);
     ransac_uncut.computeModel();
     ransac_uncut.getInliers(inliers_uncut);
-    Eigen::VectorXf coeff_uncut;
+
     ransac_uncut.getModelCoefficients(coeff_uncut);
     pcl::copyPointCloud(*plane_uncut,inliers_uncut,*plane_uncut);
 
@@ -801,6 +829,7 @@ Eigen::VectorXf borderpoints_clusterd(Mat& rgb, Mat& depth,pcl::PointCloud<pcl::
     coeff_uncut_height_mean[2]= coeff_uncut_height_mean[2]==0 ? coeff_uncut[2]:(coeff_uncut[2]*0.125+coeff_uncut_height_mean[2]*0.875);
     coeff_uncut_height_mean[3]= coeff_uncut_height_mean[3]==0 ? coeff_uncut[3]:(coeff_uncut[3]*0.125+coeff_uncut_height_mean[3]*0.875);
     //cout<<coeff_uncut[0]<<" "<<coeff_uncut[1]<<" "<<coeff_uncut[2]<<" "<<coeff_uncut[3]<<endl;
+//    uncut_plane_file<<coeff_uncut[0]<<" "<<coeff_uncut[1]<<" "<<coeff_uncut[2]<<" "<<coeff_uncut[3]<<endl;
 
     Point3f  pointdepth_3d; //分界线点的三维坐标
     Point2i  pointdepth;    //分界线点的二维坐标
@@ -808,23 +837,27 @@ Eigen::VectorXf borderpoints_clusterd(Mat& rgb, Mat& depth,pcl::PointCloud<pcl::
 //    float A=coeff_uncut[0],B=coeff_uncut[1],C=coeff_uncut[2],D=coeff_uncut[3];  //基准面系数
 
     // change to ground;
-    const float  A =-0.00292031, B=-0.997347945,	C=-0.035490671,D=2.620329934;    //20210605,地面为基准面
+    const float  A =-0.00292031, B=-0.997347945,	C=-0.035490671,D=2.620329934;    //20210605,地面为基准面 from lingang
+//    const float  A =0.00805, B=-0.98256,	C=-0.10004,D=2.24256;    //20210605,Gaoyou uncut plane fit
 
 
     pcl::PointXYZRGB Point;
 
     // draw the rectangle
-    cv::rectangle(rgb, cv::Point(200, 250), cv::Point(420, rgb.rows - 1), Scalar(0,0,255),1,1,0);
+    cv::rectangle(rgb, cv::Point(roi_left_index, 250), cv::Point(roi_right_index, rgb.rows - 1), Scalar(0,0,255),1,1,0);
+
 
     if(isTrueHarvest){
-        for(int row=200;row< rgb.rows;row+=2)  //ROI遍历范围
-            for(int col=200;col<420;col++ )
+        for(int row=170;row< rgb.rows - 30;row++)  //ROI遍历范围
+            for(int col=roi_left_index;col<roi_right_index;col++ )
             {
+
                 float z = float(depth.at<ushort>(row,col))/1000;
                 float y = (row - 232.171) * z / 615.312;
                 float x = (col - 323.844) * z / 615.372;
 
                 float distance=abs(A*x+B*y+C*z+D);
+
                 if(distance<border_height_high && distance>border_height_low) //距离阈值判断
                 {
                     pointdepth.x=col;
@@ -890,7 +923,7 @@ Eigen::VectorXf borderpoints_clusterd(Mat& rgb, Mat& depth,pcl::PointCloud<pcl::
 }
 
 void removeOutlier_depth_2D_3D(vector<Point2i>& inData_depth_2D, vector<Point2i> &outData_depth_2D, int radius, int k,
-                            vector<Point3f>& inData_depth_3D, vector<Point3f>& outData_depth_3D)
+                               vector<Point3f>& inData_depth_3D, vector<Point3f>& outData_depth_3D)
 {
     vector<bool> flag(inData_depth_2D.size(),false);  //用于判断哪些点是内点,然后处理三维路径点
     outData_depth_2D.clear();
@@ -1058,9 +1091,9 @@ void curve_detect(Mat& rgb,Mat& depth, vector<Point2i>& outData_fusion_kdtree,cu
     if (outData_fusion_kdtree.size() > 20) {
         int path_points_size = outData_fusion_kdtree.size();
         vector<Point2i> outData_fusion_kdtree_before(outData_fusion_kdtree.begin() + path_points_size / 2,
-                                           outData_fusion_kdtree.end());                           //路径点后半段
+                                                     outData_fusion_kdtree.end());                           //路径点后半段
         vector<Point2i> outData_fusion_kdtree_last(outData_fusion_kdtree.begin(),
-                                             outData_fusion_kdtree.begin() + path_points_size / 2);//路径点前半段
+                                                   outData_fusion_kdtree.begin() + path_points_size / 2);//路径点前半段
 
         Vec4f line_para_last;
         fitLine(outData_fusion_kdtree_last, line_para_last, cv::DIST_L2, 0, 1e-2, 1e-2);
@@ -1099,7 +1132,7 @@ void curve_detect(Mat& rgb,Mat& depth, vector<Point2i>& outData_fusion_kdtree,cu
             Point2i point_curve;    //转弯点二维坐标
             point_curve.y =(int)
                     ((-k_before * point0_last.y + k_before * k_last * point0_last.x + k_last * point0_before.y -
-                     k_before * k_last * point0_before.x) / (k_last - k_before));
+                      k_before * k_last * point0_before.x) / (k_last - k_before));
             point_curve.x = (int) ((point_curve.y - point0_before.y + k_before * point0_before.x) / k_before);
             circle(rgb, point_curve, 10, Scalar(255, 0, 0), -1);
 
@@ -1234,11 +1267,15 @@ void border_offset(Mat& rgb,vector<Point2i>& pointimg,vector<Point3f>& pointimg_
         Vec6f line_para_3d; //三维空间点直线拟合
         fitLine(pointimg_3d, line_para_3d, cv::DIST_WELSCH, 0, 1e-2, 1e-2);
         //cout<<line_para_3d[0]<<" "<<line_para_3d[1]<<" "<<line_para_3d[2]<<" "<<line_para_3d[3]<<" "<<line_para_3d[4]<<" "<<line_para_3d[5]<<endl;
+//        standard_line_file<<line_para_3d[0]<<" "<<line_para_3d[1]<<" "<<line_para_3d[2]<<" "<<line_para_3d[3]<<" "<<line_para_3d[4]<<" "<<line_para_3d[5]<<endl;
 
         // For virtual harvest, should adjust the standard line here?
 
-        double Standard_line_fun_0 = 0.00251082, Standard_line_fun_1 =-0.127729, Standard_line_fun_2= 0.991806,  //分界线标准线
-               Standard_line_fun_3= 0.451316,Standard_line_fun_4= 1.08251, Standard_line_fun_5=5.69316;
+//        double Standard_line_fun_0 = 0.00251082, Standard_line_fun_1 =-0.127729, Standard_line_fun_2= 0.991806,  //分界线标准线
+//        Standard_line_fun_3= 0.451316,Standard_line_fun_4= 1.08251, Standard_line_fun_5=5.69316;
+        // For gaoyou experiment
+        double Standard_line_fun_0 = 0.11835, Standard_line_fun_1 =-0.03563, Standard_line_fun_2= 0.99155,  //分界线标准线in Gaoyou
+        Standard_line_fun_3= -0.04115,Standard_line_fun_4= 2.28176, Standard_line_fun_5=9.41604;
 
 
         if(line_para_3d[2]<0)  //调整矢量方向一致,避免余弦角计算1变179问题
@@ -1254,6 +1291,7 @@ void border_offset(Mat& rgb,vector<Point2i>& pointimg,vector<Point3f>& pointimg_
         if(!left) arc_cosvalue_inangle=-arc_cosvalue_inangle;
 
         double A_standard_plane=0.04488149,B_standard_plane=-0.986913152,C_standard_plane=-0.153237743,D_standard_plane=1.906296245;  //该平面为偏差基准面
+//        double A_standard_plane=0.00805,B_standard_plane=-0.98256,C_standard_plane=-0.1004,D_standard_plane=2.24256;  //border_offset_in Gaoyou
 
         Point3f begin_standard = Point3f(Standard_line_fun_3, Standard_line_fun_4, Standard_line_fun_5);
         Point3f end_standard = Point3f(Standard_line_fun_3+Standard_line_fun_0, Standard_line_fun_4+Standard_line_fun_1, Standard_line_fun_5+Standard_line_fun_2);
@@ -1356,23 +1394,23 @@ void border_offset(Mat& rgb,vector<Point2i>& pointimg,vector<Point3f>& pointimg_
 
 //绘制方向箭头
 void drawArrow(cv::Mat& img, cv::Point pStart, cv::Point pEnd, int len, int alpha,
-     cv::Scalar& color, int thickness, int lineType)
- {
-     const double PI = 3.1415926;
-     Point arrow;
+               cv::Scalar& color, int thickness, int lineType)
+{
+    const double PI = 3.1415926;
+    Point arrow;
     //计算 θ 角（最简单的一种情况在下面图示中已经展示，关键在于 atan2 函数，详情见下面）
-     double angle = atan2((double)(pStart.y - pEnd.y), (double)(pStart.x - pEnd.x));
-     line(img, pStart, pEnd, color, thickness, lineType);
-     //计算箭角边的另一端的端点位置（上面的还是下面的要看箭头的指向，也就是pStart和pEnd的位置）
-     arrow.x = pEnd.x + len * cos(angle + PI * alpha / 180);
-     arrow.y = pEnd.y + len * sin(angle + PI * alpha / 180);
-     line(img, pEnd, arrow, color, thickness, lineType);
-     arrow.x = pEnd.x + len * cos(angle - PI * alpha / 180);
-     arrow.y = pEnd.y + len * sin(angle - PI * alpha / 180);
-     line(img, pEnd, arrow, color, thickness, lineType);
- }
+    double angle = atan2((double)(pStart.y - pEnd.y), (double)(pStart.x - pEnd.x));
+    line(img, pStart, pEnd, color, thickness, lineType);
+    //计算箭角边的另一端的端点位置（上面的还是下面的要看箭头的指向，也就是pStart和pEnd的位置）
+    arrow.x = pEnd.x + len * cos(angle + PI * alpha / 180);
+    arrow.y = pEnd.y + len * sin(angle + PI * alpha / 180);
+    line(img, pEnd, arrow, color, thickness, lineType);
+    arrow.x = pEnd.x + len * cos(angle - PI * alpha / 180);
+    arrow.y = pEnd.y + len * sin(angle - PI * alpha / 180);
+    line(img, pEnd, arrow, color, thickness, lineType);
+}
 
- //计算众数,出现次数最多的数
+//计算众数,出现次数最多的数
 float max_num(vector<float> height)
 {
     int count =1;
