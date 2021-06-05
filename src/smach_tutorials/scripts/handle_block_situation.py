@@ -454,10 +454,10 @@ class Car_speed_monitor(smach.State):
         '''
         motor_speed_dict = {
             # todo 增加1-4的减速比（3 4 2 1）
-            'M1': 324 * 10,
-            'M2': 187 * 15,
-            'M3': 44 * 60,
-            'M4': 467 * 5,
+            'M1': 44 / 1,
+            'M2': 467 / 1,
+            'M3': 187 / 1,
+            'M4': 324 / 1,
             'M5': 1324 / 1.4,
             'M6': None,
             'M7': 487 / 0.25,
@@ -473,9 +473,8 @@ class Car_speed_monitor(smach.State):
         # m4_ta = fhRatio * min(187.0, min(39.16 * fhCof * msg.data + 52.47, 39.16 * 3.0 * msg.data + 90.07))
 
         # 以下为额定转速
-        # motor_target_speed[0] = motor_speed_dict['M3']
-	motor_target_speed[0] = reelRatio * min(50.0, min(21.23 * reelCof * car_speed_now + 12.3, 21.23 * 1.0 * car_speed_now + 21.23))
-        motor_target_speed[1] = motor_speed_dict['M4']
+        motor_target_speed[0] = 1000  # motor_speed_dict['M3']
+        motor_target_speed[1] = motor_speed_dict['M3']
         motor_target_speed[2] = motor_speed_dict['M2']
         motor_target_speed[3] = motor_speed_dict['M1']
         motor_target_speed[4] = motor_speed_dict['M5']
@@ -497,7 +496,7 @@ class Car_speed_monitor(smach.State):
         #motor_target_speed[9] = 500
 
         for index in range(len(motor_target_speed)):
-            motor_target_speed[index] = motor_target_speed[index] * 0.75
+            motor_target_speed[index] = motor_target_speed[index] / 2
 
         for index in range(len(motor_target_speed)):
             if motor_target_speed[index] > 3000:

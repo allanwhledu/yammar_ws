@@ -228,7 +228,7 @@ int main(int argc, char**argv)
 
     // read the in matrix of cameras to distort
     // todo: change as IPC
-    string camera_cali = "/home/yangzt/catkin_ws/src/multicamera/calib.txt";
+    string camera_cali = "/home/agv/yammar_ws/src/multicamera/calib.txt";
     vector<Mat> intrinsic_matrix(4);
     vector<Mat> distortion_coeffs(4);
     readInstric(camera_cali, intrinsic_matrix, distortion_coeffs);
