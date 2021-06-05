@@ -23,7 +23,7 @@ geometry_msgs::Pose2D curr_pos;
 double tmpDis = 0;
 
 // et front view distance
-double front_view_dist = 3;
+double front_view_dist = 4;
 
 
 //go
@@ -42,7 +42,7 @@ void headgocallback(const std_msgs::Float64::ConstPtr &msg)
 
 // Update the current pose
 void curr_pos_cb(const geometry_msgs::Pose2D::ConstPtr &msg){
-    curr_pos.x = msg->x;
+    curr_pos.x = msg->x ;
     curr_pos.y = msg->y;
     curr_pos.theta = msg->theta;
 }
@@ -75,41 +75,41 @@ int find_space(const string& str){
 void find_nearest_point(const vector<geometry_msgs::Pose2D>& ref_pose_line, const geometry_msgs::Pose2D curr_pose,int& ind_nearest_point);
 int find_goal_point(const vector<geometry_msgs::Pose2D>& ref_pose_line, const geometry_msgs::Pose2D curr_pose, const int ind_nearest_point);
 
-int find_goal_point(vector<double>&vec, double x, double y, int prevInd){
-    int len = vec.size();
-    int i = prevInd;
-    cout<<"<<<<<   prev    <<<<<<<<:"<<i<<endl;
-    tmpDis = sqrt( (vec[i]-x)*(vec[i]-x)+ (vec[i+1]-y)*(vec[i+1] -y) );
-    //前视距离
-    while(tmpDis > 4)
-    {
-        cout<<"tmpDis>1!!"<<endl;
-        for(int n = 0;n<len;n=n+2){
+// int find_goal_point(vector<double>&vec, double x, double y, int prevInd){
+//     int len = vec.size();
+//     int i = prevInd;
+//     cout<<"<<<<<   prev    <<<<<<<<:"<<i<<endl;
+//     tmpDis = sqrt( (vec[i]-x)*(vec[i]-x)+ (vec[i+1]-y)*(vec[i+1] -y) );
+//     //前视距离
+//     while(tmpDis > 4)
+//     {
+//         cout<<"tmpDis>1!!"<<endl;
+//         for(int n = 0;n<len;n=n+2){
 
-            double  tmpDis_last = sqrt((vec[n] - x) * (vec[n] - x) + (vec[n + 1] - y) * (vec[n + 1] - y));
-            double  tmpDis_curr = sqrt((vec[n+2] - x) * (vec[n+2] - x) + (vec[n + 3] - y) * (vec[n + 3] - y));
-            cout<<"find the fuck point!!"<<endl;
-            if (tmpDis_curr>tmpDis_last)
-            {
-                i = n;
-                break;
-            }
-        }
-    }
+//             double  tmpDis_last = sqrt((vec[n] - x) * (vec[n] - x) + (vec[n + 1] - y) * (vec[n + 1] - y));
+//             double  tmpDis_curr = sqrt((vec[n+2] - x) * (vec[n+2] - x) + (vec[n + 3] - y) * (vec[n + 3] - y));
+//             cout<<"find the fuck point!!"<<endl;
+//             if (tmpDis_curr>tmpDis_last)
+//             {
+//                 i = n;
+//                 break;
+//             }
+//         }
+//     }
 
-    while(tmpDis < 4)
-    {
-        tmpDis = sqrt((vec[i] - x) * (vec[i] - x) + (vec[i + 1] - y) * (vec[i + 1] - y));
-        i += 2;
-    }
-    double x1 = x - 20727639.100297771;
-    double y1 = y - 3656080.994595551;
-    cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<:"<<vec[i]- 20727639.100297771<<"  "<<vec[i+1]- 3656080.994595551<<endl;
-    cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<:"<<x1<<"  "<<y1<<endl;
-    cout<<"<<<<<<<<<<<<<<DIS:"<<tmpDis<<endl;
-    cout<<"<<<<<   curr    <<<<<<<<:"<<i<<endl;
-    return i;
-}
+//     while(tmpDis < 4)
+//     {
+//         tmpDis = sqrt((vec[i] - x) * (vec[i] - x) + (vec[i + 1] - y) * (vec[i + 1] - y));
+//         i += 2;
+//     }
+//     double x1 = x - 20727599.584582306;
+//     double y1 = y - 3655971.238907663;
+//     cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<:"<<vec[i]- 20727599.584582306<<"  "<<vec[i+1]- 3655971.238907663<<endl;
+//     cout<<"<<<<<<<<<<<<<<<<<<<<<<<<<<<<:"<<x1<<"  "<<y1<<endl;
+//     cout<<"<<<<<<<<<<<<<<DIS:"<<tmpDis<<endl;
+//     cout<<"<<<<<   curr    <<<<<<<<:"<<i<<endl;
+//     return i;
+// }
 
 int w2pls(double W)
 {
@@ -204,7 +204,7 @@ int main(int argc, char **argv){
         V.push_back(d);//将数据压入堆栈。//
     readFile.close();
 
-    // Generate an img to Show;
+    // // Generate an img to Show;
     cv::Mat img = Mat::zeros(480,640, CV_8UC3);
     img = Scalar(255, 255, 255);
 
@@ -237,15 +237,18 @@ int main(int argc, char **argv){
         int goal_point_ind = find_goal_point(ref_pos_line, curr_pos, curr_nearest_point);
         cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<goal_point_ind:"<<goal_point_ind<<endl;
  
-        // cv::circle(img, Point(int(curr_pos.x - 21395654.928438500)+10, int(curr_pos.y - 3417716.812632216)+10), 5, Scalar(0,255,0), -1);
-        // cv::circle(img, Point(int(ref_pos_line[goal_point_ind].x - 21395654.928438500)+10, int(ref_pos_line[goal_point_ind].y - 3417716.812632216)+10), 5, Scalar(0,0,255), -1);
-        // cv::imshow("image",img);
-        // cv::waitKey(1);
-        // Calculate the command w
+        cv::circle(img, Point(int(curr_pos.x - 20727600.534582306)*5+320, int(curr_pos.y - 3655956.798907663)*5+240), 5, Scalar(0,255,0), -1);
+        cv::circle(img, Point(int(ref_pos_line[goal_point_ind].x -  20727600.534582306)*5+320, int(ref_pos_line[goal_point_ind].y - 3655956.798907663)*5+240), 5, Scalar(0,0,255), -1);
+        cv::imshow("image",img);
+        cv::waitKey(1);
+        //Calculate the command w
         double theta_goal = atan((curr_pos.y - ref_pos_line[goal_point_ind].y) / (curr_pos.x - ref_pos_line[goal_point_ind].x));
-        double alpha = theta_goal - pi * (180.0 - curr_pos.theta) / 180.0;
+       
+        double alpha = theta_goal - pi * (90 - curr_pos.theta) / 180.0;
 
         double dist_goal_curr = sqrt(pow(curr_pos.x - ref_pos_line[goal_point_ind].x,2) + pow(curr_pos.y - ref_pos_line[goal_point_ind].y, 2));
+        cout<<"<<<<<<<<><<<<<<<<<<dist_goal_curr:"<<dist_goal_curr<<endl;
+
         double w = sin(alpha / dist_goal_curr);
  
 
@@ -297,8 +300,13 @@ void find_nearest_point(const vector<geometry_msgs::Pose2D>& ref_pose_line, cons
     if(ind_nearest_point < 0 || ind_nearest_point >= ref_pose_line.size()) return;
     // search the nearest point;
     for(int i = ind_nearest_point; i < ref_pose_line.size() - 1; ++i){
-        double curr_dis = sqrt(pow(curr_pose.x - ref_pose_line[i].x, 2) + pow(curr_pose.x - ref_pose_line[i].x, 2));
-        double next_dis = sqrt(pow(curr_pose.x - ref_pose_line[i + 1].x, 2) + pow(curr_pose.x - ref_pose_line[i + 1].x, 2));
+        double curr_dis = sqrt(pow(curr_pose.x - ref_pose_line[i].x, 2) + pow(curr_pose.y - ref_pose_line[i].y, 2));
+        double next_dis = sqrt(pow(curr_pose.x - ref_pose_line[i + 1].x, 2) + pow(curr_pose.y - ref_pose_line[i + 1].y, 2));
+        // cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<curr_dis:"<<curr_dis<<endl;
+        // cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<next_dis:"<<next_dis<<endl;
+        // cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<shabi:"<<ref_pose_line[i].x<<endl;
+        // cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>><<<shabi2:"<<curr_pose.x<<endl;
+
         if(curr_dis < next_dis){
             ind_nearest_point = i;
             return;
@@ -309,7 +317,7 @@ int find_goal_point(const vector<geometry_msgs::Pose2D>& ref_pose_line, const ge
     // search the goal point
     int goal_point_ind = ind_nearest_point;
     for (int i = ind_nearest_point; i < ref_pose_line.size(); ++i) {
-        double curr_dis = sqrt(pow(curr_pose.x - ref_pose_line[i].x, 2) + pow(curr_pose.x - ref_pose_line[i].x, 2));
+        double curr_dis = sqrt(pow(curr_pose.x - ref_pose_line[i].x, 2) + pow(curr_pose.y - ref_pose_line[i].y, 2));
         if(curr_dis > front_view_dist){
             goal_point_ind = i;
             break;
