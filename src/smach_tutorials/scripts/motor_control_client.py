@@ -473,8 +473,8 @@ class Car_speed_monitor(smach.State):
         # m4_ta = fhRatio * min(187.0, min(39.16 * fhCof * msg.data + 52.47, 39.16 * 3.0 * msg.data + 90.07))
 
         # 以下为额定转速
-        # motor_target_speed[0] = motor_speed_dict['M3']
-	motor_target_speed[0] = reelRatio * min(50.0, min(21.23 * reelCof * car_speed_now + 12.3, 21.23 * 1.0 * car_speed_now + 21.23))
+
+        motor_target_speed[0] = 1500 + 100 * car_speed_now
         motor_target_speed[1] = motor_speed_dict['M4']
         motor_target_speed[2] = motor_speed_dict['M2']
         motor_target_speed[3] = motor_speed_dict['M1']
@@ -485,16 +485,16 @@ class Car_speed_monitor(smach.State):
         motor_target_speed[8] = motor_speed_dict['M9']
         motor_target_speed[9] = motor_speed_dict['M10']
 
-        #motor_target_speed[0] = 1500 + 1000 * car_speed_now  # motor_speed_dict['M3']
-        #motor_target_speed[1] = 500
-        #motor_target_speed[2] = 500
-        #motor_target_speed[3] = 800
-        #motor_target_speed[4] = 500
-        #motor_target_speed[5] = 300
-        #motor_target_speed[6] = 500
-        #motor_target_speed[7] = 200
-        #motor_target_speed[8] = 500
-        #motor_target_speed[9] = 500
+        # motor_target_speed[0] = 1500 + 1000 * car_speed_now  # motor_speed_dict['M3']
+        # motor_target_speed[1] = 500
+        # motor_target_speed[2] = 500
+        # motor_target_speed[3] = 800
+        # motor_target_speed[4] = 500
+        # motor_target_speed[5] = 300
+        # motor_target_speed[6] = 500
+        # motor_target_speed[7] = 200
+        # motor_target_speed[8] = 500
+        # motor_target_speed[9] = 500
 
         for index in range(len(motor_target_speed)):
             motor_target_speed[index] = motor_target_speed[index] * 0.75
@@ -522,9 +522,9 @@ class Car_speed_monitor(smach.State):
             result = 'start'
         elif car_speed_now != -1000 and car_speed_last == -1000:
             result = 'start'
-        elif car_speed_now > car_speed_last:
+        elif car_speed_now - car_speed_last > 0.2:
             result = 'speedup'
-        elif car_speed_now < car_speed_last:
+        elif car_speed_now - car_speed_last < -0.2:
             result = 'speeddown'
 
         # elif car_speed_now < car_speed_last and car_speed_last != 0:
