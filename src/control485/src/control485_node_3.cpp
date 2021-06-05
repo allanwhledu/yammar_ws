@@ -53,10 +53,10 @@ bool rs485_busy = false;
 
 // 初始化publisher
 ros::Publisher* pub_modified_car_speed;
-ros::Publisher* pub_motor1_speed;
-ros::Publisher* pub_motor2_speed;
-ros::Publisher* pub_motor3_speed;
-ros::Publisher* pub_motor4_speed;
+ros::Publisher* pub_m3_speed;
+ros::Publisher* pub_m4_speed;
+ros::Publisher* pub_m2_speed;
+ros::Publisher* pub_m1_speed;
 ros::Publisher* pub_motor_controlled;
 
 
@@ -92,22 +92,22 @@ void *read_motor_speed_background(void *) {
             realSpeed_reel = motorReadSpeed(motor_id_reel);
             std_msgs::Float32 reel_speed;
             reel_speed.data = realSpeed_reel;
-            pub_motor1_speed->publish(reel_speed);
+            pub_m3_speed->publish(reel_speed);
 
             realSpeed_cb = motorReadSpeed(motor_id_cb);
             std_msgs::Float32 cb_speed;
             cb_speed.data = realSpeed_cb;
-            pub_motor2_speed->publish(cb_speed);
+            pub_m4_speed->publish(cb_speed);
 
             realSpeed_pf = motorReadSpeed(motor_id_pf);
             std_msgs::Float32 pf_speed;
             pf_speed.data = realSpeed_pf;
-            pub_motor3_speed->publish(pf_speed);
+            pub_m2_speed->publish(pf_speed);
 
 //            realSpeed_fh = motorReadSpeed(motor_id_fh);
 //            std_msgs::Float32 fh_speed;
 //            fh_speed.data = realSpeed_fh;
-//            pub_motor4_speed->publish(fh_speed);
+//            pub_m1_speed->publish(fh_speed);
 
             rs485_busy = false;
             usleep(100000);  // 下一次轮训间隔100ms
@@ -162,7 +162,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
                     ROS_INFO_STREAM("pub reel speed.");
                     std_msgs::Float32 reel_speed;
                     reel_speed.data = actual_speed;
-                    pub_motor1_speed->publish(reel_speed);
+                    pub_m3_speed->publish(reel_speed);
                     break;
                 }
                 case 9:
@@ -170,7 +170,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
                     ROS_INFO_STREAM("pub cb speed.");
                     std_msgs::Float32 cb_speed;
                     cb_speed.data = actual_speed;
-                    pub_motor2_speed->publish(cb_speed);
+                    pub_m4_speed->publish(cb_speed);
                     break;
                 }
                 case 10:
@@ -178,7 +178,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
                     ROS_INFO_STREAM("pub pf speed.");
                     std_msgs::Float32 pf_speed;
                     pf_speed.data = actual_speed;
-                    pub_motor3_speed->publish(pf_speed);
+                    pub_m2_speed->publish(pf_speed);
                     break;
                 }
 //                case 1:
@@ -186,7 +186,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
 //                    ROS_INFO_STREAM("pub fh speed.");
 //                    std_msgs::Float32 fh_speed;
 //                    fh_speed.data = actual_speed;
-//                    pub_motor4_speed->publish(fh_speed);
+//                    pub_m1_speed->publish(fh_speed);
 //                    break;
 //                }
             }
@@ -203,7 +203,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
                     ROS_INFO_STREAM("pub reel speed.");
                     std_msgs::Float32 reel_speed;
                     reel_speed.data = actual_speed;
-                    pub_motor1_speed->publish(reel_speed);
+                    pub_m3_speed->publish(reel_speed);
                     break;
                 }
                 case 9:
@@ -211,7 +211,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
                     ROS_INFO_STREAM("pub cb speed.");
                     std_msgs::Float32 cb_speed;
                     cb_speed.data = actual_speed;
-                    pub_motor2_speed->publish(cb_speed);
+                    pub_m4_speed->publish(cb_speed);
                     break;
                 }
                 case 10:
@@ -219,7 +219,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
                     ROS_INFO_STREAM("pub pf speed.");
                     std_msgs::Float32 pf_speed;
                     pf_speed.data = actual_speed;
-                    pub_motor3_speed->publish(pf_speed);
+                    pub_m2_speed->publish(pf_speed);
                     break;
                 }
 //                case 1:
@@ -227,7 +227,7 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
 //                    ROS_INFO_STREAM("pub fh speed.");
 //                    std_msgs::Float32 fh_speed;
 //                    fh_speed.data = actual_speed;
-//                    pub_motor4_speed->publish(fh_speed);
+//                    pub_m1_speed->publish(fh_speed);
 //                    break;
 //                }
             }
@@ -295,12 +295,12 @@ void motorInit(void)
 
     ROS_WARN_STREAM("init cbmotor...");
     motorSetModbus(cbMotor,1);
-    motorSetDirection(cbMotor,1);//正转
+    motorSetDirection(cbMotor,2);//正转
 //    motorSetSpeed(cbMotor,0);
 
     ROS_WARN_STREAM("init pfmotor...");
     motorSetModbus(pfMotor,1);
-    motorSetDirection(pfMotor,1);//正转
+    motorSetDirection(pfMotor,2);//正转
 //    motorSetSpeed(pfMotor,0);
 
 //    ROS_WARN_STREAM("init fhmotor...");
@@ -389,16 +389,16 @@ int main (int argc, char **argv)
     pub_modified_car_speed = &pub_;
 
     pub1_ = n_.advertise<std_msgs::Float32>("motor_11_speed", 1);
-    pub_motor1_speed = &pub1_;
+    pub_m3_speed = &pub1_;
 
     pub2_ = n_.advertise<std_msgs::Float32>("motor_9_speed", 1);
-    pub_motor2_speed = &pub2_;
+    pub_m4_speed = &pub2_;
 
     pub3_ = n_.advertise<std_msgs::Float32>("motor_10_speed", 1);
-    pub_motor3_speed = &pub3_;
+    pub_m2_speed = &pub3_;
 
 //    pub4_ = n_.advertise<std_msgs::Float32>("motor_1_speed", 1);
-//    pub_motor4_speed = &pub4_;
+//    pub_m1_speed = &pub4_;
 
 //    pub5_ = n_.advertise<std_msgs::Int16>("motor_controlled", 1);
 //    pub_motor_controlled = &pub5_;

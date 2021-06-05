@@ -46,7 +46,7 @@ if __name__ == '__main__':
     # cb_speed = np.delete(cb_speed, (1666, 1915, 2154), 0)
     # cb_speed = np.delete(cb_speed, 656, 0)
 
-    draw_what = 'current'  # speed or current
+    draw_what = 'speed-single'  # speed or current
     if draw_what == 'speed':
         car_speed = np.load("mall_car_speed.npy", allow_pickle=True)
         m1_speed = np.load("mall_m1_speed.npy", allow_pickle=True)
@@ -152,23 +152,23 @@ if __name__ == '__main__':
         # m5_current = remove_end_part(m5_current, how_long=200)
         # m11_current = remove_end_part(m11_current, how_long=200)
 
-        remove_error(cm7290_current)
+        # remove_error(cm7290_current)
 
 
         fig3 = plt.figure(2)
         ax4 = plt.subplot(811)
-        plt.plot(m1_current[..., 0], m1_current[..., 1], 'r', label='m1_current')
+        plt.plot(m3_current[..., 0], m3_current[..., 1], 'r', label='m3_current')
         plt.title('Control motors based on car speed.\nCurrent compared monitoring', fontsize=30)
         plt.xticks(fontsize=20)
         plt.yticks(fontsize=20)
-        # 设置坐标标签字体大小
+        # 设置坐标标签字体大小speed
         ax4.set_ylabel('current A', fontsize=20)
         # 设置图例字体大小
         ax4.legend(fontsize=20, loc='upper right')
         # 设置坐标刻度大小
 
         ax5 = plt.subplot(812)
-        plt.plot(cm7290_current[..., 0], cm7290_current[..., 1], 'g', label='cm7290_current')
+        plt.plot(m4_current[..., 0], m4_current[..., 1], 'g', label='m4_current')
         plt.xticks(fontsize=20)
         plt.yticks(fontsize=20)
         # 设置坐标标签字体大小
@@ -178,7 +178,7 @@ if __name__ == '__main__':
         ax5.legend(fontsize=20, loc='upper right')
 
         ax6 = plt.subplot(813)
-        plt.plot(m3_current[..., 0], m3_current[..., 1], 'b', label='m3_current')
+        plt.plot(m2_current[..., 0], m2_current[..., 1], 'b', label='m2_current')
         plt.xticks(fontsize=20)
         plt.yticks(fontsize=20)
         # 设置坐标标签字体大小
@@ -188,7 +188,7 @@ if __name__ == '__main__':
         ax6.legend(fontsize=20, loc='upper right')
 
         ax7 = plt.subplot(814)
-        plt.plot(m4_current[..., 0], m4_current[..., 1], 'y', label='m4_current')
+        plt.plot(m1_current[..., 0], m1_current[..., 1], 'y', label='m1_current')
         plt.xticks(fontsize=20)
         plt.yticks(fontsize=20)
         # 设置坐标标签字体大小
@@ -208,7 +208,7 @@ if __name__ == '__main__':
         ax8.legend(fontsize=20, loc='upper right')
 
         ax9 = plt.subplot(816)
-        plt.plot(m11_current[..., 0], m11_current[..., 1], 'b', label='m11_current')
+        plt.plot(m7_current[..., 0], m7_current[..., 1], 'b', label='m7_current')
         plt.xticks(fontsize=20)
         plt.yticks(fontsize=20)
         # 设置坐标标签字体大小
@@ -218,7 +218,7 @@ if __name__ == '__main__':
         ax9.legend(fontsize=20, loc='upper right')
 
         ax10 = plt.subplot(817)
-        plt.plot(m2_current[..., 0], m2_current[..., 1], 'r', label='m2_current')
+        plt.plot(m8_current[..., 0], m8_current[..., 1], 'r', label='m8_current')
         plt.xticks(fontsize=20)
         plt.yticks(fontsize=20)
         # 设置坐标标签字体大小
@@ -241,20 +241,46 @@ if __name__ == '__main__':
 
         plt.show()
 
-    elif draw_what == 'current-single':
+    elif draw_what == 'speed-single':
 
-        m2_current = down_sample(m2_current, scale=50)
+        car_speed = np.load("mall_car_speed.npy", allow_pickle=True)
+        m1_speed = np.load("mall_m1_speed.npy", allow_pickle=True)
+        m2_speed = np.load("mall_m2_speed.npy", allow_pickle=True)
+        m3_speed = np.load("mall_m3_speed.npy", allow_pickle=True)
+        m4_speed = np.load("mall_m4_speed.npy", allow_pickle=True)
+        m5_speed = np.load("mall_m5_speed.npy", allow_pickle=True)
+        m11_speed = np.load("mall_m11_speed.npy", allow_pickle=True)
+        m7_speed = np.load("mall_m7_speed.npy", allow_pickle=True)
+        m8_speed = np.load("mall_m8_speed.npy", allow_pickle=True)
+        m9_speed = np.load("mall_m9_speed.npy", allow_pickle=True)
+        m10_speed = np.load("mall_m10_speed.npy", allow_pickle=True)
+
+        xlim = [300,800]
+        # m2_current = down_sample(m2_current, scale=50)
         fig3 = plt.figure(2)
-        ax4 = plt.subplot(111)
-        plt.plot(m6_current[..., 0], m6_current[..., 1]*1.4, 'r', label='m5')
-        plt.plot(cm7290_current[..., 0], cm7290_current[..., 1], 'b', label='cm7290')
+        ax4 = plt.subplot(211)
+        plt.plot(m3_speed[..., 0], m3_speed[..., 1], 'r', label='m3_speed')
+        # plt.plot(car_speed[..., 0], car_speed[..., 1], 'b', label='car_speed')
         plt.title('Control motors based on car speed.\nCurrent compared monitoring', fontsize=30)
         plt.xticks(fontsize=20)
         plt.yticks(fontsize=20)
         # 设置坐标标签字体大小
-        ax4.set_ylabel('current A', fontsize=20)
+        ax4.set_ylabel('Speed', fontsize=20)
         # 设置图例字体大小
         ax4.legend(fontsize=20, loc='upper right')
+        plt.xlim(xlim)
+
+        ax4 = plt.subplot(212)
+        # plt.plot(m3_speed[..., 0], m3_speed[..., 1], 'r', label='m3_speed')
+        plt.plot(car_speed[..., 0], car_speed[..., 1], 'b', label='car_speed')
+        # plt.title('Control motors based on car speed.\nCurrent compared monitoring', fontsize=30)
+        plt.xticks(fontsize=20)
+        plt.yticks(fontsize=20)
+        # 设置坐标标签字体大小
+        ax4.set_ylabel('Speed', fontsize=20)
+        # 设置图例字体大小
+        ax4.legend(fontsize=20, loc='upper right')
+        plt.xlim(xlim)
 
 
         plt.show()

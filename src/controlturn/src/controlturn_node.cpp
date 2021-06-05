@@ -101,8 +101,8 @@ void controlset_ml(int motor1)
     modbus_set_slave(com,motor1); 
     modbus_write_registers(com,controlmod,1,src);  //设置控制模式---位置控制 
     // const uint16_t acc[]={0xc8};
-        const uint16_t acc[]={0x15c};
-    const uint16_t v[]={0x15c};
+    const uint16_t acc[]={0x200};
+    const uint16_t v[]={0x300};
     modbus_write_registers(com,seta,1,acc);       //设置加速度
     modbus_write_registers(com,setv,1,v);         //设置定位目标速度
     modbus_write_registers(com,setaa,1,acc);      //设置减速度
@@ -143,6 +143,7 @@ void stopmotor(int motor1)
 {
     const uint16_t src[]={0x0};
     modbus_set_slave(com,motor1); 
+    usleep(1000000);
     modbus_write_registers(com,startstop,1,src);
     cout<<"motor STOP!!!!!!!!"<<endl;
 }

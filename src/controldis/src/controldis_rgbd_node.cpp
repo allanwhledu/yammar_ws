@@ -71,13 +71,19 @@ int main(int argc, char **argv)
     ros::Subscriber sub_start = nh.subscribe("/smach_fback", 1000, &Callback_start);
     ros::Publisher pub_start = nh.advertise<std_msgs::Int16>("/submodules_status",1000);
 
+
     ros::Subscriber sub_w = nh.subscribe("/height_border",100,&Callback);
     ros::Publisher pub_turn = nh.advertise<std_msgs::Int16>("/turn",1000);
     ros::Publisher pub_speed = nh.advertise<std_msgs::Int16>("/speed",1000);
     ros::Publisher pub_stop = nh.advertise<std_msgs::Int16>("/stop",1000);
+    ros::Publisher pub_height = nh.advertise<std_msgs::Int16>("/reap_height_target",1000);
+
+
     std_msgs::Int16 ready;
     std_msgs::Int16 speed;
     std_msgs::Int16 msg_turn;
+    std_msgs::Int16 height_control;
+
     double pid_p = 0.6;
     double offset_ange = 0;
     double offset_dis = 0;
@@ -109,14 +115,18 @@ int main(int argc, char **argv)
             continue;
         }
 
+        height_control.data = 20;// speed = 0.5m/s
+        pub_height.publish(height_control);
+        usleep(1000000);
         speed.data = 11000;// speed = 0.5m/s
         pub_speed.publish(speed);
+
         // *********************************** first turn without eyes ******************************//
 //        if (need_turn)
 //        {
 //            record += 1;
 //
-//            if (record == 20)
+//            if (record == 0)
 //            {
 //                cout<<"///////////////////////*****************************START GO!!!!!!!!************************************////////////////////////"<<endl;
 //                msg_turn.data = 0;
@@ -125,6 +135,8 @@ int main(int argc, char **argv)
 //                cout<<"///////////////////////*****************************  TURN  ***********************************////////////////////////"<<endl;
 //                msg_turn.data = -7000;
 //                pub_turn.publish(msg_turn);
+                //   height_control.data = 40;
+                //   pub_height.publish(height_control);
 //                usleep(6500000);
 //                msg_turn.data = 0;
 //                pub_turn.publish(msg_turn);
@@ -140,19 +152,28 @@ int main(int argc, char **argv)
 //    if (need_turn)
 //    {
 //        record += 1;
-//        if (record == 5)
+//        if (record == 10)
 //        {
-//            cout<<"///////////////////////*****************************go along************************************////////////////////////"<<endl;
-//            msg_turn.data = 0;
-//            pub_turn.publish(msg_turn);
-//            usleep(5000000);
+        //    cout<<"///////////////////////*****************************go along************************************////////////////////////"<<endl;
+        //    msg_turn.data = 0;
+        //    pub_turn.publish(msg_turn);
+        //    usleep(15000000);
+
 //            cout<<"///////////////////////*****************************go back  ***********************************////////////////////////"<<endl;
-//            msg_turn.data = 9000;
+
+//            height_control.data = 40;
+//            pub_height.publish(height_control);
+
+//            msg_turn.data = -9000;
 //            pub_turn.publish(msg_turn);
 //            speed.data = -11000;
 //            pub_speed.publish(speed);
 //            usleep(5000000);
 //            cout<<"///////////////////////*****************************  go again  ***********************************////////////////////////"<<endl;
+
+//            height_control.data = 20;
+//            pub_height.publish(height_control);
+
 //            msg_turn.data = 0;
 //            pub_turn.publish(msg_turn);
 //            speed.data = 11000;

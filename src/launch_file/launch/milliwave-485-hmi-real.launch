@@ -1,7 +1,7 @@
 <launch>
 
 #### rosbag #################################################
-  <node pkg="rosbag" type="record" name="bag_record" args="-a -o test_"/>
+  <node pkg="rosbag" type="record" name="bag_record" args="-a -o /media/agv/Samsung_T51/test_eh"/>
 
 #### HMI ####################################################
 
@@ -9,9 +9,9 @@
 
 #### control motors vis RS485 bus ####################################################
 
-  <node pkg="control485" type="control485_node" name="control485"/>
-  <node pkg="control485" type="control485_node_2" name="control485_2"/>
-  <node pkg="control485" type="control485_node_3" name="control485_3"/>
+  <node pkg="control485" type="control485_node" name="control485" output="screen"/>
+  <!--node pkg="control485" type="control485_node_2" name="control485_2"/>
+  <node pkg="control485" type="control485_node_3" name="control485_3"/-->
 
 #### read signals from CAN bus ####################################################
 
@@ -31,11 +31,11 @@
 
 #### for reap unit height control ####################################################
 
-  <!--node pkg="height_controller" type="height_controller_node" name="height_controller" output="screen"/-->
+  <!--node pkg="height_controller" type="height_controller_node" name="height_controller"/-->
 
 #### for logic control flow ####################################################
 
-  <node pkg="smach_tutorials" type="motor_control_client.py" name="motor_control_client" output="screen"/>
+  <node pkg="smach_tutorials" type="motor_control_client.py" name="motor_control_client"/>
 
 #### for upload data to cloud ################################################
 
