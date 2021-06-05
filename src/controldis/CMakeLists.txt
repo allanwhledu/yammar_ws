@@ -14,7 +14,9 @@ find_package(catkin REQUIRED COMPONENTS
 		geometry_msgs
 		tf2_geometry_msgs
 		height_border_msgs
-)
+		curve_point_z_msgs
+
+		)
 find_package(OpenCV REQUIRED)
 
 catkin_package(

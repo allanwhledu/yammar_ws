@@ -6,6 +6,8 @@
 #include "std_msgs/Int16.h"
 #include "height_border_msgs/height_border.h"
 #include <cmath>
+#include "curve_point_z_msgs/curve_point_z.h"
+
 
 using namespace std;
 
@@ -73,6 +75,7 @@ int main(int argc, char **argv)
 
 
     ros::Subscriber sub_w = nh.subscribe("/height_border",100,&Callback);
+
     ros::Publisher pub_turn = nh.advertise<std_msgs::Int16>("/turn",1000);
     ros::Publisher pub_speed = nh.advertise<std_msgs::Int16>("/speed",1000);
     ros::Publisher pub_stop = nh.advertise<std_msgs::Int16>("/stop",1000);
