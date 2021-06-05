@@ -13,7 +13,7 @@ import threading
 
 class Interpreter:
     def __init__(self):
-        self.play_ratio = 1
+        self.play_ratio = 10
         self.init_time = rospy.get_rostime()
         self.time = 0
         self.car_speed = []
@@ -59,8 +59,8 @@ class Interpreter:
         rospy.Subscriber('/current3_rms', Float32, self.callback_motor_3_current)
         rospy.Subscriber('/current4_rms', Float32, self.callback_motor_4_current)
         rospy.Subscriber('/current5_rms', Float32, self.callback_motor_5_current)
-        # rospy.Subscriber('/current11_rms', Float32, self.callback_motor_11_current)
-        rospy.Subscriber('/current6_rms', Float32, self.callback_motor_11_current)
+        rospy.Subscriber('/current11_rms', Float32, self.callback_motor_11_current)
+        # rospy.Subscriber('/current6_rms', Float32, self.callback_motor_11_current)
         rospy.Subscriber('/current7_rms', Float32, self.callback_motor_7_current)
         rospy.Subscriber('/current8_rms', Float32, self.callback_motor_8_current)
         rospy.Subscriber('/current9_rms', Float32, self.callback_motor_9_current)
@@ -167,7 +167,7 @@ class Interpreter:
     def time_get_job(self):
         while not rospy.is_shutdown():
             time_duration = rospy.get_rostime() - self.init_time
-            self.time = time_duration.to_sec() / self.play_ratio
+            self.time = time_duration.to_sec() * self.play_ratio
             # print 'time:' + str(self.time)
 
     ## save data ##
