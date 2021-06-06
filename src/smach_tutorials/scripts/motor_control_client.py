@@ -159,6 +159,30 @@ class self_check(smach.State):
 
         return result
 
+class client_motor_1_change(smach.State):
+    def __init__(self):
+        smach.State.__init__(self, outcomes=['SUCCEEDED', 'ABORTED'])
+
+    def execute(self, userdata):
+        global client_1
+        global motor_goal
+        # msg = Int32()
+        # msg.data = 1
+        # pub_result.publish(msg)
+        goal = motor_goal[0].action_goal.goal
+        action_result = client_1.send_goal_and_wait(goal)
+        # client_1.wait_for_result()
+        # action_result = client_1
+        # print 'motor10 goal state:'
+        # print action_result
+        if action_result == 3:
+            action_result = "SUCCEEDED"
+        elif action_result == 4:
+            action_result = 'ABORTED'
+
+        return action_result
+
+
 class client_motor_1(smach.State):
     def __init__(self):
         smach.State.__init__(self, outcomes=['SUCCEEDED', 'ABORTED'])
@@ -581,9 +605,9 @@ def main():
                                             'stop': 'SPEEDDOWN_MOTOR1',
                                             'speedup': 'SPEEDCHANGE_MOTOR1'})
 
-        smach.StateMachine.add('SPEEDCHANGE_MOTOR1', client_motor_1(),
+        smach.StateMachine.add('SPEEDCHANGE_MOTOR1', client_motor_1_change(),
                                transitions={'SUCCEEDED': 'WAIT',
-                                            'ABORTED': 'SPEEDDOWN_MOTOR1'})
+                                            'ABORTED': 'WAIT'})
 
         smach.StateMachine.add('START_MOTOR1', client_motor_1(),
                                transitions={'SUCCEEDED': 'END',

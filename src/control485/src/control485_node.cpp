@@ -327,7 +327,8 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
             }
             speed_ok = true;
             break;
-        } else {
+        }
+        else {
             // 发布速度（未达要求的）
             ROS_WARN_STREAM("Speed is BAD.");
             switch (goal->motor_id) {

@@ -46,7 +46,7 @@ if __name__ == '__main__':
     # cb_speed = np.delete(cb_speed, (1666, 1915, 2154), 0)
     # cb_speed = np.delete(cb_speed, 656, 0)
 
-    draw_what = 'speed-single'  # speed or current
+    draw_what = 'speed'  # speed or current
     if draw_what == 'speed':
         car_speed = np.load("mall_car_speed.npy", allow_pickle=True)
         m1_speed = np.load("mall_m1_speed.npy", allow_pickle=True)
@@ -255,7 +255,7 @@ if __name__ == '__main__':
         m9_speed = np.load("mall_m9_speed.npy", allow_pickle=True)
         m10_speed = np.load("mall_m10_speed.npy", allow_pickle=True)
 
-        xlim = [300,800]
+        # xlim = [300,800]
         # m2_current = down_sample(m2_current, scale=50)
         fig3 = plt.figure(2)
         ax4 = plt.subplot(211)
@@ -268,7 +268,7 @@ if __name__ == '__main__':
         ax4.set_ylabel('Speed', fontsize=20)
         # 设置图例字体大小
         ax4.legend(fontsize=20, loc='upper right')
-        plt.xlim(xlim)
+        # plt.xlim(xlim)
 
         ax4 = plt.subplot(212)
         # plt.plot(m3_speed[..., 0], m3_speed[..., 1], 'r', label='m3_speed')
@@ -280,7 +280,50 @@ if __name__ == '__main__':
         ax4.set_ylabel('Speed', fontsize=20)
         # 设置图例字体大小
         ax4.legend(fontsize=20, loc='upper right')
-        plt.xlim(xlim)
+        # plt.xlim(xlim)
 
+        plt.show()
+
+    elif draw_what == 'current-single':
+
+        car_speed = np.load("mall_car_speed.npy", allow_pickle=True)
+        m1_current = np.load("mall_m1_current.npy", allow_pickle=True)
+        m2_current = np.load("mall_m2_current.npy", allow_pickle=True)
+        m3_current = np.load("mall_m3_current.npy", allow_pickle=True)
+        m4_current = np.load("mall_m4_current.npy", allow_pickle=True)
+        m5_current = np.load("mall_m5_current.npy", allow_pickle=True)
+        m11_current = np.load("mall_m11_current.npy", allow_pickle=True)
+        m7_current = np.load("mall_m7_current.npy", allow_pickle=True)
+        m8_current = np.load("mall_m8_current.npy", allow_pickle=True)
+        m9_current = np.load("mall_m9_current.npy", allow_pickle=True)
+        m10_current = np.load("mall_m10_current.npy", allow_pickle=True)
+        cm7290_current = np.load("mall_cm7290_current.npy", allow_pickle=True)
+
+        # xlim = [300,800]
+        # m2_current = down_sample(m2_current, scale=50)
+        fig3 = plt.figure(2)
+        ax4 = plt.subplot(211)
+        plt.plot(m3_current[..., 0], m3_current[..., 1], 'r', label='m3_current')
+        # plt.plot(car_speed[..., 0], car_speed[..., 1], 'b', label='car_speed')
+        plt.title('Control motors based on car speed.\nCurrent compared monitoring', fontsize=30)
+        plt.xticks(fontsize=20)
+        plt.yticks(fontsize=20)
+        # 设置坐标标签字体大小
+        ax4.set_ylabel('Speed', fontsize=20)
+        # 设置图例字体大小
+        ax4.legend(fontsize=20, loc='upper right')
+        # plt.xlim(xlim)
+
+        ax4 = plt.subplot(212)
+        # plt.plot(m3_speed[..., 0], m3_speed[..., 1], 'r', label='m3_speed')
+        plt.plot(car_speed[..., 0], car_speed[..., 1], 'b', label='car_speed')
+        # plt.title('Control motors based on car speed.\nCurrent compared monitoring', fontsize=30)
+        plt.xticks(fontsize=20)
+        plt.yticks(fontsize=20)
+        # 设置坐标标签字体大小
+        ax4.set_ylabel('Speed', fontsize=20)
+        # 设置图例字体大小
+        ax4.legend(fontsize=20, loc='upper right')
+        # plt.xlim(xlim)
 
         plt.show()
