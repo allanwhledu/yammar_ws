@@ -153,9 +153,8 @@ add_executable(${PROJECT_NAME}_rgbd_node src/controldis_rgbd_node.cpp)
 # add_dependencies(${PROJECT_NAME}_node ${${PROJECT_NAME}_EXPORTED_TARGETS} ${catkin_EXPORTED_TARGETS})
 
 ## Specify libraries to link a library or executable target against
-# target_link_libraries(${PROJECT_NAME}_node
-#   ${catkin_LIBRARIES}
-# )
+
+
 target_link_libraries(controldis_rgbd_node
 	${catkin_LIBRARIES}
 		${OpenCV_LIBS}

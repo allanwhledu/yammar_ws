@@ -227,28 +227,24 @@ int main(int argc, char **argv){
     int prevInd = 0;
     //ack
     int curr_nearest_point = 0;
+    int count = 0;
     while (ros::ok())
     {
         ros::spinOnce();
         // Update the current pose and goal-point
         find_nearest_point(ref_pos_line, curr_pos, curr_nearest_point);
-
-        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<curr_nearest_point:"<<curr_nearest_point<<endl;
         int goal_point_ind = find_goal_point(ref_pos_line, curr_pos, curr_nearest_point);
-        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<goal_point_ind:"<<goal_point_ind<<endl;
+       
  
-        cv::circle(img, Point(int(curr_pos.x - 20727600.534582306)*5+320, int(curr_pos.y - 3655956.798907663)*5+240), 5, Scalar(0,255,0), -1);
-        cv::circle(img, Point(int(ref_pos_line[goal_point_ind].x -  20727600.534582306)*5+320, int(ref_pos_line[goal_point_ind].y - 3655956.798907663)*5+240), 5, Scalar(0,0,255), -1);
+        cv::circle(img, Point(int(curr_pos.x - 20727600.534582306)+320, int(curr_pos.y - 3655956.798907663)+240), 5, Scalar(0,255,0), -1);
+        cv::circle(img, Point(int(ref_pos_line[goal_point_ind].x -  20727600.534582306)+320, int(ref_pos_line[goal_point_ind].y - 3655956.798907663)+240), 5, Scalar(0,0,255), -1);
         cv::imshow("image",img);
         cv::waitKey(1);
         //Calculate the command w
         double theta_goal = atan((curr_pos.y - ref_pos_line[goal_point_ind].y) / (curr_pos.x - ref_pos_line[goal_point_ind].x));
-       
         double alpha = theta_goal - pi * (90 - curr_pos.theta) / 180.0;
 
         double dist_goal_curr = sqrt(pow(curr_pos.x - ref_pos_line[goal_point_ind].x,2) + pow(curr_pos.y - ref_pos_line[goal_point_ind].y, 2));
-        cout<<"<<<<<<<<><<<<<<<<<<dist_goal_curr:"<<dist_goal_curr<<endl;
-
         double w = sin(alpha / dist_goal_curr);
  
 
@@ -278,21 +274,27 @@ int main(int argc, char **argv){
         //  fout<<gps_x_go.data<<" "<<gps_y_gco.data<<" "<<w<<" "<<pls<<" "<<tmpDis<<endl;
         // fout<<gps_x_go.data<<" "<<gps_y_go.data<<endl;
         // fout<<"\r\n"<<endl;
-        if(pls>7000)
+        if(pls>5000)
         {
-            pls = 7000;
+            pls = 5000;
         }
-        else if(pls<-7000)
+        else if(pls<-5000)
         {
-            pls = -7000;
+            pls = -5000;
         }
 
         msg_turn.data = 1.4*pls;
-
-        cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<pls:"<<pls<<endl;
+        if(count%1000==0){
+             cout<<"<<<<<<<<><<<<<<<<<<dist_goal_curr:"<<dist_goal_curr<<endl;
+             cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<curr_nearest_point:"<<curr_nearest_point<<endl;
+             cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<goal_point_ind:"<<goal_point_ind<<endl; 
+             cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<pls:"<<pls<<endl;
+             count = 0;
+        }
+       
 
         turn_pub.publish(msg_turn);
-//        prevInd = ;
+        count++;
     }
     return 0;
 }
