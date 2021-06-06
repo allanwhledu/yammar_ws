@@ -463,3 +463,9 @@ void MainWindow::on_height_button_3_clicked()
 {
     qnode.pub_hmi_ready(5);
 }
+
+void MainWindow::on_height_button_4_clicked() //STOP button
+{
+  bool force_stop = 1;
+  qnode.pub_force_stop(force_stop);
+}

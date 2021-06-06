@@ -13,6 +13,7 @@ find_package(catkin REQUIRED COMPONENTS
   std_msgs
 		geometry_msgs
 		tf2_geometry_msgs
+		height_border_msgs
 )
 find_package(OpenCV REQUIRED)
 

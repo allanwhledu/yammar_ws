@@ -1,0 +1,28 @@
+<launch>
+
+#### rosbag #################################################
+  <node pkg="rosbag" type="record" name="bag_record" args="-a -o /media/agv/Samsung_T51/test_eh"/>
+
+#### HMI ####################################################
+
+  <node pkg="trail" type="app_node" name="HMI" />
+
+#### control motors vis RS485 bus ####################################################
+
+  <node pkg="control485" type="control485_node" name="control485" output="screen"/>
+
+#### read signals from CAN bus ####################################################
+
+  <node pkg="read_CAN" type="read_CAN_node" name="CAN_bus_server"/>
+
+#### for logic control flow ####################################################
+
+  <node pkg="smach_tutorials" type="motor_control_client.py" name="motor_control_client"/>
+
+#### visulization ################################################
+
+  <node pkg="rqt_graph" type="rqt_graph" name="rqt_graph"/>
+
+  <node pkg="smach_viewer" type="smach_viewer.py" name="smach_viewer_py"/>
+
+</launch>

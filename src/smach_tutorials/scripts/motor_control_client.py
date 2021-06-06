@@ -180,6 +180,7 @@ class client_motor_1_change(smach.State):
         elif action_result == 4:
             action_result = 'ABORTED'
 
+        print 'Can not change motor-3 speed.'
         return action_result
 
 

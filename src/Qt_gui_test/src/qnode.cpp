@@ -116,6 +116,7 @@ bool QNode::init()
 
   car_speed_pub = n.advertise<std_msgs::Int16>("speed", 1000);
   is_stop_pub = n.advertise<std_msgs::Int16>("stop", 1000);
+  force_stop_pub = n.advertise<std_msgs::Bool>("force_stop", 1);
   car_turn_pub = n.advertise<std_msgs::Int16>("turn", 1000);
 
     hmi_ready_pub = n.advertise<std_msgs::Int16>("/submodules_status", 1);
@@ -397,6 +398,13 @@ void QNode::pub_is_stop(int msg)
   std_msgs::Int16 is_stop;
   is_stop.data = msg;
   is_stop_pub.publish(is_stop);
+}
+
+void QNode::pub_force_stop(bool msg)
+{
+    std_msgs::Bool force_stop;
+    force_stop.data = msg;
+    force_stop_pub.publish(force_stop);
 }
 
 void QNode::pub_height_control_mode(float msg) {
