@@ -189,7 +189,7 @@ void *read_motor_speed_background(void *) {
             }
 
             rs485_busy = false;
-            usleep(100000);  // 下一次轮训间隔100ms
+            usleep(200000);  // 下一次轮训间隔200ms
         } else
             usleep(10000); // 如果485用于控制占用了，那么等待10ms再次检测是否占用
     }
@@ -664,24 +664,10 @@ int main(int argc, char **argv) {
     ros::Duration(10);
 
 //    ROS_WARN_STREAM("debug info");
-    // todo 这里的所有id要改
-    motorSetSpeed(3, 0);
-    motorSetSpeed(4, 0);
-    motorSetSpeed(2, 0);
-    motorSetSpeed(1, 0);
-    motorSetSpeed(5, 0);
-    motorSetSpeed(7, 0);
-    motorSetSpeed(8, 0);
-    motorSetSpeed(11, 0);
-    motorSetSpeed(9, 0);
-    motorSetSpeed(10, 0);
-
-//    ROS_WARN_STREAM("debug info1");
-    closeSerial();
-    return 0;
-}
-
-void stop_all_motors(){
+    while (rs485_busy) {
+        usleep(10000); // 如果485用于控制占用了，那么等待10ms再次检测是否占用
+    }
+    rs485_busy = true;  // rs485占用
     motorSetDirection(3, 4);
     motorSetDirection(4, 4);
     motorSetDirection(2, 4);
@@ -692,6 +678,32 @@ void stop_all_motors(){
     motorSetDirection(11, 4);
     motorSetDirection(9, 4);
     motorSetDirection(10, 4);
+    rs485_busy = false;  // rs485释放
+
+//    ROS_WARN_STREAM("debug info1");
+    closeSerial();
+    return 0;
+}
+
+void stop_all_motors(){
+
+    while (rs485_busy) {
+        usleep(10000); // 如果485用于控制占用了，那么等待10ms再次检测是否占用
+    }
+    rs485_busy = true;  // rs485占用
+
+    motorSetDirection(3, 4);
+    motorSetDirection(4, 4);
+    motorSetDirection(2, 4);
+    motorSetDirection(1, 4);
+    motorSetDirection(5, 4);
+    motorSetDirection(7, 4);
+    motorSetDirection(8, 4);
+    motorSetDirection(11, 4);
+    motorSetDirection(9, 4);
+    motorSetDirection(10, 4);
+
+    rs485_busy = false;  // rs485释放
 }
 
 // 消息订阅回调函数
@@ -723,9 +735,9 @@ void carspeed_callback(const std_msgs::Float32ConstPtr &msg) {
         modified_car_speed.data = carSpeed.linear;
     }
 
-    if (modified_car_speed.data != last_modified_car_speed) {
-        ROS_WARN_STREAM("modified speed will be change.");
-    }
+//    if (modified_car_speed.data != last_modified_car_speed) {
+//        ROS_WARN_STREAM("modified speed will be change.");
+//    }
     pub_modified_car_speed->publish(modified_car_speed);
     last_modified_car_speed = modified_car_speed.data;
 }

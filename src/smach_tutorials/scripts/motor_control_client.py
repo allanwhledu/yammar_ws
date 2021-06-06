@@ -499,7 +499,7 @@ class Car_speed_monitor(smach.State):
 
         # 以下为额定转速
 
-        motor_target_speed[0] = 1500 + 1000 * car_speed_now
+        motor_target_speed[0] = reelRatio * min(50.0, min(21.23 * reelCof * car_speed_now + 12.3, 21.23 * 1.0 * car_speed_now + 21.23)) * 0.8
         motor_target_speed[1] = motor_speed_dict['M4'] * 0.75
         motor_target_speed[2] = motor_speed_dict['M2'] * 0.75
         motor_target_speed[3] = motor_speed_dict['M1'] * 0.75
@@ -547,9 +547,9 @@ class Car_speed_monitor(smach.State):
             result = 'start'
         elif car_speed_now != -1000 and car_speed_last == -1000:
             result = 'start'
-        elif car_speed_now - car_speed_last > 0.2:
+        elif car_speed_now > car_speed_last:
             result = 'speedup'
-        elif car_speed_now - car_speed_last < -0.2:
+        elif car_speed_now < car_speed_last:
             result = 'speeddown'
 
         # elif car_speed_now < car_speed_last and car_speed_last != 0:
@@ -558,7 +558,7 @@ class Car_speed_monitor(smach.State):
         #     result = 'stop'
         # 以上是做了什么逻辑？
 
-        elif car_speed_now == car_speed_last:
+        else:
             result = 'steady'
 
         car_speed_last = car_speed_now
