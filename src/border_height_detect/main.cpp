@@ -41,11 +41,12 @@ vector<float> coeff_uncut_height_mean(4,0);
 int Estimated_height=0;  //估计的高度平均值
 int distance_ema = 0; // use ema filter to smooth the distance
 int angle_int_ema = 0;
-const float border_height_low = 0.40;
-const float border_height_high = 0.50;
+const float border_height_low = 0.45;
+const float border_height_high = 0.55;
 
-const int roi_left_index = 240;
+const int roi_left_index = 200;
 const int roi_right_index = 420;
+const int roi_col_offset = 70;
 
 
 ros::Publisher height_border_pub;       // publish the height and border
@@ -63,6 +64,8 @@ using namespace cv;
 //ofstream uncut_plane_file;
 //string standard_line_file_name = "/home/yangzt/yammar_ws/src/border_height_detect/standard_line_file.txt";
 //ofstream standard_line_file;
+//string ground_plane_file_name = "/home/yangzt/yammar_ws/src/border_height_detect/ground_plane_file.txt";
+//ofstream ground_plane_file;
 
 //按y值升序
 struct cmp{
@@ -129,7 +132,7 @@ int main(int argc,char** argv)
 
 //    uncut_plane_file.open(uncut_plane_file_name.c_str());
 //    standard_line_file.open(standard_line_file_name.c_str());
-
+//    ground_plane_file.open(ground_plane_file_name.c_str());
 
     //同步接收rgb,depth
     message_filters::Subscriber<sensor_msgs::Image> rgb_sub(nh, "/realsense_sr300/ylx/rgb", 1);
@@ -159,6 +162,7 @@ int main(int argc,char** argv)
 
 //    uncut_plane_file.close();
 //    standard_line_file.close();
+//    ground_plane_file.close();
 
     return 0;
 }
@@ -767,7 +771,7 @@ bool ifPlane_uncut_valid(Mat& rgb,pcl::PointCloud<pcl::PointXYZRGB>::Ptr& plane_
             col = 615.372 * plane_uncut->points[i].x  / plane_uncut->points[i].z  + 323.844;
             if(roi_right_index - col < 5) count_right_roi_1++;
             if(roi_right_index - col < 30) count_right_roi_2++;
-            if(20 <= col && col < 200) count_left_roi++;
+            if(20 <= col && col < 300) count_left_roi++;
             project_plane.at<uchar>(row,col) = 255;
         }
 //    imshow("project",project_plane);
@@ -775,7 +779,7 @@ bool ifPlane_uncut_valid(Mat& rgb,pcl::PointCloud<pcl::PointXYZRGB>::Ptr& plane_
 //    阈值参数细调,是否可以自适应调整
 //    &&  count_right_roi_2 > 150 识别边界
 //        cout<<count_left_roi<<" "<<count_right_roi_1<<" "<<count_right_roi_2<<" "<<plane_uncut->points.size()<<endl;
-        if(count_right_roi_1 > 10 || count_right_roi_2 > 150 || plane_uncut->points.size()  < 4000) return false;
+        if(count_right_roi_1 > 10 || count_right_roi_2 > 150 || plane_uncut->points.size()  < 3000) return false;
         else if(count_left_roi  > 500) return true;
         else return false;
     }
@@ -829,7 +833,7 @@ Eigen::VectorXf borderpoints_clusterd(Mat& rgb, Mat& depth,pcl::PointCloud<pcl::
     coeff_uncut_height_mean[2]= coeff_uncut_height_mean[2]==0 ? coeff_uncut[2]:(coeff_uncut[2]*0.125+coeff_uncut_height_mean[2]*0.875);
     coeff_uncut_height_mean[3]= coeff_uncut_height_mean[3]==0 ? coeff_uncut[3]:(coeff_uncut[3]*0.125+coeff_uncut_height_mean[3]*0.875);
     //cout<<coeff_uncut[0]<<" "<<coeff_uncut[1]<<" "<<coeff_uncut[2]<<" "<<coeff_uncut[3]<<endl;
-//    uncut_plane_file<<coeff_uncut[0]<<" "<<coeff_uncut[1]<<" "<<coeff_uncut[2]<<" "<<coeff_uncut[3]<<endl;
+    //ground_plane_file<<coeff_uncut[0]<<" "<<coeff_uncut[1]<<" "<<coeff_uncut[2]<<" "<<coeff_uncut[3]<<endl;
 
     Point3f  pointdepth_3d; //分界线点的三维坐标
     Point2i  pointdepth;    //分界线点的二维坐标
@@ -837,19 +841,22 @@ Eigen::VectorXf borderpoints_clusterd(Mat& rgb, Mat& depth,pcl::PointCloud<pcl::
 //    float A=coeff_uncut[0],B=coeff_uncut[1],C=coeff_uncut[2],D=coeff_uncut[3];  //基准面系数
 
     // change to ground;
-    const float  A =-0.00292031, B=-0.997347945,	C=-0.035490671,D=2.620329934;    //20210605,地面为基准面 from lingang
+//    const float  A =-0.00292031, B=-0.997347945,	C=-0.035490671,D=2.620329934;    //20210605,地面为基准面 from lingang
 //    const float  A =0.00805, B=-0.98256,	C=-0.10004,D=2.24256;    //20210605,Gaoyou uncut plane fit
 
+    const float A = -0.00365, B = -0.99662, C = -0.06673, D = 2.79094;  // 20210606 Gaoyou indoor ground plane
 
     pcl::PointXYZRGB Point;
 
     // draw the rectangle
-    cv::rectangle(rgb, cv::Point(roi_left_index, 250), cv::Point(roi_right_index, rgb.rows - 1), Scalar(0,0,255),1,1,0);
+//    cv::rectangle(rgb, cv::Point(roi_left_index, 250), cv::Point(roi_right_index, rgb.rows - 1), Scalar(0,0,255),1,1,0);
+    cv::line(rgb, cv::Point(roi_left_index, rgb.rows - 1), cv::Point(roi_left_index + roi_col_offset , 200), Scalar(0,0,255),2);
+    cv::line(rgb, cv::Point(roi_right_index, rgb.rows - 1), cv::Point(roi_right_index - roi_col_offset , 200), Scalar(0,0,255),2);
 
 
     if(isTrueHarvest){
-        for(int row=170;row< rgb.rows - 30;row++)  //ROI遍历范围
-            for(int col=roi_left_index;col<roi_right_index;col++ )
+        for(int row=200;row< rgb.rows;row++)  //ROI遍历范围
+            for(int col=roi_left_index  + int((row - 200) * roi_col_offset / 279 ) ;col<roi_right_index -  int((row - 200) * roi_col_offset / 279);col++ )
             {
 
                 float z = float(depth.at<ushort>(row,col))/1000;
@@ -871,10 +878,11 @@ Eigen::VectorXf borderpoints_clusterd(Mat& rgb, Mat& depth,pcl::PointCloud<pcl::
 
                     pointimg_3d.push_back(pointdepth_3d);
                     pointimg.push_back(pointdepth);
-                    //circle(rgb, pointdepth, 3, Scalar(100, 255, 100));
+                    circle(rgb, pointdepth, 3, Scalar(100, 255, 100));
                     Point.x=pointdepth_3d.x;
                     Point.y=pointdepth_3d.y;
                     Point.z=pointdepth_3d.z;
+//                    Point.z = z;    // do not project
                     Point.r=255;
                     Point.g=0;
                     Point.b=0;
