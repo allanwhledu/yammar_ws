@@ -39,14 +39,14 @@ const bool isTrueHarvest = true;
 
 vector<float> coeff_uncut_height_mean(4,0);
 int Estimated_height=0;  //估计的高度平均值
-int distance_ema = 0; // use ema filter to smooth the distance
-int angle_int_ema = 0;
-const float border_height_low = 0.45;
-const float border_height_high = 0.55;
+int distance_ema = INT_MIN; // use ema filter to smooth the distance
+int angle_int_ema = INT_MIN;
+const float border_height_low = 0.40;
+const float border_height_high = 0.46;
 
-const int roi_left_index = 200;
-const int roi_right_index = 420;
-const int roi_col_offset = 70;
+const int roi_left_index = 220;
+const int roi_right_index = 450;
+const int roi_col_offset = 60;
 
 
 ros::Publisher height_border_pub;       // publish the height and border
@@ -142,7 +142,7 @@ int main(int argc,char** argv)
 
     sync.registerCallback(boost::bind(&border_RGBD,_1,_2));//主函数入口
 
-    height_border_pub = nh.advertise<height_border_msgs::height_border>("height_border", 1000);
+    height_border_pub = nh.advertise<height_border_msgs::height_border>("/height_border", 1000);
     pointcloud_pub = nh.advertise<sensor_msgs::PointCloud2>("/farm_cloud", 1000);
     border_param=nh.advertise<border_msgs::border>("/border_param", 1000);
     curve_point_pub=nh.advertise<curve_point_z_msgs::curve_point_z>("/curve_point_z", 1000);
@@ -156,9 +156,7 @@ int main(int argc,char** argv)
         visual_status_pub.publish(visual_status_msg);
         usleep(100);
     }
-    while(ros::ok()){
-        ros::spin();
-    }
+    ros::spin();
 
 //    uncut_plane_file.close();
 //    standard_line_file.close();
@@ -183,8 +181,6 @@ void border_RGBD(const sensor_msgs::ImageConstPtr& rgbimg,const sensor_msgs::Ima
     std_msgs::Header height_borderHeader;
     height_border_msgs::height_border heightBorderMsg;
     heightBorderMsg.header = height_borderHeader;
-    heightBorderMsg.dis_3d = to_string(0);
-    heightBorderMsg.angle_3d = to_string(0);
 
     Mat depth(depth_raw.size(),CV_16UC1);
     for(int row=0;row<rgb.rows;row++)
@@ -618,6 +614,7 @@ void border_depth(Mat& rgb, Mat& depth,vector<Point2i>& inliners_depth_2D,vector
         border_msgs::border borderMsg;
         borderMsg.header = borderHeader;
         border_offset(rgb,pointimg,pointimg_3d,borderMsg,cloudin, heightBorderMsg);
+//        height_border_pub.publish(heightBorderMsg);
 
         cv_bridge::CvImage cvi;
         ros::Time time = ros::Time::now();
@@ -771,7 +768,7 @@ bool ifPlane_uncut_valid(Mat& rgb,pcl::PointCloud<pcl::PointXYZRGB>::Ptr& plane_
             col = 615.372 * plane_uncut->points[i].x  / plane_uncut->points[i].z  + 323.844;
             if(roi_right_index - col < 5) count_right_roi_1++;
             if(roi_right_index - col < 30) count_right_roi_2++;
-            if(20 <= col && col < 300) count_left_roi++;
+            if(col < 250) count_left_roi++;
             project_plane.at<uchar>(row,col) = 255;
         }
 //    imshow("project",project_plane);
@@ -779,8 +776,8 @@ bool ifPlane_uncut_valid(Mat& rgb,pcl::PointCloud<pcl::PointXYZRGB>::Ptr& plane_
 //    阈值参数细调,是否可以自适应调整
 //    &&  count_right_roi_2 > 150 识别边界
 //        cout<<count_left_roi<<" "<<count_right_roi_1<<" "<<count_right_roi_2<<" "<<plane_uncut->points.size()<<endl;
-        if(count_right_roi_1 > 10 || count_right_roi_2 > 150 || plane_uncut->points.size()  < 3000) return false;
-        else if(count_left_roi  > 500) return true;
+        if(count_left_roi  > 500) return true;
+        else if(count_right_roi_1 > 10 || count_right_roi_2 > 150 || plane_uncut->points.size()  < 3000) return false;
         else return false;
     }
     else{
@@ -1363,38 +1360,39 @@ void border_offset(Mat& rgb,vector<Point2i>& pointimg,vector<Point3f>& pointimg_
         int angle_dec = abs(int((arc_cosvalue_inangle*180/3.1415926 - angle_int) * 10));//保留一位小数
 
         // Add ema filter
-        angle_int_ema = angle_int_ema == 0 ?angle_int:0.8 * angle_int_ema + 0.2 * angle_int;
+        angle_int_ema = angle_int_ema == INT_MIN  ?angle_int:0.9 * angle_int_ema + 0.1 * angle_int;
         // add offset for gaoyou experiment
 //        angle_int_ema = angle_int_ema ;
 
-        string angle_str = to_string(angle_int_ema) + '.' + to_string(angle_dec);
-        borderMsg.angle = angle_str;
-        borderMsg.dis = to_string(distance);
 
         //
-        distance_ema = distance_ema == 0 ?distance : 0.8 * distance_ema + 0.2 * distance;
+        distance_ema = distance_ema == INT_MIN ?distance : 0.9 * distance_ema + 0.1 * distance;
         // add offset for gaoyou experiment
 //        distance_ema = distance_ema - 550;
-        heightBorderMsg.angle_3d = angle_str;
-        heightBorderMsg.dis_3d = to_string(distance_ema);
+
 
         // Add offset for path track, angle = msg.angle - 7; dis_3d = dis_3d + 180
 
 //        if(arc_cosvalue_inangle<40 && arc_cosvalue_inangle>-40 && distance<70 && distance>-70)
-        if(arc_cosvalue_inangle<40 && arc_cosvalue_inangle>-40)
+        if(angle_int_ema < 30 && angle_int_ema > -30 && distance_ema < 50 && distance_ema > -50)
         {
-
-            string angle_str_img = "Ang: " + heightBorderMsg.angle_3d+"deg";
-            cv::putText(rgb, angle_str_img, Point2i(400, 50), cv::FONT_HERSHEY_SIMPLEX, 1, CV_RGB(255, 0, 0), 4);
-
-            string dist_ema_str_img = "Dis: " + heightBorderMsg.dis_3d+"cm";
-            cv::putText(rgb, dist_ema_str_img, Point2i(400, 100), cv::FONT_HERSHEY_SIMPLEX, 1, CV_RGB(255, 0, 0), 5);
-
-            // 2d dist
-//            string dis_2d_str = "Dis 2d: " + to_string(dist_2d);
-//            cv::putText(rgb, dis_2d_str, Point2i(400, 150),cv::FONT_HERSHEY_SIMPLEX, 1, CV_RGB(255, 0, 0), 3);
+            heightBorderMsg.angle_3d = to_string(angle_int_ema);
+            heightBorderMsg.dis_3d = to_string(distance_ema);
         }
-        border_param.publish(borderMsg);
+        else{
+            heightBorderMsg.angle_3d = to_string(0.0);
+            heightBorderMsg.dis_3d = to_string(0);
+        }
+        cout<<angle_int_ema<<" "<<distance_ema<<endl;
+        string angle_str_img = "Ang: " + heightBorderMsg.angle_3d+"deg";
+        cv::putText(rgb, angle_str_img, Point2i(400, 50), cv::FONT_HERSHEY_SIMPLEX, 1, CV_RGB(255, 0, 0), 4);
+
+        string dist_ema_str_img = "Dis: " + heightBorderMsg.dis_3d+"cm";
+        cv::putText(rgb, dist_ema_str_img, Point2i(400, 100), cv::FONT_HERSHEY_SIMPLEX, 1, CV_RGB(255, 0, 0), 5);
+
+//        borderMsg.angle = angle_str;
+//        borderMsg.dis = to_string(distance);
+//        border_param.publish(borderMsg);
         cv::imshow("Border_offset", rgb);
         cv::waitKey(1);
     }

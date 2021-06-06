@@ -16,9 +16,9 @@ double d = 3;//孙汉的视觉距离
 double theta = 0;
 bool need_turn = false;
 int record = 0;
-int gogo=0;
+int gogo=1;// need change for true harvest
 double before_angle;
-double before_dis;
+int before_dis;
 
 int w2pls(double W)
 {
@@ -55,11 +55,17 @@ void Callback_start(const std_msgs::Int16::ConstPtr &msg)
 
 void Callback(const height_border_msgs::height_border& height_borderMsg)
 {
+    if(height_borderMsg.angle_3d.empty() || height_borderMsg.dis_3d.empty()) return;
     string be_angle=height_borderMsg.angle_3d;
-    before_angle = atof(be_angle.c_str());//修改************************************************
+//    before_angle = atof(be_angle.c_str());//修改************************************************
+    before_angle = stod(height_borderMsg.angle_3d);
+    if(before_angle > 15.0 || before_angle < -15.0) before_angle = 0;
     string be_dis=height_borderMsg.dis_3d;
-    before_dis = atof(be_dis.c_str());//修改************************************************
+//    before_dis = atof(be_dis.c_str());//修改************************************************
+    before_dis = stoi(height_borderMsg.angle_3d);
+    if(before_dis < -50 || before_dis > 50) before_dis = 0;
     need_turn = height_borderMsg.is_corner;
+    cout<<before_angle<<"  "<<before_dis<<endl;
 
 }
 
@@ -106,7 +112,6 @@ int main(int argc, char **argv)
     while (ros::ok()) {
 
         ros::spinOnce();
-
         double angle = before_angle + offset_ange;
         double dis = before_dis + offset_dis;
 
@@ -205,16 +210,16 @@ int main(int argc, char **argv)
         }
         msg_turn.data = pls;
         pub_turn.publish(msg_turn);
-        if(count%10000==0){
+        if(false){
             cout<<"error: "<<error<<endl;
             cout<<"<<<<<<<<<<<<theta "<<theta<<endl;
             cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<angle:"<<(angle/180)*3.1415926<<endl;
             cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<alpha"<<alpha<<endl;
             cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<w"<<w<<endl;
             cout<<"<<<<<<<<>>>>>>>>>>>>>>>>>>>>>>>>>>>>><<<<<<<<<<<<<<<<<<<<<<<pls:"<<pls<<endl;
+            count =0;
         }
-        count++;
-        if(count>100000) count=0;
+//        count++;
 
     }
 
