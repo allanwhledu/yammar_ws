@@ -229,12 +229,12 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
 
     int count = 0;
     bool speed_ok = false;
-    while (count < 5) {
+    while (count < 10) {
         actual_speed = motorReadSpeed(goal->motor_id);
         ROS_INFO_STREAM("reed speed onground:");
         ROS_INFO_STREAM(actual_speed);
 
-        if (abs(actual_speed - target_speed) < 100) {
+        if (abs(actual_speed - target_speed) < 200) {
             ROS_WARN_STREAM("Speed is ok.");
             switch (goal->motor_id) {
                 case 3: {
