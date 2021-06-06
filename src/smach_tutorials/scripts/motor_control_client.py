@@ -180,6 +180,7 @@ class client_motor_1_change(smach.State):
         elif action_result == 4:
             action_result = 'ABORTED'
 
+        print 'Can not change motor-3 speed.'
         return action_result
 
 
@@ -498,16 +499,16 @@ class Car_speed_monitor(smach.State):
 
         # 以下为额定转速
 
-        motor_target_speed[0] = 1500 + 100 * car_speed_now
-        motor_target_speed[1] = motor_speed_dict['M4']
-        motor_target_speed[2] = motor_speed_dict['M2']
-        motor_target_speed[3] = motor_speed_dict['M1']
-        motor_target_speed[4] = motor_speed_dict['M5']
-        motor_target_speed[5] = motor_speed_dict['M7']
-        motor_target_speed[6] = motor_speed_dict['M8']
-        motor_target_speed[7] = motor_speed_dict['M11']
-        motor_target_speed[8] = motor_speed_dict['M9']
-        motor_target_speed[9] = motor_speed_dict['M10']
+        motor_target_speed[0] = 1500 + 1000 * car_speed_now
+        motor_target_speed[1] = motor_speed_dict['M4'] * 0.75
+        motor_target_speed[2] = motor_speed_dict['M2'] * 0.75
+        motor_target_speed[3] = motor_speed_dict['M1'] * 0.75
+        motor_target_speed[4] = motor_speed_dict['M5'] * 0.75
+        motor_target_speed[5] = motor_speed_dict['M7'] * 0.75
+        motor_target_speed[6] = motor_speed_dict['M8'] * 0.75
+        motor_target_speed[7] = motor_speed_dict['M11'] * 0.75
+        motor_target_speed[8] = motor_speed_dict['M9'] * 0.75
+        motor_target_speed[9] = motor_speed_dict['M10'] * 0.75
 
         # motor_target_speed[0] = 1500 + 1000 * car_speed_now  # motor_speed_dict['M3']
         # motor_target_speed[1] = 500
@@ -520,8 +521,8 @@ class Car_speed_monitor(smach.State):
         # motor_target_speed[8] = 500
         # motor_target_speed[9] = 500
 
-        for index in range(len(motor_target_speed)):
-            motor_target_speed[index] = motor_target_speed[index] * 0.75
+        # for index in range(len(motor_target_speed)):
+        #     motor_target_speed[index] = motor_target_speed[index] * 0.75
 
         for index in range(len(motor_target_speed)):
             if motor_target_speed[index] > 3000:

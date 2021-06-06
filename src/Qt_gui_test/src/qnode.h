@@ -60,6 +60,9 @@ public:
     ros::Publisher is_stop_pub;
     void pub_is_stop(int msg);
 
+    ros::Publisher force_stop_pub;
+    void pub_force_stop(bool msg);
+
     ros::Publisher car_turn_pub;
     void  pub_car_turn(int msg);
 

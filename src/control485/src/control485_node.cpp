@@ -84,6 +84,7 @@ void carspeed_callback(const std_msgs::Float32ConstPtr &msg);
 void obstacle_callback(const std_msgs::BoolConstPtr &msg);
 
 void manual_stop_callback(const std_msgs::BoolConstPtr &msg);
+void force_stop_callback(const std_msgs::BoolConstPtr &msg);
 
 void test(void);
 
@@ -229,12 +230,12 @@ void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
 
     int count = 0;
     bool speed_ok = false;
-    while (count < 5) {
+    while (count < 10) {
         actual_speed = motorReadSpeed(goal->motor_id);
         ROS_INFO_STREAM("reed speed onground:");
         ROS_INFO_STREAM(actual_speed);
 
-        if (abs(actual_speed - target_speed) < 100) {
+        if (abs(actual_speed - target_speed) < 200) {
             ROS_WARN_STREAM("Speed is ok.");
             switch (goal->motor_id) {
                 case 3: {
@@ -637,6 +638,7 @@ int main(int argc, char **argv) {
     //Topic you want to subscribe
     sub2_ = n_.subscribe("is_obstacle", 1, &obstacle_callback);
     sub3_ = n_.subscribe("is_stop", 1, &manual_stop_callback);
+    sub3_ = n_.subscribe("force_stop", 1, &force_stop_callback);
     sub_ = n_.subscribe("car_speed", 1, &carspeed_callback);
 
     openSerial(port.c_str());
@@ -679,6 +681,19 @@ int main(int argc, char **argv) {
     return 0;
 }
 
+void stop_all_motors(){
+    motorSetDirection(3, 4);
+    motorSetDirection(4, 4);
+    motorSetDirection(2, 4);
+    motorSetDirection(1, 4);
+    motorSetDirection(5, 4);
+    motorSetDirection(7, 4);
+    motorSetDirection(8, 4);
+    motorSetDirection(11, 4);
+    motorSetDirection(9, 4);
+    motorSetDirection(10, 4);
+}
+
 // 消息订阅回调函数
 void obstacle_callback(const std_msgs::BoolConstPtr &msg) {
 //    ROS_INFO_STREAM("callback! is_obstacle: "<<msg->data);
@@ -688,6 +703,13 @@ void obstacle_callback(const std_msgs::BoolConstPtr &msg) {
 void manual_stop_callback(const std_msgs::BoolConstPtr &msg) {
     ROS_INFO_STREAM("callback! is_stop: " << msg->data);
     is_stop = msg->data;
+}
+
+void force_stop_callback(const std_msgs::BoolConstPtr &msg) {
+    ROS_INFO_STREAM("callback! force_stop: " << msg->data);
+    if(msg->data){
+        stop_all_motors();
+    }
 }
 
 void carspeed_callback(const std_msgs::Float32ConstPtr &msg) {
