@@ -50,6 +50,7 @@ bool is_stop = false;
 bool endFlag = false;
 modbus_t *com; //com用于电机速度控制反馈
 bool rs485_busy = false;
+int motor_direction_now = 0;
 
 // 初始化publisher
 ros::Publisher *pub_modified_car_speed;
@@ -71,6 +72,7 @@ ros::Publisher *pub_motor_controlled;
 bool openSerial(const char *port);
 
 void motorInit(void);
+void motor_reserve(int dir);
 
 void motorSetModbus(int motor, int enable);
 
@@ -201,11 +203,15 @@ typedef actionlib::SimpleActionServer<control485::DriveMotorAction> Server;
 
 void execute(const control485::DriveMotorGoalConstPtr &goal, Server *as) {
     ROS_WARN_STREAM("Start Motor :" << goal->motor_id);
-
+    ROS_WARN_STREAM("Direction :" << goal->direction);
 //    // 发布正在控制的电机编号
 //    std_msgs::Int16 motor_controlled;
 //    motor_controlled.data = goal->motor_id;
 //    pub_motor_controlled->publish(motor_controlled);
+    if(motor_direction_now == 1 && goal->direction==-1)
+        motor_reserve(-1);
+    else if(motor_direction_now == -1 && goal->direction==1)
+        motor_reserve(1);
 
     while (rs485_busy) {
         usleep(10000); // 如果485用于控制占用了，那么等待10ms再次检测是否占用
@@ -523,6 +529,106 @@ void motorInit(void) {
     motorSetModbus(10, 1);
     motorSetDirection(10, 2);//正转
 
+    motor_direction_now = 1;
+
+}
+
+void motor_reserve(int dir) {
+    if(dir == -1){
+        // 只有这里才打开了电机，这里首先仅仅开启了reel电机
+        ROS_WARN_STREAM("reserve motor-3...");
+        motorSetModbus(3, 1);
+        motorSetDirection(3, 1);//反转
+//    motorSetSpeed(reelMotor,0);
+
+        ROS_WARN_STREAM("reserve motor-4...");
+        motorSetModbus(4, 1);
+        motorSetDirection(4, 1);//反转
+//    motorSetSpeed(cbMotor,0);
+
+        ROS_WARN_STREAM("reserve motor-2...");
+        motorSetModbus(2, 1);
+        motorSetDirection(2, 1);//反转
+//    motorSetSpeed(pfMotor,0);
+
+        ROS_WARN_STREAM("reserve motor-1...");
+        motorSetModbus(1, 1);
+        motorSetDirection(1, 1);//反转
+
+        ROS_WARN_STREAM("reserve motor-5...");
+        motorSetModbus(5, 1);
+        motorSetDirection(5, 1);//反转
+
+        ROS_WARN_STREAM("reserve motor-7...");
+        motorSetModbus(7, 1);
+        motorSetDirection(7, 1);//反转
+
+        ROS_WARN_STREAM("reserve motor-8...");
+        motorSetModbus(8, 1);
+        motorSetDirection(8, 1);//反转
+
+        ROS_WARN_STREAM("reserve motor-11...");
+        motorSetModbus(11, 1);
+        motorSetDirection(11, 2);//反转
+
+        ROS_WARN_STREAM("reserve motor-9...");
+        motorSetModbus(9, 1);
+        motorSetDirection(9, 1);//反转
+
+        ROS_WARN_STREAM("reserve motor-10...");
+        motorSetModbus(10, 1);
+        motorSetDirection(10, 1);//反转
+
+        motor_direction_now = -1;
+
+    }
+    else if(dir==1){
+        // 只有这里才打开了电机，这里首先仅仅开启了reel电机
+        ROS_WARN_STREAM("init motor-3...");
+        motorSetModbus(3, 1);
+        motorSetDirection(3, 2);//正转
+//    motorSetSpeed(reelMotor,0);
+
+        ROS_WARN_STREAM("init motor-4...");
+        motorSetModbus(4, 1);
+        motorSetDirection(4, 2);//正转
+//    motorSetSpeed(cbMotor,0);
+
+        ROS_WARN_STREAM("init motor-2...");
+        motorSetModbus(2, 1);
+        motorSetDirection(2, 2);//正转
+//    motorSetSpeed(pfMotor,0);
+
+        ROS_WARN_STREAM("init motor-1...");
+        motorSetModbus(1, 1);
+        motorSetDirection(1, 2);//正转
+
+        ROS_WARN_STREAM("init motor-5...");
+        motorSetModbus(5, 1);
+        motorSetDirection(5, 2);//正转
+
+        ROS_WARN_STREAM("init motor-7...");
+        motorSetModbus(7, 1);
+        motorSetDirection(7, 2);//正转
+
+        ROS_WARN_STREAM("init motor-8...");
+        motorSetModbus(8, 1);
+        motorSetDirection(8, 2);//正转
+
+        ROS_WARN_STREAM("init motor-11...");
+        motorSetModbus(11, 1);
+        motorSetDirection(11, 1);//正转
+
+        ROS_WARN_STREAM("init motor-9...");
+        motorSetModbus(9, 1);
+        motorSetDirection(9, 2);//正转
+
+        ROS_WARN_STREAM("init motor-10...");
+        motorSetModbus(10, 1);
+        motorSetDirection(10, 2);//正转
+
+        motor_direction_now = 1;
+    }
 }
 
 void motorSetModbus(int motor, int enable) {
@@ -566,11 +672,11 @@ int motorReadSpeed(int motor) {
     uint16_t temp = 55555;
     modbus_set_slave(com, motor);
     while (!modbus_read_registers(com, motorSpeedFeedbackAddr, 1, &temp)) {
-        ROS_WARN_STREAM(motor << " read speed failed， try again.");
+        ROS_INFO_STREAM(motor << " read speed failed， try again.");
         usleep(500000);
     }
     if (temp > 3000) {
-        ROS_WARN_STREAM(motor << " read speed strange! speed:" << temp);
+        ROS_INFO_STREAM(motor << " read speed strange! speed:" << temp);
         temp = 55555;
     }
     return temp;
@@ -662,13 +768,13 @@ int main(int argc, char **argv) {
     endFlag = true;
 //    pthread_kill(motorControlThread, 0);
     pthread_kill(speed_read_background, 0);
-    ros::Duration(10);
-
-//    ROS_WARN_STREAM("debug info");
+    ros::Duration(5);
+    
     while (rs485_busy) {
         usleep(10000); // 如果485用于控制占用了，那么等待10ms再次检测是否占用
     }
     rs485_busy = true;  // rs485占用
+    ROS_WARN_STREAM("stop all motors normal.");
     motorSetDirection(3, 4);
     motorSetDirection(4, 4);
     motorSetDirection(2, 4);
@@ -687,12 +793,12 @@ int main(int argc, char **argv) {
 }
 
 void stop_all_motors(){
-
+    
     while (rs485_busy) {
         usleep(10000); // 如果485用于控制占用了，那么等待10ms再次检测是否占用
     }
     rs485_busy = true;  // rs485占用
-
+    ROS_WARN_STREAM("stop all motors un-normal.");
     motorSetDirection(3, 4);
     motorSetDirection(4, 4);
     motorSetDirection(2, 4);

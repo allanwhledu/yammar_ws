@@ -1,5 +1,6 @@
 # Define the goal
 uint32 motor_id  # Specify which motor we want to use
+int32 direction # If direction is -1, then reserve all motors
 uint32 target_speed
 ---
 # Define the result

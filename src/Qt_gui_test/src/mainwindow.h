@@ -104,6 +104,8 @@ private slots:
 
     void on_height_button_4_clicked();
 
+    void on_height_button_5_clicked();
+
 private:
     Ui::MainWindow *ui;
     QNode qnode;
