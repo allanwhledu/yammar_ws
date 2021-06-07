@@ -44,7 +44,7 @@ int angle_int_ema = INT_MIN;
 const float border_height_low = 0.40;
 const float border_height_high = 0.46;
 
-const int roi_left_index = 220;
+const int roi_left_index = 100;
 const int roi_right_index = 450;
 const int roi_col_offset = 60;
 
@@ -64,7 +64,7 @@ using namespace cv;
 //ofstream uncut_plane_file;
 //string standard_line_file_name = "/home/yangzt/yammar_ws/src/border_height_detect/standard_line_file.txt";
 //ofstream standard_line_file;
-//string ground_plane_file_name = "/home/yangzt/yammar_ws/src/border_height_detect/ground_plane_file.txt";
+//string ground_plane_file_name = "/home/yangzt/yammar_ws/src/border_height_detect/ground_plane_file_0607.txt";
 //ofstream ground_plane_file;
 
 //按y值升序
@@ -830,7 +830,7 @@ Eigen::VectorXf borderpoints_clusterd(Mat& rgb, Mat& depth,pcl::PointCloud<pcl::
     coeff_uncut_height_mean[2]= coeff_uncut_height_mean[2]==0 ? coeff_uncut[2]:(coeff_uncut[2]*0.125+coeff_uncut_height_mean[2]*0.875);
     coeff_uncut_height_mean[3]= coeff_uncut_height_mean[3]==0 ? coeff_uncut[3]:(coeff_uncut[3]*0.125+coeff_uncut_height_mean[3]*0.875);
     //cout<<coeff_uncut[0]<<" "<<coeff_uncut[1]<<" "<<coeff_uncut[2]<<" "<<coeff_uncut[3]<<endl;
-    //ground_plane_file<<coeff_uncut[0]<<" "<<coeff_uncut[1]<<" "<<coeff_uncut[2]<<" "<<coeff_uncut[3]<<endl;
+//    ground_plane_file<<coeff_uncut[0]<<" "<<coeff_uncut[1]<<" "<<coeff_uncut[2]<<" "<<coeff_uncut[3]<<endl;
 
     Point3f  pointdepth_3d; //分界线点的三维坐标
     Point2i  pointdepth;    //分界线点的二维坐标
@@ -852,6 +852,7 @@ Eigen::VectorXf borderpoints_clusterd(Mat& rgb, Mat& depth,pcl::PointCloud<pcl::
 
 
     if(isTrueHarvest){
+        int count_uncut_point = 0, count_cut_point = 0;
         for(int row=200;row< rgb.rows;row++)  //ROI遍历范围
             for(int col=roi_left_index  + int((row - 200) * roi_col_offset / 279 ) ;col<roi_right_index -  int((row - 200) * roi_col_offset / 279);col++ )
             {
@@ -875,7 +876,7 @@ Eigen::VectorXf borderpoints_clusterd(Mat& rgb, Mat& depth,pcl::PointCloud<pcl::
 
                     pointimg_3d.push_back(pointdepth_3d);
                     pointimg.push_back(pointdepth);
-                    circle(rgb, pointdepth, 3, Scalar(100, 255, 100));
+//                    circle(rgb, pointdepth, 3, Scalar(100, 255, 100));
                     Point.x=pointdepth_3d.x;
                     Point.y=pointdepth_3d.y;
                     Point.z=pointdepth_3d.z;
@@ -884,7 +885,7 @@ Eigen::VectorXf borderpoints_clusterd(Mat& rgb, Mat& depth,pcl::PointCloud<pcl::
                     Point.g=0;
                     Point.b=0;
                     cloudin->points.push_back(Point); //三维点云显示
-                    break;
+                    break;  // Here the break means there is only one effective point of the border in each row
                 }
             }
     }
@@ -1360,11 +1361,10 @@ void border_offset(Mat& rgb,vector<Point2i>& pointimg,vector<Point3f>& pointimg_
         int angle_dec = abs(int((arc_cosvalue_inangle*180/3.1415926 - angle_int) * 10));//保留一位小数
 
         // Add ema filter
-        angle_int_ema = angle_int_ema == INT_MIN  ?angle_int:0.9 * angle_int_ema + 0.1 * angle_int;
+//        angle_int_ema = angle_int_ema == INT_MIN  ?angle_int:0.9 * angle_int_ema + 0.1 * angle_int;
         // add offset for gaoyou experiment
 //        angle_int_ema = angle_int_ema ;
-
-
+        string angle_str = to_string(angle_int) + '.' + to_string(angle_dec);
         //
         distance_ema = distance_ema == INT_MIN ?distance : 0.9 * distance_ema + 0.1 * distance;
         // add offset for gaoyou experiment
@@ -1374,16 +1374,17 @@ void border_offset(Mat& rgb,vector<Point2i>& pointimg,vector<Point3f>& pointimg_
         // Add offset for path track, angle = msg.angle - 7; dis_3d = dis_3d + 180
 
 //        if(arc_cosvalue_inangle<40 && arc_cosvalue_inangle>-40 && distance<70 && distance>-70)
-        if(angle_int_ema < 30 && angle_int_ema > -30 && distance_ema < 50 && distance_ema > -50)
-        {
-            heightBorderMsg.angle_3d = to_string(angle_int_ema);
-            heightBorderMsg.dis_3d = to_string(distance_ema);
-        }
-        else{
-            heightBorderMsg.angle_3d = to_string(0.0);
-            heightBorderMsg.dis_3d = to_string(0);
-        }
-        cout<<angle_int_ema<<" "<<distance_ema<<endl;
+//        if(angle_int < 50 && angle_int > -50 && distance_ema < 70 && distance_ema > -70)
+//        {
+//            heightBorderMsg.angle_3d = angle_str;
+//            heightBorderMsg.dis_3d = to_string(distance_ema);
+//        }
+//        else{
+//            heightBorderMsg.angle_3d = to_string(0.0);
+//            heightBorderMsg.dis_3d = to_string(0);
+//        }
+        heightBorderMsg.angle_3d = angle_str;
+        heightBorderMsg.dis_3d = to_string(distance_ema);
         string angle_str_img = "Ang: " + heightBorderMsg.angle_3d+"deg";
         cv::putText(rgb, angle_str_img, Point2i(400, 50), cv::FONT_HERSHEY_SIMPLEX, 1, CV_RGB(255, 0, 0), 4);
 
@@ -1393,7 +1394,7 @@ void border_offset(Mat& rgb,vector<Point2i>& pointimg,vector<Point3f>& pointimg_
 //        borderMsg.angle = angle_str;
 //        borderMsg.dis = to_string(distance);
 //        border_param.publish(borderMsg);
-        cv::imshow("Border_offset", rgb);
+        cv::imshow("Border_offset_new", rgb);
         cv::waitKey(1);
     }
 }
