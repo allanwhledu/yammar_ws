@@ -74,6 +74,7 @@ car_speed_last = -1000
 is_stop = 0
 is_stop_last = 0
 submodules_status = 0
+reverse_motors = 0
 module_visual = 1 
 module_rs485 = 1
 module_can = 1
@@ -88,6 +89,7 @@ class Topic_monitor:
         rospy.Subscriber('/modified_car_speed', Float32, self.callback_car_speed)
         rospy.Subscriber('/stop', Int16, self.callback_stop_msg)
         rospy.Subscriber('/submodules_status', Int16, self.callback_status)
+        rospy.Subscriber('/reverse_motor', Int16, self.callback_reverse)
 
         self.callback_thread = threading.Thread(target=self.call_back_jobs)
         self.callback_thread.start()
@@ -130,6 +132,10 @@ class Topic_monitor:
             submodules_status = 1
         else:
             print 'system is waiting for all submodules...'
+
+    def callback_reverse(self, data):
+        global reverse_motors
+        reverse_motors = data.data
 
     ## thread functions ##
     def call_back_jobs(self):
@@ -458,7 +464,7 @@ class end(smach.State):
 # define state Foo
 class Car_speed_monitor(smach.State):
     def __init__(self):
-        smach.State.__init__(self, outcomes=['speedup', 'speeddown', 'steady', 'stop', 'start'])
+        smach.State.__init__(self, outcomes=['reverse', 'speedup', 'speeddown', 'steady', 'stop', 'start'])
         self.counter = 0
 
     def execute(self, userdata):
@@ -499,7 +505,7 @@ class Car_speed_monitor(smach.State):
 
         # 以下为额定转速
 
-        motor_target_speed[0] = 1500 + 1000 * car_speed_now
+        motor_target_speed[0] = reelRatio * min(50.0, min(21.23 * reelCof * car_speed_now + 12.3, 21.23 * 1.0 * car_speed_now + 21.23)) * 0.8
         motor_target_speed[1] = motor_speed_dict['M4'] * 0.75
         motor_target_speed[2] = motor_speed_dict['M2'] * 0.75
         motor_target_speed[3] = motor_speed_dict['M1'] * 0.75
@@ -539,7 +545,9 @@ class Car_speed_monitor(smach.State):
         #     print motor.action_goal.goal.motor_id, ' ', motor.action_goal.goal.target_speed
 
         # rospy.loginfo('Monitor car speed ...')
-        if is_stop == 1 and is_stop_last == 0:
+        if reverse_motors == 1:
+            result = 'reverse'
+        elif is_stop == 1 and is_stop_last == 0:
             is_stop_last = is_stop
             result = 'stop'
         elif is_stop == 0 and is_stop_last == 1:
@@ -547,9 +555,9 @@ class Car_speed_monitor(smach.State):
             result = 'start'
         elif car_speed_now != -1000 and car_speed_last == -1000:
             result = 'start'
-        elif car_speed_now - car_speed_last > 0.2:
+        elif car_speed_now > car_speed_last:
             result = 'speedup'
-        elif car_speed_now - car_speed_last < -0.2:
+        elif car_speed_now < car_speed_last:
             result = 'speeddown'
 
         # elif car_speed_now < car_speed_last and car_speed_last != 0:
@@ -558,7 +566,7 @@ class Car_speed_monitor(smach.State):
         #     result = 'stop'
         # 以上是做了什么逻辑？
 
-        elif car_speed_now == car_speed_last:
+        else:
             result = 'steady'
 
         car_speed_last = car_speed_now
@@ -600,7 +608,8 @@ def main():
                                             'SYS_STARTED': 'WAIT'})
 
         smach.StateMachine.add('WAIT', Car_speed_monitor(),
-                               transitions={'start': 'START_MOTOR10',
+                               transitions={'reverse': 'SPEEDDOWN_MOTOR1',
+                                            'start': 'START_MOTOR10',
                                             'speeddown': 'SPEEDCHANGE_MOTOR1',
                                             'steady': 'WAIT',
                                             'stop': 'SPEEDDOWN_MOTOR1',
