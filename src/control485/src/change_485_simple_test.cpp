@@ -29,7 +29,7 @@ uint16_t motorRS485Adress=0x43;
 uint16_t motorCurrentFeedbackAddr=0xC6; //说明书中找到而补充的电流读取，但是应该暂时不用（因为不精确吧）
 // 以上，就是现在用到的寄存器地址
 
-string port="/dev/rs485-02";
+string port="/dev/ttyUSB0";
 
 string current_time = "";
 ofstream* open_file;
@@ -201,7 +201,7 @@ int main (int argc, char **argv)
     motorSetModbus(motor_id);
     motorSetSpeedmode(motor_id);
 //    motorSetTorqueMode(motor_id);
-    motorSetSpeed(motor_id, 500);
+    motorSetSpeed(motor_id, 1000);
 
     float sec_count = 0.0, sec_duration = 360.0;
     while (ros::ok() && sec_count <= sec_duration)
