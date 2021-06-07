@@ -33,7 +33,8 @@ uint16_t motorCurrentFeedbackAddr = 0xC6; //说明书中找到而补充的电流
 double cbCof = 1.2, reelCof = 1.6, pfCof = 4.44, fhCof = 3.94; //同调率
 int cbRatio = 5, reelRatio = 64, pfRatio = 15, fhRatio = 10; //减速比
 const int reelMotor = 3, cbMotor = 4, pfMotor = 2, fhMotor = 1;
-string port = "/dev/rs485-01";
+//string port = "/dev/rs485-01";
+string port = "/dev/ttyUSB0";
 
 
 // 初始化变量
