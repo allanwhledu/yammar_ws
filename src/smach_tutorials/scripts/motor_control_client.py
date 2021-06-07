@@ -533,10 +533,13 @@ class Car_speed_monitor(smach.State):
         for index in range(len(motor_target_speed)):
             if motor_target_speed[index] > 3000:
                 motor_target_speed[index] = 3000
+            if motor_target_speed[index] < 0:
+                motor_target_speed[index] = 0
 
         for index in range(len(motor_goal)):
             motor_goal[index].action_goal.goal.motor_id = motors[index]
             motor_goal[index].action_goal.goal.target_speed = motor_target_speed[index]
+            motor_goal[index].action_goal.goal.direction = 1
 
         if is_stop == 1:
             for index in range(len(motor_goal)):
@@ -546,6 +549,9 @@ class Car_speed_monitor(smach.State):
 
         # rospy.loginfo('Monitor car speed ...')
         if reverse_motors == 1:
+            rospy.loginfo('Reserve motors')
+            for index in range(len(motor_goal)):
+                motor_goal[index].action_goal.goal.direction = -1
             result = 'reverse'
         elif is_stop == 1 and is_stop_last == 0:
             is_stop_last = is_stop

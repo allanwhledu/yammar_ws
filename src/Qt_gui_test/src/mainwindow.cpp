@@ -469,3 +469,9 @@ void MainWindow::on_height_button_4_clicked() //STOP button
   bool force_stop = 1;
   qnode.pub_force_stop(force_stop);
 }
+
+void MainWindow::on_height_button_5_clicked()
+{
+   bool reserve = 1;
+    qnode.pub_reverse_motor(reserve);
+}

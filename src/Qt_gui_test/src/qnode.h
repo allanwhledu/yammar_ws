@@ -69,6 +69,9 @@ public:
     ros::Publisher hmi_ready_pub;
     void  pub_hmi_ready(int msg);
 
+    ros::Publisher reverse_motor_pub;
+    void  pub_reverse_motor(int msg);
+
     ros::Publisher height_control_mode_pub;
     void pub_height_control_mode(float msg);
 
