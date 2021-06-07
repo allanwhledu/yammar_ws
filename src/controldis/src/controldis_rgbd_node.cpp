@@ -93,14 +93,36 @@ int main(int argc, char **argv)
     ros::Publisher pub_height = nh.advertise<std_msgs::Int16>("/reap_height_target",1000);
     ros::Subscriber path_track_sub = nh.subscribe("/path_track", 1000, path_track_cb);
 
-
-//  std_msgs::Int16 ready;
     std_msgs::Int16 speed;
     std_msgs::Int16 msg_turn;
-    speed.data = 11000;
-    pub_speed.publish(speed);
+    int judge = 0;
+    usleep(2000000);
+    //先进行收割机方向盘转向功能检测
+    for(int i = 0; i < 10; i++){
+        msg_turn.data = 2000;
+        pub_turn.publish(msg_turn);
+    }
+    usleep(1000000);
+    for(int i = 0; i < 10; i++){
+        msg_turn.data = 1;
+        pub_turn.publish(msg_turn);
+    }
+
+    cout<<"方向盘是否转动，若方向盘转动,则按数字'1'，若方向盘不转动，则C杀死进程，并拨打孙晗电话"<<endl;
+    cin>>judge;
+
+    if(judge==0){
+        while(ros::ok()){}
+    }
+     
+    for(int i = 0; i < 10; i++){
+        speed.data = 11000;
+        pub_speed.publish(speed);
+    }
+  
     while (ros::ok()) {
         ros::spinOnce();
+        usleep(10000);
         if(curr_val_path_track < -200 ){
             msg_turn.data = 2500;
         }else if(curr_val_path_track < -100){
@@ -119,7 +141,6 @@ int main(int argc, char **argv)
         }
         pub_turn.publish(msg_turn);
         ROS_INFO_STREAM(msg_turn.data);
-        usleep(10000);
     }
 
     return 0;
