@@ -105,7 +105,6 @@ void boud_depth(Mat& rgb, Mat& depth)
     heigth_detection(rgb,depth,cloudin,height_borderMsg,coeff_uncut);
     coeff_uncut=boundpoints_clusterd(rgb,depth,cloudin,plane_uncut,pointdepthimg,pointdepthimg_3d);
 
-    height_borderMsg.header = height_borderHeader;
     boud_points_process(rgb,pointdepthimg,pointdepthimg_3d,height_borderMsg,cloudin);
     curve_detect(rgb,pointdepthimg,height_borderMsg);
     height_border_pub.publish(height_borderMsg);
@@ -253,10 +252,11 @@ Eigen::VectorXf boundpoints_clusterd(Mat& rgb, Mat& depth,pcl::PointCloud<pcl::P
     // draw the roi area;
     cv::line(rgb, cv::Point(roi_left_index, rgb.rows - 1), cv::Point(roi_left_index + roi_col_offset , 200), Scalar(0,0,255),2);
     cv::line(rgb, cv::Point(roi_right_index, rgb.rows - 1), cv::Point(roi_right_index - roi_col_offset , 200), Scalar(0,0,255),2);
-
+    cv::line(rgb, cv::Point(roi_left_index, 390), cv::Point(roi_right_index , 390), Scalar(0,255,0),2);
 
     pcl::PointXYZRGB Point;
     int uncut_plane_count = 0, cut_plane_count = 0;
+    int near_left_count = 0;
     for(int row=200;row< rgb.rows;row++)  //ROI遍历范围
         for(int col=roi_left_index  + int((row - 200) * roi_col_offset / 279 ) ;col<roi_right_index -  int((row - 200) * roi_col_offset / 279);col++ )
         {
@@ -273,6 +273,7 @@ Eigen::VectorXf boundpoints_clusterd(Mat& rgb, Mat& depth,pcl::PointCloud<pcl::P
                 cv::circle(rgb, point_plane, 1, Scalar(255, 0, 0), -1);
             }
             else if(distance < cut_plane_height && row > 300){
+                if(row < 390 && col < 360) near_left_count++;
                 cut_plane_count++;
                 cv::circle(rgb, point_plane, 1, Scalar(0, 255, 0), -1);
             }
@@ -309,7 +310,9 @@ Eigen::VectorXf boundpoints_clusterd(Mat& rgb, Mat& depth,pcl::PointCloud<pcl::P
     std_msgs::Int16 path_track_msg;
     path_track_msg.data = (uncut_plane_count_ema - cut_plane_count_ema) / 100;
     path_track_pub.publish(path_track_msg);
-    cv::putText(rgb, to_string((uncut_plane_count_ema - cut_plane_count_ema) / 100), Point2i(400, 150), cv::FONT_HERSHEY_SIMPLEX, 1, CV_RGB(0, 255, 0), 2);
+
+    cv::putText(rgb, to_string((uncut_plane_count_ema - cut_plane_count_ema) / 100), Point2i(400, 50), cv::FONT_HERSHEY_SIMPLEX, 1, CV_RGB(0, 255, 0), 2);
+    cv::putText(rgb, to_string(near_left_count / 100), Point2i(400, 100), cv::FONT_HERSHEY_SIMPLEX, 1, CV_RGB(0, 0, 255), 2);
     cv::imshow("Border_offset", rgb);
     cv::waitKey(1);
     return coeff_uncut;
@@ -487,16 +490,12 @@ void curve_detect(Mat& rgb,vector<Point2i>& pointdepthimg, height_border_msgs::h
         if (angle_last < 0)
             angle_last = 180 + angle_last;
         if (abs(angle_before - angle_last) > 45) {
-            height_borderMsg.is_corner = true;
             Point2i point_curve;
             point_curve.y =
                     (-k_before * point0_last.y + k_before * k_last * point0_last.x + k_last * point0_before.y -
                      k_before * k_last * point0_before.x) / (k_last - k_before);
             point_curve.x = (point_curve.y - point0_before.y + k_before * point0_before.x) / k_before;
             circle(rgb, point_curve, 10, Scalar(255, 0, 0), -1);
-        }
-        else{
-            height_borderMsg.is_corner = false;
         }
     }
 }

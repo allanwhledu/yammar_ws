@@ -509,7 +509,7 @@ class Car_speed_monitor(smach.State):
         motor_target_speed[1] = motor_speed_dict['M4'] * 0.75
         motor_target_speed[2] = motor_speed_dict['M2'] * 0.75
         motor_target_speed[3] = motor_speed_dict['M1'] * 0.75
-        motor_target_speed[4] = motor_speed_dict['M5'] * 0.75
+        motor_target_speed[4] = motor_speed_dict['M5'] * 0.75 * 0.75
         motor_target_speed[5] = motor_speed_dict['M7'] * 0.75
         motor_target_speed[6] = motor_speed_dict['M8'] * 0.75
         motor_target_speed[7] = motor_speed_dict['M11'] * 0.75
