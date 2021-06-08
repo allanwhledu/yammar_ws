@@ -121,7 +121,7 @@ void motorSetSpeed(int motor_id, int speed)
 {
     modbus_set_slave(com, motor_id);
     usleep(5000);
-    ROS_INFO_STREAM("set direction: "<<modbus_write_register(com, motorDirectionAddr, 2));
+    ROS_INFO_STREAM("set direction: "<<modbus_write_register(com, motorDirectionAddr, 1));
     usleep(5000);
     ROS_INFO_STREAM("set speed: "<<modbus_write_register(com, motorSpeedAddr, speed));
     usleep(5000);
@@ -192,7 +192,7 @@ int main (int argc, char **argv)
     //string filename = "/home/yangzt/yammar_ws/src/control485/speed_result/";
     //filename = filename + current_time + "m10_500.txt";
 
-    int motor_id = 8;
+    int motor_id = 2;
     int realSpeed = 0;
 
     ROS_INFO_STREAM(">>Open Serial!") ;

@@ -466,7 +466,7 @@ bool openSerial(const char *port) {
     }
     timeval time_out;
     time_out.tv_sec = 0;
-    time_out.tv_usec = 500 * 1000; //设置500ms超时
+    time_out.tv_usec = 600 * 1000; //设置500ms超时
     modbus_set_response_timeout(com, time_out.tv_sec, time_out.tv_usec);
     modbus_rtu_set_serial_mode(com, MODBUS_RTU_RS485);
     if (modbus_connect(com) == -1) {
@@ -634,8 +634,10 @@ void motor_reserve(int dir) {
 void motorSetModbus(int motor, int enable) {
     modbus_set_slave(com, motor); //这句话的意思是不是将某从机设置为当前要访问的对象？
 //    usleep(20000);
-    while (!modbus_write_register(com, motorModbusAddr, enable)) {
+    int count = 0;
+    while (!modbus_write_register(com, motorModbusAddr, enable) && count < 5) {
         ROS_WARN_STREAM(motor << "set modbus failed.");
+        count ++;
         usleep(500000);
     }
 }
@@ -643,8 +645,10 @@ void motorSetModbus(int motor, int enable) {
 void motorSetDirection(int motor, int dir) {
     modbus_set_slave(com, motor);
 //    usleep(20000);
-    while (!modbus_write_register(com, motorDirectionAddr, dir)) {
+    int count = 0;
+    while (!modbus_write_register(com, motorDirectionAddr, dir) && count < 5) {
         ROS_WARN_STREAM(motor << "set direction failed, try again.");
+        count ++;
         usleep(500000);
     }
 }
@@ -661,8 +665,10 @@ void motorSetSpeed(int motor, int speed) {
 //    ROS_WARN_STREAM("set slave success");
 //    ROS_WARN_STREAM("set speed result: "<<modbus_write_register(com,motorSpeedAddr,speed));
 //    usleep(20000);
-    while (!modbus_write_register(com, motorSpeedAddr, speed)) {
+    int count = 0;
+    while (!modbus_write_register(com, motorSpeedAddr, speed) && count < 5) {
         ROS_WARN_STREAM(motor << " set speed failed， try again.");
+        count ++;
         usleep(500000);
     }
 }
@@ -671,8 +677,10 @@ int motorReadSpeed(int motor) {
 //    ROS_INFO_STREAM("Will read which motor speed: "<<motor);
     uint16_t temp = 55555;
     modbus_set_slave(com, motor);
-    while (!modbus_read_registers(com, motorSpeedFeedbackAddr, 1, &temp)) {
+    int count = 0;
+    while (!modbus_read_registers(com, motorSpeedFeedbackAddr, 1, &temp) && count < 5) {
         ROS_INFO_STREAM(motor << " read speed failed， try again.");
+        count ++;
         usleep(500000);
     }
     if (temp > 3000) {
@@ -793,7 +801,7 @@ int main(int argc, char **argv) {
 }
 
 void stop_all_motors(){
-    
+    endFlag = true;
     while (rs485_busy) {
         usleep(10000); // 如果485用于控制占用了，那么等待10ms再次检测是否占用
     }

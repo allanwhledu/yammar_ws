@@ -5,6 +5,7 @@ import rospy
 import smach
 import smach_ros
 import threading
+import time
 
 from std_msgs.msg import Empty
 from std_msgs.msg import Float32
@@ -41,6 +42,7 @@ m10 = 10
 
 # 模式
 mode = 'stop'
+delay_time = 0
 
 # 设定电机序号
 # motors = [cb, reel]
@@ -202,6 +204,7 @@ class client_motor_1(smach.State):
         # pub_result.publish(msg)
         goal = motor_goal[0].action_goal.goal
         action_result = client_1.send_goal_and_wait(goal)
+        time.sleep(delay_time)
         # client_1.wait_for_result()
         # action_result = client_1
         # print 'motor10 goal state:'
@@ -228,6 +231,7 @@ class client_motor_2(smach.State):
         # pub_result.publish(msg)
         goal = motor_goal[1].action_goal.goal
         action_result = client_1.send_goal_and_wait(goal)
+        time.sleep(delay_time)
         # client_1.wait_for_result()
         # action_result = client_1
         # print 'motor10 goal state:'
@@ -254,6 +258,7 @@ class client_motor_3(smach.State):
         # pub_result.publish(msg)
         goal = motor_goal[2].action_goal.goal
         action_result = client_1.send_goal_and_wait(goal)
+        time.sleep(delay_time)
         # client_1.wait_for_result()
         # action_result = client_1
         # print 'motor10 goal state:'
@@ -280,6 +285,7 @@ class client_motor_4(smach.State):
         # pub_result.publish(msg)
         goal = motor_goal[3].action_goal.goal
         action_result = client_1.send_goal_and_wait(goal)
+        time.sleep(delay_time)
         # client_1.wait_for_result()
         # action_result = client_1
         # print 'motor10 goal state:'
@@ -306,6 +312,7 @@ class client_motor_5(smach.State):
         # pub_result.publish(msg)
         goal = motor_goal[4].action_goal.goal
         action_result = client_1.send_goal_and_wait(goal)
+        time.sleep(delay_time)
         # client_1.wait_for_result()
         # action_result = client_1
         # print 'motor10 goal state:'
@@ -332,6 +339,7 @@ class client_motor_6(smach.State):
         # pub_result.publish(msg)
         goal = motor_goal[5].action_goal.goal
         action_result = client_1.send_goal_and_wait(goal)
+        time.sleep(delay_time)
         # client_1.wait_for_result()
         # action_result = client_1
         # print 'motor10 goal state:'
@@ -358,6 +366,7 @@ class client_motor_7(smach.State):
         # pub_result.publish(msg)
         goal = motor_goal[6].action_goal.goal
         action_result = client_1.send_goal_and_wait(goal)
+        time.sleep(delay_time)
         # client_1.wait_for_result()
         # action_result = client_1
         # print 'motor10 goal state:'
@@ -384,6 +393,7 @@ class client_motor_8(smach.State):
         # pub_result.publish(msg)
         goal = motor_goal[7].action_goal.goal
         action_result = client_1.send_goal_and_wait(goal)
+        time.sleep(delay_time)
         # client_1.wait_for_result()
         # action_result = client_1
         # print 'motor10 goal state:'
@@ -410,6 +420,7 @@ class client_motor_9(smach.State):
         # pub_result.publish(msg)
         goal = motor_goal[8].action_goal.goal
         action_result = client_1.send_goal_and_wait(goal)
+        time.sleep(delay_time)
         # client_1.wait_for_result()
         # action_result = client_1
         # print 'motor10 goal state:'
@@ -436,6 +447,7 @@ class client_motor_10(smach.State):
         # pub_result.publish(msg)
         goal = motor_goal[9].action_goal.goal
         action_result = client_1.send_goal_and_wait(goal)
+        time.sleep(delay_time)
         # client_1.wait_for_result()
         # action_result = client_1
         # print 'motor10 goal state:'
@@ -552,6 +564,7 @@ class Car_speed_monitor(smach.State):
             rospy.loginfo('Reserve motors')
             for index in range(len(motor_goal)):
                 motor_goal[index].action_goal.goal.direction = -1
+            delay_time = 10
             result = 'reverse'
         elif is_stop == 1 and is_stop_last == 0:
             is_stop_last = is_stop

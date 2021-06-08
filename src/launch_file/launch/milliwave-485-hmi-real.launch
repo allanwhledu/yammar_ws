@@ -1,7 +1,7 @@
 <launch>
 
 #### rosbag #################################################
-  <node pkg="rosbag" type="record" name="bag_record" args="-a -o /media/yangzt/File/yanmar/20210607/test_eh"/>
+  <node pkg="rosbag" type="record" name="bag_record" args="-a -o /media/sjtu_wanghaili/Samsung_T5/last_day_test/test_eh"/>
 
 #### HMI ####################################################
 
@@ -35,11 +35,11 @@
 
 #### for logic control flow ####################################################
 
-  <node pkg="smach_tutorials" type="motor_control_client.py" name="motor_control_client"/>
+  <node pkg="smach_tutorials" type="motor_control_client.py" name="motor_control_client" output="screen"/>
 
 #### for upload data to cloud ################################################
 
-  <node pkg="cloud_convertor" type="cloud_convertor_node.py" name="cloud_convertor"/>
+  <!--node pkg="cloud_convertor" type="cloud_convertor_node.py" name="cloud_convertor"/-->
 
 #### visulization ################################################
 
@@ -48,6 +48,6 @@
 
   <node pkg="rqt_graph" type="rqt_graph" name="rqt_graph"/>
 
-  <node pkg="smach_viewer" type="smach_viewer.py" name="smach_viewer_py"/>
+  <!--node pkg="smach_viewer" type="smach_viewer.py" name="smach_viewer_py"/-->
 
 </launch>
