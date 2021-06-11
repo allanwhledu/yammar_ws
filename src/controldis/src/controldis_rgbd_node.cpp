@@ -123,18 +123,35 @@ int main(int argc, char **argv)
     while (ros::ok()) {
         ros::spinOnce();
         usleep(10000);
+        // if(curr_val_path_track < -200 ){
+        //     msg_turn.data = 2500;
+        // }else if(curr_val_path_track < -100){
+        //     msg_turn.data = 2000;
+        // }else if(curr_val_path_track > 60){
+        //     msg_turn.data = -1500;
+        // }else if(curr_val_path_track > 100){
+        //     msg_turn.data = -2000;
+        // }else if(curr_val_path_track > 150){
+        //     msg_turn.data = -2250;
+        // }else if(curr_val_path_track > 200){
+        //     msg_turn.data = -2500;
+        // }
+        // else{
+        //     msg_turn.data = 0;
+        // }
+
         if(curr_val_path_track < -200 ){
             msg_turn.data = 2500;
         }else if(curr_val_path_track < -100){
             msg_turn.data = 2000;
-        }else if(curr_val_path_track > 60){
-            msg_turn.data = -1500;
-        }else if(curr_val_path_track > 100){
-            msg_turn.data = -2000;
-        }else if(curr_val_path_track > 150){
-            msg_turn.data = -2250;
         }else if(curr_val_path_track > 200){
             msg_turn.data = -2500;
+        }else if(curr_val_path_track > 150){
+            msg_turn.data = -2250;
+        }else if(curr_val_path_track > 100){
+            msg_turn.data = -2000;
+        }else if(curr_val_path_track > 60){
+            msg_turn.data = -1500;
         }
         else{
             msg_turn.data = 0;
