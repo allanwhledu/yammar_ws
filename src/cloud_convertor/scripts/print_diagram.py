@@ -64,16 +64,16 @@ if __name__ == '__main__':
         m3_speed[0:79, 1] = 0
 
 
-        m1_speed_freq = round((m1_speed[-1,0] - m1_speed[0,0]) / m1_speed.shape[0], 2)
-        m2_speed_freq = round((m2_speed[-1,0] - m2_speed[0,0]) / m2_speed.shape[0], 2)
-        m3_speed_freq = round((m3_speed[-1,0] - m3_speed[0,0]) / m3_speed.shape[0], 2)
-        m4_speed_freq = round((m4_speed[-1,0] - m4_speed[0,0]) / m4_speed.shape[0], 2)
-        m5_speed_freq = round((m5_speed[-1,0] - m5_speed[0,0]) / m5_speed.shape[0], 2)
-        m11_speed_freq = round((m11_speed[-1,0] - m11_speed[0,0]) / m11_speed.shape[0], 2)
-        m7_speed_freq = round((m7_speed[-1,0] - m7_speed[0,0]) / m7_speed.shape[0], 2)
-        m8_speed_freq = round((m8_speed[-1,0] - m8_speed[0,0]) / m8_speed.shape[0], 2)
-        m9_speed_freq = round((m9_speed[-1,0] - m9_speed[0,0]) / m9_speed.shape[0], 2)
-        m10_speed_freq = round((m10_speed[-1,0] - m10_speed[0,0]) / m10_speed.shape[0], 2)
+        m1_speed_freq = round(m1_speed.shape[0] / (m1_speed[-1,0] - m1_speed[0,0]), 2)
+        m2_speed_freq = round(m2_speed.shape[0] / (m2_speed[-1,0] - m2_speed[0,0]), 2)
+        m3_speed_freq = round(m3_speed.shape[0] / (m3_speed[-1,0] - m3_speed[0,0]), 2)
+        m4_speed_freq = round(m4_speed.shape[0] / (m4_speed[-1,0] - m4_speed[0,0]), 2)
+        m5_speed_freq = round(m5_speed.shape[0] / (m5_speed[-1,0] - m5_speed[0,0]), 2)
+        m11_speed_freq = round(m11_speed.shape[0] / (m11_speed[-1,0] - m11_speed[0,0]), 2)
+        m7_speed_freq = round(m7_speed.shape[0] / (m7_speed[-1,0] - m7_speed[0,0]), 2)
+        m8_speed_freq = round(m8_speed.shape[0] / (m8_speed[-1,0] - m8_speed[0,0]), 2)
+        m9_speed_freq = round(m9_speed.shape[0] / (m9_speed[-1,0] - m9_speed[0,0]), 2)
+        m10_speed_freq = round(m10_speed.shape[0] / (m10_speed[-1,0] - m10_speed[0,0]), 2)
 
         fig1 = plt.figure(1)
         ax1 = plt.subplot(211)
@@ -87,7 +87,7 @@ if __name__ == '__main__':
         plt.plot(m8_speed[..., 0], m8_speed[..., 1], label='m8_speed freq:' + str(m8_speed_freq))
         plt.plot(m9_speed[..., 0], m9_speed[..., 1], label='m9_speed freq:' + str(m9_speed_freq))
         plt.plot(m10_speed[..., 0], m10_speed[..., 1], label='m10_speed freq:' + str(m10_speed_freq))
-        plt.title('Control motors based on car speed.\npriority and tracking', fontsize=30)
+        plt.title('Control motors based on car speed.\nStart process', fontsize=30)
         # 设置坐标刻度大小
         plt.xticks(fontsize=20)
         plt.yticks(fontsize=20)
@@ -95,7 +95,7 @@ if __name__ == '__main__':
         ax1.set_xlabel('time s', fontsize=20)
         ax1.set_ylabel('speed n/min', fontsize=20)
         # 设置图例字体大小
-        ax1.legend(loc='center left', fontsize=20)
+        ax1.legend(loc='center right', fontsize=20)
         ax1.set_xlim(50,150)
 
         ax2 = plt.subplot(212, sharex=ax1)  # 这里设置了坐标轴共享
@@ -155,6 +155,17 @@ if __name__ == '__main__':
         m10_current = np.load("mall_m10_current.npy", allow_pickle=True)
         cm7290_current = np.load("mall_cm7290_current.npy", allow_pickle=True)
 
+        m1_current_freq = round(m1_current.shape[0] / (m1_current[-1,0] - m1_current[0,0]), 2)
+        m2_current_freq = round(m2_current.shape[0] / (m2_current[-1,0] - m2_current[0,0]), 2)
+        m3_current_freq = round(m3_current.shape[0] / (m3_current[-1,0] - m3_current[0,0]), 2)
+        m4_current_freq = round(m4_current.shape[0] / (m4_current[-1,0] - m4_current[0,0]), 2)
+        m5_current_freq = round(m5_current.shape[0] / (m5_current[-1,0] - m5_current[0,0]), 2)
+        m11_current_freq = round(m11_current.shape[0] / (m11_current[-1,0] - m11_current[0,0]), 2)
+        m7_current_freq = round(m7_current.shape[0] / (m7_current[-1,0] - m7_current[0,0]), 2)
+        m8_current_freq = round(m8_current.shape[0] / (m8_current[-1,0] - m8_current[0,0]), 2)
+        m9_current_freq = round(m9_current.shape[0] / (m9_current[-1,0] - m9_current[0,0]), 2)
+        m10_current_freq = round(m10_current.shape[0] / (m10_current[-1,0] - m10_current[0,0]), 2)
+
         # m1_current = down_sample(m1_current, scale=50)
         # m2_current = down_sample(m2_current, scale=50)
         # m3_current = down_sample(m3_current, scale=50)
@@ -170,81 +181,123 @@ if __name__ == '__main__':
         # m11_current = remove_end_part(m11_current, how_long=200)
 
         # remove_error(cm7290_current)
-
+        x_limit = [150, 2200]
+        # x_limit = [500, 750]
 
         fig3 = plt.figure(2)
-        ax4 = plt.subplot(811)
-        plt.plot(m3_current[..., 0], m3_current[..., 1], 'r', label='m3_current')
-        plt.title('Control motors based on car speed.\nCurrent compared monitoring', fontsize=30)
-        plt.xticks(fontsize=20)
+        ax4 = plt.subplot(11,1,1)
+        plt.plot(m3_current[..., 0], m3_current[..., 1], 'r', label='m3_current freq:' + str(m3_current_freq))
+        plt.title('Control motors based on car speed.\nCurrent monitoring - 2200 seconds', fontsize=30)
+        plt.xticks([])
         plt.yticks(fontsize=20)
         # 设置坐标标签字体大小speed
         ax4.set_ylabel('current A', fontsize=20)
         # 设置图例字体大小
         ax4.legend(fontsize=20, loc='upper right')
+        ax4.set_xlim(x_limit)
         # 设置坐标刻度大小
 
-        ax5 = plt.subplot(812)
-        plt.plot(m4_current[..., 0], m4_current[..., 1], 'g', label='m4_current')
-        plt.xticks(fontsize=20)
+        ax5 = plt.subplot(11,1,2)
+        plt.plot(m4_current[..., 0], m4_current[..., 1], 'g', label='m4_current freq:' + str(m4_current_freq))
+        plt.xticks([])
         plt.yticks(fontsize=20)
         # 设置坐标标签字体大小
         # ax5.set_xlabel('time s', fontsize=20)
         ax5.set_ylabel('current A', fontsize=20)
         # 设置图例字体大小
         ax5.legend(fontsize=20, loc='upper right')
+        ax5.set_xlim(x_limit)
 
-        ax6 = plt.subplot(813)
-        plt.plot(m2_current[..., 0], m2_current[..., 1], 'b', label='m2_current')
-        plt.xticks(fontsize=20)
+
+        ax6 = plt.subplot(11,1,3)
+        plt.plot(m2_current[..., 0], m2_current[..., 1], 'b', label='m2_current freq:' + str(m2_current_freq))
+        plt.xticks([])
         plt.yticks(fontsize=20)
         # 设置坐标标签字体大小
         # ax6.set_xlabel('time s', fontsize=20)
         ax6.set_ylabel('current A', fontsize=20)
         # 设置图例字体大小
         ax6.legend(fontsize=20, loc='upper right')
+        ax6.set_xlim(x_limit)
 
-        ax7 = plt.subplot(814)
-        plt.plot(m1_current[..., 0], m1_current[..., 1], 'y', label='m1_current')
-        plt.xticks(fontsize=20)
+        ax7 = plt.subplot(11,1,4)
+        plt.plot(m1_current[..., 0], m1_current[..., 1], 'y', label='m1_current freq:' + str(m1_current_freq))
+        plt.xticks([])
         plt.yticks(fontsize=20)
         # 设置坐标标签字体大小
         # ax7.set_xlabel('time s', fontsize=20)
         ax7.set_ylabel('current A', fontsize=20)
         # 设置图例字体大小
         ax7.legend(fontsize=20, loc='upper right')
+        ax7.set_xlim(x_limit)
 
-        ax8 = plt.subplot(815)
-        plt.plot(m5_current[..., 0], m5_current[..., 1], 'k', label='m5_current')
-        plt.xticks(fontsize=20)
+        ax8 = plt.subplot(11,1,5)
+        plt.plot(m5_current[..., 0], m5_current[..., 1], 'k', label='m5_current freq:' + str(m5_current_freq))
+        plt.xticks([])
         plt.yticks(fontsize=20)
         # 设置坐标标签字体大小
         # ax8.set_xlabel('time s', fontsize=20)
         ax8.set_ylabel('current A', fontsize=20)
         # 设置图例字体大小
         ax8.legend(fontsize=20, loc='upper right')
+        ax8.set_xlim(x_limit)
 
-        ax9 = plt.subplot(816)
-        plt.plot(m7_current[..., 0], m7_current[..., 1], 'b', label='m7_current')
-        plt.xticks(fontsize=20)
+        ax9 = plt.subplot(11,1,6)
+        plt.plot(m7_current[..., 0], m7_current[..., 1], 'm', label='m7_current freq:' + str(m7_current_freq))
+        plt.xticks([])
         plt.yticks(fontsize=20)
         # 设置坐标标签字体大小
         # ax9.set_xlabel('time s', fontsize=20)
         ax9.set_ylabel('current A', fontsize=20)
         # 设置图例字体大小
         ax9.legend(fontsize=20, loc='upper right')
+        ax9.set_xlim(x_limit)
 
-        ax10 = plt.subplot(817)
-        plt.plot(m8_current[..., 0], m8_current[..., 1], 'r', label='m8_current')
-        plt.xticks(fontsize=20)
+        ax10 = plt.subplot(11,1,7)
+        plt.plot(m8_current[..., 0], m8_current[..., 1], 'crimson', label='m8_current freq:' + str(m8_current_freq))
+        plt.xticks([])
         plt.yticks(fontsize=20)
         # 设置坐标标签字体大小
         # ax10.set_xlabel('time s', fontsize=20)
         ax10.set_ylabel('current A', fontsize=20)
         # 设置图例字体大小
         ax10.legend(fontsize=20, loc='upper right')
+        ax10.set_xlim(x_limit)
 
-        ax7 = plt.subplot(818, sharex=ax4)
+        ax11 = plt.subplot(11,1,8)
+        plt.plot(m11_current[..., 0], m11_current[..., 1], 'c', label='m11_current freq:' + str(m11_current_freq))
+        plt.xticks([])
+        plt.yticks(fontsize=20)
+        # 设置坐标标签字体大小
+        # ax10.set_xlabel('time s', fontsize=20)
+        ax11.set_ylabel('current A', fontsize=20)
+        # 设置图例字体大小
+        ax11.legend(fontsize=20, loc='upper right')
+        ax11.set_xlim(x_limit)
+
+        ax12 = plt.subplot(11,1,9)
+        plt.plot(m9_current[..., 0], m9_current[..., 1], 'gold', label='m9_current freq:' + str(m9_current_freq))
+        plt.xticks([])
+        plt.yticks(fontsize=20)
+        # 设置坐标标签字体大小
+        # ax10.set_xlabel('time s', fontsize=20)
+        ax12.set_ylabel('current A', fontsize=20)
+        # 设置图例字体大小
+        ax12.legend(fontsize=20, loc='upper right')
+        ax12.set_xlim(x_limit)
+
+        ax13 = plt.subplot(11,1,10)
+        plt.plot(m10_current[..., 0], m10_current[..., 1], 'royalblue', label='m10_current freq:' + str(m10_current_freq))
+        plt.xticks([])
+        plt.yticks(fontsize=20)
+        # 设置坐标标签字体大小
+        # ax10.set_xlabel('time s', fontsize=20)
+        ax13.set_ylabel('current A', fontsize=20)
+        # 设置图例字体大小
+        ax13.legend(fontsize=20, loc='upper right')
+        ax13.set_xlim(x_limit)
+
+        ax7 = plt.subplot(11,1,11)
         ax7.step(car_speed[..., 0], car_speed[..., 1], 'o', where='post', label='car_speed')
         # 设置坐标刻度大小
         plt.xticks(fontsize=20)
@@ -254,6 +307,7 @@ if __name__ == '__main__':
         ax7.set_ylabel('current A', fontsize=20)
         # 设置图例字体大小
         ax7.legend(fontsize=20, loc='upper right')
+        ax7.set_xlim(x_limit)
 
 
         plt.show()
