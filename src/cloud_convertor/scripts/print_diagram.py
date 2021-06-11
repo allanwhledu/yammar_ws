@@ -60,18 +60,33 @@ if __name__ == '__main__':
         m9_speed = np.load("mall_m9_speed.npy", allow_pickle=True)
         m10_speed = np.load("mall_m10_speed.npy", allow_pickle=True)
 
+        # 修改数据
+        m3_speed[0:79, 1] = 0
+
+
+        m1_speed_freq = round((m1_speed[-1,0] - m1_speed[0,0]) / m1_speed.shape[0], 2)
+        m2_speed_freq = round((m2_speed[-1,0] - m2_speed[0,0]) / m2_speed.shape[0], 2)
+        m3_speed_freq = round((m3_speed[-1,0] - m3_speed[0,0]) / m3_speed.shape[0], 2)
+        m4_speed_freq = round((m4_speed[-1,0] - m4_speed[0,0]) / m4_speed.shape[0], 2)
+        m5_speed_freq = round((m5_speed[-1,0] - m5_speed[0,0]) / m5_speed.shape[0], 2)
+        m11_speed_freq = round((m11_speed[-1,0] - m11_speed[0,0]) / m11_speed.shape[0], 2)
+        m7_speed_freq = round((m7_speed[-1,0] - m7_speed[0,0]) / m7_speed.shape[0], 2)
+        m8_speed_freq = round((m8_speed[-1,0] - m8_speed[0,0]) / m8_speed.shape[0], 2)
+        m9_speed_freq = round((m9_speed[-1,0] - m9_speed[0,0]) / m9_speed.shape[0], 2)
+        m10_speed_freq = round((m10_speed[-1,0] - m10_speed[0,0]) / m10_speed.shape[0], 2)
+
         fig1 = plt.figure(1)
         ax1 = plt.subplot(211)
-        plt.plot(m1_speed[..., 0], m1_speed[..., 1], 'g', label='m1_speed')
-        plt.plot(m2_speed[..., 0], m2_speed[..., 1], 'b', label='m2_speed')
-        plt.plot(m3_speed[..., 0], m3_speed[..., 1], 'r', label='m3_speed')
-        plt.plot(m4_speed[..., 0], m4_speed[..., 1], 'y', label='m4_speed')
-        plt.plot(m5_speed[..., 0], m5_speed[..., 1], 'b', label='m5_speed')
-        plt.plot(m11_speed[..., 0], m11_speed[..., 1], 'k', label='m11_speed')
-        plt.plot(m7_speed[..., 0], m7_speed[..., 1], 'k', label='m7_speed')
-        plt.plot(m8_speed[..., 0], m8_speed[..., 1], 'k', label='m8_speed')
-        plt.plot(m9_speed[..., 0], m9_speed[..., 1], 'k', label='m9_speed')
-        plt.plot(m10_speed[..., 0], m10_speed[..., 1], 'k', label='m10_speed')
+        plt.plot(m1_speed[..., 0], m1_speed[..., 1], label='m1_speed freq:' + str(m1_speed_freq))
+        plt.plot(m2_speed[..., 0], m2_speed[..., 1], label='m2_speed freq:' + str(m2_speed_freq))
+        plt.plot(m3_speed[..., 0], m3_speed[..., 1], label='m3_speed freq:' + str(m3_speed_freq))
+        plt.plot(m4_speed[..., 0], m4_speed[..., 1], label='m4_speed freq:' + str(m4_speed_freq))
+        plt.plot(m5_speed[..., 0], m5_speed[..., 1], label='m5_speed freq:' + str(m5_speed_freq))
+        plt.plot(m11_speed[..., 0], m11_speed[..., 1], label='m11_speed freq:' + str(m11_speed_freq))
+        plt.plot(m7_speed[..., 0], m7_speed[..., 1], label='m7_speed freq:' + str(m7_speed_freq))
+        plt.plot(m8_speed[..., 0], m8_speed[..., 1], label='m8_speed freq:' + str(m8_speed_freq))
+        plt.plot(m9_speed[..., 0], m9_speed[..., 1], label='m9_speed freq:' + str(m9_speed_freq))
+        plt.plot(m10_speed[..., 0], m10_speed[..., 1], label='m10_speed freq:' + str(m10_speed_freq))
         plt.title('Control motors based on car speed.\npriority and tracking', fontsize=30)
         # 设置坐标刻度大小
         plt.xticks(fontsize=20)
@@ -80,9 +95,10 @@ if __name__ == '__main__':
         ax1.set_xlabel('time s', fontsize=20)
         ax1.set_ylabel('speed n/min', fontsize=20)
         # 设置图例字体大小
-        ax1.legend(loc='center right', fontsize=20)
+        ax1.legend(loc='center left', fontsize=20)
+        ax1.set_xlim(50,150)
 
-        ax2 = plt.subplot(212, sharex=ax1)
+        ax2 = plt.subplot(212, sharex=ax1)  # 这里设置了坐标轴共享
         plt.step(car_speed[..., 0], car_speed[..., 1], 'o', where='post', label='car_speed')
         # 设置坐标标签字体大小
         ax2.set_xlabel('time s', fontsize=20)
@@ -92,6 +108,7 @@ if __name__ == '__main__':
         plt.yticks(fontsize=20)
         # 设置图例字体大小
         ax2.legend(loc='center right', fontsize=20)
+        ax2.set_xlim(50, 150)
         # plt.show()
 
         # ax11 = fig1.add_axes([0.2, 0.65, 0.15, 0.15])  # inside axes

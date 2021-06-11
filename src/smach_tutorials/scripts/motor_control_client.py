@@ -520,13 +520,13 @@ class Car_speed_monitor(smach.State):
         motor_target_speed[0] = reelRatio * min(50.0, min(21.23 * reelCof * car_speed_now + 12.3, 21.23 * 1.0 * car_speed_now + 21.23)) * 0.8
         motor_target_speed[1] = motor_speed_dict['M4'] * 0.75
         motor_target_speed[2] = motor_speed_dict['M2'] * 0.75
-        motor_target_speed[3] = motor_speed_dict['M1'] * 0.75
-        motor_target_speed[4] = motor_speed_dict['M5'] * 0.75 * 0.75
-        motor_target_speed[5] = motor_speed_dict['M7'] * 0.75
-        motor_target_speed[6] = motor_speed_dict['M8'] * 0.75
+        motor_target_speed[3] = motor_speed_dict['M1'] * 1
+        motor_target_speed[4] = motor_speed_dict['M5'] * 0.75
+        motor_target_speed[5] = motor_speed_dict['M7'] * 1
+        motor_target_speed[6] = motor_speed_dict['M8'] * 0.5
         motor_target_speed[7] = motor_speed_dict['M11'] * 0.75
-        motor_target_speed[8] = motor_speed_dict['M9'] * 0.75
-        motor_target_speed[9] = motor_speed_dict['M10'] * 0.75
+        motor_target_speed[8] = motor_speed_dict['M9'] * 0.5
+        motor_target_speed[9] = motor_speed_dict['M10'] * 0.5
 
         # motor_target_speed[0] = 1500 + 1000 * car_speed_now  # motor_speed_dict['M3']
         # motor_target_speed[1] = 500
